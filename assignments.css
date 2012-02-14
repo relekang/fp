@@ -1,0 +1,59 @@
+@media screen{
+	section{
+		max-width: 800px;
+		width: 100%;
+		margin: 0 auto;
+	}
+}
+header{
+	padding-top: 20px;
+	font-size:30px;
+	text-align:center;
+	font-family: sans-serif;
+}
+header .ovings-detaljer{
+	font-size:12px;
+}
+header hr{
+	margin: 2px;
+}
+article{
+	width: 90%;
+	margin: 0 auto;
+}
+ol li{
+	color: gray;
+	font-family: sans-serif;
+	font-size: 12px;
+	vertical-align: top;
+}
+article>ol>li{
+	margin-bottom: 20px;
+}
+ol li ol{
+	list-style-type: lower-alpha;
+	padding-left: 10px;
+
+}
+ol li p{
+	color: black;
+	font-family: serif;
+	font-size: 14px;
+}
+ol li img{
+	max-width: 90%;
+	margin: 0 auto;
+
+	vertical-align: text-top;
+}
+
+
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+    background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+    background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+}
