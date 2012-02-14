@@ -41,7 +41,7 @@ ol li p, ol li table{
 	font-size: 14px;
 }
 ol li img{
-	max-width: 90%;
+	max-width: 60%;
 	margin: 0 auto;
 
 	vertical-align: text-top;
@@ -80,5 +80,10 @@ table.gantt{
 	border-right: none;
 }
 .gantt td.active{
-	background-color: #ffcc66 
+	background-color: #ffcc66 !important;
+}
+@media print{
+	.gantt td.active{
+		background-color: #ffcc66 !important;
+	}
 }
