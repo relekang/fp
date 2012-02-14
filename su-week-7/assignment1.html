@@ -9,9 +9,10 @@
 	<header>
 	TDT4140 - Systemutvikling - Øving 1
 	<hr/>
-	<div class="ovings-detaljer"></div>
+	<div class="ovings-detaljer"><strong>Gruppe 36:</strong>Agnethe Søraa, Audun Skjervold, David Storjord, Hong-Dang Lam, Rolf Erik Lekang og Sondre Lefsaker</div>
 	</header>
 	<article>
+	<h2>2.1</h2>
 	<ol>
 		<li>
 			<img src="http://yuml.me/diagram/plain;/usecase/[Ole G]-(Logs in),[Ole G]-(Invites developers),[Ole G]-(Updates info),[Ole G]-(Register project),[Ole G]-(Logs out),(Register project)<(Specify requirements)"><br/>
@@ -22,9 +23,29 @@
 			<img src="http://yuml.me/diagram/plain;/usecase/[Ole O]-(Logs in),[Ole O]-(Search for experience),[Ole O]-(Adds experience),[Ole O]-(Upload kode),[Ole O]-(Mark changes inn code),[Ole O]-(Logs out)"><br/>
 		
 		</li>
-		<li></li>
-		<li></li>
-		<li></li>
+		<li>
+			<ul>
+				<li><p><strong>Scenario 1</strong>
+Ola G. logs into SAVVY. There, he invites the other developers to the database. He then updates his information, such as areas of competence and responsibilities, by setting himself as the project manager of the TJA project. He then registers the project, and inserts the requirements definition document, estimated costs and schedule into the database. Finally, he inserts references to the persons allocated to the project, and logs off.</p></li>
+
+<li><p><strong>Scenario 2</strong>
+Per P. logs into SAVVY and adds experiences from his project UFFAMEI. Then he links this experience to the project, and logs off.</p></li>
+
+<li><p><strong>Scenario 3</strong>
+Hans H. logs in, and finds Per's experience from the UFFAMEI project. He adds comments to these experiences from experiences he made in a previous job, and links these comments to the experience from that previous job. He also uploads an example risk table from that same previous job.</p></li>
+
+<li><p><strong>Scenario 4</strong>
+Jan J. logs in, and searches for experiences of the "Process" type. He finds Per's experience and prints them out, before he logs off.</p></li>
+
+<li><p><strong>Scenario 5</strong>
+Ole O. logs in, and searches for experiences with the criteria "Type = Code" and "Keywords = {Java, Calculus, Gamma}". He downloads the desired code and logs out.</p></li>
+
+<li><p><strong>Scenario 6</strong>
+Ole O. logs back in, and finds the code he used. He then adds his experiences, and uploads his new, modified code. Then he marks the changes he made to the code, before he once again logs out.</p></li>
+			</li></ul>
+		</li>
+		<li><img src="http://yuml.me/422bbfdf"></li>
+		<li><img src="sequence1.png"><br/><img src="sequence2.png"></li>
 		<li>
 			<table class="gantt" cellspacing="0">
 				<tr>
