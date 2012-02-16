@@ -199,6 +199,62 @@
 <table border="1" width="500" cellpadding="3" cellspacing="0">
 	<tr>
 		<td width="120"><b>Name</b></td>
+		<td>Upload file</td>
+	</tr>
+	<tr>
+		<td width="120"><b>Pre-requirements</b></td>
+		<td>User needs to be logged into system</td>
+	</tr>
+	<tr>
+		<td width="120"><b>Step</b></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="120"><b>1</b></td>
+		<td>Open upload interface</td>
+	</tr>
+	<tr>
+		<td width="120"><b>2</b></td>
+		<td>Select file from local system</td>
+	</tr>
+	<tr>
+		<td width="120"><b>3</b></td>
+		<td>Click "Upload" button</td>
+	</tr>
+	<tr>
+		<td width="120"><b>4</b></td>
+		<td>Save file in database</td>
+	</tr>
+	<tr>
+		<td width="120"><b>Errors</b></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="120"><b>1.1</b></td>
+		<td>Upload interface does not appear when it should</td>
+	</tr>
+	<tr>
+		<td width="120"><b>2.1</b></td>
+		<td>System does not get access to local file system</td>
+	</tr>
+	<tr>
+		<td width="120"><b>3.1</b></td>
+		<td>Upload fails</td>
+	</tr>
+	<tr>
+		<td width="120"><b>3.2</b></td>
+		<td>File type not supported by system</td>
+	</tr>
+	<tr>
+		<td width="120"><b>4.1</b></td>
+		<td>Save unsuccessful</td>
+	</tr>
+	
+</table>
+
+<table border="1" width="500" cellpadding="3" cellspacing="0">
+	<tr>
+		<td width="120"><b>Name</b></td>
 		<td>Register project</td>
 	</tr>
 	<tr>
@@ -215,15 +271,19 @@
 	</tr>
 	<tr>
 		<td width="120"><b>2</b></td>
-		<td>Enter information</td>
+		<td>Enter information (project name etc)</td>
 	</tr>
 	<tr>
 		<td width="120"><b>3</b></td>
-		<td>Click "Save" button</td>
+		<td>Specify requirements definition document, estimated costs and schedule from files in system</td>
 	</tr>
 	<tr>
 		<td width="120"><b>4</b></td>
-		<td>Call "Save user information" function</td>
+		<td>Insert references to persons allocated to project</td>
+	</tr>
+	<tr>
+		<td width="120"><b>5</b></td>
+		<td>Register project</td>
 	</tr>
 	<tr>
 		<td width="120"><b>Errors</b></td>
@@ -231,19 +291,66 @@
 	</tr>
 	<tr>
 		<td width="120"><b>1.1</b></td>
-		<td>Invite interface does not appear when it should</td>
+		<td>Project registering interface does not appear when it should</td>
 	</tr>
 	<tr>
 		<td width="120"><b>3.1</b></td>
-		<td>Button not clickable or does not call the save function</td>
+		<td>Not allowed to select files</td>
 	</tr>
 	<tr>
 		<td width="120"><b>3.2</b></td>
-		<td>Incorrect or no information is saved</td>
+		<td>Files not found</td>
+	</tr>
+	<tr>
+		<td width="120"><b>3.3</b></td>
+		<td>Wrong files are set</td>
+	</tr>
+	<tr>
+		<td width="120"><b>4.1</b></td>
+		<td>Persons cannot be referenced</td>
+	</tr>
+	<tr>
+		<td width="120"><b>5.1</b></td>
+		<td>Project not registered</td>
 	</tr>
 	
 </table>
 
+<table border="1" width="500" cellpadding="3" cellspacing="0">
+	<tr>
+		<td width="120"><b>Name</b></td>
+		<td>Log out</td>
+	</tr>
+	<tr>
+		<td width="120"><b>Pre-requirements</b></td>
+		<td>User needs to be logged into system</td>
+	</tr>
+	<tr>
+		<td width="120"><b>Step</b></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="120"><b>1</b></td>
+		<td>Click the "Log out" button</td>
+	</tr>
+	<tr>
+		<td width="120"><b>2</b></td>
+		<td>Call the logout-function</td>
+	</tr>
+	<tr>
+		<td width="120"><b>Errors</b></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="120"><b>1.1</b></td>
+		<td>Button not clickable or does not call log out function</td>
+	</tr>
+	<tr>
+		<td width="120"><b>2.1</b></td>
+		<td>Logs into another user</td>
+	</tr>
+	
+</table>
 
 <table border="1" width="500" cellpadding="3" cellspacing="0">
 	<tr>
@@ -260,7 +367,7 @@
 	</tr>
 	<tr>
 		<td width="120"><b>1</b></td>
-		<td>Searches for experiencs with "Process" as type</td>
+		<td>Searches for experiences with "Process" as type</td>
 	</tr>
 	<tr>
 		<td width="120"><b>2</b></td>
