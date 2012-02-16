@@ -35,10 +35,16 @@ ol li ol{
 	padding-left: 10px;
 
 }
-ol li p, ol li table{
+ol li p,
+ol li table,
+ol li div,
+ol li div ul li{
 	color: black;
 	font-family: serif;
 	font-size: 14px;
+}
+ol li div{
+	margin: 10px auto;
 }
 ol li img{
 	max-width: 60%;
@@ -62,6 +68,11 @@ hr {
 
 
 /***** SU ******/
+
+ol li div ul{
+	margin: 2px;
+	padding: 0 20px;
+}
 
 table {
 	margin: 4px auto;
