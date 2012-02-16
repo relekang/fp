@@ -63,8 +63,18 @@ hr {
 
 /***** SU ******/
 
+table {
+	margin: 4px auto;
+	background: silver;
+}
+table td{
+	background: white;
+	padding: 4px;
+}
+
 table.gantt{
 	width: 100%;
+	background: transparent;
 }
 .gantt th:first-child,.gantt td:first-child{
 	max-width: 50px;
