@@ -118,12 +118,57 @@
         </ul>
     </div>
     <div>
-        <h3>Scenario 4 - search for relevant experiences</h3>
-
-        Logging in: see test 1.1
+        <strong>Test 2.5 Refer to 1.5</strong>
+    </div>
+    <h3>Scenario 3: add comments to an experience</h3>
+    <div>
+        <strong>Test 3.1 Refer to 1.1</strong>
     </div>
     <div>
-        <strong>Test 4.1 search for experience: The user searches for all experiences including the type
+        <strong>Test 3.1: Search for experience</strong><br/>
+        <strong>Expected result:</strong> Relevant data is found<br/>
+        <strong>Error:</strong>
+        <ul>
+            <li>No result</li>
+            <li>Result contains non-relevant information</li>
+        </ul>
+        <strong>Necessary environmental requirements:</strong> Relevant data must exist<br/>
+    </div>
+    <div>
+        <strong>Test 3.2: Comments on experience</strong><br/>
+        <strong>Expected result:</strong> Comment added<br/>
+        <strong>Error:</strong> Comment not added<br/>
+    </div>
+    <div>
+        <strong>Test 3.3: Links experience</strong><br/>
+        <strong>Expected result:</strong> Experience linked<br/>
+        <strong>Error:</strong>
+        <ul>
+            <li>Experience not linked</li>
+            <li>Link between wrong experiences</li>
+        </ul>
+    </div>
+    <div>
+        <strong>Test 3.4: Adds information</strong><br/>
+        <strong>Expected result:</strong> Information added<br/>
+        <strong>Error:</strong>
+        <ul>
+            <li>Information was not added</li>
+            <li>Information was added to wrong object</li>
+        </ul>
+    </div>
+
+    <div>
+        <strong>Test 3.5 Refer to 1.5</strong>
+    </div>
+
+    <h3>Scenario 4 - search for relevant experiences</h3>
+
+    <div>
+        <strong>Test 4.1 Refer to 1.1</strong>
+    </div>
+    <div>
+        <strong>Test 4.2 search for experience: The user searches for all experiences including the type
             ”Process”. </strong><br/>
         <strong>Input:</strong> = ‘Process’(Type)<br/>
 
@@ -137,18 +182,20 @@
         Process as their type.<br/>
     </div>
     <div>
-        <strong>Test 4.2 User sends all documents found in the search to the printer.</strong><br/>
+        <strong>Test 4.3 User sends all documents found in the search to the printer.</strong><br/>
         <strong>Expected results::</strong> All experiences found in the search are sent to the printer.
         <strong>Error:</strong> The documents aren’t printed.
         <strong>Necessary environmental requirements:</strong> the search found experiences.
-
-        Logging out see test 1.5
     </div>
-
-    <h3>Scenario Test 5.1 - reuse of code</h3>
-
     <div>
-        <strong>Test Test 5.1.1: Search for code-snippets</strong><br/>
+        <strong>Test 4.4 Refer to 1.5</strong>
+    </div>
+    <h3>Scenario 5.1 - reuse of code</h3>
+    <div>
+        <strong>Test 5.1.1 Refer to 1.1</strong>
+    </div>
+    <div>
+        <strong>Test 5.1.2: Search for code-snippets</strong><br/>
         <strong>Input:</strong> type='code' and keywords<br/>
         <strong>Expected result:</strong> List out code from SAVVY that corresponds to the given
         keywords.<br/>
@@ -156,15 +203,20 @@
         contain the data required to give a result for the given keywords.<br/>
     </div>
     <div>
-        <strong>Test Test 5.1.2: fetch project description</strong><br/>
+        <strong>Test 5.1.3: fetch project description</strong><br/>
         <strong>Input:</strong> Code-snippet<br/>
         <strong>Expected result:</strong> The information concerned the project that the code-snippet is
         linked to.<br/>
     </div>
-    <h3>Scenario Test 5.2 comment an experience</h3>
-
     <div>
-        <strong>Test 5.2.1 Search for code: User searches for code</strong><br/>
+        <strong>Test 5.1.4 Refer to 1.5</strong>
+    </div>
+    <h3>Scenario 5.2 comment an experience</h3>
+    <div>
+        <strong>Test 5.2.1 Refer to 1.1</strong>
+    </div>
+    <div>
+        <strong>Test 5.2.2 Search for code: User searches for code</strong><br/>
         <strong>Input:</strong> type = 'code' and keywords<br/>
         <strong>Expected result:</strong> The user gets the experiences that maches his/hers search<br/>
         <strong>Necessary environmental requirements:</strong> the database contains code that machos the
@@ -172,14 +224,14 @@
         <strong>Error:</strong> The search fails and the user gets wrong or no maches<br/>
     </div>
     <div>
-        <strong>Test 5.2.2 Adds experience: The user adds experience to the code</strong><br/>
+        <strong>Test 5.2.3 Adds experience: The user adds experience to the code</strong><br/>
         <strong>Input:</strong> experience<br/>
         <strong>Expected results:</strong> the experience is added to the code in the database<br/>
         <strong>Necessary environmental requirements:</strong> the code exists in the database.<br/>
         <strong>Error:</strong> the experience doesn't get uploaded to the database.<br/>
     </div>
     <div>
-        <strong>Test 5.2.3 Uploads and marks new code: The user uploads a modified version of the code</strong>
+        <strong>Test 5.2.4 Uploads and marks new code: The user uploads a modified version of the code</strong>
         <strong>Input:</strong> code and marking<br/>
         <strong>Expected results:</strong> the code gets uploaded and marked.<br/>
         <strong>Necessary environmental requirement:</strong> the code exists in the database.<br/>
@@ -187,7 +239,7 @@
         doesn't get marked.<br/>
     </div>
     <div>
-        <strong>Test 5.2.4 log out:</strong> see test 1.5
+        <strong>Test 5.2.5 Refer to 1.5</strong>
     </div>
 </li>
 <li>
@@ -239,7 +291,6 @@
     </tr>
 
 </table>
-
 <table style="width: 60%;" cellspacing="2">
     <tr>
         <td style="width:120px;"><strong>Name</strong></td>
@@ -287,7 +338,6 @@
     </tr>
 
 </table>
-
 <table style="width: 60%;" cellspacing="2">
     <tr>
         <td style="width:120px;"><strong>Name</strong></td>
@@ -335,7 +385,6 @@
     </tr>
 
 </table>
-
 <table style="width: 60%;" cellspacing="2">
     <tr>
         <td style="width:120px;"><strong>Name</strong></td>
@@ -384,7 +433,6 @@
 
 
 </table>
-
 <table style="width: 60%;" cellspacing="2">
     <tr>
         <td style="width:120px;"><strong>Name</strong></td>
@@ -440,7 +488,6 @@
     </tr>
 
 </table>
-
 <table style="width: 60%;" cellspacing="2">
     <tr>
         <td style="width:120px;"><strong>Name</strong></td>
@@ -504,7 +551,6 @@
     </tr>
 
 </table>
-
 <table style="width: 60%;" cellspacing="2">
     <tr>
         <td style="width:120px;"><strong>Name</strong></td>
@@ -540,8 +586,6 @@
     </tr>
 
 </table>
-
-
 <table style="width: 60%;" cellspacing="2">
     <tr>
         <td style="width:120px;"><strong>Name</strong></td>
@@ -585,7 +629,6 @@
     </tr>
 
 </table>
-
 <table style="width: 60%;" cellspacing="2">
     <tr>
         <td style="width:120px;"><strong>Name</strong></td>
@@ -627,7 +670,6 @@
         <td>Experience might not load</td>
     </tr>
 </table>
-
 <table style="width: 60%;" cellspacing="2">
     <tr>
         <td style="width:120px;"><strong>Name</strong></td>
