@@ -5,193 +5,757 @@
 </head>
 <body>
 <section>
-    <header>
-        TDT4140 - Systemutvikling - Assignment 3
-        <hr/>
-        <div class="ovings-detaljer"><strong>Gruppe 36:</strong>Agnethe Søraa, Audun Skjervold, David Storjord,
-            Hong-Dang Lam, Rolf Erik Lekang og Sondre Lefsaker
-        </div>
-    </header>
-    <article>
-        <ol>
-            <li>
-                <h2>Tests</h2>
+<header>
+    TDT4140 - Systemutvikling - Assignment 3
+    <hr/>
+    <div class="ovings-detaljer"><strong>Gruppe 36:</strong>Agnethe Søraa, Audun Skjervold, David Storjord,
+        Hong-Dang Lam, Rolf Erik Lekang og Sondre Lefsaker
+    </div>
+</header>
+<article>
+<ol>
+<li>
+    <h2>Tests</h2>
 
-                <h3>Scenario 1 - Register a project</h3>
+    <h3>Scenario 1 - Register a project</h3>
 
-                <div>
-                    <strong>Test 1.1 Login:</strong> <br/>
-                    <strong>Input:</strong> Username and Password<br/>
-                    <strong>Success:</strong> Successful login if the user enters right username and password.<br/>
+    <div>
+        <strong>Test 1.1 Login:</strong> <br/>
+        <strong>Input:</strong> Username and Password<br/>
+        <strong>Success:</strong> Successful login if the user enters right username and password.<br/>
 
-                    <strong>Error:</strong> <br/>
-                    <ul>
-                        <li>If not the user will be asked to try again.</li>
-                        <li>The user was able to login, even though the password was wrong.</li>
-                        <li>The user wasn't able to login, even though the username and password was correct.</li>
-                    </ul>
-                </div>
-                <div>
-                    <strong>Test 1.2: Invite developers</strong> <br/>
-                    <strong>Input:</strong> e-mails to the developers<br/>
-                    <strong>Success:</strong> The developers will all get a message telling them that they have been
-                    invited to a specific project, and they will be prompted to join the project.<br/>
-                    <strong>Error:</strong>
-                    <ul>
-                        <li>The user wasn't able to join the project, even though he got the invitation.</li>
-                        <li>The user didn't get the invitation to the project.</li>
-                        <li>Unwelcome users was invited.</li>
-                    </ul>
-                </div>
-                <div>
-                    <strong>Test 1.3: Update personal info</strong> <br/>
+        <strong>Error:</strong> <br/>
+        <ul>
+            <li>If not the user will be asked to try again.</li>
+            <li>The user was able to login, even though the password was wrong.</li>
+            <li>The user wasn't able to login, even though the username and password was correct.</li>
+        </ul>
+    </div>
+    <div>
+        <strong>Test 1.2: Invite developers</strong> <br/>
+        <strong>Input:</strong> e-mails to the developers<br/>
+        <strong>Success:</strong> The developers will all get a message telling them that they have been
+        invited to a specific project, and they will be prompted to join the project.<br/>
+        <strong>Error:</strong>
+        <ul>
+            <li>The user wasn't able to join the project, even though he got the invitation.</li>
+            <li>The user didn't get the invitation to the project.</li>
+            <li>Unwelcome users was invited.</li>
+        </ul>
+    </div>
+    <div>
+        <strong>Test 1.3: Update personal info</strong> <br/>
 
-                    <strong>Input:</strong> Personal info<br/>
-                    <strong>Success:</strong> Everything was updated smoothly! All the fields in the User-class should
-                    have been updated correctly.<br/>
-                    <strong>Error:</strong> The new profile was saved, but some (or all) of the information was lost in
-                    the process, and the fields kept the old values.<br/>
-                </div>
-                <div>
-                    <strong>Test 1.4 Register Project:</strong> <br/>
-                    <strong>Input:</strong> Project info<br/>
-                    <strong>Success:</strong> The project should have been created, and the user will get the option of
-                    specifying the requirements.<br/>
+        <strong>Input:</strong> Personal info<br/>
+        <strong>Success:</strong> Everything was updated smoothly! All the fields in the User-class should
+        have been updated correctly.<br/>
+        <strong>Error:</strong> The new profile was saved, but some (or all) of the information was lost in
+        the process, and the fields kept the old values.<br/>
+    </div>
+    <div>
+        <strong>Test 1.4 Register Project:</strong> <br/>
+        <strong>Input:</strong> Project info<br/>
+        <strong>Success:</strong> The project should have been created, and the user will get the option of
+        specifying the requirements.<br/>
 
-                    <strong>Error:</strong>
-                    <ul>
-                        <li>The project wasn't registered.</li>
-                        <li>Some or all of the information was lost during registration.</li>
-                    </ul>
-                </div>
-                <div>
-                    <strong>Test 1.5 Logout:</strong><br/>
-                    <strong>Input:</strong> -<br/>
+        <strong>Error:</strong>
+        <ul>
+            <li>The project wasn't registered.</li>
+            <li>Some or all of the information was lost during registration.</li>
+        </ul>
+    </div>
+    <div>
+        <strong>Test 1.5 Logout:</strong><br/>
+        <strong>Input:</strong> -<br/>
 
-                    <strong>Success:</strong> The user logged out successfully.<br/>
+        <strong>Success:</strong> The user logged out successfully.<br/>
 
-                    <strong>Error:</strong> The user wasn't logged out.<br/>
-                </div>
-                <h3>Scenario 2 - Register experience from a project</h3>
+        <strong>Error:</strong> The user wasn't logged out.<br/>
+    </div>
+    <h3>Scenario 2 - Register experience from a project</h3>
 
-                <div>
-                    <strong>Test 2.1 Refer to 1.1</strong>
-                </div>
-                <div>
-                    <strong>Test 2.2 Inserts two experience items</strong> <br/>
-                    <strong>Expected result:</strong> Both items are added successfully<br/>
-                    <strong>Errors:</strong>
-                    <ul>
-                        <li>The system tells the user that items are successfully added when they're not</li>
-                        <li>Internet connection fails and the user cannot add experience items</li>
-                        <li>System crash</li>
-                        <li>The system tells the user that items aren't successfully added when they are.</li>
-                    </ul>
-                    <strong>Input data:</strong> Experience items
-                    <strong>Test 2.3 Links to project description of UFFAMEI</strong>
-                    <strong>Success:</strong> Links works correctly<br/>
-                    <strong>Expected result:</strong>
-                    <ul>
-                        <li>Links works correctly</li>
-                        <li>Links to a 404 page, system asks user to re-post the link</li>
-                    </ul>
-                    <strong>Errors:</strong> The system accepts an incorrect link.
+    <div>
+        <strong>Test 2.1 Refer to 1.1</strong>
+    </div>
+    <div>
+        <strong>Test 2.2 Inserts two experience items</strong> <br/>
+        <strong>Expected result:</strong> Both items are added successfully<br/>
+        <strong>Errors:</strong>
+        <ul>
+            <li>The system tells the user that items are successfully added when they're not</li>
+            <li>Internet connection fails and the user cannot add experience items</li>
+            <li>System crash</li>
+            <li>The system tells the user that items aren't successfully added when they are.</li>
+        </ul>
+        <strong>Input data:</strong> Experience items
+        <strong>Test 2.3 Links to project description of UFFAMEI</strong>
+        <strong>Success:</strong> Links works correctly<br/>
+        <strong>Expected result:</strong>
+        <ul>
+            <li>Links works correctly</li>
+            <li>Links to a 404 page, system asks user to re-post the link</li>
+        </ul>
+        <strong>Errors:</strong> The system accepts an incorrect link.
 
-                    <strong>Input data:</strong> Links
-                </div>
-                <div>
-                    <strong>Test 2.4 Refer to 1.5</strong>
+        <strong>Input data:</strong> Links
+    </div>
+    <div>
+        <strong>Test 2.4 Refer to 1.5</strong>
 
-                    <strong>Necessary environmental requirements:</strong>
-                    <ul>
-                    <li>A computer, either a windows, mac or linux, drivers has to be correctly installed.</li>
-                    <li>Internet connection, hopefully broadband.</li>
-					</ul>
-                    <strong>Dependability:</strong> Login and logout.
+        <strong>Necessary environmental requirements:</strong>
+        <ul>
+            <li>A computer, either a windows, mac or linux, drivers has to be correctly installed.</li>
+            <li>Internet connection, hopefully broadband.</li>
+        </ul>
+        <strong>Dependability:</strong> Login and logout.
 
-                    <strong>Description of how to run the test.</strong>
-                    <ul>
-                        <li>Log in to SAVVY, try both correct and incorrect password</li>
-                        <li>Add experience items, in the correct format and non-correct format.</li>
-                        <li>Add links to UFFAMEI-projects, and a link to a 404-page</li>
-                        <li>Log off</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3>Scenario 4 - search for relevant experiences</h3>
+        <strong>Description of how to run the test.</strong>
+        <ul>
+            <li>Log in to SAVVY, try both correct and incorrect password</li>
+            <li>Add experience items, in the correct format and non-correct format.</li>
+            <li>Add links to UFFAMEI-projects, and a link to a 404-page</li>
+            <li>Log off</li>
+        </ul>
+    </div>
+    <div>
+        <h3>Scenario 4 - search for relevant experiences</h3>
 
-                    Logging in: see test 1.1
-                </div>
-                <div>
-                    <strong>Test 4.1 search for experience: The user searches for all experiences including the type
-                        ”Process”. </strong><br/>
-                    <strong>Input:</strong> = ‘Process’(Type)<br/>
+        Logging in: see test 1.1
+    </div>
+    <div>
+        <strong>Test 4.1 search for experience: The user searches for all experiences including the type
+            ”Process”. </strong><br/>
+        <strong>Input:</strong> = ‘Process’(Type)<br/>
 
-                    <strong>Expected results::</strong> The user gets all the registered experiences with ”Process” as
-                    type.<br/>
+        <strong>Expected results::</strong> The user gets all the registered experiences with ”Process” as
+        type.<br/>
 
-                    <strong>Error:</strong> The search fails and the user get the wrong experiences or no experiences at
-                    all.<br/>
+        <strong>Error:</strong> The search fails and the user get the wrong experiences or no experiences at
+        all.<br/>
 
-                    <strong>Necessary environmental requirements:</strong> The database contains experiences with
-                    Process as their type.<br/>
-                </div>
-                <div>
-                    <strong>Test 4.2 User sends all documents found in the search to the printer.</strong><br/>
-                    <strong>Expected results::</strong> All experiences found in the search are sent to the printer.
-                    <strong>Error:</strong> The documents aren’t printed.
-                    <strong>Necessary environmental requirements:</strong> the search found experiences.
+        <strong>Necessary environmental requirements:</strong> The database contains experiences with
+        Process as their type.<br/>
+    </div>
+    <div>
+        <strong>Test 4.2 User sends all documents found in the search to the printer.</strong><br/>
+        <strong>Expected results::</strong> All experiences found in the search are sent to the printer.
+        <strong>Error:</strong> The documents aren’t printed.
+        <strong>Necessary environmental requirements:</strong> the search found experiences.
 
-                    Logging out see test 1.5
-                </div>
+        Logging out see test 1.5
+    </div>
 
-                <h3>Scenario Test 5.1 - reuse of code</h3>
+    <h3>Scenario Test 5.1 - reuse of code</h3>
 
-                <div>
-                    <strong>Test Test 5.1.1: Search for code-snippets</strong><br/>
-                    <strong>Input:</strong> type='code' and keywords<br/>
-                    <strong>Expected result:</strong> List out code from SAVVY that corresponds to the given
-                    keywords.<br/>
-                    <strong>Necessary environmental requirements:</strong> The database must
-                    contain the data required to give a result for the given keywords.<br/>
-                </div>
-                <div>
-                    <strong>Test Test 5.1.2: fetch project description</strong><br/>
-                    <strong>Input:</strong> Code-snippet<br/>
-                    <strong>Expected result:</strong> The information concerned the project that the code-snippet is
-                    linked to.<br/>
-                </div>
-                <h3>Scenario Test 5.2 comment an experience</h3>
+    <div>
+        <strong>Test Test 5.1.1: Search for code-snippets</strong><br/>
+        <strong>Input:</strong> type='code' and keywords<br/>
+        <strong>Expected result:</strong> List out code from SAVVY that corresponds to the given
+        keywords.<br/>
+        <strong>Necessary environmental requirements:</strong> The database must
+        contain the data required to give a result for the given keywords.<br/>
+    </div>
+    <div>
+        <strong>Test Test 5.1.2: fetch project description</strong><br/>
+        <strong>Input:</strong> Code-snippet<br/>
+        <strong>Expected result:</strong> The information concerned the project that the code-snippet is
+        linked to.<br/>
+    </div>
+    <h3>Scenario Test 5.2 comment an experience</h3>
 
-                <div>
-                    <strong>Test 5.2.1 Search for code: User searches for code</strong><br/>
-                    <strong>Input:</strong> type = 'code' and keywords<br/>
-                    <strong>Expected result:</strong> The user gets the experiences that maches his/hers search<br/>
-                    <strong>Necessary environmental requirements:</strong> the database contains code that machos the
-                    result<br/>
-                    <strong>Error:</strong> The search fails and the user gets wrong or no maches<br/>
-				</div>
-                <div>
-                    <strong>Test 5.2.2 Adds experience: The user adds experience to the code</strong><br/>
-                    <strong>Input:</strong> experience<br/>
-                    <strong>Expected results:</strong> the experience is added to the code in the database<br/>
-                    <strong>Necessary environmental requirements:</strong> the code exists in the database.<br/>
-                    <strong>Error:</strong> the experience doesn't get uploaded to the database.<br/>
-                </div>
-                <div>
-                    <strong>Test 5.2.3 Uploads and marks new code: The user uploads a modified version of the code</strong>
-                    <strong>Input:</strong> code and marking<br/>
-                    <strong>Expected results:</strong> the code gets uploaded and marked.<br/>
-                    <strong>Necessary environmental requirement:</strong> the code exists in the database.<br/>
-                    <strong>Error:</strong> The new code doesn't get uploaded. The marking fails and the new code
-                    doesn't get marked.<br/>
-				</div>
-                <div>
-                    <strong>Test 5.2.4 log out:</strong> see test 1.5
-                </div>
-            </li>
-        </ol>
-    </article>
+    <div>
+        <strong>Test 5.2.1 Search for code: User searches for code</strong><br/>
+        <strong>Input:</strong> type = 'code' and keywords<br/>
+        <strong>Expected result:</strong> The user gets the experiences that maches his/hers search<br/>
+        <strong>Necessary environmental requirements:</strong> the database contains code that machos the
+        result<br/>
+        <strong>Error:</strong> The search fails and the user gets wrong or no maches<br/>
+    </div>
+    <div>
+        <strong>Test 5.2.2 Adds experience: The user adds experience to the code</strong><br/>
+        <strong>Input:</strong> experience<br/>
+        <strong>Expected results:</strong> the experience is added to the code in the database<br/>
+        <strong>Necessary environmental requirements:</strong> the code exists in the database.<br/>
+        <strong>Error:</strong> the experience doesn't get uploaded to the database.<br/>
+    </div>
+    <div>
+        <strong>Test 5.2.3 Uploads and marks new code: The user uploads a modified version of the code</strong>
+        <strong>Input:</strong> code and marking<br/>
+        <strong>Expected results:</strong> the code gets uploaded and marked.<br/>
+        <strong>Necessary environmental requirement:</strong> the code exists in the database.<br/>
+        <strong>Error:</strong> The new code doesn't get uploaded. The marking fails and the new code
+        doesn't get marked.<br/>
+    </div>
+    <div>
+        <strong>Test 5.2.4 log out:</strong> see test 1.5
+    </div>
+</li>
+<li>
+<h2>Corrections from assignment 1</h2>
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+        <td>Template</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>Requirements to perform this action</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+        <td>1st step</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2</strong></td>
+        <td>2nd step</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>...</strong></td>
+        <td>...th step</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>n</strong></td>
+        <td>nth step</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.1</strong></td>
+        <td>Possible 1st error on step 1</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.2</strong></td>
+        <td>Possible 2nd error on step 1</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2.1</strong></td>
+        <td>Possible error on step 2</td>
+    </tr>
+
+</table>
+
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+        <td>Log in</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+        <td>Enter username and password</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2</strong></td>
+        <td>Click the "Log in" button</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3</strong></td>
+        <td>Call the login-function with the username and password as arguments</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2.1</strong></td>
+        <td>Button not clickable or does not call log in function</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.1</strong></td>
+        <td>Correct username and password do not grant access</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.2</strong></td>
+        <td>Incorrect username and password grants access</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.3</strong></td>
+        <td>Username and password grants access to wrong user</td>
+    </tr>
+
+</table>
+
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+        <td>Invite developers to system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>User needs to be logged into system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+        <td>Activate the "Invite" function</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2</strong></td>
+        <td>Enter e-mail addresses to invite to the system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3</strong></td>
+        <td>Send invites to entered e-mail addresses</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.1</strong></td>
+        <td>Invite interface does not appear when it should</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.1</strong></td>
+        <td>Invites are not sent to the entered addresses</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.2</strong></td>
+        <td>Attempts to invite addresses that are not correctly formatted</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.3</strong></td>
+        <td>Invites other addresses than the entered ones</td>
+    </tr>
+
+</table>
+
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+        <td>Update user information</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>User needs to be logged into system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+        <td>Open information editing interface</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2</strong></td>
+        <td>Enter information</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3</strong></td>
+        <td>Click "Save" button</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>4</strong></td>
+        <td>Call "Save user information" function</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.1</strong></td>
+        <td>Invite interface does not appear when it should</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.1</strong></td>
+        <td>Button not clickable or does not call the save function</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.2</strong></td>
+        <td>Incorrect or no information is saved</td>
+    </tr>
+
+
+</table>
+
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+        <td>Upload file</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>User needs to be logged into system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+        <td>Open upload interface</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2</strong></td>
+        <td>Select file from local system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3</strong></td>
+        <td>Click "Upload" button</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>4</strong></td>
+        <td>Save file in database</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.1</strong></td>
+        <td>Upload interface does not appear when it should</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2.1</strong></td>
+        <td>System does not get access to local file system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.1</strong></td>
+        <td>Upload fails</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.2</strong></td>
+        <td>File type not supported by system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>4.1</strong></td>
+        <td>Save unsuccessful</td>
+    </tr>
+
+</table>
+
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+        <td>Register project</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>User needs to be logged into system, user needs to have project manager status</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+        <td>Open project registering interface</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2</strong></td>
+        <td>Enter information (project name etc)</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3</strong></td>
+        <td>Specify requirements definition document, estimated costs and schedule from files in system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>4</strong></td>
+        <td>Insert references to persons allocated to project</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>5</strong></td>
+        <td>Register project</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.1</strong></td>
+        <td>Project registering interface does not appear when it should</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.1</strong></td>
+        <td>Not allowed to select files</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.2</strong></td>
+        <td>Files not found</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>3.3</strong></td>
+        <td>Wrong files are set</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>4.1</strong></td>
+        <td>Persons cannot be referenced</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>5.1</strong></td>
+        <td>Project not registered</td>
+    </tr>
+
+</table>
+
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+        <td>Log out</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>User needs to be logged into system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+        <td>Click the "Log out" button</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2</strong></td>
+        <td>Call the logout-function</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.1</strong></td>
+        <td>Button not clickable or does not call log out function</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2.1</strong></td>
+        <td>Logs into another user</td>
+    </tr>
+
+</table>
+
+
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+        <td>search for relevant experiences</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>User needs to be logged into system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+        <td>Searches for experiences with "Process" as type</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2</strong></td>
+        <td>Prints out the experiences the user found</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.1</strong></td>
+        <td>The search returns the wrong experiences</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.2</strong></td>
+        <td>The search returns no experiences even though the database contains valid experiences</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2.1</strong></td>
+        <td>The printer doesn't print the experiences</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2.2</strong></td>
+        <td>The wrong documents are sent to the printer</td>
+    </tr>
+
+</table>
+
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+
+        <td>Finds experience</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>User needs to be logged into system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>The user have to be logged in.</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+
+        <td>Browses through experience</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2</strong></td>
+        <td>Clicks on an experience</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.1</strong></td>
+
+        <td>Experience list not showing</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2.1</strong></td>
+        <td>Experience might not load</td>
+    </tr>
+</table>
+
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+        <td>Comments on an experience</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>User needs to be logged into system, and needs to have found an experience</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+        <td>Comments and experience</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2</strong></td>
+        <td>Submits the comment</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.1</strong></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2.1</strong></td>
+        <td>Comment not added</td>
+    </tr>
+</table>
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+        <td>Comments on an experience</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>User needs to be logged into system, and needs to have found an experience</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+        <td>Adds a link to an experience</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.1</strong></td>
+        <td>Experience not linked</td>
+    </tr>
+</table>
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+        <td>Adds information</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>User needs to be logged into system, and needs to have found an experience</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+        <td>Adds information about an experience</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.1</strong></td>
+        <td>Information not added</td>
+    </tr>
+</table>
+<table style="width: 60%;" cellspacing="2">
+    <tr>
+        <td style="width:120px;"><strong>Name</strong></td>
+        <td>Per Pedersen</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Pre-requirements</strong></td>
+        <td>User needs to be logged into system, and needs to be a developer</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Step</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1</strong></td>
+        <td>The user adds experience to the previous project. The experience is a suggestment improvement.</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2</strong></td>
+        <td>The user links the experience to the description of UFFAMEI.</td>
+
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>Errors</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>1.1</strong></td>
+        <td>The experience wasn't registered in the system</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2.1</strong></td>
+        <td>Links not added</td>
+    </tr>
+    <tr>
+        <td style="width:120px;"><strong>2.2</strong></td>
+        <td>Invalid link</td>
+    </tr>
+</table>
+</li>
+</ol>
+</article>
 </section>
 </body>
 </html>
