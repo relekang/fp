@@ -39,9 +39,16 @@ ol li p,
 ol li table,
 ol li div,
 ol li div ul li{
+
 	color: black;
 	font-family: serif;
 	font-size: 14px;
+}
+ol li h1,
+ol li h2,
+ol li h3,
+ol li h4{
+    color: black;
 }
 ol li div{
 	margin: 10px auto;
@@ -75,7 +82,7 @@ ol li div ul{
 }
 
 table {
-	margin: 4px auto;
+	margin: 4px;
 	background: silver;
 }
 table td{
