@@ -85,6 +85,7 @@ table {
 	margin: 4px;
 	background: silver;
 }
+
 table td{
 	background: white;
 	padding: 4px;
@@ -114,4 +115,25 @@ table.gantt{
 	.gantt td.active{
 		background-color: #ffcc66 !important;
 	}
+    table{
+        width: 100%;
+    }
+    article>ol>li{
+        page-break-after: always;
+    }
+    div, table{
+        page-break-inside: avoid;
+        page-break-before: auto;
+        page-break-after: auto;
+    }
+    tr, td{
+        page-break-before: avoid;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+
+    }
+    .break{
+        page-break-before: always;
+    }
+
 }
