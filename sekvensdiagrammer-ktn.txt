@@ -1,0 +1,50 @@
+Sekvensdiagrammer, KTN:
+
+title Establish Connection
+
+App1->App1_A1: connect(App2_adress, App2_port)
+App1_A1->App1_A1: constructInternalPacket(SYN)
+App1_A1->A2: send(packet)
+App2_A1->App2_A1: recieve()
+A2->App2_A1: SYN
+App1_A1->App1_A1: recieveAck()
+App2_A1->A2: sendAck(packet, true)
+A2->App1_A1: SYN-ACK
+App2_A1->App2_A1: recieveAck()
+App1_A1->A2: sendAck(packet, false)
+App1_A1->App1: 'connection established'
+A2->App2_A1: ACK
+App2_A1->App2: 'connection established'
+
+title Close sender <---> Close reciever
+
+App1->App1_A1: close()
+App1_A1->App1_A1: constructInternalPacket(FIN)
+App1_A1->A2: send(packet)
+App2_A1->App2_A1: recieve()
+A2->App2_A1: 'sending'
+App2_A1->A2: sendACK(packet, false)
+App2_A1->App2_A1: constructInternalPacket(FIN)
+App2_A1->A2: send(packet)
+App1_A1->App1_A1: recieve()
+A2->App1_A1: ACK
+A2->App1_A1: FIN
+App1_A1->A2: sendAck(packet, false);
+App2_A1->App2_A1: recieveAck()
+A2->App2_A1: ACK
+App2_A1->App2: 'connectionClosed'
+
+title Send packet <---> Recieve packet
+
+App1->App1_A1: send(msg)
+alt while not recieved
+App1_A1->App1_A1: constructDataPacket(msg)
+App1_A1->A2: sendDataPacketWithRetransmit(packet)
+A2->App2_A1: 'sending packet'
+App2_A1->A2: sendACK(packet, false)
+App1_A1->App1_A1: recieve()
+note right of App1_A1: Timeout
+else ACK recieved
+A2->App1_A1: ACK
+end
+App2_A1->App2: 'deliver packet'
