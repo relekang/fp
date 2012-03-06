@@ -18,7 +18,7 @@ import no.ntnu.fp.net.co.AbstractConnection;
  * @see AbstractConnection#simplySendPacket(KtnDatagram)
  * @see java.util.TimerTask
  * @see java.util.Timer
- * @author Stein Jakob Nordbø
+ * @author Stein Jakob NordbÃ¸
  */
 public class SendTimer extends TimerTask {
 
