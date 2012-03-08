@@ -38,7 +38,8 @@ public class ConnectionImpl extends AbstractConnection {
 
     /** Keeps track of the used ports for each server port. */
     private static Map<Integer, Boolean> usedPorts = Collections.synchronizedMap(new HashMap<Integer, Boolean>());
-
+    private ClSocket socket; 
+    private int port;
     /**
      * Initialise initial sequence number and setup state machine.
      * 
@@ -46,7 +47,9 @@ public class ConnectionImpl extends AbstractConnection {
      *            - the local port to associate with this connection
      */
     public ConnectionImpl(int myPort) {
-        throw new NotImplementedException();
+        socket = new ClSocket();
+        port = myPort;
+        
     }
 
     private String getIPv4Address() {
@@ -99,6 +102,13 @@ public class ConnectionImpl extends AbstractConnection {
      * @see no.ntnu.fp.net.co.Connection#send(String)
      */
     public void send(String msg) throws ConnectException, IOException {
+        KtnDatagram packet = new KtnDatagram();
+        packet.setPayload(msg);
+        try {
+            socket.send(packet);
+        } catch (ClException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         throw new NotImplementedException();
     }
 
@@ -111,7 +121,11 @@ public class ConnectionImpl extends AbstractConnection {
      * @see AbstractConnection#sendAck(KtnDatagram, boolean)
      */
     public String receive() throws ConnectException, IOException {
-        throw new NotImplementedException();
+        KtnDatagram datagram =  socket.receive(port);
+        if (isValid(datagram)){
+            return datagram.getPayload().toString();
+        }
+        return null;
     }
 
     /**
@@ -120,7 +134,7 @@ public class ConnectionImpl extends AbstractConnection {
      * @see Connection#close()
      */
     public void close() throws IOException {
-        throw new NotImplementedException();
+        socket.cancelReceive();
     }
 
     /**
@@ -132,6 +146,7 @@ public class ConnectionImpl extends AbstractConnection {
      * @return true if packet is free of errors, false otherwise.
      */
     protected boolean isValid(KtnDatagram packet) {
-        throw new NotImplementedException();
+//        throw new NotImplementedException();
+        return true;
     }
 }
