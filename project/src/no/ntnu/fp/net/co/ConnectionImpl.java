@@ -89,6 +89,7 @@ public class ConnectionImpl extends AbstractConnection {
         } catch (ClException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        receiveAck();
     }
 
     /**
@@ -98,6 +99,11 @@ public class ConnectionImpl extends AbstractConnection {
      * @see Connection#accept()
      */
     public Connection accept() throws IOException, SocketTimeoutException {
+        KtnDatagram ackPacket = receiveAck();
+        if(isValid(ackPacket)){
+            sendAck(ackPacket, false);
+            return this;
+        }
         return this;
     }
 
@@ -139,7 +145,8 @@ public class ConnectionImpl extends AbstractConnection {
         if (isValid(packet) && packet.getPayload() != null){
             return packet.getPayload().toString();
         }
-        return null;
+        return "";
+//        throw new ConnectException();
     }
 
     /**
@@ -149,6 +156,8 @@ public class ConnectionImpl extends AbstractConnection {
      */
     public void close() throws IOException {
         socket.cancelReceive();
+        myAddress = null;
+        myPort = 0;
     }
 
     /**
@@ -160,7 +169,10 @@ public class ConnectionImpl extends AbstractConnection {
      * @return true if packet is free of errors, false otherwise.
      */
     protected boolean isValid(KtnDatagram packet) {
-//        throw new NotImplementedException();
-        return true;
+        if(packet == null) return false;
+        if(packet.getChecksum() == packet.calculateChecksum()){
+            return true;
+        }
+        return false;
     }
 }
