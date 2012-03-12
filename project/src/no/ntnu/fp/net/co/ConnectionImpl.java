@@ -49,7 +49,7 @@ public class ConnectionImpl extends AbstractConnection {
     public ConnectionImpl(int myPort) {
         socket = new ClSocket();
         port = myPort;
-        
+        System.out.println("Port: " + port);
     }
 
     private String getIPv4Address() {
@@ -76,7 +76,19 @@ public class ConnectionImpl extends AbstractConnection {
      */
     public void connect(InetAddress remoteAddress, int remotePort) throws IOException,
             SocketTimeoutException {
-        throw new NotImplementedException();
+        this.remoteAddress = remoteAddress.getHostAddress();
+        this.remotePort = remotePort;
+        KtnDatagram packet = constructInternalPacket(Flag.SYN);
+        packet.setDest_addr(this.remoteAddress);
+        packet.setDest_port(this.remotePort);
+        packet.setSrc_addr(getIPv4Address());
+        packet.setSrc_port(port);
+
+        try {
+            socket.send(packet);
+        } catch (ClException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     /**
@@ -86,7 +98,7 @@ public class ConnectionImpl extends AbstractConnection {
      * @see Connection#accept()
      */
     public Connection accept() throws IOException, SocketTimeoutException {
-        throw new NotImplementedException();
+        return this;
     }
 
     /**
@@ -102,14 +114,16 @@ public class ConnectionImpl extends AbstractConnection {
      * @see no.ntnu.fp.net.co.Connection#send(String)
      */
     public void send(String msg) throws ConnectException, IOException {
-        KtnDatagram packet = new KtnDatagram();
-        packet.setPayload(msg);
+        KtnDatagram packet = constructInternalPacket(Flag.SYN);
+        packet.setDest_addr(this.remoteAddress);
+        packet.setDest_port(this.remotePort);
+        packet.setSrc_addr(getIPv4Address());
+        packet.setSrc_port(port);
         try {
             socket.send(packet);
         } catch (ClException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        throw new NotImplementedException();
     }
 
     /**
@@ -121,9 +135,9 @@ public class ConnectionImpl extends AbstractConnection {
      * @see AbstractConnection#sendAck(KtnDatagram, boolean)
      */
     public String receive() throws ConnectException, IOException {
-        KtnDatagram datagram =  socket.receive(port);
-        if (isValid(datagram)){
-            return datagram.getPayload().toString();
+        KtnDatagram packet =  socket.receive(port);
+        if (isValid(packet) && packet.getPayload() != null){
+            return packet.getPayload().toString();
         }
         return null;
     }
