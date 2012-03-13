@@ -204,9 +204,10 @@ public class FileStorage implements Storage {
 	private Employee assemblePerson(String line) throws ParseException {
 		StringTokenizer tokenizer = new StringTokenizer(line, ";");
 		String name = tokenizer.nextToken();
+		Employee.Gender gender = tokenizer.nextToken().equals("" + Employee.Gender.MALE) 
+				? Employee.Gender.MALE : Employee.Gender.FEMALE;
 		String email = tokenizer.nextToken();
-		
 		Date date = parseDate(tokenizer.nextToken());
-		return new Employee(name, email, date);
+		return new Employee(name, email, date, gender);
 	}	
 }
