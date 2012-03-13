@@ -40,7 +40,7 @@ public class Employee {
 	 * 
 	 * @see #setGender(Gender) the setGender(Gender) method
 	 */
-	private enum Gender{
+	public enum Gender{
 		FEMALE, MALE
 	};
 	private Gender gender;

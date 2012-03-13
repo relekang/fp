@@ -25,6 +25,12 @@ import nu.xom.ParsingException;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class XmlSerializer {
+	
+	public static final String PERSON = "person";
+	public static final String NAME = "name";
+	public static final String EMAIL = "email";
+	public static final String GENDER = "gender";
+	public static final String DATE_OF_BIRTH = "date-of-birth";
 
 	public Document toXml(Workgroup aProject) {
 		Element root = new Element("project");
@@ -60,14 +66,20 @@ public class XmlSerializer {
 	
 	private Element personToXml(Employee aPerson) {
 		DateFormat format = DateFormat.getDateInstance(DateFormat.MEDIUM, java.util.Locale.US);
-		Element element = new Element("person");
-		Element name = new Element("name");
+		
+		Element element = new Element(PERSON);
+		Element name = new Element(NAME);
+		Element gender = new Element(GENDER);
+		Element email = new Element(EMAIL);
+		Element dateOfBirth = new Element(DATE_OF_BIRTH);
+
 		name.appendChild(aPerson.getName());
-		Element email = new Element("email");
+		gender.appendChild("" + aPerson.getGender());
 		email.appendChild(aPerson.getEmail());
-		Element dateOfBirth = new Element("date-of-birth");
 		dateOfBirth.appendChild(format.format(aPerson.getDateOfBirth()));
+		
 		element.appendChild(name);
+		element.appendChild(gender);
 		element.appendChild(email);
 		element.appendChild(dateOfBirth);
 		return element;
@@ -75,20 +87,26 @@ public class XmlSerializer {
 	
 	private Employee assemblePerson(Element personElement) throws ParseException {
 		String name = null, email = null;
+		Employee.Gender gender = null;
 		Date date = null;
-		Element element = personElement.getFirstChildElement("name");
+		Element element = personElement.getFirstChildElement(NAME);
 		if (element != null) {
 			name = element.getValue();
 		}
-		element = personElement.getFirstChildElement("email");
+		element = personElement.getFirstChildElement(GENDER);
+		if(element != null) {
+			gender = element.getValue().equals("" + Employee.Gender.MALE) 
+					? Employee.Gender.MALE : Employee.Gender.FEMALE;
+		}
+		element = personElement.getFirstChildElement(EMAIL);
 		if (element != null) {
 			email = element.getValue();
 		}
-		element = personElement.getFirstChildElement("date-of-birth");
+		element = personElement.getFirstChildElement(DATE_OF_BIRTH);
 		if (element != null) {
 			date = parseDate(element.getValue());
 		}
-		return new Employee(name, email, date);
+		return new Employee(name, email, date, gender);
 	}
 	
 	/**
