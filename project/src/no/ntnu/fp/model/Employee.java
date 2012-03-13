@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @version $Revision: 1.5 $ - $Date: 2005/02/20 14:52:29 $
  */
-public class Person {
+public class Employee {
 	
 	/**
 	 * This member variable holds the person's name.
@@ -33,6 +33,17 @@ public class Person {
 	 * This member variable holds a unique identifier for this object.
 	 */
 	private long id;
+	
+	/**
+	 * Enum for gender, you can set it to either female or male
+	 * 
+	 * 
+	 * @see #setGender(Gender) the setGender(Gender) method
+	 */
+	private enum Gender{
+		FEMALE, MALE
+	};
+	private Gender gender;
 	
 	/**
 	 * This member variable provides functionality for notifying of changes to
@@ -70,17 +81,29 @@ public class Person {
 	 */
 	public final static String DATEOFBIRTH_PROPERTY_NAME = "dateOfBirth";
 	
+	
+	/**
+	 * Constant used when calling 
+	 * {@link java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)}
+	 * on {@linkplain #addPropertyChangeListener(java.beans.PropertyChangeListener) registered
+	 * <code>PropertyChangeListener<code> objecs} when the person's gender is changed.
+	 * 
+	 * @see #setGender(Gender) the setGender(Gender) method
+	 */
+	public final static String GENDER_PROPERTY_NAME = "gender";
+	
+	
 	/**
 	 * Default constructor. Must be called to initialise the object's member variables.
 	 * The constructor sets the name and email of this person to empty
 	 * {@link java.lang.String}, while the date of birth is given today's date. The 
 	 * {@linkplain #getId() id field} is set to current time when the object is created.
 	 */
-	public Person() {
+	public Employee() {
 		name = "";
 		email = "";
 		dateOfBirth = new Date();
-		id = System.currentTimeMillis();
+		id = System.currentTimeMillis(); 
 		propChangeSupp = new PropertyChangeSupport(this);
 	}
 	
@@ -92,10 +115,11 @@ public class Person {
 	 * @param email The person's e-mail address
 	 * @param dateOfBirth The person's date of birth.
 	 */
-	public Person(String name, String email, Date dateOfBirth) {
+	public Employee(String name, String email, Date dateOfBirth, Gender gender) {
 		this();
 		this.name = name;
 		this.email = email;
+		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 	}
 	
@@ -117,7 +141,7 @@ public class Person {
 	 * with the person's old name</li>
 	 * <li>the <code>getPropertyName()</code> method returns a {@link java.lang.String} 
 	 * with the value {@link #NAME_PROPERTY_NAME}.</li>
-	 * <li>the <code>getSource()</code> method returns this {@link Person} object
+	 * <li>the <code>getSource()</code> method returns this {@link Employee} object
 	 * </ul>
 	 * 
 	 * @param name The person's new name.
@@ -150,7 +174,7 @@ public class Person {
 	 * with the person's old email address</li>
 	 * <li>the <code>getPropertyName()</code> method returns a {@link java.lang.String} 
 	 * with the value {@link #EMAIL_PROPERTY_NAME}.</li>
-	 * <li>the <code>getSource()</code> method returns this {@link Person} object
+	 * <li>the <code>getSource()</code> method returns this {@link Employee} object
 	 * </ul>
 	 * 
 	 * @param email The person's new email address.
@@ -183,7 +207,7 @@ public class Person {
 	 * with the person's old date of birth</li>
 	 * <li>the <code>getPropertyName()</code> method returns a {@link java.lang.String} 
 	 * with the value {@link #DATEOFBIRTH_PROPERTY_NAME}.</li>
-	 * <li>the <code>getSource()</code> method returns this {@link Person} object
+	 * <li>the <code>getSource()</code> method returns this {@link Employee} object
 	 * </ul>
 	 * 
 	 * @param dateOfBirth The person's new date of birth.
@@ -199,6 +223,40 @@ public class Person {
 		propChangeSupp.firePropertyChange(event);
 	}
 	
+	
+	/**
+	 * Assigns a new email address to the person.<P>
+	 * 
+	 * Calling this method will invoke the 
+	 * <code>propertyChange(java.beans.PropertyChangeEvent)</code> method on 
+	 * all {@linkplain
+	 * #addPropertyChangeListener(java.beans.PropertyChangeListener) registered
+	 * <code>PropertyChangeListener<code> objecs}.  The {@link java.beans.PropertyChangeEvent}
+	 * passed with the {@link java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)}
+	 * method has the following characteristics:
+	 * 
+	 * <ul>
+	 * <li>the <code>getNewValue()</code> method returns a {@link java.lang.String} 
+	 * with the newly assigned email address</li>
+	 * <li>the <code>getOldValue()</code> method returns a {@link java.lang.String} 
+	 * with the person's old email address</li>
+	 * <li>the <code>getPropertyName()</code> method returns a {@link java.lang.String} 
+	 * with the value {@link #EMAIL_PROPERTY_NAME}.</li>
+	 * <li>the <code>getSource()</code> method returns this {@link Employee} object
+	 * </ul>
+	 * 
+	 * @param email The person's new email address.
+	 *
+	 * @see java.beans.PropertyChangeListener <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeListener.html">java.beans.PropertyChangeListener</a>
+	 * @see java.beans.PropertyChangeEvent <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeEvent.html">java.beans.PropertyChangeEvent</a>
+	 */
+	public void setGender(Gender gender) {
+		//
+		Gender oldGender = this.gender;
+		this.gender = gender;
+		PropertyChangeEvent event = new PropertyChangeEvent(this, GENDER_PROPERTY_NAME, oldGender, gender);
+		propChangeSupp.firePropertyChange(event);
+	}
 	/**
 	 * Returns the person's name.
 	 * 
@@ -234,7 +292,15 @@ public class Person {
 	public long getId() {
 		return id;
 	}
-
+	/**
+	 * Returns the person's gender.
+	 * 
+	 * @return The person's gender.
+	 */
+	public Gender getGender() {
+		return gender;
+	}
+	
 	/**
 	 * Add a {@link java.beans.PropertyChangeListener} to the listener list.
 	 * 
@@ -263,7 +329,7 @@ public class Person {
 		if (obj.getClass() != this.getClass())
 			return false;
 		
-		Person aPerson = (Person)obj;
+		Employee aPerson = (Employee)obj;
 		
 		if (aPerson.getName().compareTo(getName()) != 0) 
 			return false;
@@ -278,10 +344,13 @@ public class Person {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override 
 	public String toString() {
 		String s = "Name: " + getName() + "; ";
 		s += "Email: " + getEmail() + "; ";
 		s += "Date of birth: " + getDateOfBirth().toString();
 		return s;
 	}
+	
+	
 }
