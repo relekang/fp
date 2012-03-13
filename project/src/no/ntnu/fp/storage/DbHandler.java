@@ -21,12 +21,13 @@ public class DbHandler {
         this.password = password;
     }
     
-    public void connect() throws SQLException {
+    public boolean connect() throws SQLException {
         try {
             String url = "jdbc:mysql://lkng.me/fp";
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, username, password);
             System.out.println ("Database connection established");
+            return true;
         }
         catch (Exception e) {
             System.err.println ("Cannot connect to database server");
@@ -39,6 +40,7 @@ public class DbHandler {
                 } catch (Exception e) { /* ignore close errors */ }
             }
         }
+        return false;
     }
 
     public void close() throws SQLException {
@@ -48,7 +50,8 @@ public class DbHandler {
     public ArrayList<Event> fetchAllEvents(){
         ArrayList<Event> events = new ArrayList<Event>();
         try {
-            connect();
+            if(!connect())
+                return events;
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM EVENT");
 
@@ -65,7 +68,7 @@ public class DbHandler {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return events;
         }
 
     }
