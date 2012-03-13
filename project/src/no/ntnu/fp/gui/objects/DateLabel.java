@@ -32,22 +32,14 @@ public class DateLabel extends JLabel implements MouseListener{
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+    public void mousePressed(MouseEvent mouseEvent)  { }
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+    public void mouseReleased(MouseEvent mouseEvent) { }
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+    public void mouseEntered(MouseEvent mouseEvent)  { }
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+    public void mouseExited(MouseEvent mouseEvent)   { }
 }

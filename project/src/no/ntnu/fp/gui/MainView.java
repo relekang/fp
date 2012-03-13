@@ -32,8 +32,14 @@ public class MainView extends JFrame{
         gbc.gridx = 1; gbc.gridy = 0;
         mainPanel.add(findPersonBtn, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 3;gbc.gridheight = 3;
+        gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 2;gbc.gridheight = 2;
         mainPanel.add(overviewPanel, gbc);
+
+        gbc.gridx = 2; gbc.gridy = 0; gbc.gridwidth = 5;gbc.gridheight = 4;
+        mainPanel.add(calenderPanel, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2;gbc.gridheight = 2;
+        mainPanel.add(notificationPanel, gbc);
 
     }
 
