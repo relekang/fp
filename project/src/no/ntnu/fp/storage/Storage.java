@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.net.URL;
 
-import no.ntnu.fp.model.Project;
+import no.ntnu.fp.model.Workgroup;
 
 /**
  * @author tho
@@ -20,8 +20,8 @@ import no.ntnu.fp.model.Project;
  */
 public interface Storage {
 
-	Project load(URL url) throws IOException, ParseException;
+	Workgroup load(URL url) throws IOException, ParseException;
 	
-	void save(URL url, Project project) throws IOException, ParseException;
+	void save(URL url, Workgroup project) throws IOException, ParseException;
 
 }

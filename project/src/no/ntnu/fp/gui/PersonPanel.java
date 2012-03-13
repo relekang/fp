@@ -23,12 +23,12 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-import no.ntnu.fp.model.Person;
+import no.ntnu.fp.model.Employee;
 
 import no.ntnu.fp.swingutil.EmailFormatter;
 
 /**
- * A panel for viewing and editing {@link no.ntnu.fp.model.Person} objects. The various
+ * A panel for viewing and editing {@link no.ntnu.fp.model.Employee} objects. The various
  * interfaces are implemented to react to sub-components and model changes.
  * 
  * @author Hallvard Trætteberg
@@ -40,9 +40,9 @@ public class PersonPanel extends JPanel
     implements PropertyChangeListener, ActionListener, ItemListener, FocusListener
 {
     /**
-     * The underlying data model is the {@link no.ntnu.fp.model.Person} class.
+     * The underlying data model is the {@link no.ntnu.fp.model.Employee} class.
      */
-    private Person model;
+    private Employee model;
 
     /**
      * Text field for displaying and editing the person's name.
@@ -118,7 +118,7 @@ public class PersonPanel extends JPanel
      * is called when a property of an object listened to is changed.<P>
      * 
      * Note that <code>PersonPanel</code> listens to both the underlying model object,
-     * i.e. {@link no.ntnu.fp.model.Person}, and to the value property of the 
+     * i.e. {@link no.ntnu.fp.model.Employee}, and to the value property of the 
      * {@link javax.swing.JFormattedTextField}, i.e. nameTextField, emailTextField, and
      * dateOfBirthTextField.
      * 
@@ -143,7 +143,7 @@ public class PersonPanel extends JPanel
      * 
      * @param p The underlying data model.
      */
-    public void setModel(Person p) {
+    public void setModel(Employee p) {
     		if (p != null) {
     			if (model != null)
     				model.removePropertyChangeListener(this);
@@ -204,17 +204,17 @@ public class PersonPanel extends JPanel
             setEditable(false);
         }
  
-        if (propertyChanged(property, Person.NAME_PROPERTY_NAME, nameTextField)) {
+        if (propertyChanged(property, Employee.NAME_PROPERTY_NAME, nameTextField)) {
             String name = (model != null ? model.getName() : "");
             nameTextField.setText(name != null ? name : "");
         }
 
-        if (propertyChanged(property, Person.EMAIL_PROPERTY_NAME, emailTextField)) {
+        if (propertyChanged(property, Employee.EMAIL_PROPERTY_NAME, emailTextField)) {
             String email = (model != null ? model.getEmail() : "");
             emailTextField.setValue(email);
         }
 
-        if (propertyChanged(property, Person.DATEOFBIRTH_PROPERTY_NAME, dateOfBirthTextField)) {
+        if (propertyChanged(property, Employee.DATEOFBIRTH_PROPERTY_NAME, dateOfBirthTextField)) {
             Date birthday = (model != null ? model.getDateOfBirth() : null);
             dateOfBirthTextField.setValue(birthday);
         }

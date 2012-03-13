@@ -10,8 +10,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import no.ntnu.fp.model.Project;
-import no.ntnu.fp.model.Person;
+import no.ntnu.fp.model.Workgroup;
+import no.ntnu.fp.model.Employee;
 
 /**
  * Implements action for removing persons from the list.
@@ -43,10 +43,10 @@ public class RemovePersonAction extends AbstractAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		PersonListModel plm = projectPanel.getModel();
-		Project project = plm.getProject();
+		Workgroup project = plm.getProject();
 
 		int index = projectPanel.getSelectedElement();
-		Person person = project.getPerson(index);
+		Employee person = project.getPerson(index);
 		project.removePerson(person);
 		
 	}

@@ -4,8 +4,8 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
 
-import no.ntnu.fp.model.Person;
-import no.ntnu.fp.model.Project;
+import no.ntnu.fp.model.Employee;
+import no.ntnu.fp.model.Workgroup;
 
 import no.ntnu.fp.storage.FileStorage;
 
@@ -76,7 +76,7 @@ public class ProjectPanel extends JPanel implements ListSelectionListener, ListD
     		this.model = model;
     		personList.setModel(model);
     		model.addListDataListener(this);
-    		listElementSelected((Person)model.getElementAt(0));
+    		listElementSelected((Employee)model.getElementAt(0));
     		personList.setSelectedIndex(0);
     }
 
@@ -92,9 +92,9 @@ public class ProjectPanel extends JPanel implements ListSelectionListener, ListD
     /**
      * Called when a Person is selected in (one of) the list(s).
      * 
-     * @param p The selected {@link no.ntnu.fp.model.Person} object.
+     * @param p The selected {@link no.ntnu.fp.model.Employee} object.
      */
-    private void listElementSelected(Person p) {
+    private void listElementSelected(Employee p) {
         personPanel.setModel(p);
         personPanel.setEditable(p != null);
     }
@@ -106,7 +106,7 @@ public class ProjectPanel extends JPanel implements ListSelectionListener, ListD
      */
     public void valueChanged(ListSelectionEvent e) {
         if (e.getSource() == personSelection) {
-            listElementSelected((Person)personList.getSelectedValue());
+            listElementSelected((Employee)personList.getSelectedValue());
         }
     }
 
@@ -195,6 +195,6 @@ public class ProjectPanel extends JPanel implements ListSelectionListener, ListD
         frame.setSize (800,300);
         frame.setVisible(true);
 
-	projectPanel.setModel(new PersonListModel(new Project(), null));
+	projectPanel.setModel(new PersonListModel(new Workgroup(), null));
     }
 }

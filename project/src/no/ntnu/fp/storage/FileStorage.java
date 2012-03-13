@@ -14,8 +14,8 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.StringTokenizer;
 
-import no.ntnu.fp.model.Project;
-import no.ntnu.fp.model.Person;
+import no.ntnu.fp.model.Workgroup;
+import no.ntnu.fp.model.Employee;
 import no.ntnu.fp.model.XmlSerializer;
 import no.ntnu.fp.swingutil.FPFileFilter;
 import nu.xom.Builder;
@@ -44,7 +44,7 @@ public class FileStorage implements Storage {
 	}
 	
 	/**
-	 * Loads a file from the system and returns an instanciated {@link Project}
+	 * Loads a file from the system and returns an instanciated {@link Workgroup}
 	 * object if the operation was successfully executed. This method handles both
 	 * flat data file types (<code>*.data</code>) and XML files (<code>*.xml</code>).
 	 *  
@@ -54,7 +54,7 @@ public class FileStorage implements Storage {
 	 * @throws ParseException If the content of the file could not be properly
 	 *         parsed.
 	 */
-	public Project load(File aFile) throws IllegalArgumentException, IOException, ParseException {
+	public Workgroup load(File aFile) throws IllegalArgumentException, IOException, ParseException {
 	    String extension = FPFileFilter.getExtension(aFile);
 	    if (extension != null && extension.toLowerCase().equals(XML_FILE_EXTENSION)) {
             return loadXOMFile(aFile);
@@ -83,11 +83,11 @@ public class FileStorage implements Storage {
 
 	/**
 	 * Loads a file from a network resource and returns an instanciated 
-	 * {@link Project} object if the operation performed successful.
+	 * {@link Workgroup} object if the operation performed successful.
 	 * 
 	 * @see #load(File)
 	 */
-	public Project load(URL url) throws IOException, ParseException {
+	public Workgroup load(URL url) throws IOException, ParseException {
 		return load(getURLFile(url));
 	}
 
@@ -112,16 +112,16 @@ public class FileStorage implements Storage {
 	}
 	
 	/**
-	 * A {@link Project} is stored to a proper file format based on it's 
+	 * A {@link Workgroup} is stored to a proper file format based on it's 
 	 * storage representation. If the extension indicates it is to be stored as 
 	 * (<code>*.xml</code>), the representation will be in XML. Otherwise, the 
-	 * {@link Project} is stored in a flat file format (<code>*.data</code>).
+	 * {@link Workgroup} is stored in a flat file format (<code>*.data</code>).
 	 * 
 	 * @param aProject The project to save.
 	 * @param aFile The file to save the project to.
 	 * @throws IOException If file I/O in some way fails
 	 */
-	public void save(Project aProject, File aFile) throws IOException {
+	public void save(Workgroup aProject, File aFile) throws IOException {
 	    String extension = FPFileFilter.getExtension(aFile);
 	    if (extension != null && extension.equals("data")) {
 	        saveFlatFile(aProject, aFile);
@@ -141,7 +141,7 @@ public class FileStorage implements Storage {
 	 * @param aFile The file to store the project to.
 	 * @throws IOException If some file I/O fails.
 	 */
-	private void saveXmlFile(Project aProject, File aFile) throws IOException {
+	private void saveXmlFile(Workgroup aProject, File aFile) throws IOException {
 		Serializer serial = 
 		    new Serializer(new FileOutputStream(aFile), "iso-8859-1");
 		serial.setIndent(5);
@@ -155,11 +155,11 @@ public class FileStorage implements Storage {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public void save(URL url, Project aProject) throws IOException {
+	public void save(URL url, Workgroup aProject) throws IOException {
 		save(aProject, getURLFile(url));
 	}
 
-	private void saveFlatFile(Project aProject, File aFile) throws IOException {
+	private void saveFlatFile(Workgroup aProject, File aFile) throws IOException {
 		FileWriter aFileWriter = new FileWriter(aFile);
 		BufferedWriter aWriter = new BufferedWriter(aFileWriter);
 		PrintWriter printWriter = new PrintWriter(aWriter);
@@ -178,8 +178,8 @@ public class FileStorage implements Storage {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	private Project loadFlatFile(File aFile) throws java.io.IOException, ParseException {
-		Project aProject = new Project();
+	private Workgroup loadFlatFile(File aFile) throws java.io.IOException, ParseException {
+		Workgroup aProject = new Workgroup();
 		FileReader aFileReader = new FileReader(aFile);
 		BufferedReader aReader = new BufferedReader(aFileReader);
 		String line = aReader.readLine();
@@ -191,7 +191,7 @@ public class FileStorage implements Storage {
 		return aProject;
 	}
 	
-	private Project loadXOMFile(File aFile) throws java.io.IOException, ParseException {
+	private Workgroup loadXOMFile(File aFile) throws java.io.IOException, ParseException {
 		Document doc = null;
 		try {
 			doc = new Builder().build(aFile);
@@ -201,12 +201,13 @@ public class FileStorage implements Storage {
 		return serializer.toProject(doc);
 	}
 	
-	private Person assemblePerson(String line) throws ParseException {
+	private Employee assemblePerson(String line) throws ParseException {
 		StringTokenizer tokenizer = new StringTokenizer(line, ";");
 		String name = tokenizer.nextToken();
+		Employee.Gender gender = tokenizer.nextToken().equals("" + Employee.Gender.MALE) 
+				? Employee.Gender.MALE : Employee.Gender.FEMALE;
 		String email = tokenizer.nextToken();
-		
 		Date date = parseDate(tokenizer.nextToken());
-		return new Person(name, email, date);
+		return new Employee(name, email, date, gender);
 	}	
 }

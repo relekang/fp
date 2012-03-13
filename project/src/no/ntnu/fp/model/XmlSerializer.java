@@ -25,13 +25,19 @@ import nu.xom.ParsingException;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class XmlSerializer {
+	
+	public static final String PERSON = "person";
+	public static final String NAME = "name";
+	public static final String EMAIL = "email";
+	public static final String GENDER = "gender";
+	public static final String DATE_OF_BIRTH = "date-of-birth";
 
-	public Document toXml(Project aProject) {
+	public Document toXml(Workgroup aProject) {
 		Element root = new Element("project");
 		
 		Iterator it = aProject.iterator();
 		while (it.hasNext()) {
-			Person aPerson = (Person)it.next();
+			Employee aPerson = (Employee)it.next();
 			Element element = personToXml(aPerson);
 			root.appendChild(element);
 		}
@@ -39,8 +45,8 @@ public class XmlSerializer {
 		return new Document(root);
 	}
 	
-	public Project toProject(Document xmlDocument) throws ParseException {
-		Project aProject = new Project();
+	public Workgroup toProject(Document xmlDocument) throws ParseException {
+		Workgroup aProject = new Workgroup();
 		Element groupElement = xmlDocument.getRootElement();
 		Elements personElements = groupElement.getChildElements("person");
 		
@@ -52,43 +58,55 @@ public class XmlSerializer {
 		return aProject;
 	}
 
-    public Person toPerson(String xml) throws java.io.IOException, java.text.ParseException, nu.xom.ParsingException {
+    public Employee toPerson(String xml) throws java.io.IOException, java.text.ParseException, nu.xom.ParsingException {
 	nu.xom.Builder parser = new nu.xom.Builder(false);
 	nu.xom.Document doc = parser.build(xml, "");
 	return assemblePerson(doc.getRootElement());
     }
 	
-	private Element personToXml(Person aPerson) {
+	private Element personToXml(Employee aPerson) {
 		DateFormat format = DateFormat.getDateInstance(DateFormat.MEDIUM, java.util.Locale.US);
-		Element element = new Element("person");
-		Element name = new Element("name");
+		
+		Element element = new Element(PERSON);
+		Element name = new Element(NAME);
+		Element gender = new Element(GENDER);
+		Element email = new Element(EMAIL);
+		Element dateOfBirth = new Element(DATE_OF_BIRTH);
+
 		name.appendChild(aPerson.getName());
-		Element email = new Element("email");
+		gender.appendChild("" + aPerson.getGender());
 		email.appendChild(aPerson.getEmail());
-		Element dateOfBirth = new Element("date-of-birth");
 		dateOfBirth.appendChild(format.format(aPerson.getDateOfBirth()));
+		
 		element.appendChild(name);
+		element.appendChild(gender);
 		element.appendChild(email);
 		element.appendChild(dateOfBirth);
 		return element;
 	}
 	
-	private Person assemblePerson(Element personElement) throws ParseException {
+	private Employee assemblePerson(Element personElement) throws ParseException {
 		String name = null, email = null;
+		Employee.Gender gender = null;
 		Date date = null;
-		Element element = personElement.getFirstChildElement("name");
+		Element element = personElement.getFirstChildElement(NAME);
 		if (element != null) {
 			name = element.getValue();
 		}
-		element = personElement.getFirstChildElement("email");
+		element = personElement.getFirstChildElement(GENDER);
+		if(element != null) {
+			gender = element.getValue().equals("" + Employee.Gender.MALE) 
+					? Employee.Gender.MALE : Employee.Gender.FEMALE;
+		}
+		element = personElement.getFirstChildElement(EMAIL);
 		if (element != null) {
 			email = element.getValue();
 		}
-		element = personElement.getFirstChildElement("date-of-birth");
+		element = personElement.getFirstChildElement(DATE_OF_BIRTH);
 		if (element != null) {
 			date = parseDate(element.getValue());
 		}
-		return new Person(name, email, date);
+		return new Employee(name, email, date, gender);
 	}
 	
 	/**

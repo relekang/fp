@@ -8,7 +8,7 @@ import javax.swing.AbstractAction;
 import no.ntnu.fp.storage.FileStorage;
 
 /**
- * Implements the command for saving the {@link no.ntnu.fp.model.Project}.
+ * Implements the command for saving the {@link no.ntnu.fp.model.Workgroup}.
  * 
  * @author Thomas &Oslash;sterlie
  * 
