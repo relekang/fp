@@ -7,7 +7,7 @@ import java.util.Iterator;
 public class Workgroup implements PropertyChangeListener {
 
 	/**
-	 * The member variable storing all registered {@link Person} objects.
+	 * The member variable storing all registered {@link Employee} objects.
 	 */
 	private java.util.ArrayList personList;
 	
@@ -36,24 +36,24 @@ public class Workgroup implements PropertyChangeListener {
 	}
 
 	/**
-	 * Returns the number of {@linkplain #addPerson(Person) <code>Person</code> objects
+	 * Returns the number of {@linkplain #addPerson(Employee) <code>Person</code> objects
 	 * registered} with this class.
 	 * 
-	 * @return The number of {@link Person} objects in this class.
+	 * @return The number of {@link Employee} objects in this class.
 	 */
 	public int getPersonCount() {
 		return personList.size();
 	}
 	
 	/**
-	 * Returns the {@link Person} object at the specified position in the list.
+	 * Returns the {@link Employee} object at the specified position in the list.
 	 * 
 	 * @param i Index of object to return.
 	 * 
-	 * @return The {@link Person} object at the specified position in the list.
+	 * @return The {@link Employee} object at the specified position in the list.
 	 */
-	public Person getPerson(int i) {
-		return (Person)personList.get(i);
+	public Employee getPerson(int i) {
+		return (Employee)personList.get(i);
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public class Workgroup implements PropertyChangeListener {
 	}
 
 	/**
-	 * Adds a new {@link Person} object to the <code>Project</code>.<P>
+	 * Adds a new {@link Employee} object to the <code>Project</code>.<P>
 	 * 
 	 * Calling this method will invoke the 
 	 * <code>propertyChange(java.beans.PropertyChangeEvent)</code> method on 
@@ -92,24 +92,24 @@ public class Workgroup implements PropertyChangeListener {
 	 * method has the following characteristics:
 	 * 
 	 * <ul>
-	 * <li>the <code>getNewValue()</code> method returns the {@link Person} object added</li>
+	 * <li>the <code>getNewValue()</code> method returns the {@link Employee} object added</li>
 	 * <li>the <code>getOldValue()</code> method returns <code>null</code></li>
 	 * <li>the <code>getSource()</code> method returns this {@link Workgroup} object
 	 * </ul>
 	 * 
-	 * @param person The {@link Person} object added.
+	 * @param person The {@link Employee} object added.
 	 * 
 	 * @see java.beans.PropertyChangeListener <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeListener.html">java.beans.PropertyChangeListener</a>
 	 * @see java.beans.PropertyChangeEvent <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeEvent.html">java.beans.PropertyChangeEvent</a>
 	 */
-	public void addPerson(Person person) {
+	public void addPerson(Employee person) {
 		personList.add(person);
 		person.addPropertyChangeListener(this);
 		propChangeSupp.firePropertyChange("person", null, person);
 	}
 
 	/**
-	 * Removes the specified {@link Person} object from the <code>Project</code>.<P>
+	 * Removes the specified {@link Employee} object from the <code>Project</code>.<P>
 	 * 
 	 * Calling this method will invoke the 
 	 * <code>propertyChange(java.beans.PropertyChangeEvent)</code> method on 
@@ -122,16 +122,16 @@ public class Workgroup implements PropertyChangeListener {
 	 * <ul>
 	 * <li>the <code>getNewValue()</code> method returns an {@link java.lang.Integer} object 
 	 *     with the index of the removed element</li>
-	 * <li>the <code>getOldValue()</code> method returns the {@link Person} object added</li>
+	 * <li>the <code>getOldValue()</code> method returns the {@link Employee} object added</li>
 	 * <li>the <code>getSource()</code> method returns this {@link Workgroup} object
 	 * </ul>
 	 * 
-	 * @param person The {@link Person} object to be removed.
+	 * @param person The {@link Employee} object to be removed.
 	 * 
 	 * @see java.beans.PropertyChangeListener <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeListener.html">java.beans.PropertyChangeListener</a>
 	 * @see java.beans.PropertyChangeEvent <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeEvent.html">java.beans.PropertyChangeEvent</a>
 	 */
-	public void removePerson(Person person) {
+	public void removePerson(Employee person) {
 		int i = personList.indexOf(person);
 		Integer index = new Integer(i);
 		personList.remove(person);
@@ -178,7 +178,7 @@ public class Workgroup implements PropertyChangeListener {
 		
 		Iterator it = this.iterator();
 		while (it.hasNext()) {
-			Person aPerson = (Person)it.next();
+			Employee aPerson = (Employee)it.next();
 			if (aProject.indexOf(aPerson) < 0)
 				return false;
 		}

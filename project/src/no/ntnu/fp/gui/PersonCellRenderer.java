@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.text.DateFormatter;
 
-import no.ntnu.fp.model.Person;
+import no.ntnu.fp.model.Employee;
 
 public class PersonCellRenderer extends DefaultListCellRenderer
 {
@@ -43,7 +43,7 @@ public class PersonCellRenderer extends DefaultListCellRenderer
      * @return the renderer Component
      */
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        Person p = (Person)value;
+        Employee p = (Employee)value;
         // the default method always returns a JLabel,
         // in fact the superclass inherits from JLabel
         JLabel label = (JLabel)super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
