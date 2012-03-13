@@ -7,7 +7,7 @@ import java.net.URL;
 
 import javax.swing.AbstractListModel;
 
-import no.ntnu.fp.model.Person;
+import no.ntnu.fp.model.Employee;
 import no.ntnu.fp.model.Workgroup;
 
 /**
@@ -95,7 +95,7 @@ class PersonListModel extends AbstractListModel implements PropertyChangeListene
      */
     public Object getElementAt(int i) {
       try {
-        return (project == null ? null : (Person)project.getPerson(i));
+        return (project == null ? null : (Employee)project.getPerson(i));
       } catch (java.lang.IndexOutOfBoundsException e) { //handling of empty models
 	return null;
       }
@@ -110,28 +110,28 @@ class PersonListModel extends AbstractListModel implements PropertyChangeListene
      */
      public void propertyChange(PropertyChangeEvent event) {
         Object source = event.getSource();
-        Person person = null;
+        Employee person = null;
    
         int index;
-        if ((source instanceof Workgroup) && (event.getNewValue() instanceof Person)) {
-        		person = (Person)event.getNewValue();
+        if ((source instanceof Workgroup) && (event.getNewValue() instanceof Employee)) {
+        		person = (Employee)event.getNewValue();
         		index = project.indexOf(person);
         } else if ((source instanceof Workgroup) && (event.getNewValue() instanceof Integer)) {
-        		person = (Person)event.getOldValue();
+        		person = (Employee)event.getOldValue();
         		Integer i = (Integer)event.getNewValue();
         		index = i.intValue();
-        } else if (source instanceof Person) { 
-        		person = (Person)source;
+        } else if (source instanceof Employee) { 
+        		person = (Employee)source;
         		index = project.indexOf(person);
         } else {
         	    return;
         }
 
-        if ((source instanceof Workgroup) && (event.getNewValue() instanceof Person))
+        if ((source instanceof Workgroup) && (event.getNewValue() instanceof Employee))
         		fireIntervalAdded(project, index, index);
         else if ((source instanceof Workgroup) && (event.getNewValue() instanceof Integer))
         		fireIntervalRemoved(project, index, index);
-        else if (source instanceof Person)
+        else if (source instanceof Employee)
         		fireContentsChanged(project, index, index);
     }
      

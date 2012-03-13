@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.StringTokenizer;
 
 import no.ntnu.fp.model.Workgroup;
-import no.ntnu.fp.model.Person;
+import no.ntnu.fp.model.Employee;
 import no.ntnu.fp.model.XmlSerializer;
 import no.ntnu.fp.swingutil.FPFileFilter;
 import nu.xom.Builder;
@@ -201,12 +201,12 @@ public class FileStorage implements Storage {
 		return serializer.toProject(doc);
 	}
 	
-	private Person assemblePerson(String line) throws ParseException {
+	private Employee assemblePerson(String line) throws ParseException {
 		StringTokenizer tokenizer = new StringTokenizer(line, ";");
 		String name = tokenizer.nextToken();
 		String email = tokenizer.nextToken();
 		
 		Date date = parseDate(tokenizer.nextToken());
-		return new Person(name, email, date);
+		return new Employee(name, email, date);
 	}	
 }
