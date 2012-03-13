@@ -4,6 +4,9 @@ package no.ntnu.fp.model;
 import java.util.Date;
 
 public class Event {
+	
+	public static final int TITLE_LENGTH = 64;
+	
     private String title;
     private Date dateFrom;
     private Date dateTo;
@@ -25,7 +28,8 @@ public class Event {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+    	if(title.length() <= TITLE_LENGTH)
+    		this.title = title;
     }
 
     public Date getDateFrom() {
@@ -54,7 +58,7 @@ public class Event {
     }
 
     public String getDescription() {
-        return description;
+        return description == null ? "" : description;
     }
 
     public void setDescription(String description) {
