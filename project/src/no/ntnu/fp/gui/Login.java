@@ -26,7 +26,7 @@ public class Login extends JPanel {
 	
 	protected JButton loginButton;
 	
-	//konstruktør	
+	//constructor	
 	public Login(){
 		
 		
@@ -34,7 +34,7 @@ public class Login extends JPanel {
     	setLayout(new GridBagLayout());
     	setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     	
-    	// adder username label og textfield
+    	// adds usernamelabel and textfield
     	usernameLabel = new JLabel("Username:");
     	c.gridheight = 1;
     	c.gridwidth = 1;
@@ -50,7 +50,7 @@ public class Login extends JPanel {
     	
     	
     	
-    	//adder password label og textfield
+    	//adds passwordlabel and textfield
     	passwordLabel = new JLabel("Password:");
     	c.gridx = 0;
     	c.gridy = 1;
@@ -63,7 +63,7 @@ public class Login extends JPanel {
     	add(passwordfield,c);
   
     	
-    	//adder login knapp
+    	//adds loginbutton
     	loginButton = new JButton("Log in");
     	c.gridx = 1;
     	c.gridy = 2;
@@ -71,7 +71,7 @@ public class Login extends JPanel {
     	
     	
     	
-    	//Legger til listeners
+    	//Adds listeners
     	usernameTextField.addActionListener(new LoginAction());
     	passwordfield.addActionListener(new LoginAction());
     	loginButton.addActionListener(new LoginAction());
@@ -84,7 +84,7 @@ public class Login extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Fiks log in. Slik at man må ha fylt ut begge felter.
+			// TODO Fix log in, so that both fields are required
 			System.out.println("login");
 		}
 		
