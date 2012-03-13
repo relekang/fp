@@ -22,43 +22,44 @@ import no.ntnu.fp.net.co.AbstractConnection;
  */
 public class SendTimer extends TimerTask {
 
-    private ClSocket socket;
-    private KtnDatagram packet;
-    private int tries;
+	private ClSocket socket;
+	private KtnDatagram packet;
+	private int tries;
 
-    /**
-     * Simple constructor.
-     * 
-     * @param socket
-     *            - the socket in which the datagram is to be send if timeout
-     * @param packet
-     *            - the packet to send if timeout
-     */
-    public SendTimer(ClSocket socket, KtnDatagram packet) {
-        this.socket = socket;
-        this.packet = packet;
-        tries = 0;
-    }
+	/**
+	 * Simple constructor.
+	 * 
+	 * @param socket
+	 *            - the socket in which the datagram is to be send if timeout
+	 * @param packet
+	 *            - the packet to send if timeout
+	 */
+	public SendTimer(ClSocket socket, KtnDatagram packet) {
+		this.socket = socket;
+		this.packet = packet;
+		tries = 0;
+	}
 
-    /**
-     * Perform a packet (re)send. The method will be called upon a timeout from
-     * the assosiated timer. If called, it means that a correct ack is not
-     * received within the desired interval, and the datagram is resend on the
-     * same socket.
-     */
-    public void run() {
-        try {
-            Log.writeToLog(packet, "Sending this datagram (try: " + ++tries + ")", "SendTimer");
-            
-            socket.send(packet);
-        }
-        catch (ClException e) {
-            Log.writeToLog("ERROR: Could not establish a connection to " + packet.getDest_addr()
-                    + ":" + packet.getDest_port(), "SendTimer");
-        }
-        catch (IOException e) {
-            Log.writeToLog("ERROR: Could not establish a connection to " + packet.getDest_addr()
-                    + ":" + packet.getDest_port(), "SendTimer");
-        }
-    }
+	/**
+	 * Perform a packet (re)send. The method will be called upon a timeout from
+	 * the assosiated timer. If called, it means that a correct ack is not
+	 * received within the desired interval, and the datagram is resend on the
+	 * same socket.
+	 */
+	public void run() {
+		try {
+			Log.writeToLog(packet, "Sending this datagram (try: " + ++tries
+					+ ")", "SendTimer");
+
+			socket.send(packet);
+		} catch (ClException e) {
+			Log.writeToLog("ERROR: Could not establish a connection to "
+					+ packet.getDest_addr() + ":" + packet.getDest_port(),
+					"SendTimer");
+		} catch (IOException e) {
+			Log.writeToLog("ERROR: Could not establish a connection to "
+					+ packet.getDest_addr() + ":" + packet.getDest_port(),
+					"SendTimer");
+		}
+	}
 }
