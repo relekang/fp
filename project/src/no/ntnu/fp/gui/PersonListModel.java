@@ -8,7 +8,7 @@ import java.net.URL;
 import javax.swing.AbstractListModel;
 
 import no.ntnu.fp.model.Person;
-import no.ntnu.fp.model.Project;
+import no.ntnu.fp.model.Workgroup;
 
 /**
  * A ListModel implementation that wraps a Project object.
@@ -28,7 +28,7 @@ class PersonListModel extends AbstractListModel implements PropertyChangeListene
 	/**
      * The data model that is wrapped
      */
-    private Project project;
+    private Workgroup project;
 
     /**
      * Path to where the data model is saved.  <code>null</code> means that the
@@ -42,7 +42,7 @@ class PersonListModel extends AbstractListModel implements PropertyChangeListene
      * @param project The underlying data model
      * @param url Path to save the data model
      */
-    PersonListModel(Project project, URL url) {
+    PersonListModel(Workgroup project, URL url) {
     		setProject(project);
     		setUrl(url);
     	}
@@ -52,7 +52,7 @@ class PersonListModel extends AbstractListModel implements PropertyChangeListene
      * 
      * @param project The new underlying data model.
      */
-    void setProject(Project project) {
+    void setProject(Workgroup project) {
         if (this.project == project) {
             return;
         }
@@ -71,7 +71,7 @@ class PersonListModel extends AbstractListModel implements PropertyChangeListene
      * 
      * @return The underlying data model.
      */
-    Project getProject() {
+    Workgroup getProject() {
     		return project;
     }
 
@@ -113,10 +113,10 @@ class PersonListModel extends AbstractListModel implements PropertyChangeListene
         Person person = null;
    
         int index;
-        if ((source instanceof Project) && (event.getNewValue() instanceof Person)) {
+        if ((source instanceof Workgroup) && (event.getNewValue() instanceof Person)) {
         		person = (Person)event.getNewValue();
         		index = project.indexOf(person);
-        } else if ((source instanceof Project) && (event.getNewValue() instanceof Integer)) {
+        } else if ((source instanceof Workgroup) && (event.getNewValue() instanceof Integer)) {
         		person = (Person)event.getOldValue();
         		Integer i = (Integer)event.getNewValue();
         		index = i.intValue();
@@ -127,9 +127,9 @@ class PersonListModel extends AbstractListModel implements PropertyChangeListene
         	    return;
         }
 
-        if ((source instanceof Project) && (event.getNewValue() instanceof Person))
+        if ((source instanceof Workgroup) && (event.getNewValue() instanceof Person))
         		fireIntervalAdded(project, index, index);
-        else if ((source instanceof Project) && (event.getNewValue() instanceof Integer))
+        else if ((source instanceof Workgroup) && (event.getNewValue() instanceof Integer))
         		fireIntervalRemoved(project, index, index);
         else if (source instanceof Person)
         		fireContentsChanged(project, index, index);

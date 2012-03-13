@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.KeyStroke;
 
-import no.ntnu.fp.model.Project;
+import no.ntnu.fp.model.Workgroup;
 import no.ntnu.fp.model.Person;
 
 /**
@@ -43,7 +43,7 @@ public class AddPersonAction extends AbstractAction {
      */
 	public void actionPerformed(ActionEvent event) {
 		PersonListModel plm = projectPanel.getModel();
-		Project project = plm.getProject();
+		Workgroup project = plm.getProject();
 		project.addPerson(new Person());
 	}
 	

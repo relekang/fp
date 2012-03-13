@@ -26,7 +26,7 @@ import nu.xom.ParsingException;
  */
 public class XmlSerializer {
 
-	public Document toXml(Project aProject) {
+	public Document toXml(Workgroup aProject) {
 		Element root = new Element("project");
 		
 		Iterator it = aProject.iterator();
@@ -39,8 +39,8 @@ public class XmlSerializer {
 		return new Document(root);
 	}
 	
-	public Project toProject(Document xmlDocument) throws ParseException {
-		Project aProject = new Project();
+	public Workgroup toProject(Document xmlDocument) throws ParseException {
+		Workgroup aProject = new Workgroup();
 		Element groupElement = xmlDocument.getRootElement();
 		Elements personElements = groupElement.getChildElements("person");
 		

@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 
-import no.ntnu.fp.model.Project;
+import no.ntnu.fp.model.Workgroup;
 import no.ntnu.fp.model.Person;
 
 /**
@@ -44,7 +44,7 @@ public class NewAction extends AbstractAction {
 	 * @param e The action event.
 	 */
 	public void actionPerformed(ActionEvent arg0) {
-		Project project = new Project();
+		Workgroup project = new Workgroup();
 		project.addPerson(new Person());
 		projectPanel.setModel(new PersonListModel(project, null));
 	}

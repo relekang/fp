@@ -11,7 +11,7 @@ import no.ntnu.fp.storage.FileStorage;
 import no.ntnu.fp.swingutil.FPFileFilter;
 
 /**
- * Implements the action for saving {@link no.ntnu.fp.model.Project} to an alternative file.
+ * Implements the action for saving {@link no.ntnu.fp.model.Workgroup} to an alternative file.
  * 
  * @author Thomas &Oslash;sterlie
  * @author Rune Molden

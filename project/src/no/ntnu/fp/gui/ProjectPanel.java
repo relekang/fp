@@ -5,7 +5,7 @@ import javax.swing.event.*;
 import java.awt.*;
 
 import no.ntnu.fp.model.Person;
-import no.ntnu.fp.model.Project;
+import no.ntnu.fp.model.Workgroup;
 
 import no.ntnu.fp.storage.FileStorage;
 
@@ -195,6 +195,6 @@ public class ProjectPanel extends JPanel implements ListSelectionListener, ListD
         frame.setSize (800,300);
         frame.setVisible(true);
 
-	projectPanel.setModel(new PersonListModel(new Project(), null));
+	projectPanel.setModel(new PersonListModel(new Workgroup(), null));
     }
 }
