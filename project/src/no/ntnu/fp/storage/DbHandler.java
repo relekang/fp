@@ -12,8 +12,8 @@ public class DbHandler {
     private String password;
     
     public DbHandler(){
-        username = "";
-        password = "";
+        username = "fp";
+        password = "6pKp0hXPMN";
     }
     
     public DbHandler(String username, String password){
@@ -22,18 +22,30 @@ public class DbHandler {
     }
     
     public void connect() throws SQLException {
-
-        this.conn = DriverManager.getConnection(
-                "jdbc:default:fellesprosjekt",
-                username,
-                password);
+        try {
+            String url = "jdbc:mysql://lkng.me/fp";
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conn = DriverManager.getConnection(url, username, password);
+            System.out.println ("Database connection established");
+        }
+        catch (Exception e) {
+            System.err.println ("Cannot connect to database server");
+        }
+        finally {
+            if (conn != null){
+                try {
+                    conn.close ();
+                    System.out.println ("Database connection terminated");
+                } catch (Exception e) { /* ignore close errors */ }
+            }
+        }
     }
 
     public void close() throws SQLException {
         conn.close();
     }
 
-    public ArrayList<Event> fetchAllEvent(){
+    public ArrayList<Event> fetchAllEvents(){
         ArrayList<Event> events = new ArrayList<Event>();
         try {
             connect();
@@ -57,4 +69,12 @@ public class DbHandler {
         }
 
     }
+
+
+    public static void main (String args[]){
+        DbHandler dbHandler = new DbHandler();
+        System.out.print(dbHandler.fetchAllEvents().size());
+    }
+
+
 }
