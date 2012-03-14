@@ -1,5 +1,6 @@
 package no.ntnu.fp.controller;
 
+import no.ntnu.fp.gui.EventView;
 import no.ntnu.fp.gui.MainView;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ public class ClientApplication {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
 
-        eventFrame = new MainView();
+        eventFrame = new EventView();
         eventFrame.setLocationRelativeTo(null);
         eventFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         eventFrame.setVisible(false);
