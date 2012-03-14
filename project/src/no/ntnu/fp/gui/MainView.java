@@ -47,5 +47,7 @@ public class MainView extends JFrame{
     public static void main (String args[]){
         JFrame frame = new MainView();
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 }
