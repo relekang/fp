@@ -92,6 +92,13 @@ public class Employee {
 	 */
 	public final static String GENDER_PROPERTY_NAME = "gender";
 	
+	/**
+	 * Enum for accepted, declined or pending
+	 */
+	public enum Status{
+		ACCEPTED, PENDING, DECLINED
+	}
+	
 	
 	/**
 	 * Default constructor. Must be called to initialise the object's member variables.
@@ -340,6 +347,16 @@ public class Employee {
 		
 		return true;
 	}
+	
+	/**
+	 * 
+	 */
+	public Status getAccepted(){
+		//TODO connect to database and get if accepted event, pending or declined
+		
+		return Status.ACCEPTED;
+	}
+	
 	
 	/**
 	 * {@inheritDoc}
