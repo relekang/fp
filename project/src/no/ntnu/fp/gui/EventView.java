@@ -52,9 +52,8 @@ public class EventView extends JFrame{
 		renderer = new ParticipantRenderer();
 		listModel = new DefaultListModel();
 		
-//		participantList = new JList(listModel);
-		participantList = new JList();
-//		participantList.setCellRenderer(renderer);
+		participantList = new JList(listModel);
+		participantList.setCellRenderer(renderer);
 		
 		listModel.addElement(bjarne);
 		listModel.addElement(hans);
