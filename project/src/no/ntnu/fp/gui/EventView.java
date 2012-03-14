@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 import no.ntnu.fp.model.Employee;
 import javax.swing.DefaultListModel;
@@ -70,10 +72,11 @@ public class EventView extends JFrame{
 		
 		//skal sjekke om brukeren er eventmanager
 		if(true){
+			String[] rooms = {"Room", "211, P15", "R2"};
 			eventTitle = new JTextField("Title", 23);
 			fromField = new JTextField("From", 10);
 			toField = new JTextField("to", 10);
-			roomBox = new JComboBox();
+			roomBox = new JComboBox(rooms);
 			descriptionBox = new JTextArea("Description");
 			saveButton = new JButton("Save");
 			cancelButton = new JButton("Cancel");
@@ -148,13 +151,32 @@ public class EventView extends JFrame{
 		gbc.gridwidth = 3;
 		gbc.gridheight = 6;
 		eventPanel.add(participantList, gbc);
+		
+		saveButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		
+		cancelButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		deletebutton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 	}
 	
-	public static void main(String[] args){
-		JFrame frame = new EventView();
-		frame.setVisible(true);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	}
+	
 
 }
