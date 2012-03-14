@@ -15,7 +15,6 @@ public class ClientApplication {
 
         eventFrame = new EventView();
         eventFrame.setLocationRelativeTo(null);
-        eventFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         eventFrame.setVisible(false);
     }
 
@@ -26,4 +25,5 @@ public class ClientApplication {
     public static void setEventFrameVisible(boolean visibility){
         eventFrame.setVisible(visibility);
     }
+
 }
