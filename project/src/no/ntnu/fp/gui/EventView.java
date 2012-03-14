@@ -31,7 +31,7 @@ public class EventView extends JFrame{
 	
 	public EventView(){
 		gbc = new GridBagConstraints();
-		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.insets = new Insets(15, 15, 15, 15);
 //		user = EventController.getEmplyee();
 		eventPanel = new JPanel();
 		eventPanel.setLayout(new GridBagLayout());
@@ -60,7 +60,7 @@ public class EventView extends JFrame{
 		listModel.addElement(geir);
 		listModel.addElement(arne);
 		
-		participantList.setPreferredSize(new Dimension(200, 200));
+		participantList.setPreferredSize(new Dimension(300, 400));
 		
 		//skal sjekke om brukeren er eventmanager
 		if(true){
@@ -82,12 +82,12 @@ public class EventView extends JFrame{
 			gbc.gridheight = 1;
 			eventPanel.add(saveButton, gbc);
 			
-			gbc.gridx = 2;	gbc.gridy = 7;
+			gbc.gridx = 1;	gbc.gridy = 7;
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
 			eventPanel.add(cancelButton, gbc);
 			
-			gbc.gridx = 4;	gbc.gridy = 7;
+			gbc.gridx = 2;	gbc.gridy = 7;
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
 			eventPanel.add(deletebutton, gbc);
