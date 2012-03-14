@@ -4,7 +4,9 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
+import java.util.Date;
+import no.ntnu.fp.model.Employee;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -23,7 +25,8 @@ public class EventView extends JFrame{
 	JButton saveButton, cancelButton, deletebutton, acceptButton, declineButton;
 	JPanel eventPanel;
 	GridBagConstraints gbc;
-	
+	DefaultListModel listModel;
+	ParticipantRenderer renderer;
 	Employee user;
 	
 	public EventView(){
@@ -36,11 +39,27 @@ public class EventView extends JFrame{
 		
 		this.add(eventPanel);
 		this.pack();
+		
+
 	}
 	
 	@SuppressWarnings("unused")
 	private void createPanel(){
+		Employee hans = new Employee("Hans", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
+		Employee geir = new Employee("Geir", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
+		Employee bjarne = new Employee("Bjarne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
+		Employee arne = new Employee("Arne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
+		renderer = new ParticipantRenderer();
+		listModel = new DefaultListModel();
+		
+//		participantList = new JList(listModel);
 		participantList = new JList();
+//		participantList.setCellRenderer(renderer);
+		
+		listModel.addElement(bjarne);
+		listModel.addElement(hans);
+		listModel.addElement(geir);
+		listModel.addElement(arne);
 		
 		participantList.setPreferredSize(new Dimension(200, 200));
 		
