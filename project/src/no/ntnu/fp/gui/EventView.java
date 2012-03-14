@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import no.ntnu.fp.model.Employee;
@@ -28,6 +29,7 @@ public class EventView extends JFrame{
 	DefaultListModel listModel;
 	ParticipantRenderer renderer;
 	Employee user;
+	JPopupMenu fromPop;
 	
 	public EventView(){
 		gbc = new GridBagConstraints();
@@ -45,10 +47,14 @@ public class EventView extends JFrame{
 	
 	@SuppressWarnings("unused")
 	private void createPanel(){
+		
+		//middlertidig eksempler
 		Employee hans = new Employee("Hans", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
 		Employee geir = new Employee("Geir", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
 		Employee bjarne = new Employee("Bjarne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
 		Employee arne = new Employee("Arne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
+		//
+		
 		renderer = new ParticipantRenderer();
 		listModel = new DefaultListModel();
 		
@@ -109,6 +115,7 @@ public class EventView extends JFrame{
 			
 			descriptionBox.setEnabled(false);
 		}
+		
 		gbc.gridx = 0;	gbc.gridy = 0;
 		gbc.gridwidth = 2;
 		eventPanel.add(eventTitle, gbc);
