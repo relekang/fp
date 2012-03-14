@@ -1,7 +1,12 @@
 package no.ntnu.fp.gui;
 
+import com.apple.eawt.Application;
+import no.ntnu.fp.controller.ClientApplication;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainView extends JFrame{
     private JPanel mainPanel, calenderPanel, overviewPanel, notificationPanel;
@@ -27,6 +32,7 @@ public class MainView extends JFrame{
         findPersonBtn = new JButton("Find person");
 
         gbc.gridx = 0; gbc.gridy = 0;
+        createEventBtn.addActionListener(new CreateEventButtonListener());
         mainPanel.add(createEventBtn, gbc);
 
         gbc.gridx = 1; gbc.gridy = 0;
@@ -43,11 +49,10 @@ public class MainView extends JFrame{
 
     }
 
-
-    public static void main (String args[]){
-        JFrame frame = new MainView();
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    class CreateEventButtonListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            ClientApplication.setEventFrameVisible(true);
+        }
     }
 }
