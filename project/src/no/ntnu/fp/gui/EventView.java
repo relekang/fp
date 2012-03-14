@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 import no.ntnu.fp.model.Employee;
 import javax.swing.DefaultListModel;
@@ -14,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import no.ntnu.fp.model.Employee;
@@ -28,10 +31,11 @@ public class EventView extends JFrame{
 	DefaultListModel listModel;
 	ParticipantRenderer renderer;
 	Employee user;
+	JPopupMenu fromPop;
 	
 	public EventView(){
 		gbc = new GridBagConstraints();
-		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.insets = new Insets(15, 15, 15, 15);
 //		user = EventController.getEmplyee();
 		eventPanel = new JPanel();
 		eventPanel.setLayout(new GridBagLayout());
@@ -45,10 +49,14 @@ public class EventView extends JFrame{
 	
 	@SuppressWarnings("unused")
 	private void createPanel(){
+		
+		//middlertidig eksempler
 		Employee hans = new Employee("Hans", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
 		Employee geir = new Employee("Geir", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
 		Employee bjarne = new Employee("Bjarne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
 		Employee arne = new Employee("Arne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
+		//
+		
 		renderer = new ParticipantRenderer();
 		listModel = new DefaultListModel();
 		
@@ -60,14 +68,15 @@ public class EventView extends JFrame{
 		listModel.addElement(geir);
 		listModel.addElement(arne);
 		
-		participantList.setPreferredSize(new Dimension(200, 200));
+		participantList.setPreferredSize(new Dimension(300, 400));
 		
 		//skal sjekke om brukeren er eventmanager
 		if(true){
+			String[] rooms = {"Room", "211, P15", "R2"};
 			eventTitle = new JTextField("Title", 23);
 			fromField = new JTextField("From", 10);
 			toField = new JTextField("to", 10);
-			roomBox = new JComboBox();
+			roomBox = new JComboBox(rooms);
 			descriptionBox = new JTextArea("Description");
 			saveButton = new JButton("Save");
 			cancelButton = new JButton("Cancel");
@@ -82,12 +91,12 @@ public class EventView extends JFrame{
 			gbc.gridheight = 1;
 			eventPanel.add(saveButton, gbc);
 			
-			gbc.gridx = 2;	gbc.gridy = 7;
+			gbc.gridx = 1;	gbc.gridy = 7;
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
 			eventPanel.add(cancelButton, gbc);
 			
-			gbc.gridx = 4;	gbc.gridy = 7;
+			gbc.gridx = 2;	gbc.gridy = 7;
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
 			eventPanel.add(deletebutton, gbc);
@@ -109,6 +118,7 @@ public class EventView extends JFrame{
 			
 			descriptionBox.setEnabled(false);
 		}
+		
 		gbc.gridx = 0;	gbc.gridy = 0;
 		gbc.gridwidth = 2;
 		eventPanel.add(eventTitle, gbc);
@@ -141,13 +151,32 @@ public class EventView extends JFrame{
 		gbc.gridwidth = 3;
 		gbc.gridheight = 6;
 		eventPanel.add(participantList, gbc);
+		
+		saveButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		
+		cancelButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		deletebutton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 	}
 	
-	public static void main(String[] args){
-		JFrame frame = new EventView();
-		frame.setVisible(true);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	}
+	
 
 }
