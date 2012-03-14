@@ -42,7 +42,7 @@ public class EventView extends JFrame{
 	private void createPanel(){
 		participantList = new JList();
 		
-		participantList.setPreferredSize(new Dimension(300, 300));
+		participantList.setPreferredSize(new Dimension(200, 200));
 		
 		//skal sjekke om brukeren er eventmanager
 		if(true){
@@ -59,16 +59,19 @@ public class EventView extends JFrame{
 			roomBox.setPreferredSize(new Dimension(275, 25));
 			descriptionBox.setPreferredSize(new Dimension(200, 100));
 			
-			gbc.gridx = 0;	gbc.gridy = 10;
+			gbc.gridx = 0;	gbc.gridy = 7;
 			gbc.gridwidth = 1;
+			gbc.gridheight = 1;
 			eventPanel.add(saveButton, gbc);
 			
-			gbc.gridx = 2;	gbc.gridy = 10;
+			gbc.gridx = 2;	gbc.gridy = 7;
 			gbc.gridwidth = 1;
+			gbc.gridheight = 1;
 			eventPanel.add(cancelButton, gbc);
 			
-			gbc.gridx = 4;	gbc.gridy = 10;
+			gbc.gridx = 4;	gbc.gridy = 7;
 			gbc.gridwidth = 1;
+			gbc.gridheight = 1;
 			eventPanel.add(deletebutton, gbc);
 			
 		}
@@ -89,29 +92,36 @@ public class EventView extends JFrame{
 			descriptionBox.setEnabled(false);
 		}
 		gbc.gridx = 0;	gbc.gridy = 0;
-		gbc.gridwidth = 3;
+		gbc.gridwidth = 2;
 		eventPanel.add(eventTitle, gbc);
 		
-		gbc.gridx = 0;	gbc.gridy = 2;
+		gbc.gridx = 0;	gbc.gridy = 1;
 		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
 		eventPanel.add(fromField, gbc);
 		
-		gbc.gridx = 2;	gbc.gridy = 2;
+		gbc.gridx = 1;	gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
 		eventPanel.add(toField, gbc);
 		
-		gbc.gridx = 0;	gbc.gridy = 4;
-		gbc.gridwidth = 3;
+		gbc.gridx = 0;	gbc.gridy = 2;
+		gbc.gridwidth = 2;
+		gbc.gridheight = 1;
 		eventPanel.add(roomBox, gbc);
 		
-		gbc.gridx = 0;	gbc.gridy = 6;
-		gbc.gridwidth = 3;
+		gbc.gridx = 0;	gbc.gridy = 3;
+		gbc.gridwidth = 2;
 		eventPanel.add(participantsField, gbc);
 		
-		gbc.gridx = 0;	gbc.gridy = 8;
+		gbc.gridx = 0;	gbc.gridy = 4;
+		gbc.gridheight = 2;
+		gbc.gridwidth = 2;
 		eventPanel.add(descriptionBox, gbc);
 		
-		gbc.gridx = 10;	gbc.gridy = 0;
+		gbc.gridx = 3;	gbc.gridy = 0;
 		gbc.gridwidth = 3;
+		gbc.gridheight = 6;
 		eventPanel.add(participantList, gbc);
 	}
 	
