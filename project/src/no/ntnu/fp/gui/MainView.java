@@ -1,6 +1,5 @@
 package no.ntnu.fp.gui;
 
-import com.apple.eawt.Application;
 import no.ntnu.fp.controller.ClientApplication;
 
 import javax.swing.*;
