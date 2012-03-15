@@ -77,20 +77,21 @@ public class EventView extends JFrame{
 		participantList.setPreferredSize(new Dimension(300, 400));
 		
 		//skal sjekke om brukeren er eventmanager
+		String[] rooms = {"Room", "211, P15", "R2"};
+		eventTitle = new JTextField("Title", 23);
+		fromField = new JTextField("From", 10);
+		toField = new JTextField("to", 10);
+		roomBox = new JComboBox(rooms);
+		descriptionBox = new JTextArea("Description");
+		participantsField = new JTextField("Participants", 23);
+		
+		roomBox.setPreferredSize(new Dimension(275, 25));
+		descriptionBox.setPreferredSize(new Dimension(200, 100));
+		
 		if(false){
-			String[] rooms = {"Room", "211, P15", "R2"};
-			eventTitle = new JTextField("Title", 23);
-			fromField = new JTextField("From", 10);
-			toField = new JTextField("to", 10);
-			roomBox = new JComboBox(rooms);
-			descriptionBox = new JTextArea("Description");
 			saveButton = new JButton("Save");
 			cancelButton = new JButton("Cancel");
 			deletebutton = new JButton("Delete");
-			participantsField = new JTextField("Participants", 23);
-			
-			roomBox.setPreferredSize(new Dimension(275, 25));
-			descriptionBox.setPreferredSize(new Dimension(200, 100));
 			
 			gbc.gridx = 0;	gbc.gridy = 7;
 			gbc.gridwidth = 1;
@@ -106,27 +107,27 @@ public class EventView extends JFrame{
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
 			eventPanel.add(deletebutton, gbc);
-			
 		}
 		
 		else{
-			Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
-			
-			BorderFactory.createEmptyBorder();
-			eventTitle = new JLabel("Tittel", JLabel.CENTER);
-			eventTitle.setFont(font);
-			eventTitle.setPreferredSize(new Dimension(150, 20));
-			eventTitle.setBorder(BorderFactory.createLineBorder(Color.black));
-			
-			fromField = new JLabel("5.mars kl 13:37");
-			toField = new JLabel("6.mars 0:01");
-			roomBox = new JLabel("314, P15");
-			descriptionBox = new JTextArea("Kort beskrivelse");
-			descriptionBox.setPreferredSize(new Dimension(200, 100));
+			eventTitle.setEnabled(false);
+//			Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
+//			
+//			BorderFactory.createEmptyBorder();
+//			eventTitle = new JLabel("Tittel", JLabel.CENTER);
+//			eventTitle.setFont(font);
+//			eventTitle.setPreferredSize(new Dimension(150, 20));
+//			eventTitle.setBorder(BorderFactory.createLineBorder(Color.black));
+//			
+//			fromField = new JLabel("5.mars kl 13:37");
+//			toField = new JLabel("6.mars 0:01");
+//			roomBox = new JLabel("314, P15");
+//			descriptionBox = new JTextArea("Kort beskrivelse");
+//			descriptionBox.setPreferredSize(new Dimension(200, 100));
 			acceptButton = new JButton("Accept");
 			declineButton = new JButton("Decline");
-			participantsField = new JLabel("hei på deg");
-			
+//			participantsField = new JLabel();
+//			
 			gbc.gridx = 0; gbc.gridy = 7;
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
@@ -136,8 +137,8 @@ public class EventView extends JFrame{
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
 			eventPanel.add(declineButton, gbc);
-			
-			descriptionBox.setEnabled(false);
+//			
+//			descriptionBox.setEnabled(false);
 		}
 		
 		gbc.gridx = 0;	gbc.gridy = 0;
