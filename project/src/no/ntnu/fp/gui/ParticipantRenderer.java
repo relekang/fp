@@ -2,6 +2,8 @@ package no.ntnu.fp.gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,7 +25,11 @@ public class ParticipantRenderer extends JPanel implements ListCellRenderer{
 			int index, boolean isSelected, boolean cellHasFocus){
 				
 		//JLabel print = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		GridBagConstraints gbc = new GridBagConstraints();
 		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		
+		
 		JLabel label = new JLabel();
 		JButton button = new JButton();
 		if(((Employee) value).getAccepted() == Status.ACCEPTED){
@@ -34,11 +40,12 @@ public class ParticipantRenderer extends JPanel implements ListCellRenderer{
 			
 
 			setVisible(true); 
-			
+			gbc.gridx = 0;
+			gbc.gridwidth = 3;
 			label.setIcon(icon);
 			label.setText( ((Employee) value).getName());	
 			label.setForeground(Color.GREEN);			
-			panel.add(label);
+			panel.add(label,gbc);
 			
 	
 		}
@@ -50,11 +57,12 @@ public class ParticipantRenderer extends JPanel implements ListCellRenderer{
 			
 			
 			setVisible(true); 
-			
+			gbc.gridx = 0;
+			gbc.gridwidth = 3;
 			label.setIcon(icon);
 			label.setText( ((Employee) value).getName());	
 			label.setForeground(Color.RED);			
-			panel.add(label);
+			panel.add(label,gbc);
 			
 			
 		}
@@ -66,11 +74,12 @@ public class ParticipantRenderer extends JPanel implements ListCellRenderer{
 			
 			
 			setVisible(true); 
-			
 			label.setIcon(icon);
 			label.setText( ((Employee) value).getName());	
 			label.setForeground(Color.ORANGE);			
-			panel.add(label);
+			gbc.gridx = 0;
+			gbc.gridwidth = 3;
+			panel.add(label,gbc);
 			
 		}
 		
@@ -86,7 +95,8 @@ public class ParticipantRenderer extends JPanel implements ListCellRenderer{
 				
 			}
 		});
-		panel.add(button);
+		gbc.gridx = 4;
+		panel.add(button,gbc);
 		return panel;
 		
 	}
