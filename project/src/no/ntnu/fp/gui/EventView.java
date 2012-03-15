@@ -1,13 +1,19 @@
 package no.ntnu.fp.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
+import java.util.Locale;
+
 import no.ntnu.fp.model.Employee;
+
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -71,7 +77,7 @@ public class EventView extends JFrame{
 		participantList.setPreferredSize(new Dimension(300, 400));
 		
 		//skal sjekke om brukeren er eventmanager
-		if(true){
+		if(false){
 			String[] rooms = {"Room", "211, P15", "R2"};
 			eventTitle = new JTextField("Title", 23);
 			fromField = new JTextField("From", 10);
@@ -104,17 +110,32 @@ public class EventView extends JFrame{
 		}
 		
 		else{
-			eventTitle = new JLabel();
-			fromField = new JLabel();
-			toField = new JLabel();
-			roomBox = new JLabel();
-			descriptionBox = new JTextArea();
+			Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
+			
+			BorderFactory.createEmptyBorder();
+			eventTitle = new JLabel("Tittel", JLabel.CENTER);
+			eventTitle.setFont(font);
+			eventTitle.setPreferredSize(new Dimension(150, 20));
+			eventTitle.setBorder(BorderFactory.createLineBorder(Color.black));
+			
+			fromField = new JLabel("5.mars kl 13:37");
+			toField = new JLabel("6.mars 0:01");
+			roomBox = new JLabel("314, P15");
+			descriptionBox = new JTextArea("Kort beskrivelse");
+			descriptionBox.setPreferredSize(new Dimension(200, 100));
 			acceptButton = new JButton("Accept");
 			declineButton = new JButton("Decline");
-			participantsField = new JLabel();
+			participantsField = new JLabel("hei på deg");
 			
-			eventPanel.add(acceptButton);
-			eventPanel.add(declineButton);
+			gbc.gridx = 0; gbc.gridy = 7;
+			gbc.gridwidth = 1;
+			gbc.gridheight = 1;
+			eventPanel.add(acceptButton, gbc);
+			
+			gbc.gridx = 1; gbc.gridy = 7;
+			gbc.gridwidth = 1;
+			gbc.gridheight = 1;
+			eventPanel.add(declineButton, gbc);
 			
 			descriptionBox.setEnabled(false);
 		}
@@ -152,29 +173,29 @@ public class EventView extends JFrame{
 		gbc.gridheight = 6;
 		eventPanel.add(participantList, gbc);
 		
-		saveButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		
-		cancelButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
-		deletebutton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
+//		saveButton.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				
+//			}
+//		});
+//		
+//		cancelButton.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				
+//			}
+//		});
+//		
+//		deletebutton.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				
+//			}
+//		});
 	}
 	
 	
