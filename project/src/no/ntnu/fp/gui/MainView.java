@@ -35,6 +35,7 @@ public class MainView extends JFrame{
         mainPanel.add(createEventBtn, gbc);
 
         gbc.gridx = 1; gbc.gridy = 0;
+        findPersonBtn.addActionListener(new FindPersonButtonListener());
         mainPanel.add(findPersonBtn, gbc);
 
         gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 2;gbc.gridheight = 2;
@@ -52,6 +53,12 @@ public class MainView extends JFrame{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             ClientApplication.setEventFrameVisible(true);
+        }
+    }
+    class FindPersonButtonListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            ClientApplication.setFindPersonFrameVisible(true);
         }
     }
 }
