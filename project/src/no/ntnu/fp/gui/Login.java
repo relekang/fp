@@ -63,7 +63,7 @@ public class Login extends JPanel {
     	add(passwordfield,c);
   
     	
-    	//adds loginbutton
+    	//adds login button
     	loginButton = new JButton("Log in");
     	c.gridx = 1;
     	c.gridy = 2;
