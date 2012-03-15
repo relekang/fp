@@ -30,9 +30,10 @@ import no.ntnu.fp.model.Employee;
 public class EventView extends JFrame{
 	
 	JList participantList;
-	JComponent fromField, toField, participantsField, roomBox, descriptionBox;
+	JComboBox roomBox;
+	JTextArea descriptionBox;
 	JButton saveButton, cancelButton, deletebutton, acceptButton, declineButton;
-	JTextField eventTitle;
+	JTextField eventTitle, fromField, toField, participantsField;
 	JPanel eventPanel;
 	GridBagConstraints gbc;
 	DefaultListModel listModel;
@@ -89,7 +90,7 @@ public class EventView extends JFrame{
 		roomBox.setPreferredSize(new Dimension(275, 25));
 		descriptionBox.setPreferredSize(new Dimension(200, 100));
 		
-		if(false){
+		if(true){
 			saveButton = new JButton("Save");
 			cancelButton = new JButton("Cancel");
 			deletebutton = new JButton("Delete");
@@ -108,31 +109,42 @@ public class EventView extends JFrame{
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
 			eventPanel.add(deletebutton, gbc);
+			
+			saveButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					
+				}
+			});
+			
+			cancelButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
+			
+			deletebutton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
 		}
 		
 		else{
 			eventTitle.setEditable(false);
-			fromField.setEnabled(false);
-			toField.setEnabled(false);
+			fromField.setEditable(false);
+			toField.setEditable(false);
 			roomBox.setEnabled(false);
+			participantsField.setEditable(false);
+			descriptionBox.setEditable(false);
 			
-//			Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
-//			
-//			BorderFactory.createEmptyBorder();
-//			eventTitle = new JLabel("Tittel", JLabel.CENTER);
-//			eventTitle.setFont(font);
-//			eventTitle.setPreferredSize(new Dimension(150, 20));
-//			eventTitle.setBorder(BorderFactory.createLineBorder(Color.black));
-//			
-//			fromField = new JLabel("5.mars kl 13:37");
-//			toField = new JLabel("6.mars 0:01");
-//			roomBox = new JLabel("314, P15");
-//			descriptionBox = new JTextArea("Kort beskrivelse");
-//			descriptionBox.setPreferredSize(new Dimension(200, 100));
 			acceptButton = new JButton("Accept");
 			declineButton = new JButton("Decline");
-//			participantsField = new JLabel();
-//			
 			gbc.gridx = 0; gbc.gridy = 7;
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
@@ -142,8 +154,23 @@ public class EventView extends JFrame{
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
 			eventPanel.add(declineButton, gbc);
-//			
-//			descriptionBox.setEnabled(false);
+			
+			acceptButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					
+				}
+			});
+			
+			declineButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
+			
 		}
 		
 		gbc.gridx = 0;	gbc.gridy = 0;
@@ -179,29 +206,6 @@ public class EventView extends JFrame{
 		gbc.gridheight = 6;
 		eventPanel.add(participantList, gbc);
 		
-//		saveButton.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				
-//			}
-//		});
-//		
-//		cancelButton.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//			}
-//		});
-//		
-//		deletebutton.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//			}
-//		});
 	}
 	
 	
