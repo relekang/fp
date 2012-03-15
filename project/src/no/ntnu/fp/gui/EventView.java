@@ -10,9 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Locale;
-
 import no.ntnu.fp.model.Employee;
-
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -25,13 +23,16 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
+
 import no.ntnu.fp.model.Employee;
 
 public class EventView extends JFrame{
 	
 	JList participantList;
-	JComponent eventTitle, fromField, toField, participantsField, roomBox, descriptionBox;
+	JComponent fromField, toField, participantsField, roomBox, descriptionBox;
 	JButton saveButton, cancelButton, deletebutton, acceptButton, declineButton;
+	JTextField eventTitle;
 	JPanel eventPanel;
 	GridBagConstraints gbc;
 	DefaultListModel listModel;
@@ -110,7 +111,11 @@ public class EventView extends JFrame{
 		}
 		
 		else{
-			eventTitle.setEnabled(false);
+			eventTitle.setEditable(false);
+			fromField.setEnabled(false);
+			toField.setEnabled(false);
+			roomBox.setEnabled(false);
+			
 //			Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
 //			
 //			BorderFactory.createEmptyBorder();
