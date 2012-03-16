@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Locale;
 import no.ntnu.fp.model.Employee;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -29,14 +31,14 @@ import no.ntnu.fp.model.Employee;
 
 public class EventView extends JFrame{
 	
-	JTable participantList;
+	JList participantList;
 	JTextArea descriptionBox;
 	JComboBox roomBox;
 	JButton saveButton, cancelButton, deleteButton, acceptButton, declineButton;
 	JTextField eventTitle, fromField, toField, participantsField;
 	JPanel eventPanel;
 	GridBagConstraints gbc;
-	DefaultTableModel tableModel;
+	DefaultListModel listModel;
 	ParticipantRenderer renderer;
 	Employee user;
 	JPopupMenu fromPop;
@@ -66,15 +68,20 @@ public class EventView extends JFrame{
 		//
 		
 		renderer = new ParticipantRenderer();
-		tableModel = new DefaultTableModel();
+		listModel = new DefaultListModel();
 		
-		participantList = new JTable(tableModel);
-		//participantList.setCellRenderer(renderer);
+		listModel.addElement(arne);
+		listModel.addElement(hans);
+		listModel.addElement(geir);
+		listModel.addElement(bjarne);
 		
-		tableModel.addRow(new Object[]{bjarne});
-		tableModel.addRow(new Object[]{hans});
-		tableModel.addRow(new Object[]{geir});
-		tableModel.addRow(new Object[]{arne});
+		participantList = new JList(listModel);
+		participantList.setCellRenderer(renderer);
+		
+//		tableModel.addRow(new Object[]{bjarne});
+//		tableModel.addRow(new Object[]{hans});
+//		tableModel.addRow(new Object[]{geir});
+//		tableModel.addRow(new Object[]{arne});
 		
 		participantList.setPreferredSize(new Dimension(300, 400));
 		
