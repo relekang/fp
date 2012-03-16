@@ -52,14 +52,13 @@ public class FindPersonView extends JFrame implements ActionListener{
 		add(compare,gbc);
 		
 		
-		
+		week.setMaximumRowCount(5);
 		gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 10;
 		this.add(calenderPanel, gbc);
 		searchField.addActionListener(this);
 		backBTN.addActionListener(this);
 		fwdBTN.addActionListener(this);
 		compare.addActionListener(this);
-	
 	
 	}
 
