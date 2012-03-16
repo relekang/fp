@@ -33,7 +33,7 @@ public class EventView extends JFrame{
 	JList participantList;
 	JTextArea descriptionBox;
 	JComboBox roomBox;
-	JButton saveButton, cancelButton, deleteButton, acceptButton, declineButton;
+	JButton saveButton, cancelButton, deleteButton, acceptButton, declineButton, delPersonBTN;
 	JTextField eventTitle, fromField, toField, participantsField;
 	JPanel eventPanel;
 	GridBagConstraints gbc;
@@ -93,14 +93,14 @@ public class EventView extends JFrame{
 		roomBox = new JComboBox(rooms);
 		descriptionBox = new JTextArea("Description");
 		participantsField = new JTextField("Participants", 23);
-		
 		roomBox.setPreferredSize(new Dimension(275, 25));
 		descriptionBox.setPreferredSize(new Dimension(200, 100));
 		
-		if(false){
+		if(true){
 			saveButton = new JButton("Save");
 			cancelButton = new JButton("Cancel");
 			deleteButton = new JButton("Delete");
+			delPersonBTN = new JButton("Remove person");
 			
 			gbc.gridx = 0;	gbc.gridy = 7;
 			gbc.gridwidth = 1;
@@ -116,6 +116,9 @@ public class EventView extends JFrame{
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
 			eventPanel.add(deleteButton, gbc);
+			
+			gbc.gridx = 4;	gbc.gridy = 7;
+			eventPanel.add(delPersonBTN,gbc);
 			
 			saveButton.addActionListener(new ActionListener() {
 				
@@ -139,6 +142,31 @@ public class EventView extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					
 				}
+			});
+			
+			delPersonBTN.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					int temp = participantList.getSelectedIndex();
+					
+					
+					
+					if(temp > -1){
+						participantList.setSelectedIndex(temp - 1);
+						removeParticipant(temp);
+					}
+					else
+					{
+						
+						//list.setSelectedIndex(-1);
+						//persons.setModel(new Person());
+						//removePerson(temp);
+					}
+					
+				}
+
+				
 			});
 			
 		}
@@ -214,7 +242,12 @@ public class EventView extends JFrame{
 		gbc.gridwidth = 3;
 		gbc.gridheight = 6;
 		eventPanel.add(participantList, gbc);
-
+	}
+	public void removeParticipant(int i) {
+		listModel.remove(i);
+	}
+	public void addParticipant(Employee person) {
+		listModel.addElement(person);
 	}
 	
 	

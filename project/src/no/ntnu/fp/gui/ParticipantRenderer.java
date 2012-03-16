@@ -34,7 +34,7 @@ public class ParticipantRenderer extends DefaultListCellRenderer implements List
 
 			print.setIcon(icon);
 			print.setText( ((Employee) value).getName());	
-			print.setForeground(Color.GREEN);			
+						
 
 			
 
@@ -51,7 +51,7 @@ public class ParticipantRenderer extends DefaultListCellRenderer implements List
 
 			print.setIcon(icon);
 			print.setText( ((Employee) value).getName());	
-			print.setForeground(Color.RED);			
+						
 
 			
 
@@ -68,7 +68,7 @@ public class ParticipantRenderer extends DefaultListCellRenderer implements List
 
 			print.setIcon(icon);
 			print.setText( ((Employee) value).getName());	
-			print.setForeground(Color.ORANGE);			
+						
 
 		}
 
