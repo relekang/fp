@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Locale;
 import no.ntnu.fp.model.Employee;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -74,6 +73,8 @@ public class EventView extends JFrame{
 		listModel.addElement(hans);
 		listModel.addElement(geir);
 		listModel.addElement(bjarne);
+
+//		participantList.setBackground(Color.black);
 		
 		participantList = new JList(listModel);
 		participantList.setCellRenderer(renderer);
