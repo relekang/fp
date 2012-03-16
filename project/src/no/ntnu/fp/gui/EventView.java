@@ -74,7 +74,6 @@ public class EventView extends JFrame{
 		listModel.addElement(geir);
 		listModel.addElement(bjarne);
 
-//		participantList.setBackground(Color.black);
 		
 		participantList = new JList(listModel);
 		participantList.setCellRenderer(renderer);
