@@ -71,14 +71,11 @@ public class SimpleConnection implements Connection {
 	 * @see no.ntnu.fp.net.co.Connection#accept(java.net.InetAddress, int)
 	 */
 	public Connection accept() throws IOException, SocketTimeoutException {
-
 		ServerSocket myServerSocket = new ServerSocket(myPort);
 
-		System.out.println("Serversocket lytter på: "
-				+ myServerSocket.getLocalPort());
+		System.out.println("Serversocket lytter på: " + myServerSocket.getLocalPort());
 		mySocket = myServerSocket.accept();
-		System.out.println("Fikk en oppkobling på: "
-				+ myServerSocket.getLocalPort());
+		System.out.println("Fikk en oppkobling på: " + myServerSocket.getLocalPort());
 
 		// skal denne lukkes med en gang? hvis ikke - når?
 		myServerSocket.close();
