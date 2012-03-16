@@ -23,21 +23,12 @@ import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
-public class ParticipantRenderer /*extends CellRendererPane*/ implements TableCellRenderer/*, ListCellRenderer*/{
-	
-	// Old code, delete when new code works
-	/*public Component getListCellRendererComponent(JList list, Object value,
-			int index, boolean isSelected, boolean cellHasFocus){
-		
-		return this;
-	}*/
+public class ParticipantRenderer implements TableCellRenderer{
 
 	@Override
 	public Component getTableCellRendererComponent(JTable list, Object value,
 			boolean arg2, boolean isSelected, int arg4, int arg5) {
-		// TODO Auto-generated method stub
 		
-		//JLabel print = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		GridBagConstraints gbc = new GridBagConstraints();
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
