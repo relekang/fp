@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Locale;
 import no.ntnu.fp.model.Employee;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -33,7 +32,7 @@ public class EventView extends JFrame{
 	JTable participantList;
 	JTextArea descriptionBox;
 	JComboBox roomBox;
-	JButton saveButton, cancelButton, deletebutton, acceptButton, declineButton;
+	JButton saveButton, cancelButton, deleteButton, acceptButton, declineButton;
 	JTextField eventTitle, fromField, toField, participantsField;
 	JPanel eventPanel;
 	GridBagConstraints gbc;
@@ -94,7 +93,7 @@ public class EventView extends JFrame{
 		if(false){
 			saveButton = new JButton("Save");
 			cancelButton = new JButton("Cancel");
-			deletebutton = new JButton("Delete");
+			deleteButton = new JButton("Delete");
 			
 			gbc.gridx = 0;	gbc.gridy = 7;
 			gbc.gridwidth = 1;
@@ -109,7 +108,32 @@ public class EventView extends JFrame{
 			gbc.gridx = 2;	gbc.gridy = 7;
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
-			eventPanel.add(deletebutton, gbc);
+			eventPanel.add(deleteButton, gbc);
+			
+			saveButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
+			
+			cancelButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
+			
+			deleteButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
+			
 		}
 		
 		else{
@@ -132,6 +156,22 @@ public class EventView extends JFrame{
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
 			eventPanel.add(declineButton, gbc);
+			
+			acceptButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					
+				}
+			});
+			
+			declineButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
 			
 		}
 		
