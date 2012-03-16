@@ -4,6 +4,7 @@ import no.ntnu.fp.model.Event;
 import no.ntnu.fp.model.Room;
 
 import java.sql.*;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Properties;
@@ -39,19 +40,35 @@ public class DbHandler {
     public void close() throws SQLException {
         conn.close();
     }
+    
+    public Date dateFromString(String input){
+        Calendar cal = Calendar.getInstance();
+        int[] date = new int[3];
+        for(int i = 0; i < date.length; i++){
+            date[i] = Integer.parseInt(input.split("-")[i]);
+        }
+        cal.set(Calendar.YEAR, date[0]);
+        cal.set(Calendar.MONTH, date[1]);
+        cal.set(Calendar.DAY_OF_MONTH, date[2]);
+        System.out.println(cal.getTime().toString());
+        return cal.getTime();
+    }
 
 
 
 
     public static void main (String args[]){
         try {
-            EventHandler dbHandler = new EventHandler();
+            EventHandler eventHandler = new EventHandler();
+            RoomHandler roomHandler = new RoomHandler();
             System.out.println("Created DbHandler instance");
             Event e = new Event("Superevent", Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
             e.setDescription("LOL");
-            e.setRoom(new Room(0));
-            System.out.println(dbHandler.createEvent(e));
-            System.out.print(dbHandler.fetchAllEvents());
+            Room room = new Room("R1", "Realfagsbygget", 600);
+            System.out.println(roomHandler.createRoom(room));
+            e.setRoom(room);
+            System.out.println(eventHandler.createEvent(e));
+            System.out.print(eventHandler.fetchAllEvents());
         } catch (SQLException e){
             System.out.println(e);
         }

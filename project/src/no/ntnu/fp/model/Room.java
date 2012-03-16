@@ -1,6 +1,10 @@
 package no.ntnu.fp.model;
 
 
+import no.ntnu.fp.storage.db.RoomHandler;
+
+import java.sql.SQLException;
+
 public class Room {
 
 	private final int ROOM_ID; 
@@ -8,21 +12,19 @@ public class Room {
 	private String name;
 	private String location;
 	private int capacity;
-	
-	
-    public Room(int roomId){
-        //Todo fetch from database from id in db
-    	ROOM_ID = 0;
-        name = "lol";
-        location = "Jaok";
-        capacity = 40;
-    }
+
     
     public Room(String name, String location, int capacity) {
     	ROOM_ID = 0;
     	setName(name);
     	setLocation(location);
     	setCapacity(capacity);
+    }
+    public Room(int id, String name, String location, int capacity) {
+        ROOM_ID = id;
+        setName(name);
+        setLocation(location);
+        setCapacity(capacity);
     }
 
 	public String getName() {

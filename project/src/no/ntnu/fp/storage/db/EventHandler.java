@@ -24,10 +24,8 @@ public class EventHandler extends DbHandler {
         ResultSet rs = stmt.executeQuery("SELECT * FROM EVENT");
 
         while (rs.next()) {
-            Event event = new Event(rs.getString("title"));
-//            event.setDateFrom(rs.getString("date_from"));
-//            event.setDateTo(rs.getString("date_to"));
-            event.setRoom(new Room(rs.getInt("room_id")));
+            Event event = new Event(rs.getInt("id") , rs.getString("title"), dateFromString(rs.getString("date_from")), dateFromString(rs.getString("date_to")));
+            event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
             event.setDescription(rs.getString("description"));
             events.add(event);
         }
@@ -46,9 +44,9 @@ public class EventHandler extends DbHandler {
             Event event;
             while (rs.next()) {
                 event = new Event(rs.getString("title"));
-                event.setDateFrom(rs.getDate("date_from"));
-                event.setDateTo(rs.getDate("date_to"));
-                event.setRoom(new Room(rs.getInt("room_id")));
+                event.setDateFrom(dateFromString(rs.getString("date_from")));
+                event.setDateTo(dateFromString(rs.getString("date_to")));
+                event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
                 event.setDescription(rs.getString(" description"));
 
             }
@@ -73,5 +71,9 @@ public class EventHandler extends DbHandler {
         System.out.println(rs);
         close();
         return event;
+    }
+    public static Event getEvent(int eventId) throws SQLException {
+        EventHandler eventHandler = new EventHandler();
+        return eventHandler.fetchEvent(String.format("id = %d", eventId));
     }
 }

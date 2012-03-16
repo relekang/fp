@@ -6,7 +6,7 @@ import java.util.Date;
 public class Event {
 	
 	public static final int TITLE_LENGTH = 64;
-	
+    private final int ID;	
     private String title;
     private Date dateFrom;
     private Date dateTo;
@@ -21,6 +21,7 @@ public class Event {
      * @param title
      */
     public Event(String title){
+        ID = 0;
         setTitle(title);
     }
     
@@ -31,9 +32,20 @@ public class Event {
      * @param dateTo
      */
     public Event(String title, Date dateFrom, Date dateTo){
+        ID = 0;
         setTitle(title);
         setDateFrom(dateFrom);
         setDateTo(dateTo);
+    }
+    public Event(int id, String title, Date dateFrom, Date dateTo){
+        ID = id;
+        setTitle(title);
+        setDateFrom(dateFrom);
+        setDateTo(dateTo);
+    }
+    
+    public int getID(){
+        return ID;
     }
     
     /**
