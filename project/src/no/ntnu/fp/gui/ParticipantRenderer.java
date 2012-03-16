@@ -35,7 +35,7 @@ public class ParticipantRenderer extends DefaultListCellRenderer implements List
 			print.setIcon(icon);
 			print.setText( ((Employee) value).getName());	
 			print.setForeground(Color.GREEN);			
-			print.setBackground(Color.BLACK);
+
 			
 
 
@@ -52,7 +52,7 @@ public class ParticipantRenderer extends DefaultListCellRenderer implements List
 			print.setIcon(icon);
 			print.setText( ((Employee) value).getName());	
 			print.setForeground(Color.RED);			
-			print.setBackground(Color.BLACK);
+
 			
 
 
@@ -69,12 +69,12 @@ public class ParticipantRenderer extends DefaultListCellRenderer implements List
 			print.setIcon(icon);
 			print.setText( ((Employee) value).getName());	
 			print.setForeground(Color.ORANGE);			
-			print.setBackground(Color.BLACK);
 
 		}
 
 		java.net.URL delIMG = getClass().getResource("/resources/icons/delete.png");
 		ImageIcon delete = new ImageIcon(delIMG);
+		print.setBackground(Color.BLACK);
 		
 		return this;
 
