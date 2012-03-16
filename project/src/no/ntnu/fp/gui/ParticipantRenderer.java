@@ -74,7 +74,6 @@ public class ParticipantRenderer extends DefaultListCellRenderer implements List
 
 		java.net.URL delIMG = getClass().getResource("/resources/icons/delete.png");
 		ImageIcon delete = new ImageIcon(delIMG);
-		print.setBackground(Color.BLACK);
 		
 		return this;
 
