@@ -31,7 +31,8 @@ import no.ntnu.fp.model.Employee;
 public class EventView extends JFrame{
 	
 	JTable participantList;
-	JComponent roomBox, descriptionBox;
+	JTextArea descriptionBox;
+	JComboBox roomBox;
 	JButton saveButton, cancelButton, deletebutton, acceptButton, declineButton;
 	JTextField eventTitle, fromField, toField, participantsField;
 	JPanel eventPanel;
@@ -116,24 +117,11 @@ public class EventView extends JFrame{
 			fromField.setEditable(false);
 			toField.setEditable(false);
 			roomBox.setEnabled(false);
+			descriptionBox.setEditable(false);
 			
-//			Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
-//			
-//			BorderFactory.createEmptyBorder();
-//			eventTitle = new JLabel("Tittel", JLabel.CENTER);
-//			eventTitle.setFont(font);
-//			eventTitle.setPreferredSize(new Dimension(150, 20));
-//			eventTitle.setBorder(BorderFactory.createLineBorder(Color.black));
-//			
-//			fromField = new JLabel("5.mars kl 13:37");
-//			toField = new JLabel("6.mars 0:01");
-//			roomBox = new JLabel("314, P15");
-//			descriptionBox = new JTextArea("Kort beskrivelse");
-//			descriptionBox.setPreferredSize(new Dimension(200, 100));
 			acceptButton = new JButton("Accept");
 			declineButton = new JButton("Decline");
 
-			participantsField = new JLabel();
 
 			gbc.gridx = 0; gbc.gridy = 7;
 			gbc.gridwidth = 1;
@@ -144,8 +132,7 @@ public class EventView extends JFrame{
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
 			eventPanel.add(declineButton, gbc);
-//			
-//			descriptionBox.setEnabled(false);
+			
 		}
 		
 		gbc.gridx = 0;	gbc.gridy = 0;
