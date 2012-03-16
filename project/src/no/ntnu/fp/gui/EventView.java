@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.Locale;
 import no.ntnu.fp.model.Employee;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -21,21 +20,23 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.JTextComponent;
 
 import no.ntnu.fp.model.Employee;
 
 public class EventView extends JFrame{
 	
-	JList participantList;
-	JComponent fromField, toField, participantsField, roomBox, descriptionBox;
+	JTable participantList;
+	JComponent roomBox, descriptionBox;
 	JButton saveButton, cancelButton, deletebutton, acceptButton, declineButton;
-	JTextField eventTitle;
+	JTextField eventTitle, fromField, toField, participantsField;
 	JPanel eventPanel;
 	GridBagConstraints gbc;
-	DefaultListModel listModel;
+	DefaultTableModel tableModel;
 	ParticipantRenderer renderer;
 	Employee user;
 	JPopupMenu fromPop;
@@ -57,7 +58,7 @@ public class EventView extends JFrame{
 	@SuppressWarnings("unused")
 	private void createPanel(){
 		
-		//middlertidig eksempler
+		//midlertidig eksempler
 		Employee hans = new Employee("Hans", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
 		Employee geir = new Employee("Geir", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
 		Employee bjarne = new Employee("Bjarne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
@@ -65,15 +66,15 @@ public class EventView extends JFrame{
 		//
 		
 		renderer = new ParticipantRenderer();
-		listModel = new DefaultListModel();
+		tableModel = new DefaultTableModel();
 		
-		participantList = new JList(listModel);
-		participantList.setCellRenderer(renderer);
+		participantList = new JTable(tableModel);
+		//participantList.setCellRenderer(renderer);
 		
-		listModel.addElement(bjarne);
-		listModel.addElement(hans);
-		listModel.addElement(geir);
-		listModel.addElement(arne);
+		tableModel.addRow(new Object[]{bjarne});
+		tableModel.addRow(new Object[]{hans});
+		tableModel.addRow(new Object[]{geir});
+		tableModel.addRow(new Object[]{arne});
 		
 		participantList.setPreferredSize(new Dimension(300, 400));
 		
@@ -112,8 +113,8 @@ public class EventView extends JFrame{
 		
 		else{
 			eventTitle.setEditable(false);
-			fromField.setEnabled(false);
-			toField.setEnabled(false);
+			fromField.setEditable(false);
+			toField.setEditable(false);
 			roomBox.setEnabled(false);
 			
 //			Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 20);

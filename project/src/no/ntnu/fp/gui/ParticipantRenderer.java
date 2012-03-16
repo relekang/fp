@@ -23,13 +23,14 @@ import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
-public class ParticipantRenderer extends CellRendererPane implements TableCellRenderer, ListCellRenderer{
+public class ParticipantRenderer /*extends CellRendererPane*/ implements TableCellRenderer/*, ListCellRenderer*/{
 	
-	public Component getListCellRendererComponent(JList list, Object value,
+	// Old code, delete when new code works
+	/*public Component getListCellRendererComponent(JList list, Object value,
 			int index, boolean isSelected, boolean cellHasFocus){
 		
 		return this;
-	}
+	}*/
 
 	@Override
 	public Component getTableCellRendererComponent(JTable list, Object value,
