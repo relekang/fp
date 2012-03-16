@@ -123,16 +123,22 @@ public class Event {
      * Gets the date from sql, and converts it to an "util" date
      * @return date
      */
-    public java.sql.Date getSqlDateFrom(){
-        return new java.sql.Date(dateFrom.getTime());
+    public String getSqlDateFrom(){
+        if(dateTo != null)
+            return new java.sql.Date(dateFrom.getTime()).toString();
+        else
+            return "0000-00-00";
     }
     
     /**
      * Gets the date from sql, and converts it to an "util" date
      * @return
      */
-    public java.sql.Date getSqlDateTo(){
-        return new java.sql.Date(dateTo.getTime());
+    public String getSqlDateTo(){
+        if(dateTo != null)
+            return new java.sql.Date(dateTo.getTime()).toString();
+        else
+            return "0000-00-00";
     }
 
 }

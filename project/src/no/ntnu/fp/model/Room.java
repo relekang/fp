@@ -13,6 +13,9 @@ public class Room {
     public Room(int roomId){
         //Todo fetch from database from id in db
     	ROOM_ID = 0;
+        name = "lol";
+        location = "Jaok";
+        capacity = 40;
     }
     
     public Room(String name, String location, int capacity) {

@@ -132,8 +132,9 @@ public class EventView extends JFrame{
 //			descriptionBox.setPreferredSize(new Dimension(200, 100));
 			acceptButton = new JButton("Accept");
 			declineButton = new JButton("Decline");
-//			participantsField = new JLabel();
-//			
+
+			participantsField = new JLabel();
+
 			gbc.gridx = 0; gbc.gridy = 7;
 			gbc.gridwidth = 1;
 			gbc.gridheight = 1;
@@ -179,30 +180,7 @@ public class EventView extends JFrame{
 		gbc.gridwidth = 3;
 		gbc.gridheight = 6;
 		eventPanel.add(participantList, gbc);
-		
-//		saveButton.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				
-//			}
-//		});
-//		
-//		cancelButton.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//			}
-//		});
-//		
-//		deletebutton.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//			}
-//		});
+
 	}
 	
 	
