@@ -85,28 +85,32 @@ public class Login extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Fix log in, so that both fields are required
-			System.out.println("login");
+			String username = usernameTextField.getText();
+			String password = passwordfield.getText();
+			System.out.println("username: "+username+"\npassword: "+ password);
+			
+
 		}
 		
 	}
 	
 	
-	//Main
-	public static void main(String[] args) throws UnsupportedLookAndFeelException{
-		
-		UIManager.setLookAndFeel(UIManager.getLookAndFeel());
-		
-		JFrame loginframe = new JFrame("Log in");
-		loginframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		loginframe.getContentPane().add(new Login());
-		loginframe.pack();
-        loginframe.setVisible(true);
-		
-		
-		
-		
-		
-	}
+//	//Main
+//	public static void main(String[] args) throws UnsupportedLookAndFeelException{
+//		
+//		UIManager.setLookAndFeel(UIManager.getLookAndFeel());
+//		
+//		JFrame loginframe = new JFrame("Log in");
+//		loginframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		loginframe.getContentPane().add(new Login());
+//		loginframe.pack();
+//        loginframe.setVisible(true);
+//		
+//		
+//		
+//		
+//		
+//	}
 	
 	
 	

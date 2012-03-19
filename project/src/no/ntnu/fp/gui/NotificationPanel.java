@@ -13,5 +13,4 @@ public class NotificationPanel extends JPanel{
         list.setModel(listModel);
         add(list);
     }
-
 }
