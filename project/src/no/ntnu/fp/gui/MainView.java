@@ -21,8 +21,8 @@ public class MainView extends JFrame{
         loginPanel = new Login();
         
         buildMainPanel();
-        add(loginPanel);
-//      add(mainPanel);
+//        add(loginPanel);
+        add(mainPanel);
 
         pack();
     }

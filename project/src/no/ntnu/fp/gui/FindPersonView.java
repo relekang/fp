@@ -10,62 +10,75 @@ import javax.swing.*;
 
 public class FindPersonView extends JFrame implements ActionListener{
     private JTextField searchField;
-    private JButton backBTN, fwdBTN, compare;
+    private JButton previousButton, nextButton, compare;
     private JComboBox week;
-    private GridBagConstraints gbc;
-    private JPanel calenderPanel;
-    private String[] weekArray = {"WEEK 10","WEEK 11","WEEK 12","WEEK 13","WEEK 14","WEEK 15","WEEK 16","WEEK 17"};
+    private GridBagConstraints gbc, gbc1;
+    private JPanel findPersonPanel, calenderPanel, buttonPanel;
+    private String[] weekArray = {"WEEK 10","WEEK 11","WEEK 12","WEEK 13",
+    							  "WEEK 14","WEEK 15","WEEK 16","WEEK 17"};
 	
 	public FindPersonView(){
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(15, 15, 15, 15);
-		this.setLayout(new GridBagLayout());
+		findPersonPanel = new JPanel();
+		findPersonPanel.setLayout(new GridBagLayout());
 //		user = EventController.getEmplyee();
 //		eventPanel = new JPanel();
 //		Panel.setLayout(new GridBagLayout());
 		
-		initialize();
+		calenderPanel = new CalendarPanel();
+		previousButton = new JButton("Previous");
+		nextButton = new JButton("Next");
+		compare = new JButton("Compare");
+		searchField = new JTextField(20);
+		week = new JComboBox(weekArray);
+		
 		addElements();
 		this.pack();
     }
 	
-	
-	private void initialize(){
-		calenderPanel = new CalendarPanel();
-		backBTN = new JButton("Previous");
-		fwdBTN = new JButton("Next");
-		compare = new JButton("Compare");
-		searchField = new JTextField(20);
-		week = new JComboBox(weekArray);
-	}
-	
 	private void addElements(){
-		gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
-		add(searchField,gbc);
+		gbc.gridx = 0;	gbc.gridy = 0;
+		gbc.gridwidth = 2;
+		gbc.weightx = 0.5;
+		gbc.anchor = GridBagConstraints.WEST;
+		findPersonPanel.add(searchField,gbc);
 		
 		
-		gbc.gridx = 7; gbc.gridwidth = 1;
-		//gbc.anchor = GridBagConstraints.EAST;
-		add(backBTN,gbc);
-		gbc.gridx = 8;
-		add(week,gbc);
-		gbc.gridx = 9; 
-		add(fwdBTN,gbc);
+		gbc.gridx = 3; gbc.gridy = 0; 
+		gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.EAST;
+		findPersonPanel.add(previousButton,gbc);
 		
-		//searchField
-		gbc.gridx = 9;gbc.anchor = GridBagConstraints.EAST;
-		add(compare,gbc);
-		//WHY U NO BE IN THE MIDDLE?
+		gbc.gridx = 5; gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.CENTER;
+		findPersonPanel.add(week, gbc);
 		
+		gbc.gridx = 6; gbc.gridy = 0;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.WEST;
+		findPersonPanel.add(nextButton, gbc);
 		
+//		searchField
+		gbc.gridx = 8; gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.CENTER;
+//		gbc.anchor = GridBagConstraints.EAST;
+		findPersonPanel.add(compare, gbc);
+		
+		gbc.gridx = 0; gbc.gridy = 1; 
+		gbc.gridwidth = 10;
+		findPersonPanel.add(calenderPanel, gbc);
 		
 		week.setMaximumRowCount(5);
-		gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 10;
-		this.add(calenderPanel, gbc);
+		
 		searchField.addActionListener(this);
-		backBTN.addActionListener(this);
-		fwdBTN.addActionListener(this);
+		previousButton.addActionListener(this);
+		nextButton.addActionListener(this);
 		compare.addActionListener(this);
+		
+		this.add(findPersonPanel);
 	
 	}
 
@@ -75,20 +88,17 @@ public class FindPersonView extends JFrame implements ActionListener{
 			// TODO Auto-generated method stub
 			System.out.println("you searched for "+searchField.getText());
 		}
-		else if(arg0.getSource() == backBTN){
+		else if(arg0.getSource() == previousButton){
 			if(week.getSelectedIndex()>0)
 			week.setSelectedIndex(week.getSelectedIndex()-1);
 		}
-		else if(arg0.getSource() == fwdBTN){
+		else if(arg0.getSource() == nextButton){
 			if(week.getSelectedIndex()<weekArray.length-1)
 			week.setSelectedIndex(week.getSelectedIndex()+1);
 		}
 		else if(arg0.getSource() == compare){
 			//TODO compare
 			System.out.println("compare");
-			
 		}
-		
 	}
-	
 }
