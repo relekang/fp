@@ -25,7 +25,19 @@ public class Login extends JPanel {
 	protected JPasswordField passwordfield;
 	
 	protected JButton loginButton;
+	protected boolean loggedIn;
+//	protected MainView;
 	
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+
+	public void logOut() {
+		loggedIn = false;
+	}
+
+
 	//constructor	
 	public Login(){
 		
@@ -76,7 +88,7 @@ public class Login extends JPanel {
     	passwordfield.addActionListener(new LoginAction());
     	loginButton.addActionListener(new LoginAction());
     
-    	
+    	loggedIn = false;
 	}
 	
 	
@@ -88,7 +100,7 @@ public class Login extends JPanel {
 			String username = usernameTextField.getText();
 			String password = passwordfield.getText();
 			System.out.println("username: "+username+"\npassword: "+ password);
-			
+			loggedIn = true;
 
 		}
 		

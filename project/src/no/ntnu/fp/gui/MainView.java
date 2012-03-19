@@ -19,10 +19,11 @@ public class MainView extends JFrame{
         overviewPanel = new OverviewCalenderPanel();
         notificationPanel = new NotificationPanel();
         loginPanel = new Login();
+//      loginPanel.mv = this;
         
         buildMainPanel();
-        add(loginPanel);
-//      add(mainPanel);
+//		add(loginPanel);
+        add(mainPanel);
 
         pack();
     }
@@ -61,6 +62,14 @@ public class MainView extends JFrame{
         mainPanel.add(notificationPanel, gbc);
 
     }
+    
+    public void logOut(){
+    	((Login) loginPanel).logOut();
+    	mainPanel.setVisible(false);
+    	add(loginPanel);
+    	pack();
+    	
+    }
 
     class CreateEventButtonListener implements ActionListener{
         @Override
@@ -71,7 +80,7 @@ public class MainView extends JFrame{
     class SignOutEventButtonListener implements ActionListener{
     	@Override
     	public void actionPerformed(ActionEvent actionEvent) {
-    		System.out.println("moooo");
+    		logOut();
     	}
     }
     class FindPersonButtonListener implements ActionListener{
