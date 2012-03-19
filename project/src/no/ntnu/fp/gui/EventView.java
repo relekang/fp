@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Locale;
 import no.ntnu.fp.model.Employee;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -177,9 +178,18 @@ public class EventView extends JFrame{
 			toField.setEditable(false);
 			roomBox.setEnabled(false);
 			descriptionBox.setEditable(false);
+			participantsField.setVisible(false);
 			
 			acceptButton = new JButton("Accept");
 			declineButton = new JButton("Decline");
+			
+			java.net.URL accept = getClass().getResource("/resources/icons/accept.png");
+			ImageIcon acceptIcon = new ImageIcon(accept);
+			acceptButton.setIcon(acceptIcon);
+			
+			java.net.URL decline = getClass().getResource("/resources/icons/decline.png");
+			ImageIcon declineIcon = new ImageIcon(decline);
+			declineButton.setIcon(declineIcon);
 
 
 			gbc.gridx = 0; gbc.gridy = 7;

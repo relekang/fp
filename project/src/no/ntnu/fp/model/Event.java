@@ -15,7 +15,6 @@ public class Event {
     
     
     
-    
     /**
      * Constructor, sets the title of the event.
      * @param title
