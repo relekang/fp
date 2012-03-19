@@ -1,15 +1,33 @@
 package no.ntnu.fp.model;
 
 
+import java.util.Calendar;
+
 public class Notification {
     private String description;
-    
+    private final int ID;
+    private final Calendar cal;
+    private boolean is_invitation;
+    private Event event;
+
     /**
      * Constructor for Notification
-     * @param desc
+     * @param id
+     * @param timestamp
+     * @param description
+     * @param is_invitation
      */
-    public Notification(String desc){
-        description = desc;
+    public Notification(int id, String timestamp, String description, int is_invitation){
+        this.ID = id;
+        this.description = description;
+        cal = Calendar.getInstance();
+//        this.description = timestamp;
+        if (is_invitation == 1){
+            this.is_invitation = true;
+        } else {
+            this.is_invitation = false;
+        }
+
     }
     
     /**
@@ -34,5 +52,27 @@ public class Notification {
     @Override
     public String toString() {
         return getDescription();
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public String getTimestampString() {
+        return "";
+    }
+
+    public int isInvitationAsInt() {
+        if (this.is_invitation) return 1;
+        else return 0;
+
     }
 }
