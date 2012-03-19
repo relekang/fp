@@ -1,6 +1,5 @@
 package no.ntnu.fp.gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -24,7 +23,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.text.JTextComponent;
 
 import no.ntnu.fp.model.Employee;
@@ -80,7 +78,6 @@ public class EventView extends JFrame{
 		
 		participantList.setPreferredSize(new Dimension(300, 400));
 		
-		//skal sjekke om brukeren er eventmanager
 		String[] rooms = {"Room", "211, P15", "R2"};
 		eventTitle = new JTextField("Title", 23);
 		fromField = new JTextField("From", 10);
@@ -91,6 +88,7 @@ public class EventView extends JFrame{
 		roomBox.setPreferredSize(new Dimension(275, 25));
 		descriptionBox.setPreferredSize(new Dimension(200, 100));
 		
+		//skal sjekke om brukeren er eventmanager
 		if(true){
 			saveButton = new JButton("Save");
 			cancelButton = new JButton("Cancel");
