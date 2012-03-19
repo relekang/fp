@@ -17,18 +17,29 @@ public class Workgroup implements PropertyChangeListener {
 	 */
 	private java.beans.PropertyChangeSupport propChangeSupp;
 	
+    private final int ID;
 	private String name;
 	private String email;
+    
 	
 	/**
 	 * Default constructor.  Must be called to initialise the object's member variables.
 	 *
 	 */
 	public Workgroup() {
+        this.ID = 0;
 		personList = new java.util.ArrayList();
 		propChangeSupp = new java.beans.PropertyChangeSupport(this);
 	}
-	
+
+    public Workgroup(int id, String name, String email) {
+        this.ID = id;
+        this.setName(name);
+        this.setEmail(email);
+        personList = new java.util.ArrayList();
+        propChangeSupp = new java.beans.PropertyChangeSupport(this);
+    }
+
 	public Workgroup(String name, String email) {
 		this();
 		this.setName(name);
