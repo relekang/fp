@@ -40,19 +40,23 @@ public class FindPersonView extends JFrame implements ActionListener{
 	}
 	
 	private void addElements(){
-		gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 4;
+		gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
 		add(searchField,gbc);
-		gbc.gridx = 4; gbc.gridwidth = 1;
+		
+		
+		gbc.gridx = 7; gbc.gridwidth = 1;
+		//gbc.anchor = GridBagConstraints.EAST;
 		add(backBTN,gbc);
-		gbc.gridx = 5; 
-		gbc.gridwidth = 3;
-		add(week,gbc);
-		gbc.gridwidth = 1;
 		gbc.gridx = 8;
+		add(week,gbc);
+		gbc.gridx = 9; 
 		add(fwdBTN,gbc);
-		gbc.gridx = 9;
+		
+		//searchField
+		gbc.gridx = 9;gbc.anchor = GridBagConstraints.EAST;
 		add(compare,gbc);
 		//WHY U NO BE IN THE MIDDLE?
+		
 		
 		
 		week.setMaximumRowCount(5);
@@ -72,7 +76,7 @@ public class FindPersonView extends JFrame implements ActionListener{
 			System.out.println("you searched for "+searchField.getText());
 		}
 		else if(arg0.getSource() == backBTN){
-			if(week.getSelectedIndex()>=0)
+			if(week.getSelectedIndex()>0)
 			week.setSelectedIndex(week.getSelectedIndex()-1);
 		}
 		else if(arg0.getSource() == fwdBTN){

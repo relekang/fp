@@ -17,8 +17,8 @@ public class NotificationPanel extends JPanel{
 
     private void createDummyData() {
         for(int i=0;i<6;i++){
-            Notification n = new Notification(rs.getInt("id"), "Test " + i, rs.getString("description"), rs.getInt("is_invitation"));
-            listModel.addElement(n);
+            //Notification n = new Notification(rs.getInt("id"), "Test " + i, rs.getString("description"), rs.getInt("is_invitation"));
+            //listModel.addElement(n);
         }
     }
 }
