@@ -22,7 +22,11 @@ public class MainView extends JFrame{
 //      loginPanel.mv = this;
         
         buildMainPanel();
+
 //		add(loginPanel);
+
+//        add(loginPanel);
+
         add(mainPanel);
 
         pack();
