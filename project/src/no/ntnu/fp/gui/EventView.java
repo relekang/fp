@@ -53,7 +53,6 @@ public class EventView extends JFrame{
 		
 		this.add(eventPanel);
 		this.pack();
-		
 
 	}
 	
@@ -78,11 +77,6 @@ public class EventView extends JFrame{
 		
 		participantList = new JList(listModel);
 		participantList.setCellRenderer(renderer);
-		
-//		tableModel.addRow(new Object[]{bjarne});
-//		tableModel.addRow(new Object[]{hans});
-//		tableModel.addRow(new Object[]{geir});
-//		tableModel.addRow(new Object[]{arne});
 		
 		participantList.setPreferredSize(new Dimension(300, 400));
 		
@@ -151,25 +145,18 @@ public class EventView extends JFrame{
 				public void actionPerformed(ActionEvent arg0) {
 					int temp = participantList.getSelectedIndex();
 					
-					
-					
 					if(temp > -1){
 						participantList.setSelectedIndex(temp - 1);
 						removeParticipant(temp);
 					}
 					else
 					{
-						
 						//list.setSelectedIndex(-1);
 						//persons.setModel(new Person());
 						//removePerson(temp);
 					}
-					
 				}
-
-				
 			});
-			
 		}
 		
 		else{
@@ -190,7 +177,6 @@ public class EventView extends JFrame{
 			java.net.URL decline = getClass().getResource("/resources/icons/decline.png");
 			ImageIcon declineIcon = new ImageIcon(decline);
 			declineButton.setIcon(declineIcon);
-
 
 			gbc.gridx = 0; gbc.gridy = 7;
 			gbc.gridwidth = 1;
@@ -217,7 +203,6 @@ public class EventView extends JFrame{
 					
 				}
 			});
-			
 		}
 		
 		gbc.gridx = 0;	gbc.gridy = 0;
@@ -253,13 +238,12 @@ public class EventView extends JFrame{
 		gbc.gridheight = 6;
 		eventPanel.add(participantList, gbc);
 	}
+	
 	public void removeParticipant(int i) {
 		listModel.remove(i);
 	}
+	
 	public void addParticipant(Employee person) {
 		listModel.addElement(person);
 	}
-	
-	
-
 }
