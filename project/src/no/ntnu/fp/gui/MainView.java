@@ -18,16 +18,17 @@ public class MainView extends JFrame{
         calenderPanel = new CalendarPanel();
         overviewPanel = new OverviewCalenderPanel();
         notificationPanel = new NotificationPanel();
-        loginPanel = new Login();
+        loginPanel = new Login(this);
 //      loginPanel.mv = this;
         
         buildMainPanel();
 
-//		add(loginPanel);
 
-//        add(loginPanel);
 
-        add(mainPanel);
+		
+		mainPanel.setVisible(false);
+       // add(mainPanel);
+        add(loginPanel);
 
         pack();
     }
@@ -67,11 +68,21 @@ public class MainView extends JFrame{
 
     }
     
+    public void logIn(){
+    	mainPanel.setVisible(true);
+    	add(mainPanel);
+    	pack();
+    	remove(loginPanel);
+    	
+    }
+    
     public void logOut(){
-    	((Login) loginPanel).logOut();
+    	//((Login) loginPanel).logOut();
     	mainPanel.setVisible(false);
+    	remove(mainPanel);
     	add(loginPanel);
     	pack();
+    	
     	
     }
 

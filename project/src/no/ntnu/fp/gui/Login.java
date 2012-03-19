@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -25,22 +26,25 @@ public class Login extends JPanel {
 	protected JPasswordField passwordfield;
 	
 	protected JButton loginButton;
-	protected boolean loggedIn;
-//	protected MainView;
+	protected JPopupMenu popup;
+//	protected boolean loggedIn;
+	protected MainView mv;
 	
-	public boolean isLoggedIn() {
-		return loggedIn;
-	}
-
-
-	public void logOut() {
-		loggedIn = false;
-	}
+//	public boolean isLoggedIn() {
+//		return loggedIn;
+//	}
+//
+//
+//	public void logOut() {
+//		loggedIn = false;
+//	}
 
 
 	//constructor	
-	public Login(){
+	public Login(MainView mv){
 		
+		this.mv = mv;
+		popup = new JPopupMenu();
 		
 		GridBagConstraints c = new GridBagConstraints();
     	setLayout(new GridBagLayout());
@@ -88,7 +92,7 @@ public class Login extends JPanel {
     	passwordfield.addActionListener(new LoginAction());
     	loginButton.addActionListener(new LoginAction());
     
-    	loggedIn = false;
+    	
 	}
 	
 	
@@ -96,11 +100,16 @@ public class Login extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Fix log in, so that both fields are required
+			// TODO Fix connection to database and check pass.
 			String username = usernameTextField.getText();
 			String password = passwordfield.getText();
-			System.out.println("username: "+username+"\npassword: "+ password);
-			loggedIn = true;
+			if(username.equalsIgnoreCase("Agnethe")&&password.equals("agnethe")){
+				mv.logIn();
+				
+			}
+			else{
+				System.out.println("feil passord");
+			}
 
 		}
 		
