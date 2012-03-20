@@ -3,6 +3,8 @@
 
 import no.ntnu.fp.storage.db.EventHandler;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -15,9 +17,10 @@ public class Event implements Model{
     private Date dateTo;
     private Room room;
     private String description;
-    
-    
-    
+    private boolean isCanceled;
+    private PropertyChangeSupport pcs;
+
+
     /**
      * Constructor, sets the title of the event.
      * @param title
@@ -169,4 +172,13 @@ public class Event implements Model{
         return true;
     }
 
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public int getIsCanceledAsInt() {
+        if(isCanceled) return 1;
+        return 0;
+    }
 }
