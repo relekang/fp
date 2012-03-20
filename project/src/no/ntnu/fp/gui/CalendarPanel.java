@@ -5,6 +5,8 @@ import no.ntnu.fp.gui.objects.CalendarDayBox;
 import javax.swing.*;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class CalendarPanel extends JPanel {
 	private GridBagConstraints gbc = new GridBagConstraints();
@@ -13,6 +15,7 @@ public class CalendarPanel extends JPanel {
 	private JLabel monLabel, tueLabel, wedLabel, thuLabel, friLabel, satLabel,
 			sunLabel;
 	private JPanel weekPanel;
+	private JScrollPane pane;
 	
 	public CalendarPanel() {
 		setLayout(new GridBagLayout());
@@ -67,13 +70,12 @@ public class CalendarPanel extends JPanel {
 		gbc.gridy = 1;
 		gbc.gridwidth = 7;
 		
-		JScrollPane pane = new JScrollPane(weekPanel);
+		pane = new JScrollPane(weekPanel);
 		pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		pane.setMinimumSize(weekPanel.getMinimumSize());
-		pane.setMinimumSize(new Dimension(pane.getMinimumSize().width, 450));
-//		pane.setMinimumSize(new Dimension(weekPanel.getWidth(), weekPanel.getHeight()));
+		pane.setMinimumSize(new Dimension(970, 450));
 		add(pane, gbc);
 	}
+	
 
 	private void addCalendarHeaders() {
 		Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 20);

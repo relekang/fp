@@ -3,6 +3,7 @@ package no.ntnu.fp.gui.objects;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,7 +20,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	public static final int WIDTH_CANVAS = 120;
 	public static final int WIDTH_CELL = WIDTH_CANVAS;
 	public static final int HEIGHT_CELL = 30;
-	public static final int HEIGHT_CANVAS = 1000;
+	public static final int HEIGHT_CANVAS = 720;
 	
 	private MyCanvas canvas;
 	
@@ -36,33 +37,31 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		canvas = new MyCanvas();
 		canvas.addMouseListener(this);
 		canvas.addMouseMotionListener(this);
-		canvas.setBounds(0, 0, WIDTH_CANVAS, HEIGHT_CANVAS);
-		canvas.setBackground(Color.DARK_GRAY);
 		add(canvas);
 	}
 	
-	private class MyCanvas extends Canvas {
+	private class MyCanvas extends JPanel {
 		boolean mouseIsPressed = false;
 		private Color c;
 		public MyCanvas() {
+			setPreferredSize(new Dimension(WIDTH_CANVAS, HEIGHT_CANVAS));
 			c = new Color(179, 209, 232);
 			setForeground(c);
+			setBackground(Color.DARK_GRAY);
 		}
 				
 		@Override
-		public void paint(Graphics g) {
-//			super.paint(g);
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
 			if(mouseIsPressed) {
-				g.fillRect(x, y, dx-x, dy-y);
+				g.fillRect(x, y, dx, dy-y);
 			}
 		}
 	}
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-//		dx = e.getX();
 		dy = e.getY() > y ? e.getY() : y;
-//		System.out.println("x:"+x+", y:"+y+", dx:"+(dx-x)+", dy:"+(dy-y));
 		canvas.repaint();
 	}
 	

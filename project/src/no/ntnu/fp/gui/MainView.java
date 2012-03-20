@@ -29,7 +29,6 @@ public class MainView extends JFrame{
 		mainPanel.setVisible(false);
        // add(mainPanel);
         add(loginPanel);
-
         pack();
     }
     
