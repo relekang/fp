@@ -1,7 +1,6 @@
 package no.ntnu.fp.gui;
 
 import no.ntnu.fp.gui.objects.DateLabel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Calendar;
@@ -11,7 +10,6 @@ public class OverviewCalenderPanel extends JPanel {
     private DateLabel[][] cal;
     private JLabel monLabel, tueLabel, wedLabel, thuLabel, friLabel, satLabel, sunLabel;
     private JButton nextbutton, previousButton;
-    private String[] yearArray, monthArray;
     
     public OverviewCalenderPanel() {
     	gbc = new GridBagConstraints();
@@ -33,7 +31,6 @@ public class OverviewCalenderPanel extends JPanel {
         gbc.gridx = 4;	gbc.gridy = 0;
         gbc.gridwidth = 4;
         this.add(nextbutton, gbc);
-        
         
         gbc.gridx = 0;	gbc.gridy = 1;
         gbc.gridwidth = 1;
@@ -75,7 +72,6 @@ public class OverviewCalenderPanel extends JPanel {
     private void buildCalendar(int month) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_MONTH, 1);
-//        c.set(Calendar.MONTH, month-1);
         c.set(Calendar.DAY_OF_WEEK, 2);
         cal = new DateLabel[5][7];
         for (int i = 0; i < cal.length; i++) {
