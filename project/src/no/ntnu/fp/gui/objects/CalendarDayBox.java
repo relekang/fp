@@ -19,7 +19,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	public static final int WIDTH_CANVAS = 120;
 	public static final int WIDTH_CELL = WIDTH_CANVAS;
 	public static final int HEIGHT_CELL = 30;
-	public static final int HEIGHT_CANVAS = 400;
+	public static final int HEIGHT_CANVAS = 1000;
 	
 	private MyCanvas canvas;
 	
@@ -45,7 +45,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		boolean mouseIsPressed = false;
 		private Color c;
 		public MyCanvas() {
-			c = new Color(179, 209, 232, 100);
+			c = new Color(179, 209, 232);
 			setForeground(c);
 		}
 				

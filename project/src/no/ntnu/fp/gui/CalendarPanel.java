@@ -25,37 +25,54 @@ public class CalendarPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		mondayBox = new CalendarDayBox();
-		add(mondayBox, gbc);
+//		add(mondayBox, gbc);
+		weekPanel.add(mondayBox);
 		
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		tuesdayBox = new CalendarDayBox();
-		add(tuesdayBox, gbc);
-
+//		add(tuesdayBox, gbc);
+		weekPanel.add(tuesdayBox);
+		
 		gbc.gridx = 2;
 		gbc.gridy = 1;
 		wednesdayBox = new CalendarDayBox();
-		add(wednesdayBox, gbc);
+//		add(wednesdayBox, gbc);
+		weekPanel.add(wednesdayBox);
 
 		gbc.gridx = 3;
 		gbc.gridy = 1;
 		thursdayBox = new CalendarDayBox();
-		add(thursdayBox, gbc);
+//		add(thursdayBox, gbc);
+		weekPanel.add(thursdayBox);
 
 		gbc.gridx = 4;
 		gbc.gridy = 1;
 		fridayBox = new CalendarDayBox();
-		add(fridayBox, gbc);
+//		add(fridayBox, gbc);
+		weekPanel.add(fridayBox);
 
 		gbc.gridx = 5;
 		gbc.gridy = 1;
 		saturdayBox = new CalendarDayBox();
-		add(saturdayBox, gbc);
+//		add(saturdayBox, gbc);
+		weekPanel.add(saturdayBox);
 
 		gbc.gridx = 6;
 		gbc.gridy = 1;
 		sundayBox = new CalendarDayBox();
-		add(sundayBox, gbc);
+//		add(sundayBox, gbc);
+		weekPanel.add(sundayBox);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = 7;
+		
+		JScrollPane pane = new JScrollPane(weekPanel);
+		pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		pane.setMinimumSize(weekPanel.getMinimumSize());
+		pane.setMinimumSize(new Dimension(pane.getMinimumSize().width, 450));
+//		pane.setMinimumSize(new Dimension(weekPanel.getWidth(), weekPanel.getHeight()));
+		add(pane, gbc);
 	}
 
 	private void addCalendarHeaders() {
