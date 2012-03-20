@@ -51,13 +51,13 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 			setPreferredSize(new Dimension(Constants.WIDTH_CANVAS, Constants.HEIGHT_CANVAS));
 			c = new Color(179, 209, 232);
 			setForeground(c);
-			setBackground(Color.LIGHT_GRAY);
+			setBackground(Constants.STD_BACKGROUND);
 		}
 				
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			g.setColor(Color.WHITE);
+			g.setColor(Constants.STD_FOREGROUND);
 			for(int i = 1; i < Constants.HOURS; i++) {
 				g.drawLine(0, i*Constants.HOUR_HEIGHT, Constants.WIDTH_CANVAS, i*Constants.HOUR_HEIGHT);
 			}
