@@ -3,6 +3,8 @@ package no.ntnu.fp.model;
 
 import no.ntnu.fp.storage.db.RoomHandler;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 
 public class Room implements Model{
@@ -12,8 +14,9 @@ public class Room implements Model{
 	private String name;
 	private String location;
 	private int capacity;
+    private PropertyChangeSupport pcs;
 
-    
+
     public Room(String name, String location, int capacity) {
     	ROOM_ID = 0;
     	setName(name);
@@ -59,5 +62,10 @@ public class Room implements Model{
     @Override
     public boolean save() {
         return false;
+    }
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
     }
 }
