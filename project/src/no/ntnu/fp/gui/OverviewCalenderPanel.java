@@ -25,7 +25,7 @@ public class OverviewCalenderPanel extends JPanel {
         Font f = new Font("Dialog", Font.PLAIN, 10);
         pickerPanel = new JPanel();
         add(pickerPanel);
-        yearComboBox = new JButton("previous");
+        yearComboBox = new JButton("Previous");
         monthComboBox = new JButton("Next");
         
         

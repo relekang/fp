@@ -96,7 +96,7 @@ public class EventView extends JFrame{
 		
 		participantList.setPreferredSize(new Dimension(300, 375));
 		
-		String[] rooms = {"Room", "211, P15", "R2"};
+		String[] rooms = {"Room", "411, P15", "R2"};
 		eventTitle = new JTextField("Title", 26);
 		fromField = new JTextField("From", 10);
 		toField = new JTextField("To", 10);
