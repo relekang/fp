@@ -9,6 +9,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class CalendarPanel extends JPanel {
+
+	Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
 	
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private CalendarDayBox mondayBox, tuesdayBox, wednesdayBox, thursdayBox,
@@ -26,6 +28,23 @@ public class CalendarPanel extends JPanel {
 
 	private void addCalendarDayBoxes() {
 		weekPanel = new JPanel(new FlowLayout());
+		weekPanel.setBackground(Color.LIGHT_GRAY);
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+		p.setBackground(Color.LIGHT_GRAY);
+		Font s = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
+		for(int i = 0; i < Constants.HOURS; i++) {
+			JLabel l = new JLabel(i<10 ? "0"+i : ""+i);
+			l.setFont(s);
+			l.setPreferredSize(new Dimension(20, 50));
+			l.setBorder(BorderFactory.createEmptyBorder(0, 0, (Constants.HOUR_HEIGHT-l.getHeight()-6), 0));
+			l.setForeground(Color.WHITE);
+			l.setBackground(Color.LIGHT_GRAY);
+			p.add(l);
+		}
+//		p.setPreferredSize(new Dimension())
+		weekPanel.add(p);
+		
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		mondayBox = new CalendarDayBox(0);
@@ -73,13 +92,12 @@ public class CalendarPanel extends JPanel {
 		
 		pane = new JScrollPane(weekPanel);
 		pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		pane.setMinimumSize(new Dimension(900, Constants.DAYBOX_HEIHGT));
+		pane.setMinimumSize(new Dimension(933, Constants.DAYBOX_HEIHGT));
 		add(pane, gbc);
 	}
 	
 
 	private void addCalendarHeaders() {
-		Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
 		gbc.gridwidth = 1;
 		gbc.weightx = 1.0;
 		gbc.gridx = 0;
