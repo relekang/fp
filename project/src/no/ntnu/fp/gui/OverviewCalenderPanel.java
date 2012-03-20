@@ -11,7 +11,7 @@ public class OverviewCalenderPanel extends JPanel {
     private DateLabel[][] cal;
     private JPanel pickerPanel;
     private JLabel monLabel, tueLabel, wedLabel, thuLabel, friLabel, satLabel, sunLabel;
-    private JButton yearComboBox, monthComboBox;
+    private JButton nextbutton, previousButton;
     private String[] yearArray, monthArray;
     
     public OverviewCalenderPanel() {
@@ -25,8 +25,8 @@ public class OverviewCalenderPanel extends JPanel {
         Font f = new Font("Dialog", Font.PLAIN, 10);
         pickerPanel = new JPanel();
         add(pickerPanel);
-        yearComboBox = new JButton("Previous");
-        monthComboBox = new JButton("Next");
+        nextbutton = new JButton("Next");
+        previousButton = new JButton("Previous");
         
         
 //      pickerPanel.add(monthComboBox);
@@ -35,11 +35,11 @@ public class OverviewCalenderPanel extends JPanel {
         gbc.gridx = 0;	gbc.gridy = 0;
         gbc.gridwidth = 4;
         gbc.gridheight = 1;
-        this.add(monthComboBox, gbc);
+        this.add(previousButton, gbc);
         
         gbc.gridx = 4;	gbc.gridy = 0;
         gbc.gridwidth = 4;
-        this.add(yearComboBox, gbc);
+        this.add(nextbutton, gbc);
         
         
         gbc.gridx = 0;	gbc.gridy = 1;
