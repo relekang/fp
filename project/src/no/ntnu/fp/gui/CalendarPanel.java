@@ -80,6 +80,7 @@ public class CalendarPanel extends JPanel {
 	private void addCalendarHeaders() {
 		Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
 		gbc.gridwidth = 1;
+		gbc.weightx = 1.0;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		monLabel = new JLabel("Monday");
@@ -88,36 +89,42 @@ public class CalendarPanel extends JPanel {
 
 		gbc.gridx = 1;
 		gbc.gridy = 0;
+		gbc.weightx = 1.0;
 		tueLabel = new JLabel("Tuesday");
 		tueLabel.setFont(f);
 		add(tueLabel, gbc);
 
 		gbc.gridx = 2;
 		gbc.gridy = 0;
+		gbc.weightx = 1.0;
 		wedLabel = new JLabel("Wednesday");
 		wedLabel.setFont(f);
 		add(wedLabel, gbc);
 
 		gbc.gridx = 3;
 		gbc.gridy = 0;
+		gbc.weightx = 1.0;
 		thuLabel = new JLabel("Thursday");
 		thuLabel.setFont(f);
 		add(thuLabel, gbc);
 
 		gbc.gridx = 4;
 		gbc.gridy = 0;
+		gbc.weightx = 1.0;
 		friLabel = new JLabel("Friday");
 		friLabel.setFont(f);
 		add(friLabel, gbc);
 
 		gbc.gridx = 5;
 		gbc.gridy = 0;
+		gbc.weightx = 1.0;
 		satLabel = new JLabel("Saturday");
 		satLabel.setFont(f);
 		add(satLabel, gbc);
 
 		gbc.gridx = 6;
 		gbc.gridy = 0;
+		gbc.weightx = 1.0;
 		sunLabel = new JLabel("Sunday");
 		sunLabel.setFont(f);
 		add(sunLabel, gbc);
