@@ -4,7 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Iterator;
 
-public class Workgroup implements PropertyChangeListener {
+public class Workgroup implements Model, PropertyChangeListener {
 
 	/**
 	 * The member variable storing all registered {@link Employee} objects.
@@ -224,5 +224,9 @@ public class Workgroup implements PropertyChangeListener {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
+    @Override
+    public boolean save() {
+        return false;
+    }
 }

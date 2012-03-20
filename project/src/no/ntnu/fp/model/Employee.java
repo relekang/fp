@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @version $Revision: 1.5 $ - $Date: 2005/02/20 14:52:29 $
  */
-public class Employee {
+public class Employee implements Model{
 	
 	/**
 	 * This member variable holds the person's name.
@@ -33,6 +33,11 @@ public class Employee {
 	 * This member variable holds a unique identifier for this object.
 	 */
     private final int ID;
+
+    @Override
+    public boolean save() {
+        return false;
+    }
 
     /**
 	 * Enum for gender, you can set it to either female or male

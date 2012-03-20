@@ -5,7 +5,7 @@ import no.ntnu.fp.storage.db.RoomHandler;
 
 import java.sql.SQLException;
 
-public class Room {
+public class Room implements Model{
 
 	private final int ROOM_ID; 
 	
@@ -55,5 +55,9 @@ public class Room {
     public int getRoomId() {
     	return ROOM_ID;
     }
-    
+
+    @Override
+    public boolean save() {
+        return false;
+    }
 }

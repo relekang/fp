@@ -6,7 +6,7 @@ import no.ntnu.fp.storage.db.EventHandler;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class Event {
+public class Event implements Model{
 	
 	public static final int TITLE_LENGTH = 64;
     private int ID;	

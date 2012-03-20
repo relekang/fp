@@ -3,7 +3,7 @@ package no.ntnu.fp.model;
 
 import java.util.Calendar;
 
-public class Notification {
+public class Notification implements Model{
     private String description;
     private final int ID;
     private final Calendar cal;
@@ -74,5 +74,10 @@ public class Notification {
         if (this.is_invitation) return 1;
         else return 0;
 
+    }
+
+    @Override
+    public boolean save() {
+        return false;
     }
 }
