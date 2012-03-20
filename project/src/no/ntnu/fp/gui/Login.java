@@ -1,6 +1,6 @@
 package no.ntnu.fp.gui;
 
-import no.ntnu.fp.server.Authentication;
+import no.ntnu.fp.client.Authentication;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -13,14 +13,11 @@ import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public class Login extends JPanel implements ActionListener, KeyListener{
 	
@@ -60,7 +57,7 @@ public class Login extends JPanel implements ActionListener, KeyListener{
     	add(usernameLabel, c);
     	
     	usernameTextField = new JTextField();
-    	usernameTextField.setMinimumSize(new Dimension(260,25));
+    	usernameTextField.setMinimumSize(new Dimension(260, 25));
     	usernameTextField.setPreferredSize(new Dimension(260,25));
     	c.gridx = 1;
     	c.gridy = 1;
@@ -75,7 +72,7 @@ public class Login extends JPanel implements ActionListener, KeyListener{
     	add(passwordLabel, c);
     	
     	passwordField = new JPasswordField();
-    	passwordField.setMinimumSize(new Dimension(260,25));
+    	passwordField.setMinimumSize(new Dimension(260, 25));
     	passwordField.setPreferredSize(new Dimension(260,25));
     	c.gridx = 1;
     	c.gridy = 2;
