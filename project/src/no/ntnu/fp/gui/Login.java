@@ -23,7 +23,7 @@ public class Login extends JPanel {
 	protected JLabel passwordLabel;
 
 	protected  JTextField usernameTextField;
-	protected JPasswordField passwordfield;
+	protected JPasswordField passwordField;
 	
 	protected JButton loginButton;
 	protected JPopupMenu popup;
@@ -72,11 +72,11 @@ public class Login extends JPanel {
     	c.gridy = 1;
     	add(passwordLabel,c);
     	
-    	passwordfield = new JPasswordField();
-    	passwordfield.setPreferredSize(new Dimension(400,25));
+    	passwordField = new JPasswordField();
+    	passwordField.setPreferredSize(new Dimension(400,25));
     	c.gridx = 1;
     	c.gridy = 1;
-    	add(passwordfield,c);
+    	add(passwordField,c);
   
     	
     	//adds login button
@@ -89,10 +89,8 @@ public class Login extends JPanel {
     	
     	//Adds listeners
     	usernameTextField.addActionListener(new LoginAction());
-    	passwordfield.addActionListener(new LoginAction());
+    	passwordField.addActionListener(new LoginAction());
     	loginButton.addActionListener(new LoginAction());
-    
-    	
 	}
 	
 	
@@ -102,8 +100,10 @@ public class Login extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Fix connection to database and check pass.
 			String username = usernameTextField.getText();
-			String password = passwordfield.getText();
-			if(username.equalsIgnoreCase("a")&&password.equals("a")){
+			String password = new String(passwordField.getPassword());
+			if(username.equalsIgnoreCase("w")&&password.equals("w")){
+				usernameTextField.setText("");
+				passwordField.setText("");
 				mv.logIn();
 				
 			}

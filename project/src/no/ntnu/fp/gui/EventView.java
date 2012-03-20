@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Date;
 import java.util.Locale;
 import no.ntnu.fp.model.Employee;
@@ -135,7 +137,8 @@ public class EventView extends JFrame{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
+					setVisible(false);
+					//TODO: Should save event to database
 				}
 			});
 			
@@ -143,7 +146,7 @@ public class EventView extends JFrame{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
+					setVisible(false);
 				}
 			});
 			
@@ -151,7 +154,8 @@ public class EventView extends JFrame{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
+					setVisible(false);
+					//TODO: Should delete event from database
 				}
 			});
 			

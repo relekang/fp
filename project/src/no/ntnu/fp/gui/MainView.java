@@ -90,6 +90,7 @@ public class MainView extends JFrame{
     	this.setLocation(screenSize.width / 2 - (this.getWidth() / 2),
     			screenSize.height / 2 - (this.getHeight() / 2));
     	
+    	((Login) loginPanel).usernameTextField.requestFocus(true);
     	
     }
 
