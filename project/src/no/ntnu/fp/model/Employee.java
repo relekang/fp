@@ -110,7 +110,8 @@ public class Employee {
 		name = "";
 		email = "";
 		dateOfBirth = new Date();
-		id = System.currentTimeMillis(); 
+//		id = System.currentTimeMillis();
+        ID = 0;
 		propChangeSupp = new PropertyChangeSupport(this);
 	}
 	
@@ -123,7 +124,7 @@ public class Employee {
 	 * @param dateOfBirth The person's date of birth.
 	 */
 	public Employee(String name, String email, Date dateOfBirth, Gender gender) {
-		this();
+        this.ID = 0;
 		this.name = name;
 		this.email = email;
 		this.gender = gender;
@@ -131,7 +132,6 @@ public class Employee {
 	}
 
     public Employee(int id, String name, String email, Date dateOfBirth, Gender gender) {
-        this();
         this.ID = id;
         this.name = name;
         this.email = email;
@@ -306,7 +306,7 @@ public class Employee {
 	 * @return The person's unique identification.
 	 */
 	public long getId() {
-		return id;
+		return ID;
 	}
 	/**
 	 * Returns the person's gender.
