@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class MainView extends JFrame{
     private JPanel mainPanel, calenderPanel, overviewPanel, notificationPanel, loginPanel;
-    private JButton createEventBtn, findPersonBtn, signOutBTN;
+    private JButton createEventBtn, findPersonBtn, signOutBtn;
     private GridBagConstraints gbc;
     public MainView(){
         gbc = new GridBagConstraints();
@@ -39,13 +39,13 @@ public class MainView extends JFrame{
         mainPanel.setLayout(new GridBagLayout());
         createEventBtn = new JButton("Create event");
         findPersonBtn = new JButton("Find person");
-        signOutBTN = new JButton("Sign out");
+        signOutBtn = new JButton("Sign out");
         
         
         
         gbc.gridx = 6; gbc.gridy = 0; gbc.gridwidth = 1; gbc.anchor = GridBagConstraints.EAST;
-        signOutBTN.addActionListener(new SignOutEventButtonListener());
-        mainPanel.add(signOutBTN, gbc);
+        signOutBtn.addActionListener(new SignOutEventButtonListener());
+        mainPanel.add(signOutBtn, gbc);
         
         
         gbc.gridx = 0; gbc.gridy = 1; gbc.anchor = GridBagConstraints.CENTER;
