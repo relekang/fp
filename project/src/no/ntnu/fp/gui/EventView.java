@@ -52,7 +52,7 @@ public class EventView extends JFrame{
 		gbc2.insets = new Insets(15, 15, 15, 15);
 		gbc3.insets = new Insets(15, 15, 15, 15);
 		
-//		user = EventController.getEmplyee();
+//		user = EventController.getEmployee();
 		
 		eventPanel = new JPanel();
 		eventPanel.setLayout(new GridBagLayout());
