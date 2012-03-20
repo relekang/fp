@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
@@ -20,7 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-public class Login extends JPanel {
+public class Login extends JPanel implements ActionListener, KeyListener{
 	
 	protected JLabel usernameLabel, passwordLabel, errorMsgLabel;
 
@@ -94,38 +96,64 @@ public class Login extends JPanel {
     	c.gridy = 3;
     	add(loginButton, c);
     	
-    	
-    	
-    	//Adds listeners
-    	usernameTextField.addActionListener(new LoginAction());
-    	passwordField.addActionListener(new LoginAction());
-    	loginButton.addActionListener(new LoginAction());
+    	usernameTextField.addActionListener(this);
+    	passwordField.addActionListener(this);
+    	loginButton.addActionListener(this);
+    	loginButton.addKeyListener(this);
+		
 	}
-	
-	
-	class LoginAction implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Fix connection to database and check pass.
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+	
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == 10 || e.getKeyCode() == 32) {
 			String username = usernameTextField.getText();
 			String password = new String(passwordField.getPassword());
-            try {
-                if(Authentication.authenticate(username, password)){
-                    usernameTextField.setText("");
-                    passwordField.setText("");
-                    mv.logIn();
-                    
-                }
-                else{
-                    errorMsgLabel.setText("feil passord");
-                }
-            } catch (SQLException exception) {
-                System.err.println(exception);
-            }
-
-        }
+			try {
+			    if(Authentication.authenticate(username, password)){
+			        usernameTextField.setText("");
+			        passwordField.setText("");
+			        mv.logIn();
+			        
+			    }
+			    else{
+			        errorMsgLabel.setText("Feil brukernavn/passord-kombinasjon");
+			    }
+			} catch (SQLException exception) {
+			    System.err.println(exception);
+			}
 		
+		}
+	}		
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		String username = usernameTextField.getText();
+		String password = new String(passwordField.getPassword());
+		try {
+		    if(Authentication.authenticate(username, password)){
+		        usernameTextField.setText("");
+		        passwordField.setText("");
+		        mv.logIn();
+		        
+		    }
+		    else{
+		        errorMsgLabel.setText("Feil brukernavn/passord-kombinasjon");
+		        mv.pack();
+		    }
+		} catch (SQLException exception) {
+		    System.err.println(exception);
+		}
 	}
 	
 	
@@ -145,9 +173,6 @@ public class Login extends JPanel {
 //		
 //		
 //	}
-	
-	
-	
 	
 
 }
