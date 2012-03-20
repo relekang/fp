@@ -2,47 +2,100 @@ package no.ntnu.fp.gui;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class DateTimePicker extends JFrame{
+public class DateTimePicker extends JPanel implements MouseListener{
 	private JPanel datePickerPanel, timePickerPanel, mainPanel;
 	private GridBagConstraints gbc;
+	private JLabel semicolon;
 	protected JTextField hourField, minuteField;
 	
 	public DateTimePicker() {
         mainPanel = new JPanel();
+        semicolon = new JLabel(":");
         datePickerPanel = new OverviewCalenderPanel();
+        timePickerPanel = new JPanel();
         hourField = new JTextField("hour",3);
         minuteField = new JTextField("min",3);
+       
+        
         gbc = new GridBagConstraints();
 		buildMainPanel();
 		mainPanel.setVisible(true);
 
-	    pack();
+	    
 	}
 	
 	
 	private void buildMainPanel(){
+		//mainpanel
 		mainPanel.setLayout(new GridBagLayout());
-		gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 4; gbc.gridheight=1;
+		
+		//timepickerpanel
+		gbc.gridx = 0; gbc.gridy = 0;
 		mainPanel.add(datePickerPanel, gbc);
-		
-		
-		gbc.gridx = 1; gbc.gridy = 3; gbc.gridwidth = 1;
-		mainPanel.add(hourField,gbc);
-		gbc.gridx = 2; gbc.gridy = 3;
-		mainPanel.add(minuteField,gbc);
+		timePickerPanel.add(hourField);
+		timePickerPanel.add(semicolon);
+		timePickerPanel.add(minuteField);
+		gbc.gridx = 0; gbc.gridy = 7; gbc.gridwidth = 7;
+		mainPanel.add(timePickerPanel, gbc);
 		add(mainPanel);
+		
+		hourField.addMouseListener(this);
+		minuteField.addMouseListener(this);
+		
+		
 		
 	}
 	
-	public static void main(String[] args) {
-		DateTimePicker test = new DateTimePicker();
-		test.pack();
-		test.setVisible(true);
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(hourField.getText().equals("")){
+			hourField.setText("hour");
+			
+		}
+		if(minuteField.getText().equals("")){
+			minuteField.setText("min");
+			
+		}
+		if(e.getSource() == hourField && hourField.getText().equals("hour")){
+			hourField.setText("");
+		}
+		if(e.getSource() == minuteField && minuteField.getText().equals("min")){
+			minuteField.setText("");
+		}
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
 		
 	}
 	
