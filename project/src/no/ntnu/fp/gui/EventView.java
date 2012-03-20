@@ -36,12 +36,13 @@ public class EventView extends JFrame{
 	JComboBox roomBox;
 	JButton saveButton, cancelButton, deleteButton, acceptButton, declineButton, deletePersonButton;
 	JTextField eventTitle, fromField, toField, participantsField;
-	JPanel eventPanel, listPanel, eventViewPanel, buttonPanel;
+	JPanel eventPanel, listPanel, eventViewPanel, buttonPanel, calenderToPopPanel,calenderFromPopPanel;
+	JLabel dash;
 	GridBagConstraints gbc1, gbc2, gbc3;
 	DefaultListModel listModel;
 	ParticipantRenderer renderer;
 	Employee user;
-	JPopupMenu fromPop;
+	JPopupMenu fromPop, toPop;
 	
 	public EventView(){
 		gbc1 = new GridBagConstraints();
@@ -62,6 +63,8 @@ public class EventView extends JFrame{
 		eventViewPanel.setLayout(new GridBagLayout());
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
+		calenderToPopPanel = new DateTimePicker();
+		calenderFromPopPanel = new DateTimePicker();
 		
 		createPanel();
 		
@@ -75,7 +78,7 @@ public class EventView extends JFrame{
 	@SuppressWarnings("unused")
 	private void createPanel(){
 		
-		//midlertidig eksempler
+		//TODO midlertidig eksempler
 		Employee hans = new Employee("Hans", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
 		Employee geir = new Employee("Geir", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
 		Employee bjarne = new Employee("Bjarne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
@@ -105,6 +108,15 @@ public class EventView extends JFrame{
 		participantsField = new JTextField("Participants", 26);
 		roomBox.setPreferredSize(new Dimension(290, 25));
 		descriptionBox.setPreferredSize(new Dimension(290, 150));
+		dash = new JLabel("-");
+		dash.setSize(5, 1);
+		
+		//TODO creating popups for from and to field
+		fromPop = new JPopupMenu();
+		fromPop.add(calenderFromPopPanel);
+		
+		toPop = new JPopupMenu();
+		toPop.add(calenderToPopPanel);
 		
 		//skal sjekke om brukeren er eventmanager
 		if(true){
@@ -137,7 +149,9 @@ public class EventView extends JFrame{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					setVisible(false);
+					//setVisible(false);
+					toPop.setLocation(fromField.getLocation().x, fromField.getLocation().y);
+					toPop.setVisible(true);
 					//TODO: Should save event to database
 				}
 			});
@@ -169,12 +183,12 @@ public class EventView extends JFrame{
 						participantList.setSelectedIndex(temp - 1);
 						removeParticipant(temp);
 					}
-					else
-					{
+//					else
+//					{
 						//list.setSelectedIndex(-1);
 						//persons.setModel(new Person());
 						//removePerson(temp);
-					}
+//					}
 				}
 			});
 		}
@@ -228,11 +242,11 @@ public class EventView extends JFrame{
 		
 		gbc1.gridx = 0;	gbc1.gridy = 7;
 		gbc1.gridheight = 1;
-		gbc1.gridwidth = 2;
+		gbc1.gridwidth = 3;
 		eventPanel.add(buttonPanel, gbc1);
 		
 		gbc1.gridx = 0;	gbc1.gridy = 0;
-		gbc1.gridwidth = 2;
+		gbc1.gridwidth = 3;
 		eventPanel.add(eventTitle, gbc1);
 		
 		gbc1.gridx = 0;	gbc1.gridy = 1;
@@ -240,27 +254,29 @@ public class EventView extends JFrame{
 		gbc1.gridheight = 1;
 		gbc1.anchor = GridBagConstraints.EAST;
 		eventPanel.add(fromField, gbc1);
-		
 		gbc1.gridx = 1;	gbc1.gridy = 1;
+		eventPanel.add(dash,gbc1);
+		
+		gbc1.gridx = 2;	gbc1.gridy = 1;
 		gbc1.gridwidth = 1;
 		gbc1.gridheight = 1;
 		//gbc1.anchor = GridBagConstraints.WEST;
 		eventPanel.add(toField, gbc1);
 		
 		gbc1.gridx = 0;	gbc1.gridy = 2;
-		gbc1.gridwidth = 2;
+		gbc1.gridwidth = 3;
 		gbc1.gridheight = 1;
 		gbc1.anchor = GridBagConstraints.CENTER
 		;
 		eventPanel.add(roomBox, gbc1);
 		
 		gbc1.gridx = 0;	gbc1.gridy = 3;
-		gbc1.gridwidth = 2;
+		gbc1.gridwidth = 3;
 		eventPanel.add(participantsField, gbc1);
 		
 		gbc1.gridx = 0;	gbc1.gridy = 4;
 		gbc1.gridheight = 2;
-		gbc1.gridwidth = 2;
+		gbc1.gridwidth = 3;
 		eventPanel.add(descriptionBox, gbc1);
 		
 
