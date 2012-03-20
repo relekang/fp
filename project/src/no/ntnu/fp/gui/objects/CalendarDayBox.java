@@ -23,7 +23,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	
 	private MyCanvas canvas;
 	
-	private int x, dx;
+	private int x = 0, dx = WIDTH_CANVAS;
 	private int y, dy;
 	
 	public CalendarDayBox() {
@@ -60,7 +60,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		dx = e.getX();
+//		dx = e.getX();
 		dy = e.getY();
 //		System.out.println("x:"+x+", y:"+y+", dx:"+(dx-x)+", dy:"+(dy-y));
 		canvas.repaint();
@@ -69,7 +69,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void mousePressed(MouseEvent e) {
 		canvas.mouseIsPressed = true;
-		x = e.getX();
+//		x = e.getX();
 		y = e.getY();
 	}
 	
