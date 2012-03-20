@@ -9,9 +9,11 @@ import java.util.Calendar;
 public class OverviewCalenderPanel extends JPanel {
     private GridBagConstraints gbc = new GridBagConstraints();
     private DateLabel[][] cal;
+    private JPanel pickerPanel;
     private JLabel monLabel, tueLabel, wedLabel, thuLabel, friLabel, satLabel, sunLabel;
-
-
+    private JComboBox yearComboBox, monthComboBox;
+    private String[] yearArray, monthArray;
+    
     public OverviewCalenderPanel() {
         setLayout(new GridBagLayout());
         addCalendarHeaders();
@@ -20,6 +22,16 @@ public class OverviewCalenderPanel extends JPanel {
 
     private void addCalendarHeaders() {
         Font f = new Font("Dialog", Font.PLAIN, 10);
+        pickerPanel = new JPanel();
+        add(pickerPanel);
+        yearComboBox = new JComboBox();
+        monthComboBox = new JComboBox();
+        
+        
+        pickerPanel.add(monthComboBox);
+        pickerPanel.add(yearComboBox);
+        
+        
         gbc.gridx=0;gbc.gridy=0;
         monLabel = new JLabel("mon");
         monLabel.setFont(f);
