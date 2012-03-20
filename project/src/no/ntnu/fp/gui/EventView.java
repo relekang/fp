@@ -95,13 +95,13 @@ public class EventView extends JFrame{
 		participantList.setPreferredSize(new Dimension(300, 375));
 		
 		String[] rooms = {"Room", "211, P15", "R2"};
-		eventTitle = new JTextField("Title", 23);
+		eventTitle = new JTextField("Title", 26);
 		fromField = new JTextField("From", 10);
-		toField = new JTextField("to", 10);
+		toField = new JTextField("To", 10);
 		roomBox = new JComboBox(rooms);
 		descriptionBox = new JTextArea("Description");
-		participantsField = new JTextField("Participants", 23);
-		roomBox.setPreferredSize(new Dimension(275, 25));
+		participantsField = new JTextField("Participants", 26);
+		roomBox.setPreferredSize(new Dimension(290, 25));
 		descriptionBox.setPreferredSize(new Dimension(290, 150));
 		
 		//skal sjekke om brukeren er eventmanager
@@ -234,16 +234,20 @@ public class EventView extends JFrame{
 		gbc1.gridx = 0;	gbc1.gridy = 1;
 		gbc1.gridwidth = 1;
 		gbc1.gridheight = 1;
+		gbc1.anchor = GridBagConstraints.EAST;
 		eventPanel.add(fromField, gbc1);
 		
 		gbc1.gridx = 1;	gbc1.gridy = 1;
 		gbc1.gridwidth = 1;
 		gbc1.gridheight = 1;
+		//gbc1.anchor = GridBagConstraints.WEST;
 		eventPanel.add(toField, gbc1);
 		
 		gbc1.gridx = 0;	gbc1.gridy = 2;
 		gbc1.gridwidth = 2;
 		gbc1.gridheight = 1;
+		gbc1.anchor = GridBagConstraints.CENTER
+		;
 		eventPanel.add(roomBox, gbc1);
 		
 		gbc1.gridx = 0;	gbc1.gridy = 3;
