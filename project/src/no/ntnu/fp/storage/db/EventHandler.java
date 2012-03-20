@@ -63,8 +63,8 @@ public class EventHandler extends DbHandler {
     public Event createEvent(Event event) throws SQLException {
         if(!connect())
             return null;
-        String query = "INSERT INTO `EVENT` (`id`,`room_id`, `date_from`, `date_to`, `title`, `description`, `type`, `canceled`) VALUES (NULL, %d, '%s', '%s', '%s', '%s', '%s', 0);";
-        query = String.format(query, event.getRoom().getRoomId(), event.getSqlDateFrom(), event.getSqlDateTo(), event.getTitle(), event.getDescription(), "meeting"/*event.getTypeAsString()*/);
+        String query = "INSERT INTO `EVENT` (`id`,`room_id`, `date_from`, `date_to`, `title`, `description`, `type`, `canceled`) VALUES (NULL, %d, '%s', '%s', '%s', '%s', '%s', %d);";
+        query = String.format(query, event.getRoom().getRoomId(), event.getSqlDateFrom(), event.getSqlDateTo(), event.getTitle(), event.getDescription(), "meeting"/*event.getTypeAsString()*/, event.getIsCanceledAsInt());
         System.out.println(query);
         Statement stm = conn.createStatement();
         boolean rs = stm.execute(query);
@@ -78,17 +78,15 @@ public class EventHandler extends DbHandler {
     }
 
     public Event updateEvent(Event event) throws SQLException {
-        //Todo
-        return null;
-//        if(!connect())
-//            return null;
-//        String query = "UPDATE  `EVENT` SET  `description` =  'LOL ' WHERE  `id` =  '%d' LIMIT 1 ;";
-//        query = String.format(query, event.getRoom().getRoomId(), event.getSqlDateFrom(), event.getSqlDateTo(), event.getTitle(), event.getDescription(), "meeting"/*event.getTypeAsString()*/);
-//        System.out.println(query);
-//        Statement stm = conn.createStatement();
-//        boolean rs = stm.execute(query);
-//        System.out.println(rs);
-//        close();
-//        return event;
+        if(!connect())
+            return null;
+        String query = "UPDATE  `EVENT` SET `room_id` = %d, `date_from` = '%s', `date_to` = '%s', `title` = '%s', `description` = '%s', `type` = '%s', `canceled` = %d, WHERE  `id` =  %d LIMIT 1 ;";
+        query = String.format(query, event.getRoom().getRoomId(), event.getSqlDateFrom(), event.getSqlDateTo(), event.getTitle(), event.getDescription(), "meeting", event.getIsCanceledAsInt(), event.getID());
+        System.out.println(query);
+        Statement stm = conn.createStatement();
+        boolean rs = stm.execute(query);
+        System.out.println(rs);
+        close();
+        return event;
     }
 }

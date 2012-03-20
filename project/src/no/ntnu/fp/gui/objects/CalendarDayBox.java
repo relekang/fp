@@ -13,27 +13,29 @@ import java.util.Calendar;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import no.ntnu.fp.gui.Constants;
+
 public class CalendarDayBox extends JPanel implements MouseListener, MouseMotionListener {
 
-	public static final int NUM_VISIBLE_CELLS = 8;
-	public static final int NUM_HOURS = 24;
-	public static final int WIDTH_CANVAS = 120;
-	public static final int WIDTH_CELL = WIDTH_CANVAS;
-	public static final int HEIGHT_CELL = 30;
-	public static final int HEIGHT_CANVAS = 720;
-	
 	private MyCanvas canvas;
 	
-	private int x = 0, dx = WIDTH_CANVAS;
+	private int x = 0, dx = Constants.WIDTH_CANVAS;
 	private int y, dy;
 	
-	public CalendarDayBox() {
-		setBorder(BorderFactory.createEmptyBorder());
+	public CalendarDayBox(int reprDay) {
+		switch(reprDay) {
+		case 0: 
+			setBorder(BorderFactory.createEmptyBorder(-5, 0, -5, -5));
+		case 6:
+			setBorder(BorderFactory.createEmptyBorder(-5, -5, -5, 0));
+		default:
+			setBorder(BorderFactory.createEmptyBorder(-5, -5, -5, -5));
+		}
 		initCanvas();
 	}
 
 	private void initCanvas() {
-		Calendar cal = Calendar.getInstance();
+//		Calendar cal = Calendar.getInstance();
 		canvas = new MyCanvas();
 		canvas.addMouseListener(this);
 		canvas.addMouseMotionListener(this);
@@ -43,16 +45,23 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	private class MyCanvas extends JPanel {
 		boolean mouseIsPressed = false;
 		private Color c;
+		
 		public MyCanvas() {
-			setPreferredSize(new Dimension(WIDTH_CANVAS, HEIGHT_CANVAS));
+			setBorder(BorderFactory.createEmptyBorder(-5, -5, -5, -5));
+			setPreferredSize(new Dimension(Constants.WIDTH_CANVAS, Constants.HEIGHT_CANVAS));
 			c = new Color(179, 209, 232);
 			setForeground(c);
-			setBackground(Color.DARK_GRAY);
+			setBackground(Color.LIGHT_GRAY);
 		}
 				
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
+			g.setColor(Color.WHITE);
+			for(int i = 1; i < Constants.HOURS; i++) {
+				g.drawLine(0, i*Constants.HOUR_HEIGHT, Constants.WIDTH_CANVAS, i*Constants.HOUR_HEIGHT);
+			}
+			g.setColor(c);
 			if(mouseIsPressed) {
 				g.fillRect(x, y, dx, dy-y);
 			}
@@ -68,7 +77,6 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void mousePressed(MouseEvent e) {
 		canvas.mouseIsPressed = true;
-//		x = e.getX();
 		y = e.getY();
 	}
 	

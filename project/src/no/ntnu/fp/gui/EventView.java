@@ -1,33 +1,23 @@
 package no.ntnu.fp.gui;
 
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Date;
-import java.util.Locale;
 import no.ntnu.fp.model.Employee;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.JTextComponent;
-
-import no.ntnu.fp.model.Employee;
 
 public class EventView extends JFrame{
 	
@@ -53,7 +43,7 @@ public class EventView extends JFrame{
 		gbc2.insets = new Insets(15, 15, 15, 15);
 		gbc3.insets = new Insets(15, 15, 15, 15);
 		
-//		user = EventController.getEmplyee();
+//		user = EventController.getEmployee();
 		
 		eventPanel = new JPanel();
 		eventPanel.setLayout(new GridBagLayout());
@@ -99,7 +89,7 @@ public class EventView extends JFrame{
 		
 		participantList.setPreferredSize(new Dimension(300, 375));
 		
-		String[] rooms = {"Room", "211, P15", "R2"};
+		String[] rooms = {"Room", "411, P15", "R2"};
 		eventTitle = new JTextField("Title", 26);
 		fromField = new JTextField("From", 10);
 		toField = new JTextField("To", 10);

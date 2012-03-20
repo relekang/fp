@@ -1,7 +1,6 @@
 package no.ntnu.fp.gui;
 
 import no.ntnu.fp.gui.objects.DateLabel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Calendar;
@@ -9,10 +8,8 @@ import java.util.Calendar;
 public class OverviewCalenderPanel extends JPanel {
     private GridBagConstraints gbc;
     private DateLabel[][] cal;
-    private JPanel pickerPanel;
     private JLabel monLabel, tueLabel, wedLabel, thuLabel, friLabel, satLabel, sunLabel;
-    private JButton yearComboBox, monthComboBox;
-    private String[] yearArray, monthArray;
+    private JButton nextbutton, previousButton;
     
     public OverviewCalenderPanel() {
     	gbc = new GridBagConstraints();
@@ -23,24 +20,17 @@ public class OverviewCalenderPanel extends JPanel {
 
     private void addCalendarHeaders() {
         Font f = new Font("Dialog", Font.PLAIN, 10);
-        pickerPanel = new JPanel();
-        add(pickerPanel);
-        yearComboBox = new JButton("previous");
-        monthComboBox = new JButton("Next");
-        
-        
-//      pickerPanel.add(monthComboBox);
-//      pickerPanel.add(yearComboBox);
+        nextbutton = new JButton("Next");
+        previousButton = new JButton("Previous");
         
         gbc.gridx = 0;	gbc.gridy = 0;
         gbc.gridwidth = 4;
         gbc.gridheight = 1;
-        this.add(monthComboBox, gbc);
+        this.add(previousButton, gbc);
         
         gbc.gridx = 4;	gbc.gridy = 0;
         gbc.gridwidth = 4;
-        this.add(yearComboBox, gbc);
-        
+        this.add(nextbutton, gbc);
         
         gbc.gridx = 0;	gbc.gridy = 1;
         gbc.gridwidth = 1;
@@ -82,7 +72,6 @@ public class OverviewCalenderPanel extends JPanel {
     private void buildCalendar(int month) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_MONTH, 1);
-//        c.set(Calendar.MONTH, month-1);
         c.set(Calendar.DAY_OF_WEEK, 2);
         cal = new DateLabel[5][7];
         for (int i = 0; i < cal.length; i++) {
