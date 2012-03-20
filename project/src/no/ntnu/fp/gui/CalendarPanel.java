@@ -79,46 +79,54 @@ public class CalendarPanel extends JPanel {
 
 	private void addCalendarHeaders() {
 		Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
-		gbc.gridwidth = 1;
+//		gbc.gridwidth = 1;
+		gbc.weightx = 0.1;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		monLabel = new JLabel("Monday");
+		monLabel.setPreferredSize(new Dimension(970/70, 25));
 		monLabel.setFont(f);
 		add(monLabel, gbc);
 
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		tueLabel = new JLabel("Tuesday");
+		tueLabel.setPreferredSize(new Dimension(970/70, 25));
 		tueLabel.setFont(f);
 		add(tueLabel, gbc);
 
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		wedLabel = new JLabel("Wednesday");
+		wedLabel.setPreferredSize(new Dimension(970/70, 25));
 		wedLabel.setFont(f);
 		add(wedLabel, gbc);
 
 		gbc.gridx = 3;
 		gbc.gridy = 0;
 		thuLabel = new JLabel("Thursday");
+		thuLabel.setPreferredSize(new Dimension(970/70, 25));
 		thuLabel.setFont(f);
 		add(thuLabel, gbc);
 
 		gbc.gridx = 4;
 		gbc.gridy = 0;
 		friLabel = new JLabel("Friday");
+		friLabel.setPreferredSize(new Dimension(970/70, 25));
 		friLabel.setFont(f);
 		add(friLabel, gbc);
 
 		gbc.gridx = 5;
 		gbc.gridy = 0;
 		satLabel = new JLabel("Saturday");
+		satLabel.setPreferredSize(new Dimension(970/70, 25));
 		satLabel.setFont(f);
 		add(satLabel, gbc);
 
 		gbc.gridx = 6;
 		gbc.gridy = 0;
 		sunLabel = new JLabel("Sunday");
+		sunLabel.setPreferredSize(new Dimension(970/70, 25));
 		sunLabel.setFont(f);
 		add(sunLabel, gbc);
 	}
