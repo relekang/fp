@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,7 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-public class Login extends JPanel {
+public class Login extends JPanel implements ActionListener, KeyListener{
 	
 	protected JLabel usernameLabel;
 	protected JLabel passwordLabel;
@@ -85,20 +87,22 @@ public class Login extends JPanel {
     	c.gridy = 2;
     	add(loginButton,c);
     	
-    	
-    	
-    	//Adds listeners
-    	usernameTextField.addActionListener(new LoginAction());
-    	passwordField.addActionListener(new LoginAction());
-    	loginButton.addActionListener(new LoginAction());
+    	usernameTextField.addActionListener(this);
+    	passwordField.addActionListener(this);
+    	loginButton.addActionListener(this);
+    	loginButton.addKeyListener(this);
+		
 	}
-	
-	
-	class LoginAction implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Fix connection to database and check pass.
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+	
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == 10 || e.getKeyCode() == 32) {
 			String username = usernameTextField.getText();
 			String password = new String(passwordField.getPassword());
 			if(username.equalsIgnoreCase("w")&&password.equals("w")){
@@ -108,11 +112,34 @@ public class Login extends JPanel {
 				
 			}
 			else{
-				System.out.println("feil passord");
-			}
-
+				System.out.println("Feil brukernavn/passord-kombinasjon");
+				System.out.println("Hint: w/w");
+			}		
+			
 		}
+		else System.out.println(e);
+	}
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		String username = usernameTextField.getText();
+		String password = new String(passwordField.getPassword());
+		if(username.equalsIgnoreCase("w")&&password.equals("w")){
+			usernameTextField.setText("");
+			passwordField.setText("");
+			mv.logIn();
+			
+		}
+		else{
+			System.out.println("Feil brukernavn/passord-kombinasjon");
+			System.out.println("Hint: w/w");
+		}
 	}
 	
 	
