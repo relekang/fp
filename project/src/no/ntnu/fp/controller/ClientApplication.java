@@ -1,5 +1,6 @@
 package no.ntnu.fp.controller;
 
+import no.ntnu.fp.client.Connection;
 import no.ntnu.fp.gui.EventView;
 import no.ntnu.fp.gui.MainView;
 import no.ntnu.fp.gui.FindPersonView;

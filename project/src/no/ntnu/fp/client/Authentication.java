@@ -4,6 +4,7 @@ import no.ntnu.fp.controller.ClientApplication;
 import no.ntnu.fp.model.Employee;
 import no.ntnu.fp.server.ServerAuthentication;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,10 +20,22 @@ public class Authentication {
         catch (NoSuchAlgorithmException e)     { return false; }
         catch (UnsupportedEncodingException e) { return false; }
         
-        Employee employee = ServerAuthentication.authenticate(username, password);
-        if(employee == null) return false;
-        ClientApplication.setCurrentUser(employee);
-        return true;
+//        Employee employee = ServerAuthentication.authenticate(username, password);
+//        if(employee == null) return false;
+//        ClientApplication.setCurrentUser(employee);
+        try {
+            Connection conn = new Connection();
+            String message = "authenticate-%s-%s";
+            message = String.format(message, username, password);
+            Connection.send(message);
+            String ack = conn.receive();
+            if(ack.equals("success"))
+                return true;
+        } catch (IOException e) {
+            return false;
+        }
+
+        return false;
     }
 
 

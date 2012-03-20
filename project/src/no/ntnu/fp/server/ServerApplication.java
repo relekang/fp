@@ -3,11 +3,14 @@ package no.ntnu.fp.server;
 import no.ntnu.fp.gui.EventView;
 import no.ntnu.fp.gui.FindPersonView;
 import no.ntnu.fp.gui.MainView;
+import no.ntnu.fp.model.Employee;
 import no.ntnu.fp.server.gui.EventListPanel;
 import no.ntnu.fp.server.gui.RoomListPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class ServerApplication {
     static JFrame frame;
@@ -15,8 +18,27 @@ public class ServerApplication {
     static GridBagConstraints gbc;
 
     public static void main (String args[]){
+        String message = "";
+        Connection conn = null;
+        try {
+            conn = new Connection();
+        } catch (IOException e) { e.printStackTrace(); }
 
-        gui();
+        while (1==1){
+            message = conn.receive();
+            System.out.println(message.split("-")[0]);
+            if(message.split("-")[0].equals("authenticate")){
+                Employee employee = null;
+                System.out.println("Trying to auth " + message.split("-")[1] + message.split("-")[2]);
+                try {
+                    employee = ServerAuthentication.authenticate(message.split("-")[1], message.split("-")[2]);
+                } catch (SQLException e) {
+                    Connection.send("failure");
+                }
+                if(employee != null) Connection.send("success");
+
+            }
+        }
     }
 
     private static void gui(){
