@@ -26,23 +26,12 @@ public class Login extends JPanel implements ActionListener, KeyListener{
 	
 	protected JLabel usernameLabel, passwordLabel, errorMsgLabel;
 
-	protected  JTextField usernameTextField;
+	protected JTextField usernameTextField;
 	protected JPasswordField passwordField;
 	
 	protected JButton loginButton;
 	protected JPopupMenu popup;
-//	protected boolean loggedIn;
 	protected MainView mv;
-	
-//	public boolean isLoggedIn() {
-//		return loggedIn;
-//	}
-//
-//
-//	public void logOut() {
-//		loggedIn = false;
-//	}
-
 
 	//constructor	
 	public Login(MainView mv){
@@ -59,6 +48,7 @@ public class Login extends JPanel implements ActionListener, KeyListener{
         c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 0;
+    	errorMsgLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         add(errorMsgLabel, c);
 
     	// adds usernamelabel and textfield
@@ -70,7 +60,8 @@ public class Login extends JPanel implements ActionListener, KeyListener{
     	add(usernameLabel, c);
     	
     	usernameTextField = new JTextField();
-    	usernameTextField.setPreferredSize(new Dimension(400,25));
+    	usernameTextField.setMinimumSize(new Dimension(260,25));
+    	usernameTextField.setPreferredSize(new Dimension(260,25));
     	c.gridx = 1;
     	c.gridy = 1;
     	add(usernameTextField,c);
@@ -84,7 +75,8 @@ public class Login extends JPanel implements ActionListener, KeyListener{
     	add(passwordLabel, c);
     	
     	passwordField = new JPasswordField();
-    	passwordField.setPreferredSize(new Dimension(400,25));
+    	passwordField.setMinimumSize(new Dimension(260,25));
+    	passwordField.setPreferredSize(new Dimension(260,25));
     	c.gridx = 1;
     	c.gridy = 2;
     	add(passwordField,c);
@@ -111,68 +103,34 @@ public class Login extends JPanel implements ActionListener, KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == 10 || e.getKeyCode() == 32) {
-			String username = usernameTextField.getText();
-			String password = new String(passwordField.getPassword());
-			try {
-			    if(Authentication.authenticate(username, password)){
-			        usernameTextField.setText("");
-			        passwordField.setText("");
-			        mv.logIn();
-			        
-			    }
-			    else{
-			        errorMsgLabel.setText("Feil brukernavn/passord-kombinasjon");
-			    }
-			} catch (SQLException exception) {
-			    System.err.println(exception);
-			}
-		
-		}
+
 	}		
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+        if (e.getKeyCode() == 10 || e.getKeyCode() == 32) loginAction();
 	}
-	
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		String username = usernameTextField.getText();
-		String password = new String(passwordField.getPassword());
-		try {
-		    if(Authentication.authenticate(username, password)){
-		        usernameTextField.setText("");
-		        passwordField.setText("");
-		        mv.logIn();
-		        
-		    }
-		    else{
-		        errorMsgLabel.setText("Feil brukernavn/passord-kombinasjon");
-		        mv.pack();
-		    }
-		} catch (SQLException exception) {
-		    System.err.println(exception);
-		}
-	}
-	
-	
-//	//Main
-//	public static void main(String[] args) throws UnsupportedLookAndFeelException{
-//		
-//		UIManager.setLookAndFeel(UIManager.getLookAndFeel());
-//		
-//		JFrame loginframe = new JFrame("Log in");
-//		loginframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		loginframe.getContentPane().add(new Login());
-//		loginframe.pack();
-//        loginframe.setVisible(true);
-//		
-//		
-//		
-//		
-//		
-//	}
-	
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		loginAction();
+	}
+
+    public void loginAction(){
+            String username = usernameTextField.getText();
+            String password = new String(passwordField.getPassword());
+            try {
+                if(Authentication.authenticate(username, password)){
+                    usernameTextField.setText("");
+                    passwordField.setText("");
+                    mv.logIn();
+                }
+                else{
+                    errorMsgLabel.setText("Wrong username or password");
+                    popup.pack();
+                }
+            } catch (SQLException exception) {
+                System.err.println(exception);
+            }
+    }
 }

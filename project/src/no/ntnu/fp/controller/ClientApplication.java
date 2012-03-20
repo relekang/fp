@@ -27,6 +27,12 @@ public class ClientApplication {
 
     }
 
+    public static void pack(){
+        if(mainFrame.isVisible()) mainFrame.pack();
+        if(eventFrame.isVisible()) eventFrame.pack();
+        if(findPersonFrame.isVisible()) findPersonFrame.pack();
+    }
+
     public static void setMainFrameVisible(boolean visibility){
         mainFrame.setVisible(visibility);
     }
