@@ -1,5 +1,7 @@
 package no.ntnu.fp.client;
 
+import no.ntnu.fp.controller.ClientApplication;
+import no.ntnu.fp.model.Employee;
 import no.ntnu.fp.server.ServerAuthentication;
 
 import java.io.UnsupportedEncodingException;
@@ -16,8 +18,11 @@ public class Authentication {
         }
         catch (NoSuchAlgorithmException e)     { return false; }
         catch (UnsupportedEncodingException e) { return false; }
-
-        return ServerAuthentication.authenticate(username, password);
+        
+        Employee employee = ServerAuthentication.authenticate(username, password);
+        if(employee == null) return false;
+        ClientApplication.setCurrentUser(employee);
+        return true;
     }
 
 

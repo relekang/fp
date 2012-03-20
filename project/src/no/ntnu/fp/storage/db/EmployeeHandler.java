@@ -34,31 +34,20 @@ public class EmployeeHandler extends DbHandler {
 //
 //    }
 //
-//    public Employee fetchEmployee(String arg){
-//        try {
-//            if(!connect())
-//                return null;
-//            Statement stmt = conn.createStatement();
-//            ResultSet rs = stmt.executeQuery("SELECT * FROM EMPLOYEE WHERE " + arg);
-//            Employee employee;
-//            while (rs.next()) {
-//                employee = new Employee(rs.getString("title"));
-//                employee.setDateFrom(dateFromString(rs.getString("date_from")));
-//                employee.setDateTo(dateFromString(rs.getString("date_to")));
-//                employee.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
-//                employee.setDescription(rs.getString(" description"));
-//
-//            }
-//            rs.close();
-//            close();
-//
-//            return null;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//
-//    }
+    public Employee fetchEmployee(String arg){
+        try {
+            if(!connect())
+                return null;
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM EMPLOYEE WHERE " + arg);
+            Employee employee;
+            rs.next();
+            employee = new Employee(rs.getInt("id"),rs.getString("name"), rs.getString("email"), dateFromString(rs.getString("date_of_birth")), Employee.Gender.MALE);
+            rs.close();
+            close();
+            return employee;
+        } catch (SQLException e) { return null; }
+    }
 //    public Employee createEmployee(Employee employee) throws SQLException {
 //        if(!connect())
 //            return null;

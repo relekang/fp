@@ -3,6 +3,7 @@ package no.ntnu.fp.controller;
 import no.ntnu.fp.gui.EventView;
 import no.ntnu.fp.gui.MainView;
 import no.ntnu.fp.gui.FindPersonView;
+import no.ntnu.fp.model.Employee;
 
 import javax.swing.*;
 
@@ -44,4 +45,8 @@ public class ClientApplication {
         findPersonFrame.setVisible(visibility);
     }
 
+    public static void setCurrentUser(Employee employee) {
+        //Todo
+        System.out.print(employee.toString());
+    }
 }
