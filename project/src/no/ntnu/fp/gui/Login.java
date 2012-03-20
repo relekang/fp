@@ -103,7 +103,7 @@ public class Login extends JPanel {
 			// TODO Fix connection to database and check pass.
 			String username = usernameTextField.getText();
 			String password = passwordfield.getText();
-			if(username.equalsIgnoreCase("Agnethe")&&password.equals("agnethe")){
+			if(username.equalsIgnoreCase("a")&&password.equals("a")){
 				mv.logIn();
 				
 			}
