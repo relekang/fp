@@ -75,4 +75,7 @@ public class DbHandler {
     }
 
 
+    public Connection getConnection() {
+        return conn;
+    }
 }
