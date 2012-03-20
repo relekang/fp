@@ -1,12 +1,15 @@
  package no.ntnu.fp.model;
 
 
+import no.ntnu.fp.storage.db.EventHandler;
+
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Event {
 	
 	public static final int TITLE_LENGTH = 64;
-    private final int ID;	
+    private int ID;	
     private String title;
     private Date dateFrom;
     private Date dateTo;
@@ -31,7 +34,6 @@ public class Event {
      * @param dateTo
      */
     public Event(String title, Date dateFrom, Date dateTo){
-        ID = 0;
         setTitle(title);
         setDateFrom(dateFrom);
         setDateTo(dateTo);
@@ -150,6 +152,21 @@ public class Event {
             return new java.sql.Date(dateTo.getTime()).toString();
         else
             return "0000-00-00";
+    }
+
+    public boolean save(){
+        try {
+            EventHandler eventHandler = new EventHandler();
+            if(ID == 0) {
+                Event e = eventHandler.createEvent(this);
+                this.ID = e.getID();
+                
+            }
+            else eventHandler.updateEvent(this);
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
     }
 
 }

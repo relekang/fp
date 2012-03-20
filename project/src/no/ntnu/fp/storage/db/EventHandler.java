@@ -76,4 +76,19 @@ public class EventHandler extends DbHandler {
         EventHandler eventHandler = new EventHandler();
         return eventHandler.fetchEvent(String.format("id = %d", eventId));
     }
+
+    public Event updateEvent(Event event) throws SQLException {
+        //Todo
+        return null;
+//        if(!connect())
+//            return null;
+//        String query = "UPDATE  `EVENT` SET  `description` =  'LOL ' WHERE  `id` =  '%d' LIMIT 1 ;";
+//        query = String.format(query, event.getRoom().getRoomId(), event.getSqlDateFrom(), event.getSqlDateTo(), event.getTitle(), event.getDescription(), "meeting"/*event.getTypeAsString()*/);
+//        System.out.println(query);
+//        Statement stm = conn.createStatement();
+//        boolean rs = stm.execute(query);
+//        System.out.println(rs);
+//        close();
+//        return event;
+    }
 }
