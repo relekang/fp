@@ -5,96 +5,25 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Date;
 
-/**
- * The <code>Person</code> class stores information about a single person.
- * 
- * @author Thomas &Oslash;sterlie
- *
- * @version $Revision: 1.5 $ - $Date: 2005/02/20 14:52:29 $
- */
-public class Employee {
-	
-	/**
-	 * This member variable holds the person's name.
-	 */
+public class Employee implements Model{
+
+    public enum Gender{
+        FEMALE, MALE
+    };
+
+    private int ID;
 	private String name;
-	
-	/**
-	 * This member variable holds the person's email address.
-	 */
 	private String email;
-	
-	/**
-	 * This member variable holds the person's date of birth.
-	 */
 	private Date dateOfBirth;
-	
-	/**
-	 * This member variable holds a unique identifier for this object.
-	 */
-    private final int ID;
-
-    /**
-	 * Enum for gender, you can set it to either female or male
-	 * 
-	 * 
-	 * @see #setGender(Gender) the setGender(Gender) method
-	 */
-	public enum Gender{
-		FEMALE, MALE
-	};
 	private Gender gender;
-	
-	/**
-	 * This member variable provides functionality for notifying of changes to
-	 * the <code>Group</code> class.
-	 */
 	private PropertyChangeSupport propChangeSupp;
-	
-	/**
-	 * Constant used when calling 
-	 * {@link java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)}
-	 * on {@linkplain #addPropertyChangeListener(java.beans.PropertyChangeListener) registered
-	 * <code>PropertyChangeListener<code> objecs} when the person's name is changed.
-	 * 
-	 * @see #setName(String) the setName(String) method
-	 */
-	public final static String NAME_PROPERTY_NAME = "name";
 
-	/**
-	 * Constant used when calling 
-	 * {@link java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)}
-	 * on {@linkplain #addPropertyChangeListener(java.beans.PropertyChangeListener) registered
-	 * <code>PropertyChangeListener<code> objecs} when the person's email address is changed.
-	 * 
-	 * @see #setEmail(String) the setEmail(String) method
-	 */
+
+	public final static String NAME_PROPERTY_NAME = "name";
 	public final static String EMAIL_PROPERTY_NAME = "email";
-	
-	/**
-	 * Constant used when calling 
-	 * {@link java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)}
-	 * on {@linkplain #addPropertyChangeListener(java.beans.PropertyChangeListener) registered
-	 * <code>PropertyChangeListener<code> objecs} when the person's date of birth is changed.
-	 * 
-	 * @see #setEmail(String) the setDateOfBirth(java.util.Date) method
-	 */
 	public final static String DATEOFBIRTH_PROPERTY_NAME = "dateOfBirth";
-	
-	
-	/**
-	 * Constant used when calling 
-	 * {@link java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)}
-	 * on {@linkplain #addPropertyChangeListener(java.beans.PropertyChangeListener) registered
-	 * <code>PropertyChangeListener<code> objecs} when the person's gender is changed.
-	 * 
-	 * @see #setGender(Gender) the setGender(Gender) method
-	 */
 	public final static String GENDER_PROPERTY_NAME = "gender";
-	
-	/**
-	 * Enum for accepted, declined or pending
-	 */
+
 	public enum Status{
 		ACCEPTED, PENDING, DECLINED
 	}
@@ -111,7 +40,7 @@ public class Employee {
 		email = "";
 		dateOfBirth = new Date();
 //		id = System.currentTimeMillis();
-        ID = 0;
+        this.ID = 0;
 		propChangeSupp = new PropertyChangeSupport(this);
 	}
 	
@@ -377,6 +306,10 @@ public class Employee {
 		s += "Date of birth: " + getDateOfBirth().toString();
 		return s;
 	}
-	
+
+    @Override
+    public boolean save() {
+        return false;
+    }
 	
 }

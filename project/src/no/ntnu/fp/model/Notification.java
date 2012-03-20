@@ -1,14 +1,17 @@
 package no.ntnu.fp.model;
 
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Calendar;
 
-public class Notification {
+public class Notification implements Model{
     private String description;
     private final int ID;
     private final Calendar cal;
     private boolean is_invitation;
     private Event event;
+    private PropertyChangeSupport pcs;
 
     /**
      * Constructor for Notification
@@ -75,4 +78,15 @@ public class Notification {
         else return 0;
 
     }
+
+    @Override
+    public boolean save() {
+        return false;
+    }
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
 }
