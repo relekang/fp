@@ -1,10 +1,13 @@
 package no.ntnu.fp.gui;
 
+import no.ntnu.fp.server.Authentication;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -19,8 +22,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class Login extends JPanel {
 	
-	protected JLabel usernameLabel;
-	protected JLabel passwordLabel;
+	protected JLabel usernameLabel, passwordLabel, errorMsgLabel;
 
 	protected  JTextField usernameTextField;
 	protected JPasswordField passwordField;
@@ -49,19 +51,26 @@ public class Login extends JPanel {
 		GridBagConstraints c = new GridBagConstraints();
     	setLayout(new GridBagLayout());
     	setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    	
+
+        errorMsgLabel = new JLabel();
+        c.gridheight = 1;
+        c.gridwidth = 2;
+        c.gridx = 0;
+        c.gridy = 0;
+        add(errorMsgLabel, c);
+
     	// adds usernamelabel and textfield
     	usernameLabel = new JLabel("Username:");
     	c.gridheight = 1;
     	c.gridwidth = 1;
     	c.gridx = 0;
-    	c.gridy = 0;
+    	c.gridy = 1;
     	add(usernameLabel, c);
     	
     	usernameTextField = new JTextField();
     	usernameTextField.setPreferredSize(new Dimension(400,25));
     	c.gridx = 1;
-    	c.gridy = 0;
+    	c.gridy = 1;
     	add(usernameTextField,c);
     	
     	
@@ -69,21 +78,21 @@ public class Login extends JPanel {
     	//adds passwordlabel and textfield
     	passwordLabel = new JLabel("Password:");
     	c.gridx = 0;
-    	c.gridy = 1;
-    	add(passwordLabel,c);
+    	c.gridy = 2;
+    	add(passwordLabel, c);
     	
     	passwordField = new JPasswordField();
     	passwordField.setPreferredSize(new Dimension(400,25));
     	c.gridx = 1;
-    	c.gridy = 1;
+    	c.gridy = 2;
     	add(passwordField,c);
   
     	
     	//adds login button
     	loginButton = new JButton("Log in");
     	c.gridx = 1;
-    	c.gridy = 2;
-    	add(loginButton,c);
+    	c.gridy = 3;
+    	add(loginButton, c);
     	
     	
     	
@@ -101,17 +110,21 @@ public class Login extends JPanel {
 			// TODO Fix connection to database and check pass.
 			String username = usernameTextField.getText();
 			String password = new String(passwordField.getPassword());
-			if(username.equalsIgnoreCase("w")&&password.equals("w")){
-				usernameTextField.setText("");
-				passwordField.setText("");
-				mv.logIn();
-				
-			}
-			else{
-				System.out.println("feil passord");
-			}
+            try {
+                if(Authentication.authenticate(username, password)){
+                    usernameTextField.setText("");
+                    passwordField.setText("");
+                    mv.logIn();
+                    
+                }
+                else{
+                    errorMsgLabel.setText("feil passord");
+                }
+            } catch (SQLException exception) {
+                System.err.println(exception);
+            }
 
-		}
+        }
 		
 	}
 	
