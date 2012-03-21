@@ -17,8 +17,8 @@ public class EventViewController{
 	private Employee currentUser;
 	
 	public EventViewController(){
-		view = new EventView(); 
-	}
+		view = new EventView();
+    }
 	
 	public void setCurrentUser(Employee currentUser){
 		this.currentUser = currentUser;

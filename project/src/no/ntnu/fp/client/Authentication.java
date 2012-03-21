@@ -31,6 +31,7 @@ public class Authentication {
             String ack = conn.receive();
             if(ack.equals("success"))
                 return true;
+            conn.close();
         } catch (IOException e) {
             return false;
         }
