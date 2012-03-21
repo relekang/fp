@@ -3,6 +3,9 @@ package no.ntnu.fp.gui;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
+
 public class Constants {
 	
 //	Bredde og hoyde til komponenter i CalendarDayPanel og CalendarDayBox
@@ -38,5 +41,12 @@ public class Constants {
 	public enum EventType {
 		PERSONAL, BUSNIESS, BUSINESS_ADMIN;
 	}
+	
+//	Borders
+	public static final Border EMPTY_BORDER_10 = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+	public static final Border EMPTY_BORDER_5 = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+	public static final Border EMPTY_BORDER_1 = BorderFactory.createEmptyBorder(1, 1, 1, 1);
+	public static final Border EMPTY_BORDER_0 = BorderFactory.createEmptyBorder(0, 0, 0, 0);
+	
 	
 }

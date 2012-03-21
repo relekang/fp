@@ -2,6 +2,8 @@ package no.ntnu.fp.gui;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -10,11 +12,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class DateTimePicker extends JPanel implements MouseListener{
+public class DateTimePicker extends JPanel implements MouseListener, KeyListener{
 	private JPanel datePickerPanel, timePickerPanel, mainPanel;
 	private GridBagConstraints gbc;
 	private JLabel semicolon;
 	protected JTextField hourField, minuteField;
+	public int hour, min;
 	
 	public DateTimePicker() {
         mainPanel = new JPanel();
@@ -98,6 +101,34 @@ public class DateTimePicker extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		try{
+		hour = Integer.parseInt(hourField.getText());
+		min = Integer.parseInt(minuteField.getText());
+		}
+		catch (Exception a) {
+			// TODO: handle exception
+		}
 		
 	}
 	

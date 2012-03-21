@@ -48,7 +48,7 @@ public class CalendarPanel extends JPanel {
 		pane = new JScrollPane(weekPanel);
 		pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		pane.setMinimumSize(new Dimension(933, Constants.DAYBOX_HEIHGT));
-		pane.setViewportBorder(BorderFactory.createEmptyBorder(5, 5, 5,5));
+		pane.setViewportBorder(Constants.EMPTY_BORDER_1);
 		pane.setAlignmentY(0f);
 		add(pane, gbc);
 	}
@@ -61,7 +61,7 @@ public class CalendarPanel extends JPanel {
 		for(int i = 0; i < Constants.DAYS.length; i++) {
 			gbc.gridx = i;
 			JLabel l = new JLabel(Constants.DAYS[i]);
-			l.setPreferredSize(new Dimension(970/70, 25));
+//			l.setPreferredSize(new Dimension(970/70, 25));
 			l.setFont(Constants.WEEKDAY_FONT);
 			add(l, gbc);
 		}
