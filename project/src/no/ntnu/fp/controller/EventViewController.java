@@ -15,26 +15,36 @@ public class EventViewController{
 	
 	private EventView view;
 	private Employee currentUser;
+	private Event event;
 	
 	public EventViewController(){
 		view = new EventView();
+<<<<<<< HEAD
     }
+=======
+		view.setVisible(false);
+		
+	}
+>>>>>>> fixet mer paa eventcontrolleren
 	
 	public void setCurrentUser(Employee currentUser){
 		this.currentUser = currentUser;
 	}
 	
 	public void showEvent(Event event){
+		this.event = event;
 		view.setVisible(true);
-		
+		view.setTitle(event.getTitle());
+		view.setFromDate(event.getDateFrom().toString());
+		view.setToDate(event.getDateTo().toString());
 	}
 	
 	public void setEventVisible(boolean visible){
 		view.setVisible(visible);
 	}
 	
-	public void setEvent(){
-		
+	public void setEvent(Event event){
+		this.event = event;
 	}
 	
 	

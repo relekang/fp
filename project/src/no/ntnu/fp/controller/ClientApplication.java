@@ -1,10 +1,13 @@
 package no.ntnu.fp.controller;
 
+import java.util.Date;
+
 import no.ntnu.fp.client.Connection;
 import no.ntnu.fp.gui.EventView;
 import no.ntnu.fp.gui.MainView;
 import no.ntnu.fp.gui.FindPersonView;
 import no.ntnu.fp.model.Employee;
+import no.ntnu.fp.model.Event;
 
 import javax.swing.*;
 
