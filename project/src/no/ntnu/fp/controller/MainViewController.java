@@ -1,11 +1,12 @@
 package no.ntnu.fp.controller;
 
-import java.beans.PropertyChangeSupport;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import no.ntnu.fp.gui.MainView;
 import no.ntnu.fp.model.Employee;
 
-public class MainViewController extends PropertyChangeSupport {
+public class MainViewController implements PropertyChangeListener {
 	
 //	public static final String 
 	
@@ -13,17 +14,25 @@ public class MainViewController extends PropertyChangeSupport {
 	private Employee currentUser;
 	
 	public MainViewController(MainView view) {
-		super(view);
-		this.mainView = view;
+		mainView = view;
 	}
 	
 	public void setCurrentUser(Employee currentUser){
 		this.currentUser = currentUser;
-		System.out.println(currentUser);
+		currentUser.addPropertyChangeListener(this);
 	}
 	
 	public Employee getCurrentUser() {
 		return currentUser;
 	}
 
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		System.out.println("propertychange in MainViewController: " + evt);
+	}
+
+	public MainView getMainView() {
+		return mainView;
+	}
+	
 }

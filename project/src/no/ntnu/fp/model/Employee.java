@@ -35,7 +35,7 @@ public class Employee implements Model{
 		Employee e = new Employee();
 		e.setName("Bernt Arne");
 		e.setEmail("test@test.com");
-		e.setDateOfBirth(new Date(31, 12, 90));
+		e.setDateOfBirth(new Date(1990, 12, 31));
 		return e;
 	}
 
