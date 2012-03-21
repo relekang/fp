@@ -324,8 +324,10 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	public void componentMoved(ComponentEvent arg0) {
 		
 		if(shown){
-			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
-			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+//			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
+//			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+			fromPop.show(fromField, 0, 30);
+			toPop.show(toField, 0, 30);
 		}
 		
 	}
@@ -334,8 +336,10 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	public void componentResized(ComponentEvent arg0) {
 		
 		if(shown){
-			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
-			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+//			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
+//			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+			fromPop.show(fromField, 0, 30);
+			toPop.show(toField, 0, 30);
 		}
 	}
 
@@ -349,13 +353,15 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == fromField){
-			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
-			fromPop.setVisible(true);
+			
+			fromPop.show(fromField, 0, 30);
+			
 			fromField.setText("");
 		}
 		else if(e.getSource() == toField){
 			toPop.setVisible(true);
-			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+			toPop.show(toField, 0, 30);
+			
 			toField.setText("");
 		}
 		
