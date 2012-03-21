@@ -6,11 +6,17 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import java.util.ArrayList;
+
 import java.util.Date;
+
+import no.ntnu.fp.controller.EventViewController;
 import no.ntnu.fp.model.Employee;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -152,9 +158,21 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
+
 					setVisible(false);
 					
 					
+					int listSize = participantList.getModel().getSize();
+					ArrayList<Employee> participantsArray = new ArrayList<Employee>();
+					
+					for (int i = 0; i < listSize; i++) {
+						participantsArray.add((Employee) participantList.getModel().getElementAt(i));
+					}
+					
+//					EventViewController.saveEvent(eventTitle.getText(), toField.getText(), 
+//												   fromField.getText(),descriptionBox.getText(), 
+//												   participantsArray, admin, ID);
+
 					//TODO: Should save event to database
 				}
 			});
@@ -226,7 +244,7 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 			buttonPanel.add(declineButton, gbc3);
 			
 			
-			acceptButton.addActionListener(new ActionListener() {
+			acceptButton.addActionListener(new ActionListener(){
 				
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -269,8 +287,7 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		gbc1.gridx = 0;	gbc1.gridy = 2;
 		gbc1.gridwidth = 3;
 		gbc1.gridheight = 1;
-		gbc1.anchor = GridBagConstraints.CENTER
-		;
+		gbc1.anchor = GridBagConstraints.CENTER;
 		eventPanel.add(roomBox, gbc1);
 		
 		gbc1.gridx = 0;	gbc1.gridy = 3;
