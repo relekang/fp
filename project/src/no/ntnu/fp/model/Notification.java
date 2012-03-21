@@ -23,21 +23,60 @@ public class Notification implements Model{
      * @param description
      * @param is_invitation
      */
-    public Notification(int id, String timestamp, String description, 
-    		int is_invitation, NotificationType type){
-        this.ID = id;
-        this.description = description;
-        cal = Calendar.getInstance();
-//        this.description = timestamp;
-        if (is_invitation == 1){
-            this.is_invitation = true;
-        } else {
-            this.is_invitation = false;
-        }
-        this.type = type;
+    public Notification(int id, Event event, String timestamp, int is_invitation, NotificationType type, Employee employee){
+    	this.ID = id;
+        this.event = event;
         this.timestamp = timestamp;
+        cal = Calendar.getInstance();
 
+        if (is_invitation == 1) this.is_invitation = true;
+        else this.is_invitation = false;
+        
+        this.type = type;
+
+        switch(type) {
+        case INVITATION:
+        	description = employee.getName() + " invited you to " + event.getTitle(); 
+        case DELETION:
+        	description = employee.getName() + " deleted " + event.getTitle();
+        case ACCEPTED:
+        	description = employee.getName() + " accepted your invitation to " + event.getTitle();
+        case DECLINED:
+        	description = employee.getName() + " declined your invitation to " + event.getTitle();
+        }
     }
+
+    public Notification(int id, Event event, String timestamp, int is_invitation, NotificationType type, Employee employee, 
+    		boolean titleChanged, boolean timeChanged, boolean roomChanged, boolean descriptionChanged){
+
+    	this.ID = id;
+        this.event = event;
+        this.timestamp = timestamp;
+        cal = Calendar.getInstance();
+
+        if (is_invitation == 1) this.is_invitation = true;
+        else this.is_invitation = false;
+        
+        this.type = type;
+
+        String descr = employee.getName() + " changed " + event.getTitle() + ": "; 
+        
+        if (titleChanged) descr += "title";
+        if (timeChanged) {
+        	if (titleChanged) descr += ", time";
+        	else descr += "time";
+        }
+        if (roomChanged) {
+        	if (timeChanged) descr += ", room";
+        	else descr += "room";	
+        }
+        if (descriptionChanged) {
+        	if (roomChanged) descr += ", description";
+        	else descr += "description";	
+        }
+        
+        description = descr;
+    }    
     
     /**
      * returns the description string
