@@ -9,6 +9,10 @@ import java.awt.event.ActionListener;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -32,7 +36,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class EventView extends JFrame implements ComponentListener, MouseListener{
+public class EventView extends JFrame implements ComponentListener, MouseListener, FocusListener, KeyListener{
 	
 	JList participantList;
 	JTextArea descriptionBox;
@@ -67,8 +71,8 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		eventViewPanel.setLayout(new GridBagLayout());
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
-		calenderToPopPanel = new DateTimePicker();
-		calenderFromPopPanel = new DateTimePicker();
+		calenderToPopPanel = new DateTimePicker(this);
+		calenderFromPopPanel = new DateTimePicker(this);
 		
 		createPanel();
 		
@@ -115,14 +119,17 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		dash = new JLabel("-");
 		dash.setSize(5, 1);
 		
+		//Add listeners to DateTimePicker
+		
 		//TODO creating popups for from and to field
 		fromPop = new JPopupMenu();
 		fromPop.add(calenderFromPopPanel);
-		
-		
+		fromPop.addFocusListener(this);
+		calenderFromPopPanel.addFocusListener(this);
 		
 		toPop = new JPopupMenu();
 		toPop.add(calenderToPopPanel);
+		toPop.addFocusListener(this);
 		
 		this.addComponentListener(this);
 		
@@ -367,8 +374,6 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	public void componentMoved(ComponentEvent arg0) {
 		
 		if(shown){
-//			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
-//			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
 			fromPop.show(fromField, 0, 30);
 			toPop.show(toField, 0, 30);
 		}
@@ -379,8 +384,6 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	public void componentResized(ComponentEvent arg0) {
 		
 		if(shown){
-//			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
-//			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
 			fromPop.show(fromField, 0, 30);
 			toPop.show(toField, 0, 30);
 		}
@@ -393,7 +396,6 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getSource() == fromField){
 			
 			fromPop.show(fromField, 0, 30);
@@ -411,24 +413,50 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		System.out.println("never gonna give you up david <3");
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		if(e.getSource()==fromField){
+		}
+		System.out.println("lost focus");
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		fromField.setText(((DateTimePicker) calenderFromPopPanel).getHour()+":"+((DateTimePicker) calenderFromPopPanel).getMin());
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
