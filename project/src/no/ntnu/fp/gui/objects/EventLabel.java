@@ -11,7 +11,7 @@ import no.ntnu.fp.model.Event;
 public class EventLabel {
 	
 	private Color eventColor = Constants.EVENT_PENDING;
-	private Color textColor = Constants.STD_FOREGROUND;
+	private Color textColor = Constants.EVENT_TEXT_COLOR;
 	private Event model;
 	private int fromPx;
 	private int toPx;

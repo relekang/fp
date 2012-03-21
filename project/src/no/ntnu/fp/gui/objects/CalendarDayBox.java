@@ -78,7 +78,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 			for(EventLabel lbl : events) {
 				g.setColor(lbl.getEventColor());
 				g.fillRoundRect(0, lbl.getFromPixel(), Constants.CANVAS_WIDTH-10, lbl.getToPixel()-lbl.getFromPixel(), 10, 10);
-				g.setColor(Constants.STD_FOREGROUND);
+				g.setColor(lbl.getTextColor());
 				g.drawString("Testetest", 0, lbl.getFromPixel()+20);
 			}
 		}

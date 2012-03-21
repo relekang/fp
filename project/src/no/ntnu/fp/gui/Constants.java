@@ -31,13 +31,14 @@ public class Constants {
 	public static final Font HOUR_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
 	
 //	Colors
+	public static final Color EVENT_TEXT_COLOR = Color.BLACK;
 	public static final Color STD_BACKGROUND = Color.LIGHT_GRAY;
 	public static final Color STD_FOREGROUND = Color.WHITE; //TODO: bedre navn paa variabel :P
-	public static final Color EVENT_ACCEPTED = new Color(131, 240, 60); //light green
-	public static final Color EVENT_PENDING = new Color(255, 180, 64); //light yellow
-	public static final Color EVENT_DECLINED = new Color(251, 63, 81); //light red
-	public static final Color DRAG_NEW_EVENT = new Color(179, 209, 232); //light blue
-	
+	public static final Color EVENT_ACCEPTED = new Color(131, 240, 60, 200); //light green
+	public static final Color EVENT_PENDING = new Color(255, 180, 64, 200); //light yellow
+	public static final Color EVENT_DECLINED = new Color(251, 63, 81, 200); //light red
+	public static final Color DRAG_NEW_EVENT = new Color(179, 209, 232, 100); //light blue
+
 	public enum EventType {
 		PERSONAL, BUSNIESS, BUSINESS_ADMIN;
 	}
