@@ -190,6 +190,7 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					setVisible(false);
+					
 					//TODO: Should delete event from database
 				}
 			});
@@ -305,6 +306,7 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		gbc2.gridwidth = 3;
 		listPanel.add(participantList, gbc2);
 	}
+	
 	
 	public void removeParticipant(int i) {
 		listModel.remove(i);

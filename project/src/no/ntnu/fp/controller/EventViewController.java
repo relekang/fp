@@ -6,50 +6,38 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import no.ntnu.fp.gui.EventView;
 import no.ntnu.fp.model.Employee;
 import no.ntnu.fp.model.Event;
 import no.ntnu.fp.storage.db.EventHandler;
 
 public class EventViewController{
 	
+	private EventView view;
+	private Employee currentUser;
 	
-	public static void createEvent(String title){
-		EventHandler eventHandler = new EventHandler();
-		Employee admin = new Employee();
-		Event event = new Event(title, admin);
-		eventHandler.createEvent(event);
+	public EventViewController(){
+		view = new EventView(); 
 	}
 	
-	public static void saveEvent(String title, Date dateTo, Date dateFrom, 
-								 String description, ArrayList<Employee> participants, Employee admin, int ID){
-		Event event = new Event(ID, title, dateTo, dateFrom);
-		EventHandler handler;
-		try {
-			handler = new EventHandler();
-			handler.updateEvent(event);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void setCurrentUser(Employee currentUser){
+		this.currentUser = currentUser;
+	}
+	
+	public void showEvent(Event event){
+		view.setVisible(true);
 		
 	}
 	
-	public void setEventTitle(String title){
+	public void setEventVisible(boolean visible){
+		view.setVisible(visible);
+	}
+	
+	public void setEvent(){
 		
 	}
 	
-	public void setEventDateFrom(Date dateFrom){
-		
-	}
 	
-	public void setEventDateTo(Date dateTo){
-		
-	}
-	
-	public void setDescription(String Description){
-		
-	}
-
 	public Event getEvent (int ID){
 		try {
 			return EventHandler.getEvent(ID);

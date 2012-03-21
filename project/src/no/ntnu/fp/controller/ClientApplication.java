@@ -10,17 +10,23 @@ import javax.swing.*;
 
 public class ClientApplication {
     private static JFrame mainFrame, eventFrame, findPersonFrame;
+    
+    private static 
+    EventViewController eventView = new EventViewController();
+    
+    public static void showEventView(){
+    	eventView.setEventVisible(true);
+    }
+    
     public static void main (String args[]){
 
     	mainFrame = new MainView();
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
-
-        eventFrame = new EventView();
-        eventFrame.setLocationRelativeTo(null);
-        eventFrame.setVisible(false);
-
+        
+        eventView = new EventViewController();
+        
         findPersonFrame = new FindPersonView();
         findPersonFrame.setLocationRelativeTo(null);
         findPersonFrame.setVisible(false);

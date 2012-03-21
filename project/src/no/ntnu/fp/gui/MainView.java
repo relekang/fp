@@ -96,7 +96,7 @@ public class MainView extends JFrame{
     class CreateEventButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            ClientApplication.setEventFrameVisible(true);
+            ClientApplication.showEventView();
         }
     }
     class SignOutEventButtonListener implements ActionListener{
