@@ -11,12 +11,14 @@ public class EventLabel {
 	private Color eventColor = Constants.EVENT_PENDING;
 	private Color textColor = Constants.STD_FOREGROUND;
 	private Event model;
-	private int from;
-	private int to;
+	private int from, fromHour;
+	private int to, toHour;
 	
 	public EventLabel(int from, int to) {
 		this.from = from;
 		this.to = to;
+		int fromHour = from / Constants.HOUR_HEIGHT;
+		int fromMinute = from % Constants.HOUR_HEIGHT; 
 //		Date dateFrom = new Date();
 	}
 	

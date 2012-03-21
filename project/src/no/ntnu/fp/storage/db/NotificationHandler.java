@@ -23,8 +23,8 @@ public class NotificationHandler extends DbHandler {
         ResultSet rs = stmt.executeQuery("SELECT * NOTIFICATION ROOM");
 
         while (rs.next()) {
-            Notification notification = new Notification(rs.getInt("id"), rs.getString("name"), rs.getString("location"), rs.getInt("capacity"));
-            notifications.add(notification);
+//            Notification notification = new Notification(rs.getInt("id"), rs.getString("name"), rs.getString("location"), rs.getInt("capacity"));
+//            notifications.add(notification);
         }
         rs.close();
         close();
@@ -40,7 +40,7 @@ public class NotificationHandler extends DbHandler {
             ResultSet rs = stmt.executeQuery("SELECT * FROM NOTIFICATION WHERE " + arg);
             Notification notification = null;
             while (rs.next()) {
-                notification = new Notification(rs.getInt("id"),rs.getString("timestamp"), rs.getString("description"), rs.getInt("is_invitation"));
+//                notification = new Notification(rs.getInt("id"),rs.getString("timestamp"), rs.getString("description"), rs.getInt("is_invitation"));
 
             }
             rs.close();

@@ -30,6 +30,14 @@ public class Employee implements Model{
 	public enum Status{
 		ACCEPTED, PENDING, DECLINED
 	}
+	
+	public static Employee getExampleEployee() {
+		Employee e = new Employee();
+		e.setName("Bernt Arne");
+		e.setEmail("test@test.com");
+		e.setDateOfBirth(new Date(31, 12, 90));
+		return e;
+	}
 
     public Employee(JSONObject jsonEmployee) throws JSONException {
         this(jsonEmployee.getInt("id"), jsonEmployee.get("name").toString(), jsonEmployee.get("email").toString(), new Date(), Gender.FEMALE );

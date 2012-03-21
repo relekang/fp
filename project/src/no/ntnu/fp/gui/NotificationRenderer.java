@@ -37,10 +37,10 @@ public class NotificationRenderer extends DefaultListCellRenderer implements Lis
 		Notification selected = (Notification) selectedValue;
 		
 		Calendar cal = selected.getTimestamp();
-		String date = cal.get(Calendar.DAY_OF_MONTH) + ".";
-		String month = cal.get(Calendar.MONTH) + " ";
-		String hour = cal.get(Calendar.HOUR_OF_DAY) + ":";
-		String min = cal.get(Calendar.MINUTE) + "";
+		String date = makeDoubleDigit(cal.get(Calendar.DAY_OF_MONTH)) + ".";
+		String month = makeDoubleDigit((cal.get(Calendar.MONTH) + 1)) + " ";
+		String hour = makeDoubleDigit(cal.get(Calendar.HOUR_OF_DAY)) + ":";
+		String min = makeDoubleDigit(cal.get(Calendar.MINUTE)) + "";
 		
 		String timestamp = date + month + hour + min;
 		
@@ -54,6 +54,11 @@ public class NotificationRenderer extends DefaultListCellRenderer implements Lis
 		else if (selected.getType() == NotificationType.CHANGE) label.setIcon(changeIcon);
 		
 		return label;
+	}
+	
+	private String makeDoubleDigit(int number) {
+		if (number > 0 && number < 10) return "0" + number;
+		else return "" + number;
 	}
 	
 }
