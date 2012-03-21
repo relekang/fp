@@ -30,7 +30,7 @@ public class NotificationRenderer extends DefaultListCellRenderer implements Lis
 	}
 	
 	public Component getListCellRendererComponent(JList list, Object selectedValue,
-			int index, boolean isSelected, boolean cellHasFocus) {
+		int index, boolean isSelected, boolean cellHasFocus) {
 		// TODO Auto-generated method stub
 		
 		JLabel label = (JLabel) super.getListCellRendererComponent(list, selectedValue, index, isSelected, cellHasFocus);

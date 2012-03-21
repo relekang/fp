@@ -10,11 +10,11 @@ public class Constants {
 	
 //	Bredde og hoyde til komponenter i CalendarDayPanel og CalendarDayBox
 	public static final int HOURS = 24;
-	public static final int HOUR_HEIGHT = 50;
-	public static final int HEIGHT_CANVAS = HOURS*HOUR_HEIGHT;
+	public static final int HOUR_HEIGHT = 60;
+	public static final int CANVAS_HEIGHT = HOURS*HOUR_HEIGHT;
+	public static final int CANVAS_WIDTH = 120;
 	public static final int NUM_VISIBLE_CELLS = 8;
-	public static final int DAYBOX_HEIHGT = NUM_VISIBLE_CELLS*HOUR_HEIGHT;
-	public static final int WIDTH_CANVAS = 120;
+	public static final int DAYBOX_HEIGHT = NUM_VISIBLE_CELLS*HOUR_HEIGHT;
 	
 //	Strings
 	public static final String MONDAY = "Monday";
@@ -48,5 +48,10 @@ public class Constants {
 	public static final Border EMPTY_BORDER_1 = BorderFactory.createEmptyBorder(1, 1, 1, 1);
 	public static final Border EMPTY_BORDER_0 = BorderFactory.createEmptyBorder(0, 0, 0, 0);
 	
+//	Scroll-speed
+	public static final int STD_SCROLL_SPEED = 16;
 	
+//	Drawable rectangle prefs
+	public static final int RECT_CURVE = 10;
+	public static final int RECT_WIDTH = CANVAS_WIDTH - 10;
 }

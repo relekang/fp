@@ -23,19 +23,18 @@ public class CalendarPanel extends JPanel {
 	private void initWeekPanel() {
 		weekPanel = new JPanel(new FlowLayout());
 		weekPanel.setBackground(Constants.STD_BACKGROUND);
-		JPanel p = new JPanel();
-		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-		p.setBackground(Color.LIGHT_GRAY);
+		JPanel hourLabels = new JPanel();
+		hourLabels.setLayout(new BoxLayout(hourLabels, BoxLayout.Y_AXIS));
+		hourLabels.setBackground(Constants.STD_BACKGROUND);
 		for(int i = 0; i < Constants.HOURS; i++) {
 			JLabel l = new JLabel(i<10 ? "0"+i : ""+i);
 			l.setFont(Constants.HOUR_FONT);
-			l.setPreferredSize(new Dimension(20, 50));
-			l.setBorder(BorderFactory.createEmptyBorder(0, 0, (Constants.HOUR_HEIGHT-l.getHeight()-6), 0));
+			l.setPreferredSize(new Dimension(15, Constants.HOUR_HEIGHT));
+			l.setBorder(BorderFactory.createEmptyBorder(0, 0, (Constants.HOUR_HEIGHT-l.getHeight()-7), 0));
 			l.setForeground(Constants.STD_FOREGROUND);
-			l.setBackground(Constants.STD_BACKGROUND);
-			p.add(l);
+			hourLabels.add(l);
 		}
-		weekPanel.add(p);
+		weekPanel.add(hourLabels);
 		
 		gbc.gridy = 1;
 		for(int i = 0; i < Constants.DAYS.length; i++) {
@@ -47,9 +46,9 @@ public class CalendarPanel extends JPanel {
 		gbc.gridwidth = 7;		
 		pane = new JScrollPane(weekPanel);
 		pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		pane.setMinimumSize(new Dimension(933, Constants.DAYBOX_HEIHGT));
+		pane.getVerticalScrollBar().setUnitIncrement(Constants.STD_SCROLL_SPEED);
+		pane.setMinimumSize(new Dimension(933, Constants.DAYBOX_HEIGHT));
 		pane.setViewportBorder(Constants.EMPTY_BORDER_1);
-		pane.setAlignmentY(0f);
 		add(pane, gbc);
 	}
 	
@@ -60,10 +59,10 @@ public class CalendarPanel extends JPanel {
 		gbc.gridy = 0;
 		for(int i = 0; i < Constants.DAYS.length; i++) {
 			gbc.gridx = i;
-			JLabel l = new JLabel(Constants.DAYS[i]);
+			JLabel lbl = new JLabel(Constants.DAYS[i]);
 //			l.setPreferredSize(new Dimension(970/70, 25));
-			l.setFont(Constants.WEEKDAY_FONT);
-			add(l, gbc);
+			lbl.setFont(Constants.WEEKDAY_FONT);
+			add(lbl, gbc);
 		}
 	}
 

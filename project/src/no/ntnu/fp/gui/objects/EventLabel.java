@@ -3,6 +3,8 @@ package no.ntnu.fp.gui.objects;
 import java.awt.Color;
 import java.sql.Date;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+
 import no.ntnu.fp.gui.Constants;
 import no.ntnu.fp.model.Event;
 
@@ -11,34 +13,34 @@ public class EventLabel {
 	private Color eventColor = Constants.EVENT_PENDING;
 	private Color textColor = Constants.STD_FOREGROUND;
 	private Event model;
-	private int from;
-	private int to;
+	private int fromPx;
+	private int toPx;
 	
-	public EventLabel(int from, int to) {
-//		TODO: fix dette!!
-		int fromHour = from / Constants.HOUR_HEIGHT;
-		int fromMinute = (from % Constants.HOUR_HEIGHT)/(Constants.HOUR_HEIGHT/4);
-		int toHour = 0;
-		int toMinute = 0;
-		if(from == to) { 
-			toHour = fromHour + 1;
-			
-		} else {
-			toHour = to / Constants.HOUR_HEIGHT;
-			toMinute = (to % Constants.HOUR_HEIGHT)/(Constants.HOUR_HEIGHT/4);
-			if(fromHour == toHour && (toMinute == 1 || toMinute == 0)) 
-				toMinute = 2;
-		}
-		this.from = fromHour*Constants.HOUR_HEIGHT + fromMinute*(Constants.HOUR_HEIGHT/4);
-		this.to = toHour*Constants.HOUR_HEIGHT + toMinute*(Constants.HOUR_HEIGHT/4);
+	public EventLabel(int fromPx, int toPx) {
+		if(toPx-fromPx < Constants.HOUR_HEIGHT/2)
+			toPx += Constants.HOUR_HEIGHT/2 - (toPx-fromPx);
+		this.fromPx = calculatePixelLocation(fromPx);
+		this.toPx = calculatePixelLocation(toPx);
+	}
+	
+	private int calculatePixelLocation(int px) {
+		int hour = px / Constants.HOUR_HEIGHT;
+		int minute = px % Constants.HOUR_HEIGHT;
+		int quarter = (minute / (Constants.HOUR_HEIGHT / 4));
+		if(minute % (Constants.HOUR_HEIGHT/4) > Constants.HOUR_HEIGHT/8) 
+			quarter++;
+//		System.out.println("from: " + fromHour + " " + fromMinute);
+//		System.out.println("to : " + toHour + " " + toMinute);
+//		System.out.println("quarters : " + fromQuarter + " " + toQuarter);
+		return hour*Constants.HOUR_HEIGHT + quarter * (Constants.HOUR_HEIGHT/4);
 	}
 	
 	public int getFromPixel() {
-		return from;
+		return fromPx;
 	}
 	
 	public int getToPixel() {
-		return to;
+		return toPx;
 	}
 
 	public Color getEventColor() {
