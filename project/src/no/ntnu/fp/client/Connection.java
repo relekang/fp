@@ -1,6 +1,7 @@
 package no.ntnu.fp.client;
 
 import no.ntnu.fp.common.Constants;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,13 +18,13 @@ public class Connection {
         server = new ServerSocket(Constants.CLIENT_PORT);
     }
 
-    public static void send(String data){
-        System.out.print(data);
+    public static void send(JSONObject object){
+        System.out.print(object.toString());
         try {
             Socket socket = new Socket("localhost", Constants.SERVER_PORT);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            System.out.println("Sending string: '" + data + "'\n");
-            out.print(data);
+            System.out.println("Sending string: '" + object.toString() + "'\n");
+            out.print(object.toString());
             out.close();
             socket.close();
         }
@@ -45,6 +46,7 @@ public class Connection {
 
             System.out.print("'\n");
             in.close();
+            socket.close();
         }
         catch(Exception e) { System.out.print(e.toString()); }
         if(message != null)
