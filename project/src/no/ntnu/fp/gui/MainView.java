@@ -19,13 +19,9 @@ public class MainView extends JFrame{
         overviewPanel = new OverviewCalenderPanel();
         notificationPanel = new NotificationPanel();
         loginPanel = new Login(this);
-//      loginPanel.mv = this;
         
         buildMainPanel();
 
-
-
-		
 		mainPanel.setVisible(false);
        // add(mainPanel);
         add(loginPanel);

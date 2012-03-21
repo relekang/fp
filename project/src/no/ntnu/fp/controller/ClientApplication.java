@@ -11,10 +11,13 @@ import javax.swing.*;
 public class ClientApplication {
     private static JFrame mainFrame, eventFrame, findPersonFrame;
     
-    private static EventViewController eventView = new EventViewController();
+    private static EventViewController eventViewController = new EventViewController();
+    private static MainViewController mainViewController = new MainViewController();
+    private static FindPersonViewController findPersonViewController = new FindPersonViewController();
+    
     
     public static void showEventView(){
-    	eventView.setEventVisible(true);
+    	eventViewController.setEventVisible(true);
     }
     
     public static void main (String args[]){
@@ -24,14 +27,14 @@ public class ClientApplication {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
         
-        eventView = new EventViewController();
+        eventViewController = new EventViewController();
+        
         
         findPersonFrame = new FindPersonView();
         findPersonFrame.setLocationRelativeTo(null);
         findPersonFrame.setVisible(false);
 
-
-
+//        pack();
     }
 
     public static void pack(){
@@ -52,7 +55,8 @@ public class ClientApplication {
     }
 
     public static void setCurrentUser(Employee employee) {
-        eventView.setCurrentUser(employee);
-        System.out.print(employee.toString());
+        eventViewController.setCurrentUser(employee);
+        findPersonViewController.setCurrentUser(employee);
+        mainViewController.setCurrentUser(employee);
     }
 }
