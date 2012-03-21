@@ -6,6 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Date;
 import no.ntnu.fp.model.Employee;
 import javax.swing.DefaultListModel;
@@ -20,7 +24,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class EventView extends JFrame{
+public class EventView extends JFrame implements ComponentListener, MouseListener{
 	
 	JList participantList;
 	JTextArea descriptionBox;
@@ -34,6 +38,7 @@ public class EventView extends JFrame{
 	ParticipantRenderer renderer;
 	Employee user;
 	JPopupMenu fromPop, toPop;
+	boolean shown;
 	
 	public EventView(){
 		gbc1 = new GridBagConstraints();
@@ -106,8 +111,12 @@ public class EventView extends JFrame{
 		fromPop = new JPopupMenu();
 		fromPop.add(calenderFromPopPanel);
 		
+		
+		
 		toPop = new JPopupMenu();
 		toPop.add(calenderToPopPanel);
+		
+		this.addComponentListener(this);
 		
 		//skal sjekke om brukeren er eventmanager
 		if(true){
@@ -136,13 +145,16 @@ public class EventView extends JFrame{
 			gbc2.gridwidth = 1;
 			listPanel.add(deletePersonButton, gbc2);
 			
+			fromField.addMouseListener(this);
+			toField.addMouseListener(this);
+			
 			saveButton.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//setVisible(false);
-					toPop.setLocation(fromField.getLocation().x, fromField.getLocation().y);
-					toPop.setVisible(true);
+					setVisible(false);
+					
+					
 					//TODO: Should save event to database
 				}
 			});
@@ -284,4 +296,77 @@ public class EventView extends JFrame{
 	public void addParticipant(Employee person) {
 		listModel.addElement(person);
 	}
+
+	@Override
+	public void componentHidden(ComponentEvent arg0) {
+		
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent arg0) {
+		
+		if(shown){
+			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
+			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+		}
+		
+	}
+
+	@Override
+	public void componentResized(ComponentEvent arg0) {
+		
+		if(shown){
+			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
+			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+		}
+	}
+
+	@Override
+	public void componentShown(ComponentEvent arg0) {
+		System.out.println("test");
+		shown = true;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == fromField){
+			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
+			fromPop.setVisible(true);
+			fromField.setText("");
+		}
+		else if(e.getSource() == toField){
+			toPop.setVisible(true);
+			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+			toField.setText("");
+		}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

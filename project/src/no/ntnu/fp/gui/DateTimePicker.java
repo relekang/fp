@@ -68,9 +68,11 @@ public class DateTimePicker extends JPanel implements MouseListener{
 		}
 		if(e.getSource() == hourField && hourField.getText().equals("hour")){
 			hourField.setText("");
+			hourField.grabFocus();
 		}
 		if(e.getSource() == minuteField && minuteField.getText().equals("min")){
 			minuteField.setText("");
+			minuteField.requestFocus();
 		}
 	}
 
