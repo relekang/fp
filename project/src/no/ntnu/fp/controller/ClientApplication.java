@@ -11,8 +11,7 @@ import javax.swing.*;
 public class ClientApplication {
     private static JFrame mainFrame, eventFrame, findPersonFrame;
     
-    private static 
-    EventViewController eventView = new EventViewController();
+    private static EventViewController eventView = new EventViewController();
     
     public static void showEventView(){
     	eventView.setEventVisible(true);
