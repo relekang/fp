@@ -307,6 +307,29 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		listPanel.add(participantList, gbc2);
 	}
 	
+	public void setTitle(String title){
+		eventTitle.setText(title);
+	}
+	
+	public String getTitle(){
+		return eventTitle.getText();
+	}
+	
+	public void setToDate(String toDate){
+		toField.setText(toDate);
+	}
+	
+	public String getToDate(){
+		return toField.getText();
+	}
+	
+	public void setFromDate(String fromDate){
+		fromField.setText(fromDate);
+	}
+	
+	public String getFromDate(){
+		return fromField.getText();
+	}
 	
 	public void removeParticipant(int i) {
 		listModel.remove(i);
@@ -347,7 +370,6 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 
 	@Override
 	public void componentShown(ComponentEvent arg0) {
-		System.out.println("test");
 		shown = true;
 	}
 

@@ -86,7 +86,7 @@ public class Event implements Model{
     	if(title.length() <= TITLE_LENGTH){
     		String oldTitle = this.title;
     		this.title = title;
-    		pcs.firePropertyChange(TITLE_CHANGED, oldTitle, this.title);
+//    		pcs.firePropertyChange(TITLE_CHANGED, oldTitle, this.title);
     	}
     }
 
@@ -105,7 +105,7 @@ public class Event implements Model{
     public void setDateFrom(Date dateFrom) {
     	Date oldDateFrom = this.dateFrom;
         this.dateFrom = dateFrom;
-        pcs.firePropertyChange(DATEFROM_CHANGED, oldDateFrom, this.dateFrom);
+//        pcs.firePropertyChange(DATEFROM_CHANGED, oldDateFrom, this.dateFrom);
     }
     
     /**
@@ -124,7 +124,7 @@ public class Event implements Model{
         if(getDateFrom() != null && getDateFrom().before(dateTo)){
         	Date oldDateTo = this.dateTo;
             this.dateTo = dateTo;
-            pcs.firePropertyChange(DATETO_CHANGED, oldDateTo, this.dateTo);
+//            pcs.firePropertyChange(DATETO_CHANGED, oldDateTo, this.dateTo);
         }
     }
 	
@@ -143,7 +143,7 @@ public class Event implements Model{
     public void setRoom(Room room) {
     	Room oldRoom = this.room;
         this.room = room;
-        pcs.firePropertyChange(ROOM_CHANGED, oldRoom, this.room);
+//        pcs.firePropertyChange(ROOM_CHANGED, oldRoom, this.room);
     }
     
     /**
@@ -161,12 +161,12 @@ public class Event implements Model{
     public void setDescription(String description) {
     	String oldDescription = this.description;
         this.description = description;
-        pcs.firePropertyChange(DESCRIPTION_CHANGED, oldDescription, description);
+//        pcs.firePropertyChange(DESCRIPTION_CHANGED, oldDescription, description);
     }
     
     public void addParticipants (Employee employee){
     	participants.add(employee);
-    	pcs.firePropertyChange(ADDED_NEW_PARTICIPANT, employee, participants);
+//    	pcs.firePropertyChange(ADDED_NEW_PARTICIPANT, employee, participants);
     }
 
     /**
