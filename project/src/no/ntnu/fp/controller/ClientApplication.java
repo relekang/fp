@@ -52,7 +52,7 @@ public class ClientApplication {
     }
 
     public static void setCurrentUser(Employee employee) {
-        //Todo
+        eventView.setCurrentUser(employee);
         System.out.print(employee.toString());
     }
 }
