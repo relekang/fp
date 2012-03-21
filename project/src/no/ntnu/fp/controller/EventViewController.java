@@ -19,13 +19,10 @@ public class EventViewController{
 	
 	public EventViewController(){
 		view = new EventView();
-<<<<<<< HEAD
-    }
-=======
 		view.setVisible(false);
+    }
 		
-	}
->>>>>>> fixet mer paa eventcontrolleren
+	
 	
 	public void setCurrentUser(Employee currentUser){
 		this.currentUser = currentUser;
