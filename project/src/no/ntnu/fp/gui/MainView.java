@@ -23,28 +23,19 @@ public class MainView extends JFrame {
 		buildMainPanel();
 
 		mainPanel.setVisible(false);
-		mainPanel.setBorder(Constants.EMPTY_BORDER_10);
 		mainPanel.setPreferredSize(new Dimension(mainPanel.getPreferredSize().width, (int)(mainPanel.getMinimumSize()).getHeight()));
 		add(loginPanel);
 		pack();
-//		System.out.println("mainpanel: " + mainPanel.getPreferredSize());
-//		System.out.println("calendarPanel: " + calendarPanel.getPreferredSize());
-//		System.out.println("overViewPanel: " + overviewPanel.getPreferredSize());
-//		System.out.println("notificationPanel: " + notificationPanel.getPreferredSize());
-//		System.out.println("loginPanel: " + loginPanel.getPreferredSize());
-//		
-//		System.out.println("mainpanel: " + mainPanel.getMinimumSize());
-//		System.out.println("calendarPanel: " + calendarPanel.getMinimumSize());
-//		System.out.println("overViewPanel: " + overviewPanel.getMinimumSize());
-//		System.out.println("notificationPanel: " + notificationPanel.getMinimumSize());
-//		System.out.println("loginPanel: " + loginPanel.getMinimumSize());
 	}
 
 	private void buildMainPanel() {
 		calendarPanel = new CalendarPanel();
 		overviewPanel = new OverviewCalenderPanel();
+		overviewPanel.setBorder(Constants.EMPTY_BORDER_5);
 		notificationPanel = new NotificationPanel();
+		notificationPanel.setBorder(Constants.EMPTY_BORDER_5);
 		mainPanel.setLayout(new GridBagLayout());
+		mainPanel.setBorder(Constants.EMPTY_BORDER_10);
 		createEventBtn = new JButton("Create event");
 		findPersonBtn = new JButton("Find person");
 		signOutBtn = new JButton("Sign out");
