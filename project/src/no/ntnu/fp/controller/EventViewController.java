@@ -28,6 +28,10 @@ public class EventViewController{
 		this.currentUser = currentUser;
 	}
 	
+	public void showEvent(){
+		
+	}
+	
 	public void showEvent(Event event){
 		this.event = event;
 		view.setVisible(true);

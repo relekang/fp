@@ -18,6 +18,8 @@ import java.util.Date;
 
 import no.ntnu.fp.controller.EventViewController;
 import no.ntnu.fp.model.Employee;
+import no.ntnu.fp.model.Room;
+
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -331,6 +333,22 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		return fromField.getText();
 	}
 	
+	public void setRoom(Room room){
+		roomBox.setSelectedItem(room);
+	}
+	
+	public Room getRoom(){
+		return (Room) roomBox.getSelectedItem();
+	}
+	
+	public void setDescription(String description){
+		descriptionBox.setText(description);
+	}
+	
+	public String getDescription(){
+		return descriptionBox.getText();
+	}
+	
 	public void removeParticipant(int i) {
 		listModel.remove(i);
 	}
@@ -338,7 +356,7 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	public void addParticipant(Employee person) {
 		listModel.addElement(person);
 	}
-
+	
 	@Override
 	public void componentHidden(ComponentEvent arg0) {
 		
