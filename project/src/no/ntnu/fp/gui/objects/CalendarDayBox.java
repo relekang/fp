@@ -108,7 +108,8 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		canvas.mouseIsPressed = false;
-		EventLabel label = new EventLabel(y, dy-y);
+		EventLabel label = new EventLabel(y, dy);
+		events.add(label);
 		canvas.repaint();
 	}
 

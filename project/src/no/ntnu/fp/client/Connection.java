@@ -1,5 +1,7 @@
 package no.ntnu.fp.client;
 
+import no.ntnu.fp.common.Constants;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,19 +10,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Connection {
-    private static final int port = 4321;
-
     ServerSocket server;
     BufferedReader in;
 
     public Connection() throws IOException {
-        server = new ServerSocket(port);
+        server = new ServerSocket(Constants.CLIENT_PORT);
     }
 
     public static void send(String data){
         System.out.print(data);
         try {
-            Socket socket = new Socket("localhost", 1234);
+            Socket socket = new Socket("localhost", Constants.SERVER_PORT);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             System.out.println("Sending string: '" + data + "'\n");
             out.print(data);
@@ -50,5 +50,9 @@ public class Connection {
         if(message != null)
             return message;
         return "";
+    }
+
+    public void close() throws IOException {
+        server.close();
     }
 }

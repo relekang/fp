@@ -1,6 +1,7 @@
 package no.ntnu.fp.gui.objects;
 
 import java.awt.Color;
+import java.sql.Date;
 
 import no.ntnu.fp.gui.Constants;
 import no.ntnu.fp.model.Event;
@@ -16,6 +17,7 @@ public class EventLabel {
 	public EventLabel(int from, int to) {
 		this.from = from;
 		this.to = to;
+//		Date dateFrom = new Date();
 	}
 	
 	public int getFromPixel() {
