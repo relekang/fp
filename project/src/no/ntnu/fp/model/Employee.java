@@ -28,6 +28,13 @@ public class Employee implements Model{
 		ACCEPTED, PENDING, DECLINED
 	}
 	
+	public static Employee getExampleEployee() {
+		Employee e = new Employee();
+		e.setName("Bernt Arne");
+		e.setEmail("test@test.com");
+		e.setDateOfBirth(new Date(31, 12, 90));
+		return e;
+	}
 	
 	/**
 	 * Default constructor. Must be called to initialise the object's member variables.

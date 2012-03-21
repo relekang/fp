@@ -10,12 +10,18 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
+import com.sun.org.apache.bcel.internal.generic.InstructionConstants.Clinit;
+
 public class Authentication {
 
     public static boolean authenticate(String username, String password) throws SQLException {
 
         //Accepting blank fields while developing
-        if(username.equals("") && password.equals("")) return true;
+        if(username.equals("") && password.equals("")) {
+        	ClientApplication.setCurrentUser(Employee.getExampleEployee());
+        	
+        	return true;
+        }
 
         try {
             password = SHA1(password);
