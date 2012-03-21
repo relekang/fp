@@ -6,11 +6,18 @@ import no.ntnu.fp.storage.db.EventHandler;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Event implements Model{
 	
 	public static final int TITLE_LENGTH = 64;
+	private final String ADDED_NEW_PARTICIPANT = "new Participant";
+	private final String DESCRIPTION_CHANGED = "description changed";
+	private final String ROOM_CHANGED = "room changed";
+	private final String DATETO_CHANGED = "dateTo changed";
+	private final String DATEFROM_CHANGED = "dateFrom changed";
+	private final String TITLE_CHANGED = "title changed";
     private int ID;	
     private String title;
     private Date dateFrom;
@@ -19,15 +26,24 @@ public class Event implements Model{
     private String description;
     private boolean isCanceled;
     private PropertyChangeSupport pcs;
+    private ArrayList<Employee> participants;
+    private Employee admin;
 
 
     /**
      * Constructor, sets the title of the event.
      * @param title
      */
-    public Event(String title){
+    public Event(String title, Employee admin){
         ID = 0;
         setTitle(title);
+        this.admin = admin;
+        participants.add(this.admin);
+    }
+    
+    public Event(String title){
+    	ID = 0;
+    	setTitle(title);
     }
     
     /**
@@ -41,6 +57,7 @@ public class Event implements Model{
         setDateFrom(dateFrom);
         setDateTo(dateTo);
     }
+    
     public Event(int id, String title, Date dateFrom, Date dateTo){
         ID = id;
         setTitle(title);
@@ -66,8 +83,11 @@ public class Event implements Model{
      * @param title
      */
     public void setTitle(String title) {
-    	if(title.length() <= TITLE_LENGTH)
+    	if(title.length() <= TITLE_LENGTH){
+    		String oldTitle = this.title;
     		this.title = title;
+    		pcs.firePropertyChange(TITLE_CHANGED, oldTitle, this.title);
+    	}
     }
 
     /**
@@ -83,7 +103,9 @@ public class Event implements Model{
      * @param dateFrom
      */
     public void setDateFrom(Date dateFrom) {
+    	Date oldDateFrom = this.dateFrom;
         this.dateFrom = dateFrom;
+        pcs.firePropertyChange(DATEFROM_CHANGED, oldDateFrom, this.dateFrom);
     }
     
     /**
@@ -99,8 +121,11 @@ public class Event implements Model{
     * @param dateTo
     */
     public void setDateTo(Date dateTo) {
-        if(getDateFrom() != null && getDateFrom().before(dateTo))
+        if(getDateFrom() != null && getDateFrom().before(dateTo)){
+        	Date oldDateTo = this.dateTo;
             this.dateTo = dateTo;
+            pcs.firePropertyChange(DATETO_CHANGED, oldDateTo, this.dateTo);
+        }
     }
 	
     /**
@@ -116,7 +141,9 @@ public class Event implements Model{
      * @param room
      */
     public void setRoom(Room room) {
+    	Room oldRoom = this.room;
         this.room = room;
+        pcs.firePropertyChange(ROOM_CHANGED, oldRoom, this.room);
     }
     
     /**
@@ -132,7 +159,14 @@ public class Event implements Model{
      * @param description
      */
     public void setDescription(String description) {
+    	String oldDescription = this.description;
         this.description = description;
+        pcs.firePropertyChange(DESCRIPTION_CHANGED, oldDescription, description);
+    }
+    
+    public void addParticipants (Employee employee){
+    	participants.add(employee);
+    	pcs.firePropertyChange(ADDED_NEW_PARTICIPANT, employee, participants);
     }
 
     /**
