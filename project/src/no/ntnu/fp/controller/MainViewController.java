@@ -7,6 +7,8 @@ import no.ntnu.fp.model.Employee;
 
 public class MainViewController extends PropertyChangeSupport {
 	
+//	public static final String 
+	
 	private MainView mainView;
 	private Employee currentUser;
 	
