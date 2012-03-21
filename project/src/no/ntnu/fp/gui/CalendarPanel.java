@@ -48,6 +48,8 @@ public class CalendarPanel extends JPanel {
 		pane = new JScrollPane(weekPanel);
 		pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		pane.setMinimumSize(new Dimension(933, Constants.DAYBOX_HEIHGT));
+		pane.setViewportBorder(BorderFactory.createEmptyBorder(5, 5, 5,5));
+		pane.setAlignmentY(0f);
 		add(pane, gbc);
 	}
 	

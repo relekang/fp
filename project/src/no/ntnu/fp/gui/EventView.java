@@ -190,6 +190,7 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					setVisible(false);
+					
 					//TODO: Should delete event from database
 				}
 			});
@@ -306,6 +307,30 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		listPanel.add(participantList, gbc2);
 	}
 	
+	public void setTitle(String title){
+		eventTitle.setText(title);
+	}
+	
+	public String getTitle(){
+		return eventTitle.getText();
+	}
+	
+	public void setToDate(String toDate){
+		toField.setText(toDate);
+	}
+	
+	public String getToDate(){
+		return toField.getText();
+	}
+	
+	public void setFromDate(String fromDate){
+		fromField.setText(fromDate);
+	}
+	
+	public String getFromDate(){
+		return fromField.getText();
+	}
+	
 	public void removeParticipant(int i) {
 		listModel.remove(i);
 	}
@@ -324,8 +349,10 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	public void componentMoved(ComponentEvent arg0) {
 		
 		if(shown){
-			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
-			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+//			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
+//			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+			fromPop.show(fromField, 0, 30);
+			toPop.show(toField, 0, 30);
 		}
 		
 	}
@@ -334,14 +361,15 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	public void componentResized(ComponentEvent arg0) {
 		
 		if(shown){
-			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
-			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+//			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
+//			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+			fromPop.show(fromField, 0, 30);
+			toPop.show(toField, 0, 30);
 		}
 	}
 
 	@Override
 	public void componentShown(ComponentEvent arg0) {
-		System.out.println("test");
 		shown = true;
 	}
 
@@ -349,13 +377,15 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == fromField){
-			fromPop.setLocation(fromField.getLocationOnScreen().x, fromField.getLocationOnScreen().y+30);
-			fromPop.setVisible(true);
+			
+			fromPop.show(fromField, 0, 30);
+			
 			fromField.setText("");
 		}
 		else if(e.getSource() == toField){
 			toPop.setVisible(true);
-			toPop.setLocation(toField.getLocationOnScreen().x, toField.getLocationOnScreen().y+30);
+			toPop.show(toField, 0, 30);
+			
 			toField.setText("");
 		}
 		

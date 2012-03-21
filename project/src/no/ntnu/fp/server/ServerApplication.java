@@ -1,8 +1,5 @@
 package no.ntnu.fp.server;
 
-import no.ntnu.fp.gui.EventView;
-import no.ntnu.fp.gui.FindPersonView;
-import no.ntnu.fp.gui.MainView;
 import no.ntnu.fp.model.Employee;
 import no.ntnu.fp.server.gui.EventListPanel;
 import no.ntnu.fp.server.gui.RoomListPanel;
@@ -19,9 +16,9 @@ public class ServerApplication {
 
     public static void main (String args[]){
         String message = "";
-        Connection conn = null;
+        ServerConnection conn = null;
         try {
-            conn = new Connection();
+            conn = new ServerConnection();
         } catch (IOException e) { e.printStackTrace(); }
 
         while (1==1){
@@ -33,9 +30,9 @@ public class ServerApplication {
                 try {
                     employee = ServerAuthentication.authenticate(message.split("-")[1], message.split("-")[2]);
                 } catch (SQLException e) {
-                    Connection.send("failure");
+                    ServerConnection.send("failure");
                 }
-                if(employee != null) Connection.send("success");
+                if(employee != null) ServerConnection.send("success");
 
             }
         }
