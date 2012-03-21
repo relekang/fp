@@ -25,15 +25,15 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	
 	private int y, dy;
 	
-	private List<EventLabel> events;
+	private List<EventLabel> events = new ArrayList<EventLabel>();
 	
 	public CalendarDayBox(int reprDay) {
-		events = new ArrayList<EventLabel>();
-		events.add(new EventLabel(100, 300));
-		events.add(new EventLabel(500, 550));
-		(events.get(1)).setEventColor(Constants.EVENT_ACCEPTED);
-		(events.get(0)).setEventColor(Constants.EVENT_DECLINED);
-		events.add(new EventLabel(600, 800));
+//		events = new ArrayList<EventLabel>();
+//		events.add(new EventLabel(100, 300));
+//		events.add(new EventLabel(500, 550));
+//		(events.get(1)).setEventColor(Constants.EVENT_ACCEPTED);
+//		(events.get(0)).setEventColor(Constants.EVENT_DECLINED);
+//		events.add(new EventLabel(600, 800));
 		
 		switch(reprDay) {
 		case 0: 

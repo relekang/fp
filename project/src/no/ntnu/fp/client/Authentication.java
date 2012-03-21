@@ -3,6 +3,9 @@ package no.ntnu.fp.client;
 import no.ntnu.fp.controller.ClientApplication;
 import no.ntnu.fp.model.Employee;
 import no.ntnu.fp.server.ServerAuthentication;
+import no.ntnu.fp.server.ServerConnection;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -10,12 +13,18 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
+import com.sun.org.apache.bcel.internal.generic.InstructionConstants.Clinit;
+
 public class Authentication {
 
     public static boolean authenticate(String username, String password) throws SQLException {
 
         //Accepting blank fields while developing
-        if(username.equals("") && password.equals("")) return true;
+        if(username.equals("") && password.equals("")) {
+        	ClientApplication.setCurrentUser(Employee.getExampleEployee());
+        	
+        	return true;
+        }
 
         try {
             password = SHA1(password);
@@ -25,14 +34,27 @@ public class Authentication {
         
         try {
             Connection conn = new Connection();
-            String message = "authenticate-%s-%s";
-            message = String.format(message, username, password);
+            JSONObject message = new JSONObject();
+            message.put("key", "authenticate");
+            message.put("username", username);
+            message.put("password", password);
             Connection.send(message);
             String ack = conn.receive();
-            if(ack.equals("success"))
+            JSONObject object = new JSONObject(ack);
+            System.out.println(object.toString());
+
+            if (object.get("key").toString().equals("success")) {
+                conn.close();
+                JSONObject jsonEmployee = object.getJSONObject("employee");
+                Employee employee = new Employee(jsonEmployee);
+                ClientApplication.setCurrentUser(employee);
                 return true;
-            conn.close();
+            }
+
         } catch (IOException e) {
+            return false;
+        } catch (JSONException e) {
+            e.printStackTrace();
             return false;
         }
 

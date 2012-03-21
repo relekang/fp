@@ -47,6 +47,7 @@ public class ServerConnection {
 
             System.out.print("'\n");
             in.close();
+            socket.close();
         }
         catch(Exception e) { System.out.print(e.toString()); }
         if(message != null)

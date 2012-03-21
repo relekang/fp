@@ -1,5 +1,8 @@
 package no.ntnu.fp.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -28,6 +31,17 @@ public class Employee implements Model{
 		ACCEPTED, PENDING, DECLINED
 	}
 	
+	public static Employee getExampleEployee() {
+		Employee e = new Employee();
+		e.setName("Bernt Arne");
+		e.setEmail("test@test.com");
+		e.setDateOfBirth(new Date(31, 12, 90));
+		return e;
+	}
+
+    public Employee(JSONObject jsonEmployee) throws JSONException {
+        this(jsonEmployee.getInt("id"), jsonEmployee.get("name").toString(), jsonEmployee.get("email").toString(), new Date(), Gender.FEMALE );
+    }
 	
 	/**
 	 * Default constructor. Must be called to initialise the object's member variables.
@@ -306,6 +320,17 @@ public class Employee implements Model{
 		s += "Date of birth: " + getDateOfBirth().toString();
 		return s;
 	}
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject object = new JSONObject();
+        object.put("id", getId());
+        object.put("name", getName());
+        object.put("email", getEmail());
+        object.put("date", getDateOfBirth().toString());
+        object.put("gender", getGender().toString());
+
+        return object;
+    }
 
     @Override
     public boolean save() {

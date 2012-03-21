@@ -15,7 +15,7 @@ public class ClientApplication {
     private static JFrame mainFrame, eventFrame, findPersonFrame;
     
     private static EventViewController eventViewController = new EventViewController();
-    private static MainViewController mainViewController = new MainViewController();
+    private static MainViewController mainViewController;
     private static FindPersonViewController findPersonViewController = new FindPersonViewController();
     
     
@@ -30,6 +30,7 @@ public class ClientApplication {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
         
+        mainViewController = new MainViewController((MainView)mainFrame);
         eventViewController = new EventViewController();
         
         
@@ -61,5 +62,9 @@ public class ClientApplication {
         eventViewController.setCurrentUser(employee);
         findPersonViewController.setCurrentUser(employee);
         mainViewController.setCurrentUser(employee);
+    }
+    
+    public static MainViewController getMainViewController() {
+    	return mainViewController;
     }
 }
