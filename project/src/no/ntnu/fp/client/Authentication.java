@@ -14,15 +14,15 @@ public class Authentication {
 
     public static boolean authenticate(String username, String password) throws SQLException {
 
+        //Accepting blank fields while developing
+        if(username.equals("") && password.equals("")) return true;
+
         try {
             password = SHA1(password);
         }
         catch (NoSuchAlgorithmException e)     { return false; }
         catch (UnsupportedEncodingException e) { return false; }
         
-//        Employee employee = ServerAuthentication.authenticate(username, password);
-//        if(employee == null) return false;
-//        ClientApplication.setCurrentUser(employee);
         try {
             Connection conn = new Connection();
             String message = "authenticate-%s-%s";
