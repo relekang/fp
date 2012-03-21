@@ -29,9 +29,6 @@ public class EventLabel {
 		int quarter = (minute / (Constants.HOUR_HEIGHT / 4));
 		if(minute % (Constants.HOUR_HEIGHT/4) > Constants.HOUR_HEIGHT/8) 
 			quarter++;
-//		System.out.println("from: " + fromHour + " " + fromMinute);
-//		System.out.println("to : " + toHour + " " + toMinute);
-//		System.out.println("quarters : " + fromQuarter + " " + toQuarter);
 		return hour*Constants.HOUR_HEIGHT + quarter * (Constants.HOUR_HEIGHT/4);
 	}
 	

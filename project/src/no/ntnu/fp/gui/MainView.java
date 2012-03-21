@@ -31,7 +31,6 @@ public class MainView extends JFrame {
 	private void buildMainPanel() {
 		calendarPanel = new CalendarPanel();
 		overviewPanel = new OverviewCalenderPanel();
-		overviewPanel.setBorder(Constants.EMPTY_BORDER_5);
 		notificationPanel = new NotificationPanel();
 		notificationPanel.setBorder(Constants.EMPTY_BORDER_5);
 		mainPanel.setLayout(new GridBagLayout());

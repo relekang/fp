@@ -27,12 +27,12 @@ public class CalendarPanel extends JPanel {
 		hourLabels.setLayout(new BoxLayout(hourLabels, BoxLayout.Y_AXIS));
 		hourLabels.setBackground(Constants.STD_BACKGROUND);
 		for(int i = 0; i < Constants.HOURS; i++) {
-			JLabel l = new JLabel(i<10 ? "0"+i : ""+i);
-			l.setFont(Constants.HOUR_FONT);
-			l.setPreferredSize(new Dimension(15, Constants.HOUR_HEIGHT));
-			l.setBorder(BorderFactory.createEmptyBorder(0, 0, (Constants.HOUR_HEIGHT-l.getHeight()-7), 0));
-			l.setForeground(Constants.STD_FOREGROUND);
-			hourLabels.add(l);
+			JLabel lbl = new JLabel(i<10 ? "0"+i : ""+i);
+			lbl.setFont(Constants.HOUR_FONT);
+			lbl.setPreferredSize(new Dimension(15, Constants.HOUR_HEIGHT));
+			lbl.setBorder(BorderFactory.createEmptyBorder(0, 0, (Constants.HOUR_HEIGHT-lbl.getHeight()-7), 0));
+			lbl.setForeground(Constants.STD_FOREGROUND);
+			hourLabels.add(lbl);
 		}
 		weekPanel.add(hourLabels);
 		
