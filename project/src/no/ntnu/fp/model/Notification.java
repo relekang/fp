@@ -23,7 +23,7 @@ public class Notification implements Model{
      * @param description
      * @param is_invitation
      */
-    public Notification(int id, Event event, String timestamp, int is_invitation, NotificationType type, Employee employee){
+    public Notification(int id, Event event, String timestamp, int is_invitation, NotificationType type/*, Employee employee*/){
     	this.ID = id;
         this.event = event;
         this.timestamp = timestamp;
@@ -36,17 +36,17 @@ public class Notification implements Model{
 
         switch(type) {
         case INVITATION:
-        	description = employee.getName() + " invited you to " + event.getTitle(); 
+        	description = /*employee.getName()*/"Person" + " invited you to " + event.getTitle(); break;
         case DELETION:
-        	description = employee.getName() + " deleted " + event.getTitle();
+        	description = /*employee.getName()*/"Person" + " deleted " + event.getTitle(); break;
         case ACCEPTED:
-        	description = employee.getName() + " accepted your invitation to " + event.getTitle();
+        	description = /*employee.getName()*/"Person" + " accepted your invitation to " + event.getTitle(); break;
         case DECLINED:
-        	description = employee.getName() + " declined your invitation to " + event.getTitle();
+        	description = /*employee.getName()*/"Person" + " declined your invitation to " + event.getTitle(); break;
         }
     }
 
-    public Notification(int id, Event event, String timestamp, int is_invitation, NotificationType type, Employee employee, 
+    public Notification(int id, Event event, String timestamp, int is_invitation, NotificationType type, /*Employee employee,*/ 
     		boolean titleChanged, boolean timeChanged, boolean roomChanged, boolean descriptionChanged){
 
     	this.ID = id;
@@ -59,7 +59,7 @@ public class Notification implements Model{
         
         this.type = type;
 
-        String descr = employee.getName() + " changed " + event.getTitle() + ": "; 
+        String descr = /*employee.getName()*/"Person" + " changed " + event.getTitle() + ": "; 
         
         if (titleChanged) descr += "title";
         if (timeChanged) {
@@ -67,11 +67,11 @@ public class Notification implements Model{
         	else descr += "time";
         }
         if (roomChanged) {
-        	if (timeChanged) descr += ", room";
+        	if (titleChanged || timeChanged) descr += ", room";
         	else descr += "room";	
         }
         if (descriptionChanged) {
-        	if (roomChanged) descr += ", description";
+        	if (titleChanged || timeChanged || roomChanged) descr += ", description";
         	else descr += "description";	
         }
         

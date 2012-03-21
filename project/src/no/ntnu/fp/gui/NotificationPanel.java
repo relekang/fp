@@ -30,20 +30,24 @@ public class NotificationPanel extends JPanel{
         list.setModel(listModel);
         
         list.setCellRenderer(new NotificationRenderer());
+        list.setFixedCellWidth(200);
+		list.setFixedCellHeight(20);
         
 //        (int id, Event event, String timestamp, int is_invitation, NotificationType type, Employee employee, 
 //        		boolean titleChanged, boolean timeChanged, boolean roomChanged, boolean descriptionChanged){
         
-        Employee testGuy = new Employee();
-        testGuy.setName("Test McYo");
+        /*Employee testGuy = new Employee();*/
+        /*testGuy.setName("Test McYo");*/
         
-        addNotification(new Notification(1, new Event("McYo", testGuy), "2012-03-19 12:04:36", 1, NotificationType.INVITATION, testGuy));
-//        addNotification(new Notification(2, "2012-03-20 13:05:37", "Invitation accepted", 0, NotificationType.ACCEPTED));
-//        addNotification(new Notification(3, "2012-03-20 13:05:38", "Invitation declined", 0, NotificationType.DECLINED));
-//        addNotification(new Notification(4, "2012-03-20 13:05:39", "Event X changed", 0, NotificationType.CHANGE));
-//        addNotification(new Notification(5, "2012-03-20 13:05:40", "Event Y deleted", 0, NotificationType.DELETION));
-//        addNotification(new Notification(6, "2012-03-20 13:05:41", "Event Y deleted", 0, NotificationType.DELETION));
-//        addNotification(new Notification(7, "2012-03-20 13:05:42", "Event Y deleted", 0, NotificationType.DELETION));
+        addNotification(new Notification(1, new Event("Event"/*, testGuy*/), "2012-03-19 12:04:36", 1, NotificationType.INVITATION/*, testGuy*/));
+        addNotification(new Notification(2, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:37", 0, NotificationType.ACCEPTED));
+        addNotification(new Notification(3, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:38", 0, NotificationType.DECLINED));
+        addNotification(new Notification(4, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:40", 0, NotificationType.DELETION));
+        addNotification(new Notification(5, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, NotificationType.CHANGE, true, false, false, false));
+        addNotification(new Notification(6, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, NotificationType.CHANGE, false, true, false, false));
+        addNotification(new Notification(7, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, NotificationType.CHANGE, false, true, false, true));
+        addNotification(new Notification(8, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, NotificationType.CHANGE, true, true, true, false));
+        
         
         gbc.gridx = 0; gbc.gridy = 0; gbc.weighty = 0;
         gbc.gridwidth = 1;
