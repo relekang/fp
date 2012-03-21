@@ -12,6 +12,9 @@ public class Notification implements Model{
     private boolean is_invitation;
     private Event event;
     private PropertyChangeSupport pcs;
+    private NotificationType type;
+    // Temporary timestamp variable:
+    private String timestamp;
 
     /**
      * Constructor for Notification
@@ -20,7 +23,8 @@ public class Notification implements Model{
      * @param description
      * @param is_invitation
      */
-    public Notification(int id, String timestamp, String description, int is_invitation){
+    public Notification(int id, String timestamp, String description, 
+    		int is_invitation, NotificationType type){
         this.ID = id;
         this.description = description;
         cal = Calendar.getInstance();
@@ -30,6 +34,8 @@ public class Notification implements Model{
         } else {
             this.is_invitation = false;
         }
+        this.type = type;
+        this.timestamp = timestamp;
 
     }
     
@@ -70,7 +76,15 @@ public class Notification implements Model{
     }
 
     public String getTimestampString() {
-        return "";
+        return timestamp;
+    }
+    
+    public Calendar getTimestamp() {
+    	return Calendar.getInstance();
+    }
+    
+    public NotificationType getType() {
+    	return type;
     }
 
     public int isInvitationAsInt() {
@@ -89,4 +103,7 @@ public class Notification implements Model{
         pcs.addPropertyChangeListener(listener);
     }
 
+    public enum NotificationType {
+    	INVITATION, DELETION, CHANGE, ACCEPTED, DECLINED;
+    }
 }

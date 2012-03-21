@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 
 import no.ntnu.fp.model.Employee;
 import no.ntnu.fp.model.Notification;
+import no.ntnu.fp.model.Notification.NotificationType;
 
 import javax.swing.*;
 
@@ -21,8 +22,13 @@ public class NotificationPanel extends JPanel{
         listModel = new DefaultListModel();
         list.setModel(listModel);
         
-        addNotification(new Notification(1, "2012-03-19 12:04:36", "Test", 0));
-        addNotification(new Notification(2, "2012-03-20 13:05:37", "Test nummer 2", 0));
+        list.setCellRenderer(new NotificationRenderer());
+        
+        addNotification(new Notification(1, "2012-03-19 12:04:36", "Invitation to event Z", 1, NotificationType.INVITATION));
+        addNotification(new Notification(2, "2012-03-20 13:05:37", "Invitation accepted", 0, NotificationType.ACCEPTED));
+        addNotification(new Notification(3, "2012-03-20 13:05:37", "Invitation declined", 0, NotificationType.DECLINED));
+        addNotification(new Notification(4, "2012-03-20 13:05:37", "Event X changed", 0, NotificationType.CHANGE));
+        addNotification(new Notification(5, "2012-03-20 13:05:37", "Event Y deleted", 0, NotificationType.DELETION));
         
         add(list);
         
