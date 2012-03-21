@@ -8,21 +8,33 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import no.ntnu.fp.gui.Constants;
 
-public class CalendarDayBox extends JPanel implements MouseListener, MouseMotionListener {
+public class CalendarDayBox extends JPanel implements MouseListener, MouseMotionListener, PropertyChangeListener{
 
 	private MyCanvas canvas;
 	
-	private int x = 0, dx = Constants.WIDTH_CANVAS;
 	private int y, dy;
 	
+	private List<EventLabel> events;
+	
 	public CalendarDayBox(int reprDay) {
+		events = new ArrayList<EventLabel>();
+		events.add(new EventLabel(100, 300));
+		events.add(new EventLabel(500, 550));
+		(events.get(1)).setEventColor(Constants.EVENT_ACCEPTED);
+		(events.get(0)).setEventColor(Constants.EVENT_DECLINED);
+		events.add(new EventLabel(600, 800));
+		
 		switch(reprDay) {
 		case 0: 
 			setBorder(BorderFactory.createEmptyBorder(-5, 0, -5, -5));
@@ -44,26 +56,39 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	
 	private class MyCanvas extends JPanel {
 		boolean mouseIsPressed = false;
-		private Color c;
+		private Color foreground = Constants.DRAG_NEW_EVENT;
 		
 		public MyCanvas() {
 			setBorder(BorderFactory.createEmptyBorder(-5, -5, -5, -5));
 			setPreferredSize(new Dimension(Constants.WIDTH_CANVAS, Constants.HEIGHT_CANVAS));
-			c = new Color(179, 209, 232);
-			setForeground(c);
+			setForeground(foreground);
 			setBackground(Constants.STD_BACKGROUND);
 		}
 				
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
+			drawForegroundLines(g);
+			paintEventLabels(g);
+			g.setColor(foreground);
+			if(mouseIsPressed) {
+				g.fillRoundRect(0, y, Constants.WIDTH_CANVAS, dy-y, 10, 10);
+			}
+		}
+		
+		private void drawForegroundLines(Graphics g) {
 			g.setColor(Constants.STD_FOREGROUND);
 			for(int i = 1; i < Constants.HOURS; i++) {
 				g.drawLine(0, i*Constants.HOUR_HEIGHT, Constants.WIDTH_CANVAS, i*Constants.HOUR_HEIGHT);
 			}
-			g.setColor(c);
-			if(mouseIsPressed) {
-				g.fillRect(x, y, dx, dy-y);
+		}
+		
+		private void paintEventLabels(Graphics g) {
+			for(EventLabel l : events) {
+				g.setColor(l.getEventColor());
+				g.fillRoundRect(0, l.getFromPixel(), Constants.WIDTH_CANVAS-10, l.getToPixel()-l.getFromPixel(), 10, 10);
+				g.setColor(Constants.STD_FOREGROUND);
+				g.drawString("Testetest", 0, l.getFromPixel()+20);
 			}
 		}
 	}
@@ -83,6 +108,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		canvas.mouseIsPressed = false;
+		EventLabel label = new EventLabel(y, dy-y);
 		canvas.repaint();
 	}
 
@@ -106,6 +132,12 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 		
 	}
