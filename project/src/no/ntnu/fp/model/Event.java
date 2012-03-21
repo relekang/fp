@@ -12,12 +12,12 @@ import java.util.Date;
 public class Event implements Model{
 	
 	public static final int TITLE_LENGTH = 64;
-	private final String ADDED_NEW_PARTICIPANT = "new Participant";
-	private final String DESCRIPTION_CHANGED = "description changed";
-	private final String ROOM_CHANGED = "room changed";
-	private final String DATETO_CHANGED = "dateTo changed";
-	private final String DATEFROM_CHANGED = "dateFrom changed";
-	private final String TITLE_CHANGED = "title changed";
+	public final String ADDED_NEW_PARTICIPANT = "new Participant";
+	public final String DESCRIPTION_CHANGED = "description changed";
+	public final String ROOM_CHANGED = "room changed";
+	public final String DATETO_CHANGED = "dateTo changed";
+	public final String DATEFROM_CHANGED = "dateFrom changed";
+	public final String TITLE_CHANGED = "title changed";
     private int ID;	
     private String title;
     private Date dateFrom;
