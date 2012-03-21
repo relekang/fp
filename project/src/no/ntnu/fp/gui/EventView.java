@@ -6,7 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
+
+import no.ntnu.fp.controller.EventViewController;
 import no.ntnu.fp.model.Employee;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -143,6 +146,17 @@ public class EventView extends JFrame{
 					//setVisible(false);
 					toPop.setLocation(fromField.getLocation().x, fromField.getLocation().y);
 					toPop.setVisible(true);
+					
+					int listSize = participantList.getModel().getSize();
+					ArrayList<Employee> participantsArray = new ArrayList<Employee>();
+					
+					for (int i = 0; i < listSize; i++) {
+						participantsArray.add((Employee) participantList.getModel().getElementAt(i));
+					}
+					
+//					EventViewController.saveEvent(eventTitle.getText(), toField.getText(), 
+//												   fromField.getText(),descriptionBox.getText(), 
+//												   participantsArray, admin, ID);
 					//TODO: Should save event to database
 				}
 			});
