@@ -434,10 +434,12 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 			
 			fromPop.show(fromField, 0, 30);
 			fromField.setText("");
+			fromField.grabFocus();
 		}
 		else if(e.getSource() == toField){
 			toPop.show(toField, 0, 30);
 			toField.setText("");
+			toField.grabFocus();
 		}
 		else if (e.getSource() == participantsField) {
 			participantPop.show(participantsField, 0, 30);
@@ -490,9 +492,14 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 					}
 				}
 				for (int y = 0; y < popListFound.size(); y++) {
+				
 					for (int i = 0; i < popListModel.size(); i++) {
-						if(popListModel.get(i) != popListFound.get(y)){
-							popListModel.remove(i);
+						if(i< popListModel.size()){
+							if(popListModel.get(i) != popListFound.get(y)){
+								popListModel.remove(i);
+								i--;
+								
+							}
 						}
 					}
 				}
