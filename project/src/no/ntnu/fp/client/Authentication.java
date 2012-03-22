@@ -38,7 +38,7 @@ public class Authentication {
             message.put("key", "authenticate");
             message.put("username", username);
             message.put("password", password);
-            Connection.send(message);
+            conn.send(message);
             String ack = conn.receive();
             JSONObject object = new JSONObject(ack);
             System.out.println(object.toString());

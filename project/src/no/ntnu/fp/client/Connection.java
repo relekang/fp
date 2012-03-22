@@ -18,10 +18,9 @@ public class Connection {
         server = new ServerSocket(Constants.CLIENT_PORT);
     }
 
-    public static void send(JSONObject object){
-        System.out.print(object.toString());
+    public void send(JSONObject object){
         try {
-            Socket socket = new Socket("localhost", Constants.SERVER_PORT);
+            Socket socket = new Socket("lkng.me", Constants.SERVER_PORT);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             System.out.println("Sending string: '" + object.toString() + "'\n");
             out.print(object.toString());

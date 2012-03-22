@@ -37,8 +37,8 @@ public class ServerApplication {
                     Employee employee = null;
                     try {
                         employee = ServerAuthentication.authenticate(object.get("username").toString(), object.get("password").toString());
-                    } catch (SQLException e) { ServerConnection.send(new JSONObject().put("key", "failure").toString()); }
-                    if (employee != null) ServerConnection.send(new JSONObject().put("key", "success").put("employee", employee.toJson()).toString());
+                    } catch (SQLException e) { conn.send(new JSONObject().put("key", "failure").toString()); }
+                    if (employee != null) conn.send(new JSONObject().put("key", "success").put("employee", employee.toJson()).toString());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
