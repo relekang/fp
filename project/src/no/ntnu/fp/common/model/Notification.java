@@ -145,4 +145,5 @@ public class Notification implements Model{
     public enum NotificationType {
     	INVITATION, DELETION, CHANGE, ACCEPTED, DECLINED;
     }
+
 }

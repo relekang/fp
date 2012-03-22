@@ -11,6 +11,7 @@ import no.ntnu.fp.client.gui.MainView;
 import no.ntnu.fp.client.gui.OverviewCalendarPanel;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
+import no.ntnu.fp.common.model.Notification;
 import no.ntnu.fp.server.storage.db.EventHandler;
 
 public class MainViewController implements PropertyChangeListener {
@@ -18,6 +19,7 @@ public class MainViewController implements PropertyChangeListener {
     private MainView mainView;
     private Employee currentUser;
     private ArrayList<Event> events;
+    private ArrayList<Notification> notifications;
 
     public MainViewController(MainView view) {
         mainView = view;
@@ -29,10 +31,11 @@ public class MainViewController implements PropertyChangeListener {
     	OverviewCalendarPanel o = mainView.getOverviewCalendarPanel(); 
 		o.addPCL(c);
 	}
-
+    
 	public void setCurrentUser(Employee currentUser) {
         this.currentUser = currentUser;
         currentUser.addPropertyChangeListener(this);
+        mainView.getUserLabel().setText("Signed in as " + currentUser.getName());
         loadUserEvents();
         loadUserNotifications();
     }
@@ -52,7 +55,12 @@ public class MainViewController implements PropertyChangeListener {
     }
 
     public void loadUserNotifications() {
-    	
+    	if(currentUser.getName().equals("Bernt Arne")) {
+    		notifications = new ArrayList<Notification>();
+    		for(Notification n : notifications) {
+    			mainView.getNotificationPanel().addNotification(n);
+    		}
+    	}
     }
 
     public Employee getCurrentUser() {

@@ -27,7 +27,6 @@ import no.ntnu.fp.common.model.Room;
 public class CalendarDayBox extends JPanel implements MouseListener, MouseMotionListener, PropertyChangeListener{
 
 	private int y, dy;
-	private final String DAY;
 	private Calendar date; 
 	private CalendarCanvas canvas;
 	private PropertyChangeSupport pcs;
@@ -40,7 +39,6 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	}
 	
 	public CalendarDayBox(int reprDay) {
-		this.DAY = GuiConstants.DAYS[reprDay];
 		pcs = new PropertyChangeSupport(this);
 		switch(reprDay) {
 		case 0: 

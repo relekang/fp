@@ -24,12 +24,12 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 	
 	public CalendarPanel() {
 		setLayout(new GridBagLayout());
-		days = new CalendarDayBox[GuiConstants.DAYS.length];
 		addCalendarHeaders();
 		initWeekPanel();
 	}
 	
 //	public CalendarPanel(Employee user) {
+//		this();
 //		this.user = user;
 //	}
 	
@@ -42,6 +42,12 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 	private void initWeekPanel() {
 		weekPanel = new JPanel(new FlowLayout());
 		weekPanel.setBackground(GuiConstants.STD_BACKGROUND);
+		initHourLabels();
+		initCalendarDayBoxes();
+		initScrollPane();
+	}
+	
+	private void initHourLabels() {
 		JPanel hourLabels = new JPanel();
 		hourLabels.setLayout(new BoxLayout(hourLabels, BoxLayout.Y_AXIS));
 		hourLabels.setBackground(GuiConstants.STD_BACKGROUND);
@@ -54,14 +60,19 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 			hourLabels.add(lbl);
 		}
 		weekPanel.add(hourLabels);
-		
+	}
+	
+	private void initCalendarDayBoxes() {
+		days = new CalendarDayBox[GuiConstants.DAYS.length];
 		gbc.gridy = 1;
 		for(int i = 0; i < GuiConstants.DAYS.length; i++) {
 			days[i] = new CalendarDayBox(i);
 			gbc.gridx = i;
 			weekPanel.add(days[i]);
 		}
-		
+	}
+	
+	private void initScrollPane() {
 		gbc.gridx = 0;
 		gbc.gridwidth = 7;		
 		pane = new JScrollPane(weekPanel);
@@ -72,7 +83,6 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 		pane.setViewportBorder(GuiConstants.EMPTY_BORDER_1);
 		add(pane, gbc);
 	}
-	
 
 	private void addCalendarHeaders() {
 		gbc.gridwidth = 1;
@@ -95,17 +105,16 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 	}
 	
 	private void loadCurrentWeek() {
-		//TODO
+		System.out.println("week changed in CalendarPanel to: " + currentWeek);
+		
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		//TODO: fikse slik at dette fungerer
 		String property = evt.getPropertyName();
 		if(property.equals(OverviewCalendarPanel.SELECTED_DAY_CHANGED)) {
 			currentWeek = ((Calendar)(evt.getNewValue())).get(Calendar.WEEK_OF_YEAR);
 			loadCurrentWeek();
-			System.out.println("week changed in CalendarPanel to: " + currentWeek);
 		}
 	}
 

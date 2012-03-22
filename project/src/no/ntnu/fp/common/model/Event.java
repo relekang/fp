@@ -88,6 +88,9 @@ public class Event implements Model{
     
     public static Event getDummyEvent(String title) {
     	Event evt = new Event(title);
+    	evt.setDateFrom(Calendar.getInstance().getTime());
+    	evt.setDateTo(Calendar.getInstance().getTime());
+    	System.out.println(Calendar.getInstance().getTime());
     	evt.setRoom(new Room("Sebra", "P-15", 10));
     	return evt;
     }

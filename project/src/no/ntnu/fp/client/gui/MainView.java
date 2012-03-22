@@ -18,6 +18,7 @@ public class MainView extends JFrame implements PropertyChangeListener {
 	private Login loginPanel;
 	private JButton createEventBtn, findPersonBtn, signOutBtn;
 	private GridBagConstraints gbc;
+	private JLabel userLabel; 
 
 	public MainView() {
 		gbc = new GridBagConstraints();
@@ -62,9 +63,17 @@ public class MainView extends JFrame implements PropertyChangeListener {
 		gbc.anchor = GridBagConstraints.EAST;
 		signOutBtn.addActionListener(new SignOutEventButtonListener());
 		mainPanel.add(signOutBtn, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.WEST;
+		userLabel = new JLabel("");
+		mainPanel.add(userLabel, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
+		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
 		createEventBtn.addActionListener(new CreateEventButtonListener());
 		mainPanel.add(createEventBtn, gbc);
@@ -146,5 +155,13 @@ public class MainView extends JFrame implements PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public JLabel getUserLabel() {
+		return userLabel;
+	}
+
+	public void setUserLabel(JLabel userLabel) {
+		this.userLabel = userLabel;
 	}
 }
