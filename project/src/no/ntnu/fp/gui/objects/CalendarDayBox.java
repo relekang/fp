@@ -10,6 +10,7 @@ import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -23,10 +24,24 @@ import no.ntnu.fp.model.Room;
 public class CalendarDayBox extends JPanel implements MouseListener, MouseMotionListener, PropertyChangeListener{
 
 	private CalendarCanvas canvas;
-	
 	private int y, dy;
 	
+	private Date date; 
+	
 	private List<EventLabel> events = new ArrayList<EventLabel>();
+	
+	public CalendarDayBox(int reprDay, Date date) {
+		this.date = date;
+		switch(reprDay) {
+		case 0: 
+			setBorder(BorderFactory.createEmptyBorder(-5, 0, -5, -5));
+		case 6:
+			setBorder(BorderFactory.createEmptyBorder(-5, -5, -5, 0));
+		default:
+			setBorder(BorderFactory.createEmptyBorder(-5, -5, -5, -5));
+		}
+		initCanvas();
+	}
 	
 	public CalendarDayBox(int reprDay) {
 		switch(reprDay) {

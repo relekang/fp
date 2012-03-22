@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Employee implements Model{
@@ -212,7 +213,6 @@ public class Employee implements Model{
 	 * @see java.beans.PropertyChangeEvent <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeEvent.html">java.beans.PropertyChangeEvent</a>
 	 */
 	public void setGender(Gender gender) {
-		//
 		Gender oldGender = this.gender;
 		this.gender = gender;
 		PropertyChangeEvent event = new PropertyChangeEvent(this, GENDER_PROPERTY_NAME, oldGender, gender);
@@ -321,6 +321,11 @@ public class Employee implements Model{
 		s += "Email: " + getEmail() + "; ";
 		s += "Date of birth: " + getDateOfBirth().toString();
 		return s;
+	}
+	
+	public ArrayList<Event> getRelatedEvents() {
+		
+		return null;
 	}
 
     public JSONObject toJson() throws JSONException {

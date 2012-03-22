@@ -1,6 +1,7 @@
 package no.ntnu.fp.gui;
 
 import no.ntnu.fp.gui.objects.CalendarDayBox;
+import no.ntnu.fp.model.Employee;
 
 import javax.swing.*;
 
@@ -13,11 +14,17 @@ public class CalendarPanel extends JPanel {
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel weekPanel;
 	private JScrollPane pane;
+	private Employee user;
 	
 	public CalendarPanel() {
 		setLayout(new GridBagLayout());
 		addCalendarHeaders();
 		initWeekPanel();
+	}
+	
+	public CalendarPanel(Employee user) {
+		this();
+		this.user = user;
 	}
 
 	private void initWeekPanel() {
@@ -65,6 +72,14 @@ public class CalendarPanel extends JPanel {
 			lbl.setFont(Constants.WEEKDAY_FONT);
 			add(lbl, gbc);
 		}
+	}
+
+	public Employee getUser() {
+		return user;
+	}
+
+	public void setUser(Employee user) {
+		this.user = user;
 	}
 
 }

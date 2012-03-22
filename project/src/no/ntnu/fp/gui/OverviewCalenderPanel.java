@@ -80,7 +80,6 @@ public class OverviewCalenderPanel extends JPanel {
                 gbc.gridx = ii;
                 gbc.gridy = i + 2;
                 add(cal[i][ii], gbc);
-
                 c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
 
             }

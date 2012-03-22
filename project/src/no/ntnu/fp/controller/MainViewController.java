@@ -2,9 +2,11 @@ package no.ntnu.fp.controller;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 import no.ntnu.fp.gui.MainView;
 import no.ntnu.fp.model.Employee;
+import no.ntnu.fp.model.Event;
 
 public class MainViewController implements PropertyChangeListener {
 	
@@ -20,6 +22,17 @@ public class MainViewController implements PropertyChangeListener {
 	public void setCurrentUser(Employee currentUser){
 		this.currentUser = currentUser;
 		currentUser.addPropertyChangeListener(this);
+		loadUserEvents();
+		loadUserNotifications();
+	}
+	
+	public void loadUserEvents() {
+		ArrayList<Event> events = currentUser.getRelatedEvents();
+//		mainView.getCalendarPanel().addEvents(events);
+	}
+	
+	public void loadUserNotifications() {
+		
 	}
 	
 	public Employee getCurrentUser() {
