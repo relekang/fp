@@ -17,17 +17,35 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 	private GridBagConstraints gbc;
 	private JLabel semicolon;
 	protected JTextField hourField, minuteField;
-	private int hour, min;
+	private int hour, min; 
+
 	
-	public int getHour() {
+	
+	public int getHourField(){
+		int temp;
+		try{
+			temp = Integer.parseInt(hourField.getText());
+		}
+		catch (Exception e) {
+			return hour;
+		}
+		if(temp >=0 && temp < 24)
+			hour = temp;
 		return hour;
 	}
-
-
-	public int getMin() {
+	public int getMinField(){
+		int temp;
+		try{
+			temp = Integer.parseInt(minuteField.getText());
+		}
+		catch (Exception e) {
+			return min;
+		}
+		if(temp >=0 && temp < 60)
+			min = temp;
 		return min;
 	}
-
+	
 
 	public DateTimePicker(EventView view) {
         mainPanel = new JPanel();
@@ -119,11 +137,6 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
-			hour = Integer.parseInt(hourField.getText());
-			min = Integer.parseInt(minuteField.getText());
-		
-		
 	}
 
 

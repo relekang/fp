@@ -1,8 +1,10 @@
 package no.ntnu.fp.server;
 
-import no.ntnu.fp.model.Employee;
+import no.ntnu.fp.model.*;
+import no.ntnu.fp.model.Event;
 import no.ntnu.fp.server.gui.EventListPanel;
 import no.ntnu.fp.server.gui.RoomListPanel;
+import no.ntnu.fp.storage.db.EventHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,24 +27,36 @@ public class ServerApplication {
             e.printStackTrace();
         }
 
-        while (1 == 1) {
+        while (true) {
             message = conn.receive();
             try {
                 JSONObject object = new JSONObject(message);
 
-                System.out.println(object.toString());
+                System.out.println("\n\n Recieved JSON-object: \n" + object.toString());
 
-                if (object.get("key").toString().equals("authenticate")) {
-                    System.out.println("authenticate");
+                if (object.getString("key").equals("authenticate")) {
                     Employee employee = null;
                     try {
                         employee = ServerAuthentication.authenticate(object.get("username").toString(), object.get("password").toString());
                     } catch (SQLException e) { conn.send(new JSONObject().put("key", "failure").toString()); }
-                    if (employee != null) conn.send(new JSONObject().put("key", "success").put("employee", employee.toJson()).toString());
+                    if (employee != null)
+                        conn.send(new JSONObject().put("key", "success").put("employee", employee.toJson()).toString());
+                } else
+                if (object.getString("key").equals("event")){
+                    if(object.getString("action").equals("get")){
+                        try {
+                            EventHandler eventHandler = new EventHandler();
+                            Event event =  eventHandler.fetchEvent(object.getString("argument"));
+                            conn.send(event.toJson().toString());
+
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
+            } catch (JSONException e) { e.printStackTrace(); }
 
         }
     }

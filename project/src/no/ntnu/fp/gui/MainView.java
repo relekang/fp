@@ -27,6 +27,10 @@ public class MainView extends JFrame {
 		add(loginPanel);
 		pack();
 	}
+	
+	public CalendarPanel getCalendarPanel() {
+		return (CalendarPanel) calendarPanel;
+	}
 
 	private void buildMainPanel() {
 		calendarPanel = new CalendarPanel();
@@ -73,6 +77,7 @@ public class MainView extends JFrame {
 		gbc.gridy = 3;
 		gbc.gridwidth = 2;
 		gbc.gridheight = 2;
+//		gbc.anchor = GridBagConstraints.SOUTH;
 		mainPanel.add(notificationPanel, gbc);
 
 	}

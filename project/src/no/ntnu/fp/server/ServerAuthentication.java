@@ -29,6 +29,10 @@ public class ServerAuthentication {
             employee = handler.fetchEmployee(arg);
         }
         handler.close();
+        if (employee != null)
+            System.out.println("Authenticated user: " + username);
+        else
+            System.out.println("Could not authenticated user: " + username);
         return employee;
     }
 

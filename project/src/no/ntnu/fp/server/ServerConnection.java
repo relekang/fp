@@ -25,15 +25,17 @@ public class ServerConnection {
 
     public void send(String data){
         try {
-            Socket socket = new Socket("localhost", Constants.CLIENT_PORT);
+            System.out.println("Print: " + ip);
+            Socket socket = new Socket(ip.getHostAddress(), Constants.CLIENT_PORT);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            System.out.print("Sending string: '" + data + "'\nto " + ip +":"+ port);
+            System.out.println("\n----------\nSending string: '" + data + "'\nIP: " + ip +":"+ port);
             out.print(data);
             out.close();
             socket.close();
         }
         catch(Exception e) {
-            System.out.print(e.toString());
+            System.out.println("Exception in send:\n");
+            e.printStackTrace();
         }
     }
 
@@ -43,19 +45,15 @@ public class ServerConnection {
             Socket socket = server.accept();
             ip = socket.getInetAddress();
             port = socket.getPort();
-            System.out.print(ip + ":" + port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            System.out.print("Received string: '");
 
             while (!in.ready()) {}
             message = in.readLine();
-            System.out.println(message);
-
-            System.out.print("'\n");
             in.close();
             socket.close();
+            System.out.println("Received string: '" + message + "'\nFrom: " + ip + ":" + port);
         }
-        catch(Exception e) { System.out.print(e.toString()); }
+        catch(Exception e) { System.out.print("Exception in receive:\n" + e.toString()); }
         if(message != null)
             return message;
         return "";
