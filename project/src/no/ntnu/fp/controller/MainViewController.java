@@ -10,10 +10,9 @@ import no.ntnu.fp.model.Event;
 
 public class MainViewController implements PropertyChangeListener {
 	
-//	public static final String 
-	
 	private MainView mainView;
 	private Employee currentUser;
+	private ArrayList<Event> events;
 	
 	public MainViewController(MainView view) {
 		mainView = view;
@@ -27,7 +26,7 @@ public class MainViewController implements PropertyChangeListener {
 	}
 	
 	public void loadUserEvents() {
-		ArrayList<Event> events = currentUser.getRelatedEvents();
+		events = currentUser.getRelatedEvents();
 //		mainView.getCalendarPanel().addEvents(events);
 	}
 	

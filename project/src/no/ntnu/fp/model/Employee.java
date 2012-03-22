@@ -324,7 +324,8 @@ public class Employee implements Model{
 	}
 	
 	public ArrayList<Event> getRelatedEvents() {
-		
+//		TODO: Fetch all events related to this user
+		String s = "SELECT * FROM EVENT AS evt JOIN EMPLOYEE_ATTEND_EVENT AS eae AT evt.id = eae.employee_id JOIN EMPLOYEE AS emp AT emp.id = eae.event_id";
 		return null;
 	}
 
