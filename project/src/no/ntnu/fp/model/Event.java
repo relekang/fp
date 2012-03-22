@@ -1,10 +1,16 @@
  package no.ntnu.fp.model;
 
 
+import no.ntnu.fp.client.Connection;
+import no.ntnu.fp.controller.ClientApplication;
 import no.ntnu.fp.storage.db.EventHandler;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.IOException;
+import java.security.PublicKey;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +41,8 @@ public class Event implements Model{
     private Event() {
     	pcs = new PropertyChangeSupport(this);
     	participants = new ArrayList<Employee>();
+        dateFrom = new Date();
+        dateTo = new Date();
     }
     
     /**
@@ -76,7 +84,10 @@ public class Event implements Model{
         setDateFrom(dateFrom);
         setDateTo(dateTo);
     }
-    
+    public Event(JSONObject object) throws JSONException {
+        this(object.getInt("id"), object.getString("title"), new Date(object.getString("date_from")), new Date(object.getString("date_to")));
+    }
+
     public int getID(){
         return ID;
     }
@@ -226,5 +237,17 @@ public class Event implements Model{
     public int getIsCanceledAsInt() {
         if(isCanceled) return 1;
         return 0;
+    }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject object = new JSONObject();
+        object.put("id", getID());
+        object.put("title", getTitle());
+        object.put("date_from", getDateFrom().toString());
+        object.put("date_to", getDateTo().toString());
+        object.put("room", getRoom().toString());
+        object.put("description", getDescription());
+
+        return object;
     }
 }

@@ -13,7 +13,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-import com.sun.org.apache.bcel.internal.generic.InstructionConstants.Clinit;
+
 
 public class Authentication {
 

@@ -1,0 +1,6 @@
+{
+    "key": "event",
+    "action": "get",
+    "arguments": "id = 1"
+}
+

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class EventHandler extends DbHandler {
@@ -35,25 +36,45 @@ public class EventHandler extends DbHandler {
 
     }
 
+    public ArrayList<Event> fetchEvents(String arg) throws SQLException {
+        ArrayList<Event> events = new ArrayList<Event>();
+
+        if(!connect())
+            return events;
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM EVENT WHERE " + arg);
+
+        while (rs.next()) {
+            Event event = new Event(rs.getInt("id") , rs.getString("title"), dateFromString(rs.getString("date_from")), dateFromString(rs.getString("date_to")));
+            event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
+            event.setDescription(rs.getString("description"));
+            events.add(event);
+        }
+        rs.close();
+        close();
+        return events;
+
+    }
+
     public Event fetchEvent(String arg){
         try {
             if(!connect())
                 return null;
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM EVENT WHERE " + arg);
+            String query = "SELECT * FROM EVENT WHERE " + arg;
+            System.out.println(query);
+            ResultSet rs = stmt.executeQuery(query);
             Event event;
-            while (rs.next()) {
-                event = new Event(rs.getString("title"));
-                event.setDateFrom(dateFromString(rs.getString("date_from")));
-                event.setDateTo(dateFromString(rs.getString("date_to")));
-                event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
-                event.setDescription(rs.getString(" description"));
-
-            }
+            rs.next();
+            event = new Event(rs.getString("title"));
+//            event.setDateFrom(new Date(rs.getString("date_from")));
+//            event.setDateTo(new Date(rs.getString("date_to")));
+            event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
+            event.setDescription(rs.getString("description"));
             rs.close();
             close();
 
-            return null;
+            return event;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
