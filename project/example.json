@@ -4,3 +4,8 @@
     "arguments": "id = 1"
 }
 
+
+[
+    {"id":0,"title":"SuperEvent","date_from":"2012-4-2 4:0:00","description":"Superkult","date_to":"2012-4-2 4:0:00","room":"Drivhuset, its"},
+    {"id":2,"title":"Kode FP","date_from":"2012-4-2 4:0:00","description":"Morro\n","date_to":"2012-4-2 4:0:00","room":"Drivhuset, its"}
+]

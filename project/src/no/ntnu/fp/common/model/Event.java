@@ -1,6 +1,7 @@
  package no.ntnu.fp.common.model;
 
 
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.server.storage.db.EventHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -81,7 +82,7 @@ public class Event implements Model{
         setDateTo(dateTo);
     }
     public Event(JSONObject object) throws JSONException {
-        this(object.getInt("id"), object.getString("title"), new Date(object.getString("date_from")), new Date(object.getString("date_to")));
+        this(object.getInt("id"), object.getString("title"), Util.dateFromString(object.getString("date_from")), Util.dateFromString(object.getString("date_to")));
     }
 
     public int getID(){
@@ -239,8 +240,8 @@ public class Event implements Model{
         JSONObject object = new JSONObject();
         object.put("id", getID());
         object.put("title", getTitle());
-        object.put("date_from", getDateFrom().toString());
-        object.put("date_to", getDateTo().toString());
+        object.put("date_from", Util.dateToString(getDateFrom()));
+        object.put("date_to", Util.dateToString(getDateTo()));
         object.put("room", getRoom().toString());
         object.put("description", getDescription());
 

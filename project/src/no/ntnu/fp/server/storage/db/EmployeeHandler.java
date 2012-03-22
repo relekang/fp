@@ -1,5 +1,6 @@
 package no.ntnu.fp.server.storage.db;
 
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Employee;
 
 import java.sql.ResultSet;
@@ -41,7 +42,7 @@ public class EmployeeHandler extends DbHandler {
             ResultSet rs = stmt.executeQuery("SELECT * FROM EMPLOYEE WHERE " + arg);
             Employee employee;
             rs.next();
-            employee = new Employee(rs.getInt("id"),rs.getString("name"), rs.getString("email"), dateFromString(rs.getString("date_of_birth")), Employee.Gender.MALE);
+            employee = new Employee(rs.getInt("id"),rs.getString("name"), rs.getString("email"), Util.dateFromString(rs.getString("date_of_birth")), Employee.Gender.MALE);
             rs.close();
             close();
             return employee;

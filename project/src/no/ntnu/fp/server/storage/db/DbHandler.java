@@ -40,18 +40,7 @@ public class DbHandler {
         conn.close();
     }
     
-    public Date dateFromString(String input){
-        Calendar cal = Calendar.getInstance();
-        int[] date = new int[3];
-        for(int i = 0; i < date.length; i++){
-            date[i] = Integer.parseInt(input.split("-")[i]);
-        }
-        cal.set(Calendar.YEAR, date[0]);
-        cal.set(Calendar.MONTH, date[1]);
-        cal.set(Calendar.DAY_OF_MONTH, date[2]);
-        System.out.println(cal.getTime().toString());
-        return cal.getTime();
-    }
+
 
 
 

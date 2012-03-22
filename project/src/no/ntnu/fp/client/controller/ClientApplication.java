@@ -1,10 +1,13 @@
 package no.ntnu.fp.client.controller;
 
+import no.ntnu.fp.client.Connection;
 import no.ntnu.fp.client.gui.MainView;
 import no.ntnu.fp.client.gui.FindPersonView;
 import no.ntnu.fp.common.model.Employee;
+import no.ntnu.fp.common.model.Event;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class ClientApplication {
     private static JFrame mainFrame, eventFrame, findPersonFrame;
@@ -32,6 +35,11 @@ public class ClientApplication {
         findPersonFrame = new FindPersonView();
         findPersonFrame.setLocationRelativeTo(null);
         findPersonFrame.setVisible(false);
+
+
+        ArrayList<Event> events = Connection.fetchEvents();
+        for(Event e:events)
+            System.out.println(e.toString());
 
 //        pack();
     }

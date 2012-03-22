@@ -5,6 +5,7 @@ import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.server.gui.EventListPanel;
 import no.ntnu.fp.server.gui.RoomListPanel;
 import no.ntnu.fp.server.storage.db.EventHandler;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ServerApplication {
     static JFrame frame;
@@ -43,21 +45,31 @@ public class ServerApplication {
                         conn.send(new JSONObject().put("key", "success").put("employee", employee.toJson()).toString());
                 } else
                 if (object.getString("key").equals("event")){
-                    if(object.getString("action").equals("get")){
-                        try {
-                            EventHandler eventHandler = new EventHandler();
-                            Event event =  eventHandler.fetchEvent(object.getString("argument"));
-                            conn.send(event.toJson().toString());
-
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
+                    try {
+                        handleEventRequest(object, conn);
+                    } catch (SQLException e) { e.printStackTrace(); }
                 }
 
             } catch (JSONException e) { e.printStackTrace(); }
 
+        }
+    }
+
+    private static void handleEventRequest(JSONObject object, ServerConnection conn) throws JSONException, SQLException {
+        EventHandler eventHandler = new EventHandler();
+        if(object.getString("action").equals("all")){
+            ArrayList<Event> list = eventHandler.fetchAllEvents();
+            ArrayList<JSONObject> jsonList = new ArrayList<JSONObject>();
+            for(Event e:list){
+                jsonList.add(e.toJson());
+            }
+            String message = new JSONArray(jsonList).toString();
+            conn.send(message);
+        }
+        else if(object.getString("action").equals("get")){
+
+                Event event =  eventHandler.fetchEvent(object.getString("argument"));
+                conn.send(event.toJson().toString());
         }
     }
 

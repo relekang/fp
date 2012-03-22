@@ -1,11 +1,13 @@
 package no.ntnu.fp.server.storage.db;
 
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Event;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class EventHandler extends DbHandler {
@@ -23,7 +25,7 @@ public class EventHandler extends DbHandler {
         ResultSet rs = stmt.executeQuery("SELECT * FROM EVENT");
 
         while (rs.next()) {
-            Event event = new Event(rs.getInt("id") , rs.getString("title"), dateFromString(rs.getString("date_from")), dateFromString(rs.getString("date_to")));
+            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateFromString(rs.getString("date_from")), Util.dateFromString(rs.getString("date_to")));
             event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
             event.setDescription(rs.getString("description"));
             events.add(event);
@@ -43,7 +45,7 @@ public class EventHandler extends DbHandler {
         ResultSet rs = stmt.executeQuery("SELECT * FROM EVENT WHERE " + arg);
 
         while (rs.next()) {
-            Event event = new Event(rs.getInt("id") , rs.getString("title"), dateFromString(rs.getString("date_from")), dateFromString(rs.getString("date_to")));
+            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateFromString(rs.getString("date_from")), Util.dateFromString(rs.getString("date_to")));
             event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
             event.setDescription(rs.getString("description"));
             events.add(event);

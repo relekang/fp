@@ -2,8 +2,10 @@ package no.ntnu.fp.client;
 
 import no.ntnu.fp.common.Constants;
 import no.ntnu.fp.common.model.Event;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.events.EventException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Connection {
     ServerSocket server;
@@ -73,6 +76,33 @@ public class Connection {
             JSONObject object = new JSONObject(ack);
             System.out.println(object.toString());
             return new Event(object);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ArrayList<Event> fetchEvents() {
+        ArrayList<Event> list = new ArrayList<Event>();
+        try {
+            Connection conn = new Connection();
+            JSONObject message = new JSONObject();
+            message.put("key", "event");
+            message.put("action", "all");
+            conn.send(message);
+            String ack = conn.receive();
+            JSONArray jsonArray = new JSONArray(ack);
+            for(int i = 0; i<jsonArray.length();i++){
+                JSONObject object =  jsonArray.optJSONObject(i);
+                Event e = new Event(object);
+                list.add(e);
+            }
+            System.out.println(list.toString());
+            return list;
 
 
         } catch (IOException e) {
