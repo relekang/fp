@@ -1,5 +1,6 @@
 package no.ntnu.fp.gui;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -30,10 +31,11 @@ public class FindPersonView extends JFrame implements ActionListener{
 		previousButton = new JButton("Previous");
 		nextButton = new JButton("Next");
 		compare = new JButton("Compare");
-		searchField = new JTextField(20);
+		searchField = new JTextField();
 		week = new JComboBox(weekArray);
-		
+		searchField.setMinimumSize(new Dimension(200,30));
 		addElements();
+		this.setPreferredSize(new Dimension(this.getPreferredSize().width, (int)(this.getMinimumSize()).getHeight()));
 		this.pack();
     }
 	
