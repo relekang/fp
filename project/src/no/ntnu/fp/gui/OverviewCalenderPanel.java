@@ -2,6 +2,7 @@ package no.ntnu.fp.gui;
 
 import no.ntnu.fp.gui.objects.DateLabel;
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.Calendar;
 
@@ -19,9 +20,17 @@ public class OverviewCalenderPanel extends JPanel {
     }
 
     private void addCalendarHeaders() {
-        Font f = new Font("Dialog", Font.PLAIN, 10);
-        nextbutton = new JButton("Next");
-        previousButton = new JButton("Previous");
+    	java.net.URL leftURL = getClass().getResource("/resources/icons/arrow_left.png");
+    	java.net.URL rightURL = getClass().getResource("/resources/icons/arrow_right.png");
+		ImageIcon leftIcon = new ImageIcon(leftURL);
+		ImageIcon rightIcon = new ImageIcon(rightURL);
+        
+		Font f = new Font("Dialog", Font.PLAIN, 10);
+        nextbutton = new JButton();
+        previousButton = new JButton();
+        
+        nextbutton.setIcon(rightIcon);
+        previousButton.setIcon(leftIcon);
         
         gbc.gridx = 0;	gbc.gridy = 0;
         gbc.gridwidth = 4;
