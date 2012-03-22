@@ -22,23 +22,28 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 	
 	
 	public int getHourField(){
-		
+		int temp;
 		try{
-			hour = Integer.parseInt(hourField.getText());
+			temp = Integer.parseInt(hourField.getText());
 		}
 		catch (Exception e) {
-
+			return hour;
 		}
+		if(temp >=0 && temp < 24)
+			hour = temp;
 		return hour;
 	}
 	public int getMinField(){
-		
+		int temp;
 		try{
-			return Integer.parseInt(minuteField.getText());
+			temp = Integer.parseInt(minuteField.getText());
 		}
 		catch (Exception e) {
-			return 0;
+			return min;
 		}
+		if(temp >=0 && temp < 60)
+			min = temp;
+		return min;
 	}
 	
 
