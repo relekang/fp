@@ -10,7 +10,7 @@ import java.awt.event.MouseListener;
 import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.common.model.Event;
 
-public class EventLabel implements MouseListener {
+public class EventLabel {
 	
 	private Color eventColor = GuiConstants.EVENT_PENDING;
 	private Color textColor = GuiConstants.EVENT_TEXT_COLOR;
@@ -29,6 +29,13 @@ public class EventLabel implements MouseListener {
 		this(fromPx, toPx);
 		this.model = event;
 	}
+
+	public static int[] getTimeFromPixel(int px) {
+		int[] hourAndMin = new int[2];
+		hourAndMin[0] = px / GuiConstants.HOUR_HEIGHT;
+		hourAndMin[1] = px % GuiConstants.HOUR_HEIGHT;
+		return hourAndMin;
+	}
 	
 	private int calculatePixelLocation(int px) {
 		int hour = px / GuiConstants.HOUR_HEIGHT;
@@ -38,6 +45,7 @@ public class EventLabel implements MouseListener {
 			quarter++;
 		return hour* GuiConstants.HOUR_HEIGHT + quarter * (GuiConstants.HOUR_HEIGHT/4);
 	}
+	
 	
 //	A hack-ish method that draws the representative string for a meeting
 	public void drawRepresentation(Graphics g) {
@@ -108,34 +116,4 @@ public class EventLabel implements MouseListener {
 		this.model = model;
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

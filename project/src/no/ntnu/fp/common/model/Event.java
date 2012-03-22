@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Event implements Model{
@@ -85,7 +86,7 @@ public class Event implements Model{
         this(object.getInt("id"), object.getString("title"), Util.dateTimeFromString(object.getString("date_from")), Util.dateTimeFromString(object.getString("date_to")));
     }
 
-    public int getID(){
+	public int getID(){
         return ID;
     }
     

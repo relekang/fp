@@ -6,26 +6,37 @@ import no.ntnu.fp.common.model.Employee;
 import javax.swing.*;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import no.ntnu.fp.common.model.Event;
 
-public class CalendarPanel extends JPanel {
+public class CalendarPanel extends JPanel implements PropertyChangeListener {
 
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel weekPanel;
 	private JScrollPane pane;
 	private Employee user;
+	private int currentWeek;
+	private CalendarDayBox[] days;
+	
+	public CalendarPanel(OverviewCalendarPanel pan) {
+		this();
+		pan.addPropertyChangeListener(this);
+	}
 	
 	public CalendarPanel() {
 		setLayout(new GridBagLayout());
+		days = new CalendarDayBox[GuiConstants.DAYS.length];
 		addCalendarHeaders();
 		initWeekPanel();
 	}
 	
-	public CalendarPanel(Employee user) {
-		this();
-		this.user = user;
-	}
+//	public CalendarPanel(Employee user) {
+//		this.user = user;
+//	}
 
 	private void initWeekPanel() {
 		weekPanel = new JPanel(new FlowLayout());
@@ -45,8 +56,9 @@ public class CalendarPanel extends JPanel {
 		
 		gbc.gridy = 1;
 		for(int i = 0; i < GuiConstants.DAYS.length; i++) {
+			days[i] = new CalendarDayBox(i);
 			gbc.gridx = i;
-			weekPanel.add(new CalendarDayBox(i));
+			weekPanel.add(days[i]);
 		}
 		
 		gbc.gridx = 0;
@@ -68,7 +80,6 @@ public class CalendarPanel extends JPanel {
 		for(int i = 0; i < GuiConstants.DAYS.length; i++) {
 			gbc.gridx = i;
 			JLabel lbl = new JLabel(GuiConstants.DAYS[i]);
-//			l.setPreferredSize(new Dimension(970/70, 25));
 			lbl.setFont(GuiConstants.WEEKDAY_FONT);
 			add(lbl, gbc);
 		}
@@ -85,5 +96,20 @@ public class CalendarPanel extends JPanel {
 	public void setUser(Employee user) {
 		this.user = user;
 	}
+	
+	private void loadCurrentWeek() {
+		//TODO
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		//TODO: fikse slik at dette fungerer
+		if(evt.getPropertyName() == OverviewCalendarPanel.SELECTED_DAY_CHANGED) {
+			currentWeek = ((Calendar)(evt.getNewValue())).get(Calendar.WEEK_OF_YEAR);
+			loadCurrentWeek();
+			System.out.println(currentWeek);
+		}
+	}
 
 }
+

@@ -6,11 +6,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class MainView extends JFrame {
+public class MainView extends JFrame implements PropertyChangeListener {
 	
-	private JPanel mainPanel, calendarPanel, overviewPanel, notificationPanel,
-			loginPanel;
+	private JPanel mainPanel;
+	private CalendarPanel calendarPanel;
+	private OverviewCalendarPanel overviewPanel;
+	private NotificationPanel notificationPanel;
+	private Login loginPanel;
 	private JButton createEventBtn, findPersonBtn, signOutBtn;
 	private GridBagConstraints gbc;
 
@@ -29,12 +34,12 @@ public class MainView extends JFrame {
 	}
 	
 	public CalendarPanel getCalendarPanel() {
-		return (CalendarPanel) calendarPanel;
+		return calendarPanel;
 	}
 
 	private void buildMainPanel() {
-		calendarPanel = new CalendarPanel();
-		overviewPanel = new OverviewCalenderPanel();
+		overviewPanel = new OverviewCalendarPanel();
+		calendarPanel = new CalendarPanel(overviewPanel);
 		notificationPanel = new NotificationPanel();
 		notificationPanel.setBorder(GuiConstants.EMPTY_BORDER_5);
 		mainPanel.setLayout(new GridBagLayout());
@@ -127,5 +132,11 @@ public class MainView extends JFrame {
 		public void actionPerformed(ActionEvent actionEvent) {
 			ClientApplication.setFindPersonFrameVisible(true);
 		}
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
 	}
 }

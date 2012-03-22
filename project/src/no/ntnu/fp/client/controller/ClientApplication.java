@@ -28,6 +28,8 @@ public class ClientApplication {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
         
+        
+        
         mainViewController = new MainViewController((MainView)mainFrame);
         eventViewController = new EventViewController();
         

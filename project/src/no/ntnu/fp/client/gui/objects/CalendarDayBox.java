@@ -9,13 +9,16 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import no.ntnu.fp.client.controller.ClientApplication;
 import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
@@ -25,18 +28,20 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 
 	private int y, dy;
 	private final String DAY;
-	private Date date; 
+	private Calendar date; 
 	private CalendarCanvas canvas;
+	private PropertyChangeSupport pcs;
 	
 	private List<EventLabel> events = new ArrayList<EventLabel>();
-	
-	public CalendarDayBox(int reprDay, Date date) {
+
+	public CalendarDayBox(int reprDay, Calendar date) {
 		this(reprDay);
 		this.date = date;
 	}
 	
 	public CalendarDayBox(int reprDay) {
 		this.DAY = GuiConstants.DAYS[reprDay];
+		pcs = new PropertyChangeSupport(this);
 		switch(reprDay) {
 		case 0: 
 			setBorder(BorderFactory.createEmptyBorder(-5, 0, -5, -5));
@@ -110,11 +115,26 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	public void mouseReleased(MouseEvent e) {
 		dy = e.getY();
 		canvas.mouseIsPressed = false;
-		Event ev = new Event("lorem ipsum loreum impsum, lorem");
-		ev.setRoom(new Room("Sebrarommet", "EL", 10));
-		EventLabel label = new EventLabel(y, dy, ev);
-		events.add(label);
+		createNewEvent(e);
 		canvas.repaint();
+	}
+	
+	private void createNewEvent(MouseEvent e) {
+		EventLabel label = new EventLabel(y, dy);
+		int[] from = EventLabel.getTimeFromPixel(label.getFromPixel());
+		int[] to = EventLabel.getTimeFromPixel(label.getToPixel());
+		Calendar calFrom = fixTime(from);
+		Calendar calTo = fixTime(to);
+		Event ev = new Event("", calFrom.getTime(), calTo.getTime());
+		events.add(label);
+		
+	}
+	
+	private Calendar fixTime(int[] hourAndMin) {
+		Calendar cal = (Calendar)date.clone();
+		cal.set(Calendar.HOUR_OF_DAY, hourAndMin[0]);
+		cal.set(Calendar.MINUTE, hourAndMin[1]);
+		return cal;
 	}
 
 	@Override
@@ -145,6 +165,10 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Calendar get() {
+		return date;
 	}
 
 }
