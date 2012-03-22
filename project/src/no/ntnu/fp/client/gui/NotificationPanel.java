@@ -17,13 +17,13 @@ public class NotificationPanel extends JPanel{
     private JList list;
     private DefaultListModel listModel;
     private JLabel label;
-    private JButton viewNotification, viewEvent;
-    
+    private JButton viewNotification;
     private GridBagConstraints gbc;
+    
+    private JPopupMenu popup;
     
     public NotificationPanel(){
     	gbc = new GridBagConstraints();
-    	
     	this.setLayout(new GridBagLayout());
     	
         label = new JLabel("Notifications");
@@ -41,8 +41,6 @@ public class NotificationPanel extends JPanel{
 
 		viewNotification = new JButton("View notification");
 		viewNotification.setSize(new Dimension(120, 20));
-		viewEvent = new JButton("View Event");
-		
 		viewNotification.addActionListener(new ActionListener() {
 			
 			@Override
@@ -53,18 +51,6 @@ public class NotificationPanel extends JPanel{
 			}
 		});
 		
-		viewEvent.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//TODO: Add support for showing correct event using selected index
-				getSelectedIndex();
-				
-				ClientApplication.showEventView();
-			}
-
-		});
-        
         /*Employee testGuy = new Employee();*/
         /*testGuy.setName("Test McYo");*/
         
@@ -76,7 +62,8 @@ public class NotificationPanel extends JPanel{
         addNotification(new Notification(6, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, NotificationType.CHANGE, false, true, false, false));
         addNotification(new Notification(7, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, NotificationType.CHANGE, false, true, false, true));
         addNotification(new Notification(8, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, NotificationType.CHANGE, true, true, true, false));
-        
+
+        popup = new JPopupMenu();
         
         gbc.gridx = 0; gbc.gridy = 0; gbc.weighty = 0.0;
         gbc.gridwidth = 1;
@@ -89,10 +76,6 @@ public class NotificationPanel extends JPanel{
         gbc.gridx = 0; gbc.gridy = 2; gbc.weighty = 0.0;
         gbc.gridwidth = 1;
         add(viewNotification, gbc);
-        
-        gbc.gridx = 1; gbc.gridy = 2; gbc.weighty = 0.0;
-        gbc.gridwidth = 1;
-        add(viewEvent, gbc);
         
     }
     

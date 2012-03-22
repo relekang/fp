@@ -40,7 +40,7 @@ public class Notification implements Model{
         case DELETION:
         	description = /*employee.getName()*/"Person" + " deleted " + event.getTitle(); break;
         case ACCEPTED:
-        	description = /*employee.getName()*/"Person" + " accepted your invitation to " /*+ event.getTitle()*/; break;
+        	description = /*employee.getName()*/"Person" + " accepted your invitation to " + event.getTitle(); break;
         case DECLINED:
         	description = /*employee.getName()*/"Person" + " declined your invitation to " + event.getTitle(); break;
         }
