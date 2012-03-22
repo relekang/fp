@@ -25,7 +25,7 @@ public class EventHandler extends DbHandler {
         ResultSet rs = stmt.executeQuery("SELECT * FROM EVENT");
 
         while (rs.next()) {
-            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateFromString(rs.getString("date_from")), Util.dateFromString(rs.getString("date_to")));
+            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")));
             event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
             event.setDescription(rs.getString("description"));
             events.add(event);
@@ -45,7 +45,7 @@ public class EventHandler extends DbHandler {
         ResultSet rs = stmt.executeQuery("SELECT * FROM EVENT WHERE " + arg);
 
         while (rs.next()) {
-            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateFromString(rs.getString("date_from")), Util.dateFromString(rs.getString("date_to")));
+            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")));
             event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
             event.setDescription(rs.getString("description"));
             events.add(event);
@@ -85,7 +85,7 @@ public class EventHandler extends DbHandler {
         if(!connect())
             return null;
         String query = "INSERT INTO `EVENT` (`id`,`room_id`, `date_from`, `date_to`, `title`, `description`, `type`, `canceled`) VALUES (NULL, %d, '%s', '%s', '%s', '%s', '%s', %d);";
-        query = String.format(query, event.getRoom().getRoomId(), event.getSqlDateFrom(), event.getSqlDateTo(), event.getTitle(), event.getDescription(), "meeting"/*event.getTypeAsString()*/, event.getIsCanceledAsInt());
+        query = String.format(query, event.getRoom().getRoomId(), Util.dateTimeToString(event.getDateFrom()), Util.dateTimeToString(event.getDateTo()), event.getTitle(), event.getDescription(), "meeting"/*event.getTypeAsString()*/, event.getIsCanceledAsInt());
         System.out.println(query);
         Statement stm = conn.createStatement();
         boolean rs = stm.execute(query);

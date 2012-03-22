@@ -37,9 +37,9 @@ public class ClientApplication {
         findPersonFrame.setVisible(false);
 
 
-        ArrayList<Event> events = Connection.fetchEvents();
-        for(Event e:events)
-            System.out.println(e.toString());
+//        ArrayList<Event> events = Connection.fetchEvents();
+//        for(Event e:events)
+//            System.out.println(e.toString());
 
 //        pack();
     }

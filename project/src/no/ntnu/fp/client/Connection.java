@@ -7,12 +7,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.events.EventException;
 
+import javax.security.auth.login.FailedLoginException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.util.ArrayList;
 
 public class Connection {
@@ -26,33 +26,51 @@ public class Connection {
     public void send(JSONObject object) {
         try {
             Socket socket = new Socket("lkng.me", Constants.SERVER_PORT);
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            System.out.println("Sending string: '" + object.toString() + "'\n");
-            out.print(object.toString());
-            out.close();
-            socket.close();
+            try {
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                System.out.println("Sending string: '" + object.toString() + "'\n");
+                out.print(object.toString());
+                out.close();
+                socket.close();
+            } catch (SocketException e) {
+                System.out.print(e.toString());
+                socket.close();
+
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+                socket.close();
+            }
         } catch (Exception e) {
-            System.out.print(e.toString());
+            e.printStackTrace();
         }
+        System.out.println("Sent");
     }
 
-    public String receive() {
+    public String receive() throws SocketTimeoutException {
         String message = "";
         try {
             Socket socket = server.accept();
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            System.out.print("Received string: '");
+            try {
+                socket.setSoTimeout(100);
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                System.out.print("Received string: '");
 
-            while (!in.ready()) {
+                while (!in.ready()) {
+                }
+                message = in.readLine();
+                System.out.println(message);
+
+                System.out.print("'\n");
+                in.close();
+                socket.close();
+            } catch (SocketException e) {
+                e.printStackTrace();
+                socket.close();
+                return "";
             }
-            message = in.readLine();
-            System.out.println(message);
-
-            System.out.print("'\n");
-            in.close();
-            socket.close();
-        } catch (Exception e) {
-            System.out.print(e.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
         }
         if (message != null)
             return message;
@@ -96,8 +114,8 @@ public class Connection {
             conn.send(message);
             String ack = conn.receive();
             JSONArray jsonArray = new JSONArray(ack);
-            for(int i = 0; i<jsonArray.length();i++){
-                JSONObject object =  jsonArray.optJSONObject(i);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject object = jsonArray.optJSONObject(i);
                 Event e = new Event(object);
                 list.add(e);
             }

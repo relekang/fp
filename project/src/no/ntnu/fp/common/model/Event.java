@@ -82,7 +82,7 @@ public class Event implements Model{
         setDateTo(dateTo);
     }
     public Event(JSONObject object) throws JSONException {
-        this(object.getInt("id"), object.getString("title"), Util.dateFromString(object.getString("date_from")), Util.dateFromString(object.getString("date_to")));
+        this(object.getInt("id"), object.getString("title"), Util.dateTimeFromString(object.getString("date_from")), Util.dateTimeFromString(object.getString("date_to")));
     }
 
     public int getID(){
@@ -240,8 +240,8 @@ public class Event implements Model{
         JSONObject object = new JSONObject();
         object.put("id", getID());
         object.put("title", getTitle());
-        object.put("date_from", Util.dateToString(getDateFrom()));
-        object.put("date_to", Util.dateToString(getDateTo()));
+        object.put("date_from", Util.dateTimeToString(getDateFrom()));
+        object.put("date_to", Util.dateTimeToString(getDateTo()));
         object.put("room", getRoom().toString());
         object.put("description", getDescription());
 

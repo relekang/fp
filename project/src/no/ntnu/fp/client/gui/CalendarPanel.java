@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import no.ntnu.fp.common.model.Event;
 
 public class CalendarPanel extends JPanel {
 

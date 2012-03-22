@@ -29,10 +29,9 @@ public class MainViewController implements PropertyChangeListener {
 	}
 	
 	public void loadUserEvents() {
-		events = new ArrayList<Event>();
-		events.add(Connection.fetchEvent(0));
+		events = Connection.fetchEvents();
 		System.out.println("EVENT:" + events.get(0));
-//		mainView.getCalendarPanel().addEvents(events);
+		mainView.getCalendarPanel().addEvents(events);
 	}
 	
 	public void loadUserNotifications() {
