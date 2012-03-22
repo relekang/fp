@@ -7,6 +7,7 @@ import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 
 import javax.swing.*;
+
 import java.util.ArrayList;
 
 public class ClientApplication {
@@ -16,19 +17,12 @@ public class ClientApplication {
     private static MainViewController mainViewController;
     private static FindPersonViewController findPersonViewController = new FindPersonViewController();
     
-    
-    public static void showEventView(){
-    	eventViewController.setEventVisible(true);
-    }
-    
-    public static void main (String args[]){
-
+    public static void main (String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
+//    	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     	mainFrame = new MainView();
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
-        
-        
         
         mainViewController = new MainViewController((MainView)mainFrame);
         eventViewController = new EventViewController();
@@ -50,6 +44,10 @@ public class ClientApplication {
         if(mainFrame.isVisible()) mainFrame.pack();
         if(eventFrame.isVisible()) eventFrame.pack();
         if(findPersonFrame.isVisible()) findPersonFrame.pack();
+    }
+    
+    public static void showEventView(){
+    	eventViewController.setEventVisible(true);
     }
 
     public static void setMainFrameVisible(boolean visibility){
