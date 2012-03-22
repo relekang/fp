@@ -29,6 +29,8 @@ public class Constants {
 //	Fonts
 	public static final Font WEEKDAY_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
 	public static final Font HOUR_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
+	public static final Font EVENT_LABEL_TITLE_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 13);
+	public static final Font EVENT_LABEL_ROOM_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 9);
 	
 //	Colors
 	public static final Color EVENT_TEXT_COLOR = Color.BLACK;
@@ -37,7 +39,7 @@ public class Constants {
 	public static final Color EVENT_ACCEPTED = new Color(131, 240, 60, 200); //light green
 	public static final Color EVENT_PENDING = new Color(255, 180, 64, 200); //light yellow
 	public static final Color EVENT_DECLINED = new Color(251, 63, 81, 200); //light red
-	public static final Color DRAG_NEW_EVENT = new Color(179, 209, 232, 100); //light blue
+	public static final Color DRAG_NEW_EVENT = new Color(179, 209, 232); //light blue
 
 	public enum EventType {
 		PERSONAL, BUSNIESS, BUSINESS_ADMIN;

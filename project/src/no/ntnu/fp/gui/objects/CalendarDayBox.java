@@ -16,6 +16,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import no.ntnu.fp.gui.Constants;
+import no.ntnu.fp.model.Event;
+import no.ntnu.fp.model.Room;
 
 @SuppressWarnings("serial")
 public class CalendarDayBox extends JPanel implements MouseListener, MouseMotionListener, PropertyChangeListener{
@@ -79,7 +81,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 				g.setColor(lbl.getEventColor());
 				g.fillRoundRect(0, lbl.getFromPixel(), Constants.CANVAS_WIDTH-10, lbl.getToPixel()-lbl.getFromPixel(), 10, 10);
 				g.setColor(lbl.getTextColor());
-				g.drawString("Testetest", 0, lbl.getFromPixel()+20);
+				lbl.drawRepresentation(g);
 			}
 		}
 	}
@@ -100,7 +102,9 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	public void mouseReleased(MouseEvent e) {
 		dy = e.getY();
 		canvas.mouseIsPressed = false;
-		EventLabel label = new EventLabel(y, dy);
+		Event ev = new Event("Møte med X og andre tullebukker som snakker sant");
+		ev.setRoom(new Room("Sebrarommet", "EL", 10));
+		EventLabel label = new EventLabel(y, dy, ev);
 		events.add(label);
 		canvas.repaint();
 	}

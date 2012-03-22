@@ -15,16 +15,20 @@ public class Room implements Model{
 	private String location;
 	private int capacity;
     private PropertyChangeSupport pcs;
-
-
+    
+    private Room(int id) {
+    	pcs = new PropertyChangeSupport(this);
+    	ROOM_ID = id;
+    }
+    
     public Room(String name, String location, int capacity) {
-    	ROOM_ID = 0;
+    	this(0);
     	setName(name);
     	setLocation(location);
     	setCapacity(capacity);
     }
     public Room(int id, String name, String location, int capacity) {
-        ROOM_ID = id;
+        this(id);
         setName(name);
         setLocation(location);
         setCapacity(capacity);
@@ -57,6 +61,11 @@ public class Room implements Model{
     
     public int getRoomId() {
     	return ROOM_ID;
+    }
+    
+    @Override
+    public String toString() {
+    	return name + ", " + location; 
     }
 
     @Override
