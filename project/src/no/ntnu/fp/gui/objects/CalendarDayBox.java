@@ -31,16 +31,8 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	private List<EventLabel> events = new ArrayList<EventLabel>();
 	
 	public CalendarDayBox(int reprDay, Date date) {
+		this(reprDay);
 		this.date = date;
-		switch(reprDay) {
-		case 0: 
-			setBorder(BorderFactory.createEmptyBorder(-5, 0, -5, -5));
-		case 6:
-			setBorder(BorderFactory.createEmptyBorder(-5, -5, -5, 0));
-		default:
-			setBorder(BorderFactory.createEmptyBorder(-5, -5, -5, -5));
-		}
-		initCanvas();
 	}
 	
 	public CalendarDayBox(int reprDay) {
