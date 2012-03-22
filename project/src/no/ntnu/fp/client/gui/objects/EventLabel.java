@@ -2,13 +2,15 @@ package no.ntnu.fp.client.gui.objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 //import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.common.model.Event;
 
-public class EventLabel {
+public class EventLabel implements MouseListener {
 	
 	private Color eventColor = GuiConstants.EVENT_PENDING;
 	private Color textColor = GuiConstants.EVENT_TEXT_COLOR;
@@ -37,6 +39,7 @@ public class EventLabel {
 		return hour* GuiConstants.HOUR_HEIGHT + quarter * (GuiConstants.HOUR_HEIGHT/4);
 	}
 	
+//	A hack-ish method that draws the representative string for a meeting
 	public void drawRepresentation(Graphics g) {
 		g.setFont(GuiConstants.EVENT_LABEL_TITLE_FONT);
 		int maxLines = (toPx - fromPx) / (GuiConstants.HOUR_HEIGHT / 4);
@@ -55,8 +58,8 @@ public class EventLabel {
 				text += titleWords[i]+ " ";
 			}
 		}
-		g.drawString(text, 0, getFromPixel()+(++line)*13);
-
+		if(maxLines != 2)
+			g.drawString(text, 0, getFromPixel()+(++line)*13);
 		if(++line > maxLines)
 			return;
 		g.setFont(GuiConstants.EVENT_LABEL_ROOM_FONT);
@@ -103,6 +106,36 @@ public class EventLabel {
 
 	public void setModel(Event model) {
 		this.model = model;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
