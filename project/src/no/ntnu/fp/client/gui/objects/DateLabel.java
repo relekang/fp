@@ -10,11 +10,10 @@ import java.beans.PropertyChangeSupport;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DateLabel extends JLabel implements MouseListener{
+public class DateLabel extends JLabel{
     private Calendar cal;
     private int month;
-    private PropertyChangeSupport pcs;
-    
+
 
     public DateLabel(Date date, int month){
         super();
@@ -23,18 +22,15 @@ public class DateLabel extends JLabel implements MouseListener{
         this.month = month;
         setText(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
         setBorder(new EmptyBorder(4, 4, 4, 4));
-        pcs = new PropertyChangeSupport(this);
-        this.addMouseListener(this);
         if(cal.get(Calendar.MONTH) + 1 != this.month){
             setForeground(Color.GRAY);
         }
     }
-    public void addMouseListener(PropertyChangeListener listener){
-    	
-    	pcs.addPropertyChangeListener(listener);
-        
+
+    public Calendar getCalendar() {
+        return cal;
     }
-    
+
     public int getYear(){
     	return cal.get(Calendar.YEAR);
     	
@@ -47,25 +43,7 @@ public class DateLabel extends JLabel implements MouseListener{
     	return cal.get(Calendar.DATE);
     	
     }
-    
- 
-	@Override
-	public void mouseClicked(MouseEvent mouseEvent) {
-	        System.out.println(cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH));
-	      pcs.firePropertyChange("date selected", "", cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH));  
-	 }
 
-	    @Override
-	    public void mousePressed(MouseEvent mouseEvent)  { }
-
-	    @Override
-	    public void mouseReleased(MouseEvent mouseEvent) { }
-
-	    @Override
-	    public void mouseEntered(MouseEvent mouseEvent)  { }
-
-	    @Override
-	    public void mouseExited(MouseEvent mouseEvent)   { }
     
    
 }
