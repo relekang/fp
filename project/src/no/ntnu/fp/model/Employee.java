@@ -67,6 +67,7 @@ public class Employee implements Model{
 	 * @param dateOfBirth The person's date of birth.
 	 */
 	public Employee(String name, String email, Date dateOfBirth, Gender gender) {
+		this();
         this.ID = 0;
 		this.name = name;
 		this.email = email;
@@ -75,7 +76,8 @@ public class Employee implements Model{
 	}
 
     public Employee(int id, String name, String email, Date dateOfBirth, Gender gender) {
-        this.ID = id;
+        this();
+    	this.ID = id;
         this.name = name;
         this.email = email;
         this.gender = gender;
