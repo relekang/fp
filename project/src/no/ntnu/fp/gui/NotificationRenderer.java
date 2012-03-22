@@ -1,12 +1,17 @@
 package no.ntnu.fp.gui;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.util.Calendar;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.ListCellRenderer;
 
 import no.ntnu.fp.model.Notification;
@@ -31,14 +36,13 @@ public class NotificationRenderer extends DefaultListCellRenderer implements Lis
 	
 	public Component getListCellRendererComponent(JList list, Object selectedValue,
 		int index, boolean isSelected, boolean cellHasFocus) {
-		// TODO Auto-generated method stub
 		
 		JLabel label = (JLabel) super.getListCellRendererComponent(list, selectedValue, index, isSelected, cellHasFocus);
 		Notification selected = (Notification) selectedValue;
 		
 		Calendar cal = selected.getTimestamp();
 		String date = makeDoubleDigit(cal.get(Calendar.DAY_OF_MONTH)) + ".";
-		String month = makeDoubleDigit((cal.get(Calendar.MONTH) + 1)) + " ";
+		String month = makeDoubleDigit((cal.get(Calendar.MONTH) + 1)) + " - ";
 		String hour = makeDoubleDigit(cal.get(Calendar.HOUR_OF_DAY)) + ":";
 		String min = makeDoubleDigit(cal.get(Calendar.MINUTE)) + "";
 		
