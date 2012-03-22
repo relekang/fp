@@ -1,6 +1,7 @@
  package no.ntnu.fp.common.model;
 
 
+import no.ntnu.fp.client.gui.objects.EventLabel;
 import no.ntnu.fp.common.Util;
 import no.ntnu.fp.server.storage.db.EventHandler;
 import org.json.JSONException;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Event implements Model{
+public class Event extends EventLabel implements Model{
 	
 	public static final int TITLE_LENGTH = 64;
 	
@@ -37,6 +38,7 @@ public class Event implements Model{
 
 
     private Event() {
+        super(30,60); //TODO: Make those numbers real
     	pcs = new PropertyChangeSupport(this);
     	participants = new ArrayList<Employee>();
         dateFrom = new Date();

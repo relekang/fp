@@ -32,7 +32,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	private CalendarCanvas canvas;
 	private PropertyChangeSupport pcs;
 	
-	private List<EventLabel> events = new ArrayList<EventLabel>();
+	private List<Event> events = new ArrayList<Event>();
     private Day day;
 
     public CalendarDayBox(int reprDay, Calendar date) {
@@ -124,7 +124,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	}
 	
 	private void createNewEvent(MouseEvent e) {
-		EventLabel label = new EventLabel(y, dy);
+		Event label = new Event("Lol");
 		int[] from = EventLabel.getTimeFromPixel(label.getFromPixel());
 		int[] to = EventLabel.getTimeFromPixel(label.getToPixel());
 		Calendar calFrom = fixTime(from);
@@ -135,7 +135,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	}
 	
 	private Calendar fixTime(int[] hourAndMin) {
-		Calendar cal = (Calendar)getDate().clone();
+		Calendar cal = Calendar.getInstance();//(Calendar)getDate().clone();
 		cal.set(Calendar.HOUR_OF_DAY, hourAndMin[0]);
 		cal.set(Calendar.MINUTE, hourAndMin[1]);
 		return cal;
