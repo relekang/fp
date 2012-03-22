@@ -33,21 +33,24 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class EventView extends JFrame implements ComponentListener, MouseListener, KeyListener{
 	
-	JList participantList;
+	JList participantList, participantPopList;
 	JTextArea descriptionBox;
 	JComboBox roomBox;
 	JButton saveButton, cancelButton, deleteButton, acceptButton, declineButton, deletePersonButton;
 	JTextField eventTitle, fromField, toField, participantsField;
-	JPanel eventPanel, listPanel, eventViewPanel, buttonPanel, calenderToPopPanel,calenderFromPopPanel;
+	JPanel eventPanel, listPanel, eventViewPanel, buttonPanel, calenderToPopPanel,calenderFromPopPanel, participantPopPanel;
 	JLabel dash;
 	GridBagConstraints gbc1, gbc2, gbc3;
-	DefaultListModel listModel;
+	DefaultListModel listModel, popListModel;
 	ParticipantRenderer renderer;
 	Employee user;
-	JPopupMenu fromPop, toPop;
+	JPopupMenu fromPop, toPop, participantPop;
+	ArrayList<String> popList, popListFound;
 	boolean shown;
 	
 	public EventView(){
@@ -71,6 +74,7 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		buttonPanel.setLayout(new GridBagLayout());
 		calenderToPopPanel = new DateTimePicker(this);
 		calenderFromPopPanel = new DateTimePicker(this);
+		participantPopPanel = new JPanel();
 		
 		createPanel();
 		
@@ -105,6 +109,21 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		
 		participantList.setPreferredSize(new Dimension(300, 375));
 		
+		popList = new ArrayList<String>();
+		popList.add("arne");	popList.add("bjarne");	popList.add("ole");	popList.add("mats");
+		popListFound = new ArrayList<String>();
+		
+		popListModel = new DefaultListModel();
+		participantPopList = new JList(popListModel);
+		
+		for (int i = 0; i < popList.size(); i++) {
+			popListModel.addElement(popList.get(i));
+		}
+		
+		participantPopList.setPreferredSize(new Dimension(315, 100));
+		participantPopPanel.add(participantPopList);
+		
+		
 		String[] rooms = {"Room", "411, P15", "R2"};
 		eventTitle = new JTextField("Title", 26);
 		fromField = new JTextField("From", 10);
@@ -119,12 +138,16 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		
 		//Add listeners to DateTimePicker
 		
-		//TODO creating popups for from and to field
+		//TODO creating popups for from, to and participant field
 		fromPop = new JPopupMenu();
 		fromPop.add(calenderFromPopPanel);
 		
 		toPop = new JPopupMenu();
 		toPop.add(calenderToPopPanel);
+		
+		participantPop = new JPopupMenu();
+		participantPop.add(participantPopPanel);
+		
 		
 		this.addComponentListener(this);
 		
@@ -157,6 +180,20 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 			
 			fromField.addMouseListener(this);
 			toField.addMouseListener(this);
+			
+			participantsField.addMouseListener(this);
+			
+			participantsField.addKeyListener(this);
+			
+			participantPopList.addListSelectionListener(new ListSelectionListener() {
+				
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+//					if(participantPopList.getSelectedIndex() =! -1){
+						participantsField.setText((String) participantPopList.getSelectedValue());
+//					}
+				}
+			});
 			
 			saveButton.addActionListener(new ActionListener() {
 				
@@ -371,6 +408,7 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		if(shown){
 			fromPop.show(fromField, 0, 30);
 			toPop.show(toField, 0, 30);
+			participantPop.show(participantsField, 0, 30);
 		}
 		
 	}
@@ -381,6 +419,7 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		if(shown){
 			fromPop.show(fromField, 0, 30);
 			toPop.show(toField, 0, 30);
+			participantPop.show(participantsField, 0, 30);
 		}
 	}
 
@@ -394,14 +433,16 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		if(e.getSource() == fromField){
 			
 			fromPop.show(fromField, 0, 30);
-			
 			fromField.setText("");
 		}
 		else if(e.getSource() == toField){
-			toPop.setVisible(true);
 			toPop.show(toField, 0, 30);
-			
 			toField.setText("");
+		}
+		else if (e.getSource() == participantsField) {
+			participantPop.show(participantsField, 0, 30);
+			participantsField.setText("");
+			participantsField.grabFocus();
 		}
 		
 	}
@@ -436,9 +477,26 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-			
-			fromField.setText(((DateTimePicker) calenderFromPopPanel).getHourField()+":"+((DateTimePicker) calenderFromPopPanel).getMinField());
-			toField.setText(((DateTimePicker) calenderToPopPanel).getHourField()+":"+((DateTimePicker) calenderToPopPanel).getMinField());
+			if (e.getSource() != participantsField) {
+				fromField.setText(((DateTimePicker) calenderFromPopPanel).getHourField()+":"+((DateTimePicker) calenderFromPopPanel).getMinField());
+				toField.setText(((DateTimePicker) calenderToPopPanel).getHourField()+":"+((DateTimePicker) calenderToPopPanel).getMinField());
+			}
+			else{
+				for (int i = 0; i < popList.size(); i++) {
+					if(participantsField.getText().length() <= 1){
+						if(popList.get(i).charAt(participantsField.getText().length() - 1) == participantsField.getText().charAt(participantsField.getText().length() - 1)){
+							popListFound.add(popList.get(i));
+						}
+					}
+				}
+				for (int y = 0; y < popListFound.size(); y++) {
+					for (int i = 0; i < popListModel.size(); i++) {
+						if(popListModel.get(i) != popListFound.get(y)){
+							popListModel.remove(i);
+						}
+					}
+				}
+			}
 		
 	}
 
