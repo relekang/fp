@@ -102,7 +102,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	public void mouseReleased(MouseEvent e) {
 		dy = e.getY();
 		canvas.mouseIsPressed = false;
-		Event ev = new Event("Møte med X og andre tullebukker som snakker sant");
+		Event ev = new Event("lorem ipsum loreum impsum, lorem");
 		ev.setRoom(new Room("Sebrarommet", "EL", 10));
 		EventLabel label = new EventLabel(y, dy, ev);
 		events.add(label);
