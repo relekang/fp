@@ -11,6 +11,7 @@ import java.util.Date;
 public class DateLabel extends JLabel implements MouseListener{
     private Calendar cal;
     private int month;
+    private String date = "";
     
 
     public DateLabel(Date date, int month){
@@ -43,7 +44,12 @@ public class DateLabel extends JLabel implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         System.out.println(cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH));
-        
+        date = cal.get(Calendar.YEAR)+ " " + cal.get(Calendar.MONTH + 1) + " " + cal.get(Calendar.DAY_OF_MONTH); 
+//        System.out.println(date);
+    }
+    
+    public String getSelectedDate(){
+    	return date;
     }
 
     @Override
