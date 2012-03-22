@@ -14,11 +14,11 @@ public class DbHandler {
     private String username;
     private String password;
 
-    private static String url = "jdbc:mysql://mysql.stud.ntnu.no/sondrele_fp";
+    private static String url = "jdbc:mysql://localhost/fp";
     
     public DbHandler() throws SQLException {
-        username = "sondrele_fp";
-        password = "fellesp1";
+        username = "fp";
+        password = "superfppassord";
 
     }
 

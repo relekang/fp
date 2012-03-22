@@ -7,6 +7,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -14,23 +16,26 @@ public class ServerConnection {
 
     ServerSocket server;
     BufferedReader in;
-
+    InetAddress ip;
+    int port;
     public ServerConnection() throws IOException {
         server = new ServerSocket(Constants.SERVER_PORT);
+        ip = InetAddress.getLocalHost();
     }
 
-    public static void send(String data){
-        System.out.print(data);
+    public void send(String data){
         try {
-            Socket socket = new Socket("localhost", Constants.CLIENT_PORT);
+            System.out.println("Print: " + ip);
+            Socket socket = new Socket(ip.getHostAddress(), Constants.CLIENT_PORT);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            System.out.print("Sending string: '" + data + "'\n");
+            System.out.println("\n----------\nSending string: '" + data + "'\nIP: " + ip +":"+ port);
             out.print(data);
             out.close();
             socket.close();
         }
         catch(Exception e) {
-            System.out.print(e.toString());
+            System.out.println("Exception in send:\n");
+            e.printStackTrace();
         }
     }
 
@@ -38,18 +43,17 @@ public class ServerConnection {
         String message = "";
         try {
             Socket socket = server.accept();
+            ip = socket.getInetAddress();
+            port = socket.getPort();
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            System.out.print("Received string: '");
 
             while (!in.ready()) {}
             message = in.readLine();
-            System.out.println(message);
-
-            System.out.print("'\n");
             in.close();
             socket.close();
+            System.out.println("Received string: '" + message + "'\nFrom: " + ip + ":" + port);
         }
-        catch(Exception e) { System.out.print(e.toString()); }
+        catch(Exception e) { System.out.print("Exception in receive:\n" + e.toString()); }
         if(message != null)
             return message;
         return "";

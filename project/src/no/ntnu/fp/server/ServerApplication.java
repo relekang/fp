@@ -30,15 +30,15 @@ public class ServerApplication {
             try {
                 JSONObject object = new JSONObject(message);
 
-                System.out.println(object.toString());
+                System.out.println("\n\n Recieved JSON-object: \n" + object.toString());
 
                 if (object.get("key").toString().equals("authenticate")) {
-                    System.out.println("authenticate");
                     Employee employee = null;
                     try {
                         employee = ServerAuthentication.authenticate(object.get("username").toString(), object.get("password").toString());
-                    } catch (SQLException e) { ServerConnection.send(new JSONObject().put("key", "failure").toString()); }
-                    if (employee != null) ServerConnection.send(new JSONObject().put("key", "success").put("employee", employee.toJson()).toString());
+                    } catch (SQLException e) { conn.send(new JSONObject().put("key", "failure").toString()); }
+                    if (employee != null)
+                        conn.send(new JSONObject().put("key", "success").put("employee", employee.toJson()).toString());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -46,6 +46,7 @@ public class Event implements Model{
         ID = 0;
         setTitle(title);
         this.admin = admin;
+        participants = new ArrayList<Employee>();
         participants.add(this.admin);
     }
     
