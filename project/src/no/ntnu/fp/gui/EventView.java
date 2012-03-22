@@ -9,8 +9,6 @@ import java.awt.event.ActionListener;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -36,7 +34,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class EventView extends JFrame implements ComponentListener, MouseListener, FocusListener, KeyListener{
+public class EventView extends JFrame implements ComponentListener, MouseListener, KeyListener{
 	
 	JList participantList;
 	JTextArea descriptionBox;
@@ -124,12 +122,9 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		//TODO creating popups for from and to field
 		fromPop = new JPopupMenu();
 		fromPop.add(calenderFromPopPanel);
-		fromPop.addFocusListener(this);
-		calenderFromPopPanel.addFocusListener(this);
 		
 		toPop = new JPopupMenu();
 		toPop.add(calenderToPopPanel);
-		toPop.addFocusListener(this);
 		
 		this.addComponentListener(this);
 		
@@ -431,17 +426,7 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		
 	}
 
-	@Override
-	public void focusGained(FocusEvent e) {
-		System.out.println("never gonna give you up david <3");
-	}
 
-	@Override
-	public void focusLost(FocusEvent e) {
-		if(e.getSource()==fromField){
-		}
-		System.out.println("lost focus");
-	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -451,7 +436,9 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		fromField.setText(((DateTimePicker) calenderFromPopPanel).getHour()+":"+((DateTimePicker) calenderFromPopPanel).getMin());
+			
+			fromField.setText(((DateTimePicker) calenderFromPopPanel).getHourField()+":"+((DateTimePicker) calenderFromPopPanel).getMinField());
+			toField.setText(((DateTimePicker) calenderToPopPanel).getHourField()+":"+((DateTimePicker) calenderToPopPanel).getMinField());
 		
 	}
 
