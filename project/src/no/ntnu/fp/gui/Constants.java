@@ -31,6 +31,7 @@ public class Constants {
 	public static final Font HOUR_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
 	public static final Font EVENT_LABEL_TITLE_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 13);
 	public static final Font EVENT_LABEL_ROOM_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 9);
+	public static final Font NOTIFICATIONPANE_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
 	
 //	Colors
 	public static final Color EVENT_TEXT_COLOR = Color.BLACK;

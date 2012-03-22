@@ -3,7 +3,10 @@ package no.ntnu.fp.gui;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import no.ntnu.fp.controller.ClientApplication;
 import no.ntnu.fp.model.Employee;
 import no.ntnu.fp.model.Event;
 import no.ntnu.fp.model.Notification;
@@ -15,6 +18,7 @@ public class NotificationPanel extends JPanel{
     JList list;
     DefaultListModel listModel;
     JLabel label;
+    JButton viewNotification, viewEvent;
     
     private GridBagConstraints gbc;
     
@@ -24,17 +28,43 @@ public class NotificationPanel extends JPanel{
     	this.setLayout(new GridBagLayout());
     	
         label = new JLabel("Notifications");
+        label.setFont(Constants.NOTIFICATIONPANE_FONT);
     	list = new JList();
         
         listModel = new DefaultListModel();
         list.setModel(listModel);
         
         list.setCellRenderer(new NotificationRenderer());
+//        list.setPreferredSize(new Dimension(200, 200));
+//        list.setMaximumSize(new Dimension(200, 300));
         list.setFixedCellWidth(200);
 		list.setFixedCellHeight(20);
-        
-//        (int id, Event event, String timestamp, int is_invitation, NotificationType type, Employee employee, 
-//        		boolean titleChanged, boolean timeChanged, boolean roomChanged, boolean descriptionChanged){
+
+		viewNotification = new JButton("View notification");
+		viewNotification.setSize(new Dimension(120, 20));
+		viewEvent = new JButton("View Event");
+		
+		viewNotification.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO: Add support for showing correct event
+				getSelectedIndex();
+				
+			}
+		});
+		
+		viewEvent.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO: Add support for showing correct event using selected index
+				getSelectedIndex();
+				
+				ClientApplication.showEventView();
+			}
+
+		});
         
         /*Employee testGuy = new Employee();*/
         /*testGuy.setName("Test McYo");*/
@@ -49,7 +79,7 @@ public class NotificationPanel extends JPanel{
         addNotification(new Notification(8, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, NotificationType.CHANGE, true, true, true, false));
         
         
-        gbc.gridx = 0; gbc.gridy = 0; gbc.weighty = 0;
+        gbc.gridx = 0; gbc.gridy = 0; gbc.weighty = 0.0;
         gbc.gridwidth = 1;
         add(label, gbc);
         
@@ -57,7 +87,24 @@ public class NotificationPanel extends JPanel{
         gbc.gridwidth = 2;
         add(list, gbc);
         
+        gbc.gridx = 0; gbc.gridy = 2; gbc.weighty = 0.0;
+        gbc.gridwidth = 1;
+        add(viewNotification, gbc);
+        
+        gbc.gridx = 1; gbc.gridy = 2; gbc.weighty = 0.0;
+        gbc.gridwidth = 1;
+        add(viewEvent, gbc);
+        
     }
+    
+    private int getSelectedIndex() {
+		int selectedIndex = 0;
+		if (list.getSelectedValue() != null) {
+			selectedIndex = list.getSelectedIndex();
+		}
+		else selectedIndex = 0;
+		return selectedIndex;
+	}
     
     public void removeNotification(int i) {
 		listModel.remove(i);
