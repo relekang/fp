@@ -30,7 +30,7 @@ public class NotificationRenderer extends DefaultListCellRenderer implements Lis
 		acceptIcon = new ImageIcon(getClass().getResource("/resources/icons/accept.png"));
 		declineIcon = new ImageIcon(getClass().getResource("/resources/icons/decline.png"));
 		invitationIcon = new ImageIcon(getClass().getResource("/resources/icons/question.png"));
-		deleteIcon = new ImageIcon(getClass().getResource("/resources/icons/delete.png"));
+		deleteIcon = new ImageIcon(getClass().getResource("/resources/icons/bin.png"));
 		changeIcon = new ImageIcon(getClass().getResource("/resources/icons/error.png"));
 	}
 	

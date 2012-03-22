@@ -15,10 +15,10 @@ import no.ntnu.fp.model.Notification.NotificationType;
 import javax.swing.*;
 
 public class NotificationPanel extends JPanel{
-    JList list;
-    DefaultListModel listModel;
-    JLabel label;
-    JButton viewNotification, viewEvent;
+    private JList list;
+    private DefaultListModel listModel;
+    private JLabel label;
+    private JButton viewNotification, viewEvent;
     
     private GridBagConstraints gbc;
     
