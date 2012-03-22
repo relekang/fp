@@ -85,6 +85,12 @@ public class Event implements Model{
     public Event(JSONObject object) throws JSONException {
         this(object.getInt("id"), object.getString("title"), Util.dateTimeFromString(object.getString("date_from")), Util.dateTimeFromString(object.getString("date_to")));
     }
+    
+    public static Event getDummyEvent(String title) {
+    	Event evt = new Event(title);
+    	evt.setRoom(new Room("Sebra", "P-15", 10));
+    	return evt;
+    }
 
 	public int getID(){
         return ID;
@@ -235,6 +241,11 @@ public class Event implements Model{
     public int getIsCanceledAsInt() {
         if(isCanceled) return 1;
         return 0;
+    }
+    
+    @Override
+    public String toString() {
+    	return this.title;
     }
 
     public JSONObject toJson() throws JSONException {

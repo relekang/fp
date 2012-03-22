@@ -22,11 +22,6 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 	private int currentWeek;
 	private CalendarDayBox[] days;
 	
-	public CalendarPanel(OverviewCalendarPanel pan) {
-		this();
-		pan.addPropertyChangeListener(this);
-	}
-	
 	public CalendarPanel() {
 		setLayout(new GridBagLayout());
 		days = new CalendarDayBox[GuiConstants.DAYS.length];
@@ -37,6 +32,12 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 //	public CalendarPanel(Employee user) {
 //		this.user = user;
 //	}
+	
+	public void addEvents(ArrayList<Event> events) {
+		for(Event e : events) {
+			System.out.println(e);
+		}
+	}
 
 	private void initWeekPanel() {
 		weekPanel = new JPanel(new FlowLayout());
@@ -84,10 +85,6 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 			add(lbl, gbc);
 		}
 	}
-	
-	public void addEvents(ArrayList<Event> events) {
-		
-	}
 
 	public Employee getUser() {
 		return user;
@@ -104,10 +101,11 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		//TODO: fikse slik at dette fungerer
-		if(evt.getPropertyName() == OverviewCalendarPanel.SELECTED_DAY_CHANGED) {
+		String property = evt.getPropertyName();
+		if(property.equals(OverviewCalendarPanel.SELECTED_DAY_CHANGED)) {
 			currentWeek = ((Calendar)(evt.getNewValue())).get(Calendar.WEEK_OF_YEAR);
 			loadCurrentWeek();
-			System.out.println(currentWeek);
+			System.out.println("week changed in CalendarPanel to: " + currentWeek);
 		}
 	}
 

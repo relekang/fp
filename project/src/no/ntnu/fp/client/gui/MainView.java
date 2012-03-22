@@ -32,6 +32,14 @@ public class MainView extends JFrame implements PropertyChangeListener {
 		add(loginPanel);
 		pack();
 	}
+
+	public OverviewCalendarPanel getOverviewCalendarPanel() {
+		return overviewPanel;
+	}
+	
+	public NotificationPanel getNotificationPanel() {
+		return notificationPanel;
+	}
 	
 	public CalendarPanel getCalendarPanel() {
 		return calendarPanel;
@@ -39,7 +47,7 @@ public class MainView extends JFrame implements PropertyChangeListener {
 
 	private void buildMainPanel() {
 		overviewPanel = new OverviewCalendarPanel();
-		calendarPanel = new CalendarPanel(overviewPanel);
+		calendarPanel = new CalendarPanel();
 		notificationPanel = new NotificationPanel();
 		notificationPanel.setBorder(GuiConstants.EMPTY_BORDER_5);
 		mainPanel.setLayout(new GridBagLayout());
