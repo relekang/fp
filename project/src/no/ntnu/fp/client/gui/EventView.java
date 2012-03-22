@@ -460,7 +460,7 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+//		((DateTimePicker) calenderToPopPanel).getDatePickerPanel().getYear();
 	}
 
 	@Override
@@ -478,32 +478,29 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-			if (e.getSource() != participantsField) {
-				fromField.setText(((DateTimePicker) calenderFromPopPanel).getHourField()+":"+((DateTimePicker) calenderFromPopPanel).getMinField());
-				toField.setText(((DateTimePicker) calenderToPopPanel).getHourField()+":"+((DateTimePicker) calenderToPopPanel).getMinField());
-			}
-			else{
-				for (int i = 0; i < popList.size(); i++) {
-					if(participantsField.getText().length() <= 1){
-						if(popList.get(i).charAt(participantsField.getText().length() - 1) == participantsField.getText().charAt(participantsField.getText().length() - 1)){
-							popListFound.add(popList.get(i));
-						}
+		if (e.getSource() != participantsField) {
+			fromField.setText(((DateTimePicker) calenderFromPopPanel).getHourField()+":"+((DateTimePicker) calenderFromPopPanel).getMinField());
+			toField.setText(((DateTimePicker) calenderToPopPanel).getHourField()+":"+((DateTimePicker) calenderToPopPanel).getMinField());
+		}
+		else{
+			for (int i = 0; i < popList.size(); i++) {
+				if(participantsField.getText().length() <= 1){
+					if(popList.get(i).charAt(participantsField.getText().length() - 1) == participantsField.getText().charAt(participantsField.getText().length() - 1)){
+						popListFound.add(popList.get(i));
 					}
 				}
-				for (int y = 0; y < popListFound.size(); y++) {
-				
-					for (int i = 0; i < popListModel.size(); i++) {
-						if(i< popListModel.size()){
-							if(popListModel.get(i) != popListFound.get(y)){
-								popListModel.remove(i);
-								i--;
-								
-							}
+			}
+			for (int y = 0; y < popListFound.size(); y++) {
+				for (int i = 0; i < popListModel.size(); i++) {
+					if(i< popListModel.size()){
+						if(popListModel.get(i) != popListFound.get(y)){
+							popListModel.remove(i);
+							i--;
 						}
 					}
 				}
 			}
-		
+		}
 	}
 
 	@Override
@@ -511,6 +508,4 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		// TODO Auto-generated method stub
 		
 	}
-
-
 }

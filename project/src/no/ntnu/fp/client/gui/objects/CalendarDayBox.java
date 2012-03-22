@@ -23,10 +23,10 @@ import no.ntnu.fp.common.model.Room;
 @SuppressWarnings("serial")
 public class CalendarDayBox extends JPanel implements MouseListener, MouseMotionListener, PropertyChangeListener{
 
-	private CalendarCanvas canvas;
 	private int y, dy;
-	
+	private final String DAY;
 	private Date date; 
+	private CalendarCanvas canvas;
 	
 	private List<EventLabel> events = new ArrayList<EventLabel>();
 	
@@ -36,6 +36,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	}
 	
 	public CalendarDayBox(int reprDay) {
+		this.DAY = GuiConstants.DAYS[reprDay];
 		switch(reprDay) {
 		case 0: 
 			setBorder(BorderFactory.createEmptyBorder(-5, 0, -5, -5));

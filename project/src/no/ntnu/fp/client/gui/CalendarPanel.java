@@ -6,6 +6,7 @@ import no.ntnu.fp.common.model.Employee;
 import javax.swing.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class CalendarPanel extends JPanel {
 
@@ -70,6 +71,10 @@ public class CalendarPanel extends JPanel {
 			lbl.setFont(GuiConstants.WEEKDAY_FONT);
 			add(lbl, gbc);
 		}
+	}
+	
+	public void addEvents(ArrayList<Event> events) {
+		
 	}
 
 	public Employee getUser() {
