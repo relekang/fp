@@ -1,6 +1,9 @@
 package no.ntnu.fp.client;
 
 import no.ntnu.fp.common.Constants;
+import no.ntnu.fp.common.Util;
+import no.ntnu.fp.common.model.Day;
+import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +17,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Connection {
     ServerSocket server;
@@ -104,7 +109,7 @@ public class Connection {
         return null;
     }
 
-    public static ArrayList<Event> fetchEvents() {
+    public static ArrayList<Event> fetchEvents(String arg) {
         ArrayList<Event> list = new ArrayList<Event>();
         try {
             Connection conn = new Connection();
@@ -129,5 +134,10 @@ public class Connection {
             e.printStackTrace();
         }
         return null;
+    }
+    public static Day fetchDayEvents(Date date, Employee employee){
+        String argument = "employee_id = %d and date_from contains '%s'";
+        String.format(argument, employee.getId(), Util.dateToString(date));
+        return new Day(fetchEvents(argument), date);
     }
 }

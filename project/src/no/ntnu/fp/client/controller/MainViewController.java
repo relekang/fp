@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import no.ntnu.fp.client.Connection;
 import no.ntnu.fp.client.gui.CalendarPanel;
@@ -14,16 +16,22 @@ import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Notification;
 import no.ntnu.fp.server.storage.db.EventHandler;
 
+import javax.swing.*;
+
 public class MainViewController implements PropertyChangeListener {
 
     private MainView mainView;
     private Employee currentUser;
     private ArrayList<Event> events;
     private ArrayList<Notification> notifications;
+    private DefaultListModel weekModel;
 
     public MainViewController(MainView view) {
         mainView = view;
         organizePropertyChangeListeners();
+        weekModel = new DefaultListModel();
+        loadUserEvents();
+        mainView.setCalendarModel(weekModel);
     }
 
     private void organizePropertyChangeListeners() {
@@ -41,17 +49,17 @@ public class MainViewController implements PropertyChangeListener {
     }
 
     public void loadUserEvents() {
-    	if(currentUser.getName().equals("Bernt Arne")) {
-    		events = new ArrayList<Event>();
-    		events.add(Event.getDummyEvent("Fisketur"));
-    		events.add(Event.getDummyEvent("Meeting with kingkong"));
-    		mainView.getCalendarPanel().addEvents(events);
-    	}
-//        if (currentUser != null) {
-//            events = Connection.fetchEvents();
-//            System.out.println("EVENT:" + events.get(0));
-//            mainView.getCalendarPanel().addEvents(events);
-//        }
+//    	if(currentUser.getName().equals("Bernt Arne")) {
+//    		events = new ArrayList<Event>();
+//    		events.add(Event.getDummyEvent("Fisketur"));
+//    		events.add(Event.getDummyEvent("Meeting with kingkong"));
+//    		mainView.getCalendarPanel().addEvents(events);
+//    	}
+        if (currentUser != null) {
+            events = Connection.fetchDayEvents(Calendar.getInstance().getTime(), getCurrentUser());
+            System.out.println("EVENT:" + events.get(0));
+            mainView.getCalendarPanel().addEvents(events);
+        }
     }
 
     public void loadUserNotifications() {

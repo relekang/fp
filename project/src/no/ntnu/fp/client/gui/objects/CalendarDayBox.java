@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 
 import no.ntnu.fp.client.controller.ClientApplication;
 import no.ntnu.fp.client.gui.GuiConstants;
+import no.ntnu.fp.common.model.Day;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
 
@@ -32,8 +33,9 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	private PropertyChangeSupport pcs;
 	
 	private List<EventLabel> events = new ArrayList<EventLabel>();
+    private Day day;
 
-	public CalendarDayBox(int reprDay, Calendar date) {
+    public CalendarDayBox(int reprDay, Calendar date) {
 		this(reprDay);
 		this.date = date;
 	}
@@ -57,8 +59,12 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		canvas.addMouseMotionListener(this);
 		add(canvas);
 	}
-	
-	private class CalendarCanvas extends JPanel {
+
+    public void setModel(Day day) {
+        this.day = day;
+    }
+
+    private class CalendarCanvas extends JPanel {
 		boolean mouseIsPressed = false;
 		private Color foreground = GuiConstants.DRAG_NEW_EVENT;
 		
@@ -129,7 +135,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	}
 	
 	private Calendar fixTime(int[] hourAndMin) {
-		Calendar cal = (Calendar)date.clone();
+		Calendar cal = (Calendar)getDate().clone();
 		cal.set(Calendar.HOUR_OF_DAY, hourAndMin[0]);
 		cal.set(Calendar.MINUTE, hourAndMin[1]);
 		return cal;
@@ -165,8 +171,8 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		
 	}
 
-	public Calendar get() {
-		return date;
+	public Date getDate() {
+		return this.day.getDate();
 	}
 
 }

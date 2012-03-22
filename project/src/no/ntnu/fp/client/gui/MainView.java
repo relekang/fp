@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 public class MainView extends JFrame implements PropertyChangeListener {
 	
@@ -18,9 +19,10 @@ public class MainView extends JFrame implements PropertyChangeListener {
 	private Login loginPanel;
 	private JButton createEventBtn, findPersonBtn, signOutBtn;
 	private GridBagConstraints gbc;
-	private JLabel userLabel; 
+	private JLabel userLabel;
+    private DefaultListModel model;
 
-	public MainView() {
+    public MainView() {
 		gbc = new GridBagConstraints();
 
 		mainPanel = new JPanel();
@@ -45,6 +47,11 @@ public class MainView extends JFrame implements PropertyChangeListener {
 	public CalendarPanel getCalendarPanel() {
 		return calendarPanel;
 	}
+
+    public void setCalendarModel(DefaultListModel newModel){
+        calendarPanel.setModel(newModel);
+
+    }
 
 	private void buildMainPanel() {
 		overviewPanel = new OverviewCalendarPanel();
