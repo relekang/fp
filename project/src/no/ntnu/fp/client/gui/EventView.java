@@ -460,7 +460,7 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+//		((DateTimePicker) calenderToPopPanel).getDatePickerPanel().getYear();
 	}
 
 	@Override

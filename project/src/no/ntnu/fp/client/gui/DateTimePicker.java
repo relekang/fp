@@ -44,6 +44,9 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 			min = temp;
 		return min;
 	}
+	public JPanel getDatePickerPanel(){
+		return datePickerPanel;
+	}
 	
 
 	public DateTimePicker(EventView view) {
