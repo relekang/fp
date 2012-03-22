@@ -1,9 +1,7 @@
 package no.ntnu.fp.server.gui;
 
-import no.ntnu.fp.model.Event;
-import no.ntnu.fp.model.Room;
-import no.ntnu.fp.storage.db.EventHandler;
-import no.ntnu.fp.storage.db.RoomHandler;
+import no.ntnu.fp.common.model.Room;
+import no.ntnu.fp.server.storage.db.RoomHandler;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

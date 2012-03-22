@@ -1,8 +1,7 @@
 package no.ntnu.fp.server;
 
-import no.ntnu.fp.model.Employee;
-import no.ntnu.fp.storage.db.DbHandler;
-import no.ntnu.fp.storage.db.EmployeeHandler;
+import no.ntnu.fp.common.model.Employee;
+import no.ntnu.fp.server.storage.db.EmployeeHandler;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

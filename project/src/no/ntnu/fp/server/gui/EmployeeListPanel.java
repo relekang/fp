@@ -1,14 +1,10 @@
 package no.ntnu.fp.server.gui;
 
-import no.ntnu.fp.model.Event;
-import no.ntnu.fp.storage.db.EmployeeHandler;
-import no.ntnu.fp.storage.db.EventHandler;
+import no.ntnu.fp.server.storage.db.EmployeeHandler;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 
 public class EmployeeListPanel extends JPanel{

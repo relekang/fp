@@ -1,10 +1,10 @@
 package no.ntnu.fp.server;
 
-import no.ntnu.fp.model.*;
-import no.ntnu.fp.model.Event;
+import no.ntnu.fp.common.model.*;
+import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.server.gui.EventListPanel;
 import no.ntnu.fp.server.gui.RoomListPanel;
-import no.ntnu.fp.storage.db.EventHandler;
+import no.ntnu.fp.server.storage.db.EventHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 

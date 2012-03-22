@@ -1,7 +1,7 @@
 package no.ntnu.fp.client;
 
 import no.ntnu.fp.common.Constants;
-import no.ntnu.fp.model.Event;
+import no.ntnu.fp.common.model.Event;
 import org.json.JSONException;
 import org.json.JSONObject;
 

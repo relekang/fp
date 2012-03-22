@@ -1,9 +1,7 @@
 package no.ntnu.fp.client;
 
-import no.ntnu.fp.controller.ClientApplication;
-import no.ntnu.fp.model.Employee;
-import no.ntnu.fp.server.ServerAuthentication;
-import no.ntnu.fp.server.ServerConnection;
+import no.ntnu.fp.client.controller.ClientApplication;
+import no.ntnu.fp.common.model.Employee;
 import org.json.JSONException;
 import org.json.JSONObject;
 
