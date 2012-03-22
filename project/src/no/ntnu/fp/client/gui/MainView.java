@@ -36,9 +36,9 @@ public class MainView extends JFrame {
 		calendarPanel = new CalendarPanel();
 		overviewPanel = new OverviewCalenderPanel();
 		notificationPanel = new NotificationPanel();
-		notificationPanel.setBorder(Constants.EMPTY_BORDER_5);
+		notificationPanel.setBorder(GuiConstants.EMPTY_BORDER_5);
 		mainPanel.setLayout(new GridBagLayout());
-		mainPanel.setBorder(Constants.EMPTY_BORDER_10);
+		mainPanel.setBorder(GuiConstants.EMPTY_BORDER_10);
 		createEventBtn = new JButton("Create event");
 		findPersonBtn = new JButton("Find person");
 		signOutBtn = new JButton("Sign out");

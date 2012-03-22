@@ -6,7 +6,7 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
-public class Constants {
+public class GuiConstants {
 	
 //	Bredde og hoyde til komponenter i CalendarDayPanel og CalendarDayBox
 	public static final int HOURS = 24;

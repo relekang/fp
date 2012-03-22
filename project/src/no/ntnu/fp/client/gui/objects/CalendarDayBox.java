@@ -16,7 +16,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-import no.ntnu.fp.client.gui.Constants;
+import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
 
@@ -56,13 +56,13 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	
 	private class CalendarCanvas extends JPanel {
 		boolean mouseIsPressed = false;
-		private Color foreground = Constants.DRAG_NEW_EVENT;
+		private Color foreground = GuiConstants.DRAG_NEW_EVENT;
 		
 		public CalendarCanvas() {
 			setBorder(BorderFactory.createEmptyBorder(-5, -5, -5, -5));
-			setPreferredSize(new Dimension(Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT));
+			setPreferredSize(new Dimension(GuiConstants.CANVAS_WIDTH, GuiConstants.CANVAS_HEIGHT));
 			setForeground(foreground);
-			setBackground(Constants.STD_BACKGROUND);
+			setBackground(GuiConstants.STD_BACKGROUND);
 		}
 				
 		@Override
@@ -72,21 +72,21 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 			paintEventLabels(g);
 			g.setColor(foreground);
 			if(mouseIsPressed) {
-				g.fillRoundRect(0, y, Constants.CANVAS_WIDTH, dy-y, 10, 10);
+				g.fillRoundRect(0, y, GuiConstants.CANVAS_WIDTH, dy-y, 10, 10);
 			}
 		}
 		
 		private void drawForegroundLines(Graphics g) {
-			g.setColor(Constants.STD_FOREGROUND);
-			for(int i = 1; i < Constants.HOURS; i++) {
-				g.drawLine(0, i*Constants.HOUR_HEIGHT, Constants.CANVAS_WIDTH, i*Constants.HOUR_HEIGHT);
+			g.setColor(GuiConstants.STD_FOREGROUND);
+			for(int i = 1; i < GuiConstants.HOURS; i++) {
+				g.drawLine(0, i* GuiConstants.HOUR_HEIGHT, GuiConstants.CANVAS_WIDTH, i* GuiConstants.HOUR_HEIGHT);
 			}
 		}
 		
 		private void paintEventLabels(Graphics g) {
 			for(EventLabel lbl : events) {
 				g.setColor(lbl.getEventColor());
-				g.fillRoundRect(0, lbl.getFromPixel(), Constants.CANVAS_WIDTH-10, lbl.getToPixel()-lbl.getFromPixel(), 10, 10);
+				g.fillRoundRect(0, lbl.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, lbl.getToPixel()-lbl.getFromPixel(), 10, 10);
 				g.setColor(lbl.getTextColor());
 				lbl.drawRepresentation(g);
 			}

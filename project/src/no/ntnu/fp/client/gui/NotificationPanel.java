@@ -27,7 +27,7 @@ public class NotificationPanel extends JPanel{
     	this.setLayout(new GridBagLayout());
     	
         label = new JLabel("Notifications");
-        label.setFont(Constants.NOTIFICATIONPANE_FONT);
+        label.setFont(GuiConstants.NOTIFICATIONPANE_FONT);
     	list = new JList();
         
         listModel = new DefaultListModel();

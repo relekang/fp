@@ -37,14 +37,14 @@ public class Login extends JPanel implements ActionListener, KeyListener{
 		
 		GridBagConstraints c = new GridBagConstraints();
     	setLayout(new GridBagLayout());
-    	setBorder(Constants.EMPTY_BORDER_10);
+    	setBorder(GuiConstants.EMPTY_BORDER_10);
 
         errorMsgLabel = new JLabel();
         c.gridheight = 1;
         c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 0;
-    	errorMsgLabel.setBorder(Constants.EMPTY_BORDER_10);
+    	errorMsgLabel.setBorder(GuiConstants.EMPTY_BORDER_10);
         add(errorMsgLabel, c);
 
     	// adds usernamelabel and textfield
