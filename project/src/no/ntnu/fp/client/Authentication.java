@@ -38,11 +38,11 @@ public class Authentication {
             message.put("password", password);
             conn.send(message);
             String ack = conn.receive();
+            conn.close();
             JSONObject object = new JSONObject(ack);
             System.out.println(object.toString());
 
             if (object.get("key").toString().equals("success")) {
-                conn.close();
                 JSONObject jsonEmployee = object.getJSONObject("employee");
                 Employee employee = new Employee(jsonEmployee);
                 ClientApplication.setCurrentUser(employee);
@@ -50,12 +50,10 @@ public class Authentication {
             }
 
         } catch (IOException e) {
-            return false;
+            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
-            return false;
         }
-
         return false;
     }
 

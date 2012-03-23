@@ -83,6 +83,7 @@ public class Connection {
     }
 
     public void close() throws IOException {
+
         server.close();
     }
 
@@ -125,6 +126,7 @@ public class Connection {
                 list.add(e);
             }
             System.out.println(list.toString());
+            conn.close();
             return list;
 
 
