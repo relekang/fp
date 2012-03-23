@@ -55,11 +55,7 @@ public class NotificationPanel extends JPanel{
 		
         /*Employee testGuy = new Employee();*/
         /*testGuy.setName("Test McYo");*/
-        
-        ArrayList<Notification> notList = Employee.getExampleEployee().getAllNotifications();
-        for(Notification n:notList){
-            addNotification(n);
-        }
+
         
 
         popup = new JPopupMenu();
