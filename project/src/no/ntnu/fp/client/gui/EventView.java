@@ -13,6 +13,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import java.util.ArrayList;
 
@@ -35,7 +37,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class EventView extends JFrame implements ComponentListener, MouseListener, KeyListener{
+public class EventView extends JFrame implements ComponentListener, MouseListener, KeyListener, PropertyChangeListener {
 	
 	JList participantList, participantPopList;
 	JTextArea descriptionBox;
@@ -84,7 +86,6 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		this.pack();
 	}
 	
-	@SuppressWarnings("unused")
 	private void createPanel(){
 		
 		//TODO midlertidig eksempler
@@ -505,6 +506,12 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 		
 	}
