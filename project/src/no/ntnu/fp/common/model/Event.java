@@ -156,11 +156,12 @@ public class Event implements Model{
 			g.drawString(room[0], 0, getFromPixel()+line*13);
 	}
 	
-	public void setFromAndToPixel(int from, int to) {
+	public void setFromAndToPixel(int fromPx, int toPx) {
 		if(toPx-fromPx < GuiConstants.HOUR_HEIGHT/2)
 			toPx += GuiConstants.HOUR_HEIGHT/2 - (toPx-fromPx);
 		this.fromPx = calculatePixelLocation(fromPx);
 		this.toPx = calculatePixelLocation(toPx);
+		System.out.println("from: " + fromPx + ", to : " + toPx);
 	}
 	
 	public int getFromPixel() {

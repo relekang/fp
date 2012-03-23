@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import no.ntnu.fp.client.controller.ClientApplication;
 import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.common.model.Day;
+import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
 
@@ -35,7 +36,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 
     public CalendarDayBox(int reprDay, Calendar date) {
     	this.date = date;
-    	System.out.println("Date: " + date.getTime());
+    	System.out.println("Date in CalendarDayBox: " + date.getTime());
     	day = new Day(date.getTime());
 		switch(reprDay) {
 		case 0: 
@@ -59,7 +60,77 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
         this.day = day;
     }
 
-    private class CalendarCanvas extends JPanel {
+	public Date getDate() {
+		return this.day.getDate();
+	}
+    
+    
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		canvas.mouseIsPressed = true;
+		y = e.getY();
+	}
+	
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		dy = e.getY() > y ? e.getY() : y;
+		canvas.repaint();
+	}
+	
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		dy = e.getY();
+		System.out.println("Mouse released, y: " + y  + ", dy: " + dy);
+		canvas.mouseIsPressed = false;
+		createNewEvent(e);
+		canvas.repaint();
+	}
+	
+	private void createNewEvent(MouseEvent e) {
+		Event label = new Event("Tittel");
+		label.setFromAndToPixel(y, dy);
+		int[] from = Event.getTimeFromPixel(label.getFromPixel());
+		int[] to = Event.getTimeFromPixel(label.getToPixel());
+		Calendar calFrom = fixTime(from);
+		Calendar calTo = fixTime(to);
+		System.out.println("DateFrom: " + calFrom.getTime() + ", DateTo: " + calTo.getTime());
+		day.add(label);
+		
+	}
+	
+	private Calendar fixTime(int[] hourAndMin) {
+		Calendar cal = (Calendar)date.clone();
+		cal.set(Calendar.HOUR_OF_DAY, hourAndMin[0]);
+		cal.set(Calendar.MINUTE, hourAndMin[1]);
+		return cal;
+	}
+	
+	private class CalendarCanvas extends JPanel {
 		boolean mouseIsPressed = false;
 		private Color foreground = GuiConstants.DRAG_NEW_EVENT;
 		
@@ -80,14 +151,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 				g.fillRoundRect(0, y, GuiConstants.CANVAS_WIDTH, dy-y, 10, 10);
 			}
 		}
-		
-		private void drawForegroundLines(Graphics g) {
-			g.setColor(GuiConstants.STD_FOREGROUND);
-			for(int i = 1; i < GuiConstants.HOURS; i++) {
-				g.drawLine(0, i* GuiConstants.HOUR_HEIGHT, GuiConstants.CANVAS_WIDTH, i* GuiConstants.HOUR_HEIGHT);
-			}
-		}
-		
+
 		private void paintEventLabels(Graphics g) {
 			for(Event lbl : day) {
 				g.setColor(lbl.getEventColor());
@@ -96,77 +160,13 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 				lbl.drawRepresentation(g);
 			}
 		}
-	}
-	
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		dy = e.getY() > y ? e.getY() : y;
-		canvas.repaint();
-	}
-	
-	@Override
-	public void mousePressed(MouseEvent e) {
-		canvas.mouseIsPressed = true;
-		y = e.getY();
-	}
-	
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		dy = e.getY();
-		canvas.mouseIsPressed = false;
-		createNewEvent(e);
-		canvas.repaint();
-	}
-	
-	private void createNewEvent(MouseEvent e) {
-		Event label = new Event("Lol");
-		label.setFromAndToPixel(y, dy);
-		int[] from = EventLabel.getTimeFromPixel(label.getFromPixel());
-		int[] to = EventLabel.getTimeFromPixel(label.getToPixel());
-		Calendar calFrom = fixTime(from);
-		Calendar calTo = fixTime(to);
-		day.add(label);
+		private void drawForegroundLines(Graphics g) {
+			g.setColor(GuiConstants.STD_FOREGROUND);
+			for(int i = 1; i < GuiConstants.HOURS; i++) {
+				g.drawLine(0, i* GuiConstants.HOUR_HEIGHT, GuiConstants.CANVAS_WIDTH, i* GuiConstants.HOUR_HEIGHT);
+			}
+		}
 		
-	}
-	
-	private Calendar fixTime(int[] hourAndMin) {
-		Calendar cal = Calendar.getInstance();//(Calendar)getDate().clone();
-		cal.set(Calendar.HOUR_OF_DAY, hourAndMin[0]);
-		cal.set(Calendar.MINUTE, hourAndMin[1]);
-		return cal;
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-	}
-
-	public Date getDate() {
-		return this.day.getDate();
 	}
 
 }

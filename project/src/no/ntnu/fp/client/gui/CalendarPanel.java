@@ -64,6 +64,13 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
     }
 
     private void initCalendarDayBoxes() {
+    	if(days != null) {
+    		for(int i = 0; i < 7; i++) {
+    			days[i].removeAll();
+    		}
+//    		TODO: fix at CalendarDayBoxene ikke flytter seg bortover til hoyre
+    		revalidate();
+    	}
         days = new CalendarDayBox[GuiConstants.DAYS.length];
         gbc.gridy = 1;
         for (int i = 0; i < GuiConstants.DAYS.length; i++) {
