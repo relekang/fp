@@ -1,6 +1,9 @@
 package no.ntnu.fp.common.model;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Calendar;
@@ -16,13 +19,6 @@ public class Notification implements Model{
     // Temporary timestamp variable:
     private String timestamp;
 
-    /**
-     * Constructor for Notification
-     * @param id
-     * @param timestamp
-     * @param description
-     * @param is_invitation
-     */
     public Notification(int id, Event event, String timestamp, int is_invitation, NotificationType type/*, Employee employee*/){
     	this.ID = id;
         this.event = event;
@@ -33,20 +29,9 @@ public class Notification implements Model{
         else this.is_invitation = false;
         
         this.type = type;
-
-        switch(type) {
-        case INVITATION:
-        	description = /*getFirstName()*/"Person" + " invited you to " + event.getTitle(); break;
-        case DELETION:
-        	description = /*getFirstName()*/"Person" + " deleted " + event.getTitle(); break;
-        case ACCEPTED:
-        	description = /*getFirstName()*/"Person" + " accepted your invitation to " + event.getTitle(); break;
-        case DECLINED:
-        	description = /*getFirstName()*/"Person" + " declined your invitation to " + event.getTitle(); break;
-        }
     }
 
-    public Notification(int id, Event event, String timestamp, int is_invitation, NotificationType type, /*Employee employee,*/ 
+    public Notification(int id, Event event, String timestamp, int is_invitation, NotificationType type, /*Employee employee,*/
     		boolean titleChanged, boolean timeChanged, boolean roomChanged, boolean descriptionChanged){
 
     	this.ID = id;
@@ -76,13 +61,33 @@ public class Notification implements Model{
         }
         
         description = descr;
-    }    
-    
+    }
+
+    public Notification(JSONObject object) {
+//        this(int id, Event event, String timestamp, int is_invitation, NotificationType type/*, Employee employee*/;
+        ID = 0;
+        cal = Calendar.getInstance();
+    }
+
+
+
     /**
      * returns the description string
      * @return description
      */
     public String getDescription() {
+        String description = "";
+        if (event == null) return description;
+        switch(type) {
+            case INVITATION:
+                description = /*getFirstName()*/"Person" + " invited you to " + event.getTitle(); break;
+            case DELETION:
+                description = /*getFirstName()*/"Person" + " deleted " + event.getTitle(); break;
+            case ACCEPTED:
+                description = /*getFirstName()*/"Person" + " accepted your invitation to " + event.getTitle(); break;
+            case DECLINED:
+                description = /*getFirstName()*/"Person" + " declined your invitation to " + event.getTitle(); break;
+        }
         return description;
     }
     
@@ -145,7 +150,18 @@ public class Notification implements Model{
     public String getFirstName(Employee employee) {
     	return employee.getName().split(" ")[0];
     }
-    
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject object = new JSONObject();
+        object.put("description", description);
+        object.put("id", ID);
+        object.put("is_invitation", is_invitation);
+//        object.put("event", event.toJson());
+        object.put("type", type.toString());
+        object.put("timestamp", timestamp);
+        return object;
+    }
+
     public enum NotificationType {
     	INVITATION, DELETION, CHANGE, ACCEPTED, DECLINED;
     }

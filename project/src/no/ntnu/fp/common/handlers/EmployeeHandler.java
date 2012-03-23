@@ -5,6 +5,7 @@ import no.ntnu.fp.common.Constants;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Notification;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,6 +37,7 @@ public class EmployeeHandler {
     }
 
     public ArrayList<Notification> getAllNotifications(){
+        if(Constants.use_server) return getNotificationsFromServer();
         ArrayList<Notification> list = new ArrayList<Notification>();
         list.add(new Notification(1, new Event("Event"/*, testGuy*/), "2012-03-19 12:04:36", 1, Notification.NotificationType.INVITATION/*, testGuy*/));
         list.add(new Notification(2, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:37", 0, Notification.NotificationType.ACCEPTED));
@@ -57,6 +59,14 @@ public class EmployeeHandler {
                 conn.send(new JSONObject().put("key", "event").put("action", "all_for_user").put("argument", Integer.toString(this.id)));
                 String message = conn.receive();
                 System.out.println(message);
+                JSONArray jsonArray = new JSONArray(message);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.optJSONObject(i);
+                    Event e = new Event(object);
+                    events.add(e);
+                }
+                conn.close();
+
             } catch (JSONException e) {
                 conn.close();
                 e.printStackTrace();
@@ -65,6 +75,30 @@ public class EmployeeHandler {
             e.printStackTrace();
         }
         return events;
+    }
+    private ArrayList<Notification> getNotificationsFromServer() {
+        ArrayList<Notification> notifications = new ArrayList<Notification>();
+        try {
+            Connection conn = new Connection();
+            try {
+                conn.send(new JSONObject().put("key", "notification").put("action", "all_for_user").put("argument", Integer.toString(this.id)));
+                String message = conn.receive();
+                System.out.println(message);
+                JSONArray jsonArray = new JSONArray(message);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.optJSONObject(i);
+                    Notification notification = new Notification(object);
+                    notifications.add(notification);
+                }
+                conn.close();
+            } catch (JSONException e) {
+                conn.close();
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return notifications;
     }
 
 }

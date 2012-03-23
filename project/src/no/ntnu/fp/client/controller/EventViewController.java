@@ -241,9 +241,9 @@ public void componentHidden(ComponentEvent arg0) {
 	@Override
 	public void componentMoved(ComponentEvent arg0) {
 		
-		view.getFromPop().show(view.getFromField(), 0, 30);
-		view.getToPop().show(view.getToField(), 0, 30);
-		view.getParticipantPop().show(view.getParticipantField(), 0, 30);
+//		view.getFromPop().show(view.getFromField(), 0, 30);
+//		view.getToPop().show(view.getToField(), 0, 30);
+//		view.getParticipantPop().show(view.getParticipantField(), 0, 30);
 	}
 
 	@Override

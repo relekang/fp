@@ -73,8 +73,8 @@ public class MainViewController implements PropertyChangeListener {
     }
 
     public void loadUserNotifications() {
-    	if(currentUser.getName().equals("Bernt Arne")) {
-    		notifications = new ArrayList<Notification>();
+    	if(currentUser != null) {
+    		notifications = currentUser.getAllNotifications();
     		for(Notification n : notifications) {
     			mainView.getNotificationPanel().addNotification(n);
     		}

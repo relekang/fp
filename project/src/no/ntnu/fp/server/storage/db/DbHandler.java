@@ -1,5 +1,6 @@
 package no.ntnu.fp.server.storage.db;
 
+import no.ntnu.fp.common.Constants;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
 
@@ -13,11 +14,11 @@ public class DbHandler {
     private String username;
     private String password;
 
-    private static String url = "jdbc:mysql://localhost/fp";
+    private static String url = Constants.getDbUrl();
     
     public DbHandler() throws SQLException {
-        username = "fp";
-        password = "superfppassord";
+        username = Constants.getDbUsername();
+        password = Constants.getDbPassword();
 
     }
 
