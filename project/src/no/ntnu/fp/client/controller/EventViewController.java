@@ -110,7 +110,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		view.setVisible(true);
 	}
 	
-	public void setEventVisible(boolean visible){
+	public void setVisible(boolean visible){
 		view.setVisible(visible);
 	}
 	

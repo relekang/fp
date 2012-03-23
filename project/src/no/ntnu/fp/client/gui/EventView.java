@@ -61,8 +61,6 @@ public class EventView extends JFrame {
 	
 	public EventView(){
 		
-		
-		
 		gbc1 = new GridBagConstraints();
 		gbc2 = new GridBagConstraints();
 		gbc3 = new GridBagConstraints();
