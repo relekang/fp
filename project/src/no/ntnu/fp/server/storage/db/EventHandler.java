@@ -102,7 +102,7 @@ public class EventHandler extends DbHandler {
         if(!connect())
             return null;
         String query = "UPDATE  `EVENT` SET `room_id` = %d, `date_from` = '%s', `date_to` = '%s', `title` = '%s', `description` = '%s', `type` = '%s', `canceled` = %d, WHERE  `id` =  %d LIMIT 1 ;";
-        query = String.format(query, event.getRoom().getRoomId(), event.getSqlDateFrom(), event.getSqlDateTo(), event.getTitle(), event.getDescription(), "meeting", event.getIsCanceledAsInt(), event.getID());
+        query = String.format(query, event.getRoom().getRoomId(), Util.dateTimeToString(event.getDateFrom()), Util.dateTimeToString(event.getDateTo()), event.getTitle(), event.getDescription(), "meeting", event.getIsCanceledAsInt(), event.getID());
         System.out.println(query);
         Statement stm = conn.createStatement();
         boolean rs = stm.execute(query);
