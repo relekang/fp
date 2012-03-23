@@ -47,7 +47,7 @@ public class ClientApplication {
     }
     
     public static void showEventView(){
-    	eventViewController.setEventVisible(true);
+    	eventViewController.setVisible(true);
     }
 
     public static void setMainFrameVisible(boolean visibility){
