@@ -1,9 +1,13 @@
 package no.ntnu.fp.client.gui;
 
 import no.ntnu.fp.client.gui.objects.DateLabel;
+import no.ntnu.fp.common.Util;
+
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeListener;
@@ -17,19 +21,24 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
 	
     private GridBagConstraints gbc;
     private DateLabel[][] dateLabels;
-    private JLabel monLabel, tueLabel, wedLabel, thuLabel, friLabel, satLabel, sunLabel;
+    private JLabel monLabel, tueLabel, wedLabel, thuLabel, friLabel, satLabel, sunLabel, monthLabel;
     private JButton nextButton, previousButton;
     private Calendar selected;
     private PropertyChangeSupport pcs;
+    private int month;
+    private Calendar c;
 
     public OverviewCalendarPanel() {
+        c = Calendar.getInstance();
+        c.setFirstDayOfWeek(Calendar.MONDAY);
     	pcs = new PropertyChangeSupport(this);
     	gbc = new GridBagConstraints();
         setLayout(new GridBagLayout());
         addCalendarHeaders();
         Calendar c = Calendar.getInstance();
-//        c.setFirstDayOfWeek(Calendar.MONDAY);
+        c.setFirstDayOfWeek(Calendar.MONDAY);
         buildCalendar(c.get(Calendar.MONTH)+1);
+        setMonth(c.get(Calendar.MONTH)+1);
     }
     
     public void addPCL(PropertyChangeListener listener) {
@@ -46,20 +55,34 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
         nextButton = new JButton();
         previousButton = new JButton();
 
+        monthLabel = new JLabel();
+
+        nextButton.addActionListener(new ButtonListener());
+        previousButton.addActionListener(new ButtonListener());
+
         nextButton.setIcon(rightIcon);
         previousButton.setIcon(leftIcon);
         
         gbc.gridx = 0;	gbc.gridy = 0;
-        gbc.gridwidth = 4;
+        gbc.gridwidth = 2;
         gbc.gridheight = 1;
+        gbc.anchor = GridBagConstraints.WEST;
         this.add(previousButton, gbc);
+
+        gbc.gridx = 2;	gbc.gridy = 0;
+        gbc.gridwidth = 3;
+        gbc.gridheight = 1;
+        gbc.anchor = GridBagConstraints.CENTER;
+        this.add(monthLabel, gbc);
         
-        gbc.gridx = 4;	gbc.gridy = 0;
-        gbc.gridwidth = 4;
+        gbc.gridx = 5;	gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.EAST;
         this.add(nextButton, gbc);
         
         gbc.gridx = 0;	gbc.gridy = 1;
         gbc.gridwidth = 1;
+        gbc.anchor = GridBagConstraints.CENTER;
         monLabel = new JLabel("mon");
         monLabel.setFont(f);
         add(monLabel, gbc);
@@ -96,8 +119,9 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
     }
 
     private void buildCalendar(int month) {
-        Calendar c = Calendar.getInstance();
+        c = Calendar.getInstance();
         c.setFirstDayOfWeek(Calendar.MONDAY);
+        c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, 1);
         System.out.println(c.get(Calendar.DAY_OF_MONTH));
         c.set(Calendar.DAY_OF_WEEK, 2);
@@ -115,6 +139,24 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
             }
         }
         
+    }
+    private void updateCalendar(int month){
+        if(month == 13) {
+            c.set(Calendar.MONTH, 12);
+            c.set(Calendar.YEAR, c.get(Calendar.YEAR)+1);
+        } else if(month == 0) {
+            c.set(Calendar.MONTH, 1);
+            c.set(Calendar.YEAR, c.get(Calendar.YEAR)-1);
+        }
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        c.set(Calendar.DAY_OF_MONTH, 1);
+        c.set(Calendar.DAY_OF_WEEK, 2);
+        for (DateLabel[] labels:dateLabels){
+            for(DateLabel label:labels){
+                label.setDate(c.getTime());
+                c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
+            }
+        }
     }
 
     private void setBackgrounds(Color color) {
@@ -169,5 +211,26 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setVisible(true);
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    private class ButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            if(actionEvent.getSource() == nextButton)           setMonth(getMonth() + 1);
+            else if(actionEvent.getSource() == previousButton)  setMonth(getMonth() - 1);
+        }
+    }
+
+    private void setMonth(int newMonth) {
+        updateCalendar(month);
+        if(newMonth == 0) newMonth = 12;
+        if(newMonth == 13) newMonth = 1;
+        this.month = newMonth;
+        this.monthLabel.setText(Util.getMonthText(month));
     }
 }
