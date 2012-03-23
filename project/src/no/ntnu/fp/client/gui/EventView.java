@@ -124,6 +124,56 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		this.pack();
 	}
 	
+	public JTextField getTitleField(){
+		return eventTitle;
+	}
+	
+	public void setTitleField(String title){
+		eventTitle.setText(title);
+	}
+	
+	public JTextField getFromField(){
+		return fromField;
+	}
+	
+	public void setFromField(String fromTime){
+		fromField.setText(fromTime);
+	}
+	
+	public JTextField getToField(){
+		return toField;
+	}
+	
+	public void setToField(String toTime){
+		toField.setText(toTime);
+	}
+	
+	public JComboBox getRoomBox(){
+		return roomBox;
+	}
+	
+	public void setRoomBox(Object room){
+		roomBox.setSelectedItem(room);
+	}
+	
+	public JTextField getParticipantField(){
+		return participantsField;
+	}
+	
+	public void setParticipantField(String participant){
+		participantsField.setText(participant);
+	}
+	
+	public JTextArea getDescriptionArea(){
+		return descriptionBox;
+	}
+	
+	public void setDescriptionArea(String description){
+		descriptionBox.setText(description);
+	}
+	
+	
+	
 	private void createPanel(){
 		
 		//TODO midlertidig eksempler
