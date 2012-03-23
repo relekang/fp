@@ -36,13 +36,13 @@ public class Notification implements Model{
 
         switch(type) {
         case INVITATION:
-        	description = /*employee.getName()*/"Person" + " invited you to " + event.getTitle(); break;
+        	description = /*getFirstName()*/"Person" + " invited you to " + event.getTitle(); break;
         case DELETION:
-        	description = /*employee.getName()*/"Person" + " deleted " + event.getTitle(); break;
+        	description = /*getFirstName()*/"Person" + " deleted " + event.getTitle(); break;
         case ACCEPTED:
-        	description = /*employee.getName()*/"Person" + " accepted your invitation to " + event.getTitle(); break;
+        	description = /*getFirstName()*/"Person" + " accepted your invitation to " + event.getTitle(); break;
         case DECLINED:
-        	description = /*employee.getName()*/"Person" + " declined your invitation to " + event.getTitle(); break;
+        	description = /*getFirstName()*/"Person" + " declined your invitation to " + event.getTitle(); break;
         }
     }
 
@@ -59,7 +59,7 @@ public class Notification implements Model{
         
         this.type = type;
 
-        String descr = /*employee.getName()*/"Person" + " changed " + event.getTitle() + ": "; 
+        String descr = /*getFirstName()*/"Person" + " changed " + event.getTitle() + ": "; 
         
         if (titleChanged) descr += "title";
         if (timeChanged) {
@@ -141,7 +141,11 @@ public class Notification implements Model{
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(listener);
     }
-
+    
+    public String getFirstName(Employee employee) {
+    	return employee.getName().split(" ")[0];
+    }
+    
     public enum NotificationType {
     	INVITATION, DELETION, CHANGE, ACCEPTED, DECLINED;
     }

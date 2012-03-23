@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -48,7 +49,16 @@ public class NotificationPopup extends JPanel {
 		else if (notification.getType() == NotificationType.DECLINED) iconLabel.setIcon(declineIcon);
 		else if (notification.getType() == NotificationType.CHANGE) iconLabel.setIcon(changeIcon);
 		
-		textArea = new JTextArea(notification.getDescription());
+		Calendar cal = notification.getTimestamp();
+		String date = makeDoubleDigit(cal.get(Calendar.DAY_OF_MONTH)) + ".";
+		String month = makeDoubleDigit((cal.get(Calendar.MONTH) + 1)) + ".";
+		String year = makeDoubleDigit((cal.get(Calendar.YEAR))) + " ";
+		String hour = makeDoubleDigit(cal.get(Calendar.HOUR_OF_DAY)) + ":";
+		String min = makeDoubleDigit(cal.get(Calendar.MINUTE)) + "";
+		
+		String timestamp = date + month + year + hour + min;
+		
+		textArea = new JTextArea(timestamp + " " + notification.getDescription());
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
 		textArea.setEditable(false);
@@ -77,12 +87,21 @@ public class NotificationPopup extends JPanel {
         gbc.gridwidth = 1;
 		this.add(viewEventBtn, gbc);
 		
-		this.setMaximumSize(new Dimension(120, 120));
-		this.setPreferredSize(new Dimension(120, 120));
+		int descriptionLength = notification.getDescription().length();
+		int descriptionHeight = ((int) (descriptionLength/15))*16 + 16; // About 15 characters per line, about 16px per line
+		int popupSize = descriptionHeight + 60 + 40; // About 60 px for the icon and space around it, and 40 for button and space around that
+		this.setMaximumSize(new Dimension(130, popupSize));
+		this.setPreferredSize(new Dimension(130, popupSize));
 	}
-
+	
+	private String makeDoubleDigit(int number) {
+		if (number >= 0 && number < 10) return "0" + number;
+		else return "" + number;
+	}
+	
 	public static void main(String[] args) {
-    	NotificationPopup popupTest = new NotificationPopup(new Notification(1, new Event("Event"), "22.03.2012 15:17", 0, NotificationType.ACCEPTED/*, true, true, true, true*/));
+		
+    	NotificationPopup popupTest = new NotificationPopup(new Notification(1, new Event("Event"), "22.03.2012 15:17", 0, NotificationType.CHANGE, true, true, true, true));
 		
 		JFrame frame = new JFrame();
 		frame.setContentPane(popupTest);
