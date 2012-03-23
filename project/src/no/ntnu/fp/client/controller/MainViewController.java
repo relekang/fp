@@ -67,7 +67,7 @@ public class MainViewController implements PropertyChangeListener {
 //    	}
         if (currentUser != null) {
             events = getCurrentUser().getEvents(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
-            System.out.println("EVENT:" + events.get(0));
+//            System.out.println("EVENT:" + events.get(0));
             mainView.getCalendarPanel().addEvents(events);
         }
     }

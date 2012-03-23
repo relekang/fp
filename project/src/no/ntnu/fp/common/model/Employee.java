@@ -42,17 +42,17 @@ public class Employee extends EmployeeHandler implements Model{
         this(jsonEmployee.getInt("id"), jsonEmployee.getString("name"), jsonEmployee.getString("email"), Util.dateFromString(jsonEmployee.getString("date_of_birth")), Gender.FEMALE );
     }
 	
-	private Employee() {
+	private Employee(int id) {
+        super(id);
+        this.ID = 0;
 		name = "";
 		email = "";
 		dateOfBirth = new Date();
-        this.ID = 0;
 		propChangeSupp = new PropertyChangeSupport(this);
 	}
 	
 	public Employee(String name, String email, Date dateOfBirth, Gender gender) {
-		this();
-        this.ID = 0;
+		this(0);
 		this.name = name;
 		this.email = email;
 		this.gender = gender;
@@ -60,7 +60,7 @@ public class Employee extends EmployeeHandler implements Model{
 	}
 
     public Employee(int id, String name, String email, Date dateOfBirth, Gender gender) {
-        this();
+        this(id);
     	this.ID = id;
         this.name = name;
         this.email = email;

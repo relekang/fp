@@ -59,7 +59,8 @@ public class ServerApplication {
 
     private static void handleEventRequest(JSONObject object, ServerConnection conn) throws JSONException, SQLException {
         EventHandler eventHandler = new EventHandler();
-        if(object.getString("action").equals("all")){
+        String action = object.getString("action");
+        if(action.equals("all")){
             ArrayList<Event> list = eventHandler.fetchAllEvents();
             ArrayList<JSONObject> jsonList = new ArrayList<JSONObject>();
             for(Event e:list){
@@ -68,10 +69,20 @@ public class ServerApplication {
             String message = new JSONArray(jsonList).toString();
             conn.send(message);
         }
-        else if(object.getString("action").equals("get")){
+        else if(action.equals("get")){
 
                 Event event =  eventHandler.fetchEvent(object.getString("argument"));
                 conn.send(event.toJson().toString());
+        }
+        else if(action.equals("all_for_user")){
+            String arg = object.getString("argument");
+            ArrayList<Event> list = eventHandler.fetchEventsForUser(arg);
+            ArrayList<JSONObject> jsonList = new ArrayList<JSONObject>();
+            for(Event e:list){
+                jsonList.add(e.toJson());
+            }
+            String message = new JSONArray(jsonList).toString();
+            conn.send(message);
         }
     }
 
