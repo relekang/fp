@@ -13,8 +13,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import java.util.Date;
 
@@ -42,17 +45,28 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 	JComboBox roomBox;
 	JButton saveButton, cancelButton, deleteButton, acceptButton, declineButton, deletePersonButton;
 	JTextField eventTitle, fromField, toField, participantsField;
-	JPanel eventPanel, listPanel, eventViewPanel, buttonPanel, calenderToPopPanel,calenderFromPopPanel, participantPopPanel;
+	JPanel eventPanel, listPanel, eventViewPanel, buttonPanel, participantPopPanel;
 	JLabel dash;
+	DateTimePicker calendarToPopPanel, calendarFromPopPanel;
 	GridBagConstraints gbc1, gbc2, gbc3;
 	DefaultListModel listModel, popListModel;
 	ParticipantRenderer renderer;
 	Employee user;
 	JPopupMenu fromPop, toPop, participantPop;
+	String toHour, toMinute, fromHour, fromMinute, toDate, fromDate;
 	ArrayList<String> popList, popListFound;
 	boolean shown;
 	
 	public EventView(){
+		
+		toHour = "0";
+		toMinute = "0";
+		toDate = "0.0.0000";
+		
+		fromHour = "0";
+		fromMinute = "0";
+		fromDate = "0.0.0000";
+		
 		gbc1 = new GridBagConstraints();
 		gbc2 = new GridBagConstraints();
 		gbc3 = new GridBagConstraints();
@@ -71,11 +85,36 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		eventViewPanel.setLayout(new GridBagLayout());
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
-		calenderToPopPanel = new DateTimePicker(this);
-		calenderFromPopPanel = new DateTimePicker(this);
+		calendarToPopPanel = new DateTimePicker(this);
+		calendarFromPopPanel = new DateTimePicker(this);
 		participantPopPanel = new JPanel();
 		
 		createPanel();
+		
+		calendarToPopPanel.getHourTextField().addKeyListener(this);
+		calendarToPopPanel.getMinuteTextField().addKeyListener(this);
+		calendarFromPopPanel.getHourTextField().addKeyListener(this);
+		calendarFromPopPanel.getMinuteTextField().addKeyListener(this);
+		
+		calendarToPopPanel.getOverviewCalendarPanel().addPCL(new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				Calendar cal = (Calendar) evt.getNewValue();
+				toDate = "" + cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + cal.get(Calendar.YEAR);
+				toField.setText(toDate + "/" + toHour + toMinute);
+			}
+		});
+		
+		calendarFromPopPanel.getOverviewCalendarPanel().addPCL(new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				Calendar cal = (Calendar) evt.getNewValue();
+				fromDate = "" + cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + cal.get(Calendar.YEAR);
+				fromField.setText(fromDate + "/" + fromHour + fromMinute);				
+			}
+		});
 		
 		eventViewPanel.add(eventPanel);
 		eventViewPanel.add(listPanel);
@@ -139,10 +178,10 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		
 		//TODO creating popups for from, to and participant field
 		fromPop = new JPopupMenu();
-		fromPop.add(calenderFromPopPanel);
+		fromPop.add(calendarFromPopPanel);
 		
 		toPop = new JPopupMenu();
-		toPop.add(calenderToPopPanel);
+		toPop.add(calendarToPopPanel);
 		
 		participantPop = new JPopupMenu();
 		participantPop.add(participantPopPanel);
@@ -475,14 +514,30 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		
 	}
 
+//	calendarToPopPanel.getHourTextField().addKeyListener(this);
+//	calendarToPopPanel.getMinuteTextField().addKeyListener(this);
+//	calendarFromPopPanel.getHourTextField().addKeyListener(this);
+//	calendarFromPopPanel.getMinuteTextField().addKeyListener(this);
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getSource() != participantsField) {
-			fromField.setText(((DateTimePicker) calenderFromPopPanel).getHourField()+":"+((DateTimePicker) calenderFromPopPanel).getMinField());
-			toField.setText(((DateTimePicker) calenderToPopPanel).getHourField()+":"+((DateTimePicker) calenderToPopPanel).getMinField());
+		if (e.getSource() == calendarToPopPanel.getHourTextField()) {
+			toHour = "" + calendarToPopPanel.getHourField() + ":";
+//			toField.setText(((DateTimePicker) calendarToPopPanel).getHourField()+":");
+//					+((DateTimePicker) calendarFromPopPanel).getMinField());
 		}
-		else{
+		else if (e.getSource() == calendarToPopPanel.getMinuteTextField()) {
+			toMinute = "" + calendarToPopPanel.getMinField();
+		}
+		if (e.getSource() == calendarFromPopPanel.getHourTextField()) {
+			fromHour = "" + calendarFromPopPanel.getHourField() + ":";
+//			toField.setText(((DateTimePicker) calendarToPopPanel).getHourField()+":");
+//					+((DateTimePicker) calendarFromPopPanel).getMinField());
+		}
+		else if (e.getSource() == calendarFromPopPanel.getMinuteTextField()) {
+			fromMinute = "" + calendarFromPopPanel.getMinField();
+		}
+		else if(e.getSource() == participantsField){
 			for (int i = 0; i < popList.size(); i++) {
 				if(participantsField.getText().length() <= 1){
 					if(popList.get(i).charAt(participantsField.getText().length() - 1) == participantsField.getText().charAt(participantsField.getText().length() - 1)){
@@ -501,6 +556,8 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 				}
 			}
 		}
+		toField.setText(toDate + "/" + toHour + toMinute);
+		fromField.setText(fromDate + "/ " + fromHour + fromMinute);
 	}
 
 	@Override
@@ -508,4 +565,6 @@ public class EventView extends JFrame implements ComponentListener, MouseListene
 		// TODO Auto-generated method stub
 		
 	}
+
+
 }
