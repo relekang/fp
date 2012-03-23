@@ -71,8 +71,6 @@ public class EventView extends JFrame {
 		gbc2.insets = new Insets(15, 15, 15, 15);
 		gbc3.insets = new Insets(15, 15, 15, 15);
 		
-//		user = EventController.getEmployee();
-		
 		eventPanel = new JPanel();
 		eventPanel.setLayout(new GridBagLayout());
 		listPanel = new JPanel();
@@ -259,16 +257,6 @@ public class EventView extends JFrame {
 			gbc2.gridwidth = 1;
 			listPanel.add(deletePersonButton, gbc2);
 			
-			participantPopList.addListSelectionListener(new ListSelectionListener() {
-				
-				@Override
-				public void valueChanged(ListSelectionEvent e) {
-//					if(participantPopList.getSelectedIndex() =! -1){
-						participantsField.setText((String) participantPopList.getSelectedValue());
-//					}
-				}
-			});
-			
 			saveButton.addActionListener(new ActionListener() {
 				
 				@Override
@@ -283,12 +271,6 @@ public class EventView extends JFrame {
 					for (int i = 0; i < listSize; i++) {
 						participantsArray.add((Employee) participantList.getModel().getElementAt(i));
 					}
-					
-//					EventViewController.saveEvent(eventTitle.getText(), toField.getText(), 
-//												   fromField.getText(),descriptionBox.getText(), 
-//												   participantsArray, admin, ID);
-
-					//TODO: Should save event to database
 				}
 			});
 			

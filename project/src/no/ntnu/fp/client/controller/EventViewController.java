@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import no.ntnu.fp.client.gui.EventView;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
@@ -83,6 +86,15 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			}
 		});
 		
+		view.getParticipantPopList().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+//				if(participantPopList.getSelectedIndex() =! -1){
+					view.getParticipantField().setText((String) view.getParticipantPopList().getSelectedValue());
+//				}
+			}
+		});
     }
 	
 	public void setCurrentUser(Employee currentUser){
@@ -244,6 +256,7 @@ public void componentHidden(ComponentEvent arg0) {
 
 	@Override
 	public void componentShown(ComponentEvent arg0) {
+		
 	}
 	
 	
