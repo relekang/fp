@@ -27,12 +27,14 @@ public class MainViewController implements PropertyChangeListener {
     private DefaultListModel weekModel;
 
     public MainViewController(MainView view) {
+    	events = new ArrayList<Event>();
+    	weekModel = new DefaultListModel();
         mainView = view;
-        organizePropertyChangeListeners();
-        weekModel = new DefaultListModel();
-        loadUserEvents();
         mainView.setCalendarModel(weekModel);
-        events = new ArrayList<Event>();
+        
+        organizePropertyChangeListeners();
+        loadUserEvents();
+        
         events.add(Event.getDummyEvent("En"));
         events.add(Event.getDummyEvent("To"));
         events.add(Event.getDummyEvent("Tre"));
@@ -65,7 +67,7 @@ public class MainViewController implements PropertyChangeListener {
 //    	}
         if (currentUser != null) {
             events = Connection.fetchDayEvents(Calendar.getInstance().getTime(), getCurrentUser());
-            System.out.println("EVENT:" + events.get(0));
+            System.out.println("Events for " + getCurrentUser().getName() + " fetched: " + events);
             mainView.getCalendarPanel().addEvents(events);
         }
     }

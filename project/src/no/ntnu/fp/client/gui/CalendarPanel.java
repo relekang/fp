@@ -20,9 +20,10 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
     private JPanel weekPanel;
     private JScrollPane pane;
     private Employee user;
-    private int currentWeek;
     private CalendarDayBox[] days;
     private DefaultListModel model;
+    private int currentWeek;
+    private int currentYear;
 
     public CalendarPanel() {
         setLayout(new GridBagLayout());
@@ -37,7 +38,8 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 
     public void addEvents(ArrayList<Event> events) {
         for (Event e : events) {
-            System.out.println(e);
+            model.addElement(e);
+            System.out.println("Event " + e + " added to listModel in CalendarPanel");
         }
     }
 
@@ -108,7 +110,8 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 
     private void loadCurrentWeek() {
         System.out.println("week changed in CalendarPanel to: " + currentWeek);
-
+        initCalendarDayBoxes();
+        
     }
 
     @Override
@@ -116,6 +119,7 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
         String property = evt.getPropertyName();
         if (property.equals(OverviewCalendarPanel.SELECTED_DAY_CHANGED)) {
             currentWeek = ((Calendar) (evt.getNewValue())).get(Calendar.WEEK_OF_YEAR);
+            currentYear = ((Calendar) (evt.getNewValue())).get(Calendar.YEAR);
             loadCurrentWeek();
         }
     }

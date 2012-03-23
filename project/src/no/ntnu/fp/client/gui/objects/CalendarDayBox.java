@@ -30,10 +30,9 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	private int y, dy;
 	private Calendar date; 
 	private CalendarCanvas canvas;
-	private PropertyChangeSupport pcs;
-	
 	private List<Event> events = new ArrayList<Event>();
-    private Day day;
+	private Day day;
+	
 
     public CalendarDayBox(int reprDay, Calendar date) {
 		this(reprDay);
@@ -41,7 +40,6 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	}
 	
 	public CalendarDayBox(int reprDay) {
-		pcs = new PropertyChangeSupport(this);
 		switch(reprDay) {
 		case 0: 
 			setBorder(BorderFactory.createEmptyBorder(-5, 0, -5, -5));

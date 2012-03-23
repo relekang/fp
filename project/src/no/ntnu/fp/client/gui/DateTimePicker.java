@@ -12,7 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class DateTimePicker extends JPanel implements MouseListener, KeyListener{
-	private JPanel datePickerPanel, timePickerPanel, mainPanel;
+	private JPanel timePickerPanel, mainPanel;
+	private OverviewCalendarPanel datePickerPanel;
 	private GridBagConstraints gbc;
 	private JLabel semicolon;
 	protected JTextField hourField, minuteField;
@@ -66,6 +67,18 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 	    
 	}
 	
+	public OverviewCalendarPanel getOverviewCalendarPanel(){
+		return datePickerPanel;
+	}
+	
+	public JTextField getHourTextField(){
+		return hourField;
+	}
+	
+	public JTextField getMinuteTextField(){
+		return minuteField;
+	}
+	
 	
 	private void buildMainPanel(){
 		//mainpanel
@@ -83,8 +96,8 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 		
 		hourField.addMouseListener(this);
 		minuteField.addMouseListener(this);
-		hourField.addKeyListener(this);
-		minuteField.addKeyListener(this);
+//		hourField.addKeyListener(this);
+//		minuteField.addKeyListener(this);
 		
 	}
 	

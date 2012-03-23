@@ -43,6 +43,8 @@ public class ServerApplication {
                     } catch (SQLException e) { conn.send(new JSONObject().put("key", "failure").toString()); }
                     if (employee != null)
                         conn.send(new JSONObject().put("key", "success").put("employee", employee.toJson()).toString());
+                    else
+                        conn.send(new JSONObject().put("key", "failure").toString());
                 } else
                 if (object.getString("key").equals("event")){
                     try {

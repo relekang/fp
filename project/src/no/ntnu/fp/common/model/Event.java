@@ -16,14 +16,14 @@ import java.util.Date;
 
 public class Event extends EventLabel implements Model{
 	
-	public static final int TITLE_LENGTH = 64;
+	public static final int TITLE_LENGTH = 40;
 	
-	public final String ADDED_NEW_PARTICIPANT = "new Participant";
-	public final String DESCRIPTION_CHANGED = "description changed";
-	public final String ROOM_CHANGED = "room changed";
-	public final String DATETO_CHANGED = "dateTo changed";
-	public final String DATEFROM_CHANGED = "dateFrom changed";
-	public final String TITLE_CHANGED = "title changed";
+	public static final String ADDED_NEW_PARTICIPANT = "new Participant";
+	public static final String DESCRIPTION_CHANGED = "description changed";
+	public static final String ROOM_CHANGED = "room changed";
+	public static final String DATETO_CHANGED = "dateTo changed";
+	public static final String DATEFROM_CHANGED = "dateFrom changed";
+	public static final String TITLE_CHANGED = "title changed";
 	
     private int ID;	
     private String title;
@@ -92,7 +92,6 @@ public class Event extends EventLabel implements Model{
     	Event evt = new Event(title);
     	evt.setDateFrom(Calendar.getInstance().getTime());
     	evt.setDateTo(Calendar.getInstance().getTime());
-    	System.out.println(Calendar.getInstance().getTime());
     	evt.setRoom(new Room("Sebra", "P-15", 10));
     	return evt;
     }
@@ -138,6 +137,12 @@ public class Event extends EventLabel implements Model{
     	Date oldDateFrom = this.dateFrom;
         this.dateFrom = dateFrom;
         pcs.firePropertyChange(DATEFROM_CHANGED, oldDateFrom, this.dateFrom);
+        if(!getDateFrom().before(getDateTo())) {
+//        	TODO: virker dette?
+        	Calendar c = Calendar.getInstance();
+        	c.setTime(getDateFrom());
+        	setDateTo(c.getTime());
+        }
     }
     
     /**

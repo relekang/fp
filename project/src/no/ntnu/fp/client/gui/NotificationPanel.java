@@ -93,7 +93,7 @@ public class NotificationPanel extends JPanel{
 	}
 	
 	public void addNotification(Notification notification) {
-		System.out.println("adding: " + notification);
+		System.out.println("adding to notificationpanel: " + notification);
 		listModel.addElement(notification);
 	}
     
