@@ -140,6 +140,7 @@ public class MainView extends JFrame implements PropertyChangeListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			ClientApplication.showEventView();
+			
 		}
 	}
 
