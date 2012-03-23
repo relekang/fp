@@ -32,11 +32,6 @@ public class ClientApplication {
         findPersonFrame.setLocationRelativeTo(null);
         findPersonFrame.setVisible(false);
 
-
-//        ArrayList<Event> events = Connection.fetchEvents();
-//        for(Event e:events)
-//            System.out.println(e.toString());
-
 //        pack();
     }
 
@@ -47,7 +42,7 @@ public class ClientApplication {
     }
     
     public static void showEventView(){
-    	eventViewController.setEventVisible(true);
+    	eventViewController.setVisible(true);
     }
 
     public static void setMainFrameVisible(boolean visibility){

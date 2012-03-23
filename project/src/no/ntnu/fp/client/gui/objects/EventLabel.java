@@ -18,17 +18,17 @@ public class EventLabel {
 	private int fromPx;
 	private int toPx;
 	
-	public EventLabel(int fromPx, int toPx) {
+	protected EventLabel(int fromPx, int toPx) {
 		if(toPx-fromPx < GuiConstants.HOUR_HEIGHT/2)
 			toPx += GuiConstants.HOUR_HEIGHT/2 - (toPx-fromPx);
 		this.fromPx = calculatePixelLocation(fromPx);
 		this.toPx = calculatePixelLocation(toPx);
 	}
 	
-	public EventLabel(int fromPx, int toPx, Event event) {
-		this(fromPx, toPx);
-		this.model = event;
-	}
+//	public EventLabel(int fromPx, int toPx, Event event) {
+//		this(fromPx, toPx);
+//		this.model = event;
+//	}
 
 	public static int[] getTimeFromPixel(int px) {
 		int[] hourAndMin = new int[2];
@@ -71,7 +71,7 @@ public class EventLabel {
 		if(++line > maxLines)
 			return;
 		g.setFont(GuiConstants.EVENT_LABEL_ROOM_FONT);
-		String[] room = {model.getRoom().toString()};
+		String[] room = {model.getRoom() != null ? model.getRoom().toString() : ""}; //check if room is null
 		if(room[0].length() >= maxChars) {
 			room = room[0].split(", ");
 			g.drawString(room[0]+",", 0, getFromPixel()+line*13);
@@ -88,10 +88,21 @@ public class EventLabel {
 		return fromPx;
 	}
 	
+	public void setFromAndToPixel(int from, int to) {
+		if(toPx-fromPx < GuiConstants.HOUR_HEIGHT/2)
+			toPx += GuiConstants.HOUR_HEIGHT/2 - (toPx-fromPx);
+		this.fromPx = calculatePixelLocation(fromPx);
+		this.toPx = calculatePixelLocation(toPx);
+	}
+	
 	public int getToPixel() {
 		return toPx;
 	}
 
+	public void setToPixel(int px) {
+		this.toPx = px;
+	}
+	
 	public Color getEventColor() {
 		return eventColor;
 	}
@@ -117,3 +128,4 @@ public class EventLabel {
 	}
 
 }
+

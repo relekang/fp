@@ -12,11 +12,15 @@ public class Day extends ArrayList<Event> implements Model{
     private Calendar cal;
 
     public Day(ArrayList<Event> list, Date date){
-        cal = Calendar.getInstance();
-        cal.setTime(date);
-        pcs = new PropertyChangeSupport(this);
+    	this(date);
         for(Event e:list)
             add(e);
+    }
+    
+    public Day(Date date) {
+    	cal = Calendar.getInstance();
+        cal.setTime(date);
+        pcs = new PropertyChangeSupport(this);
     }
 
     @Override

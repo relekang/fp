@@ -30,16 +30,13 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	private int y, dy;
 	private Calendar date; 
 	private CalendarCanvas canvas;
-	private List<Event> events = new ArrayList<Event>();
 	private Day day;
 	
 
     public CalendarDayBox(int reprDay, Calendar date) {
-		this(reprDay);
-		this.date = date;
-	}
-	
-	public CalendarDayBox(int reprDay) {
+    	this.date = date;
+    	System.out.println("Date: " + date.getTime());
+    	day = new Day(date.getTime());
 		switch(reprDay) {
 		case 0: 
 			setBorder(BorderFactory.createEmptyBorder(-5, 0, -5, -5));
@@ -92,7 +89,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		}
 		
 		private void paintEventLabels(Graphics g) {
-			for(EventLabel lbl : events) {
+			for(Event lbl : day) {
 				g.setColor(lbl.getEventColor());
 				g.fillRoundRect(0, lbl.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, lbl.getToPixel()-lbl.getFromPixel(), 10, 10);
 				g.setColor(lbl.getTextColor());
@@ -123,12 +120,12 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	
 	private void createNewEvent(MouseEvent e) {
 		Event label = new Event("Lol");
+		label.setFromAndToPixel(y, dy);
 		int[] from = EventLabel.getTimeFromPixel(label.getFromPixel());
 		int[] to = EventLabel.getTimeFromPixel(label.getToPixel());
 		Calendar calFrom = fixTime(from);
 		Calendar calTo = fixTime(to);
-		Event ev = new Event("", calFrom.getTime(), calTo.getTime());
-		events.add(label);
+		day.add(label);
 		
 	}
 	
@@ -166,7 +163,6 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public Date getDate() {

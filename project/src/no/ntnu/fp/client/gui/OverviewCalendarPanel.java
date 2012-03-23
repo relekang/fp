@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class OverviewCalendarPanel extends JPanel implements MouseListener{
 	
@@ -26,7 +27,9 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
     	gbc = new GridBagConstraints();
         setLayout(new GridBagLayout());
         addCalendarHeaders();
-        buildCalendar(Calendar.getInstance().get(Calendar.MONTH)+1);
+        Calendar c = Calendar.getInstance();
+//        c.setFirstDayOfWeek(Calendar.MONDAY);
+        buildCalendar(c.get(Calendar.MONTH)+1);
     }
     
     public void addPCL(PropertyChangeListener listener) {
@@ -94,6 +97,7 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
 
     private void buildCalendar(int month) {
         Calendar c = Calendar.getInstance();
+        c.setFirstDayOfWeek(Calendar.MONDAY);
         c.set(Calendar.DAY_OF_MONTH, 1);
         System.out.println(c.get(Calendar.DAY_OF_MONTH));
         c.set(Calendar.DAY_OF_WEEK, 2);
