@@ -43,7 +43,10 @@ public class NotificationHandler extends DbHandler {
         ResultSet rs = stmt.executeQuery(query);
 
         while (rs.next()) {
-            Notification notification = new Notification(rs.getInt("id"), null, rs.getString("timestamp"), rs.getInt("is_invitation"), Notification.NotificationType.valueOf("INVITATION"));
+            boolean is_invitation;
+            if(rs.getInt("is_invitation") == 1) is_invitation = true;
+            else is_invitation = false;
+            Notification notification = new Notification(rs.getInt("id"), EventHandler.getEvent(rs.getInt("event_id")), rs.getString("timestamp"), is_invitation, Notification.NotificationType.valueOf("INVITATION"));
             notifications.add(notification);
         }
         rs.close();

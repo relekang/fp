@@ -19,15 +19,12 @@ public class Notification implements Model{
     // Temporary timestamp variable:
     private String timestamp;
 
-    public Notification(int id, Event event, String timestamp, int is_invitation, NotificationType type/*, Employee employee*/){
+    public Notification(int id, Event event, String timestamp, boolean is_invitation, NotificationType type/*, Employee employee*/){
     	this.ID = id;
         this.event = event;
         this.timestamp = timestamp;
         cal = Calendar.getInstance();
-
-        if (is_invitation == 1) this.is_invitation = true;
-        else this.is_invitation = false;
-        
+        this.is_invitation = is_invitation;
         this.type = type;
     }
 
@@ -63,10 +60,8 @@ public class Notification implements Model{
         description = descr;
     }
 
-    public Notification(JSONObject object) {
-//        this(int id, Event event, String timestamp, int is_invitation, NotificationType type/*, Employee employee*/;
-        ID = 0;
-        cal = Calendar.getInstance();
+    public Notification(JSONObject object) throws JSONException {
+        this(object.getInt("id"), new Event(object.getJSONObject("event")), object.getString("timestamp"), object.getBoolean("is_invitation"), NotificationType.INVITATION);
     }
 
 
@@ -156,7 +151,7 @@ public class Notification implements Model{
         object.put("description", description);
         object.put("id", ID);
         object.put("is_invitation", is_invitation);
-//        object.put("event", event.toJson());
+        object.put("event", event.toJson());
         object.put("type", type.toString());
         object.put("timestamp", timestamp);
         return object;
