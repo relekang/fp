@@ -191,10 +191,7 @@ public class Employee extends EmployeeHandler implements Model{
 	 */
 	@Override 
 	public String toString() {
-		String s = "Name: " + getName() + "; ";
-		s += "Email: " + getEmail() + "; ";
-		s += "Date of birth: " + getDateOfBirth().toString();
-		return s;
+		return getName();
 	}
 
     public JSONObject toJson() throws JSONException {

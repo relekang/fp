@@ -28,6 +28,11 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
     private int currentDay;
 
     public CalendarPanel() {
+    	Calendar c = Calendar.getInstance();
+    	currentYear = c.get(Calendar.YEAR);
+    	currentMonth = c.get(Calendar.MONTH);
+    	currentWeek = c.get(Calendar.WEEK_OF_YEAR);
+    	currentDay = c.get(Calendar.DAY_OF_MONTH);
         setLayout(new GridBagLayout());
         addCalendarHeaders();
         initWeekPanel();
@@ -46,6 +51,7 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
         initHourLabels();
         initCalendarDayBoxes();
         initScrollPane();
+//        revalidate();
     }
 
     private void initHourLabels() {
@@ -64,13 +70,13 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
     }
 
     private void initCalendarDayBoxes() {
-    	if(days != null) {
-    		for(int i = 0; i < 7; i++) {
-    			days[i].removeAll();
-    		}
-//    		TODO: fix at CalendarDayBoxene ikke flytter seg bortover til hoyre
-    		revalidate();
-    	}
+//    	if(days != null) {
+//    		for(int i = 0; i < 7; i++) {
+//    			days[i].removeAll();
+//    		}
+////    		TODO: fix at CalendarDayBoxene ikke flytter seg bortover til hoyre
+//    		revalidate();
+//    	}
         days = new CalendarDayBox[GuiConstants.DAYS.length];
         gbc.gridy = 1;
         for (int i = 0; i < GuiConstants.DAYS.length; i++) {
@@ -117,9 +123,16 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
         this.user = user;
     }
 
-    private void loadCurrentWeek() {
+    public void loadCurrentWeek() {
         System.out.println("week changed in CalendarPanel to: " + currentWeek);
-        initCalendarDayBoxes();
+        for(int i = 0; i < 7; i++) {
+	        Calendar c = Calendar.getInstance();
+	        c.setFirstDayOfWeek(Calendar.MONDAY);
+	        c.set(Calendar.WEEK_OF_YEAR, currentWeek);
+	        c.set(currentYear, currentMonth, currentDay);
+	        c.set(Calendar.DAY_OF_WEEK, 2+i);
+	        days[i].setDate(c);
+        }
     }
 
     @Override
@@ -142,10 +155,10 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 
     public void setModel(DefaultListModel newModel) {
         this.model = newModel;
-        if (model.size() > 7) {
-            for (int i = 0; i < 8; i++) {
+        if (model.size() >= 7) {
+            for (int i = 0; i < 7; i++) {
                 days[i].setModel((Day) this.model.get(i));
-                System.out.print("");
+                System.out.print("weekmodel set in calendarpanel");
             }
         }
     }

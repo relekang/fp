@@ -71,6 +71,8 @@ public class EventView extends JFrame {
 		deleteButton = new JButton("Delete");
 		deletePersonButton = new JButton("Remove person");
 		
+		
+		
 		createPanel();
 		
 		eventViewPanel.add(eventPanel);
@@ -188,21 +190,9 @@ public class EventView extends JFrame {
 	
 	private void createPanel(){
 		
-		//TODO midlertidig eksempler
-		Employee hans = new Employee("Hans", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
-		Employee geir = new Employee("Geir", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
-		Employee bjarne = new Employee("Bjarne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
-		Employee arne = new Employee("Arne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
-		//
 		
 		renderer = new ParticipantRenderer();
 		listModel = new DefaultListModel();
-		
-		listModel.addElement(arne);
-		listModel.addElement(hans);
-		listModel.addElement(geir);
-		listModel.addElement(bjarne);
-
 		
 		participantList = new JList(listModel);
 		participantList.setCellRenderer(renderer);
@@ -230,7 +220,6 @@ public class EventView extends JFrame {
 		dash = new JLabel("-");
 		dash.setSize(5, 1);
 		
-		//TODO creating popups for from, to and participant field
 		fromPop = new JPopupMenu();
 		fromPop.add(calendarFromPopPanel);
 		
@@ -262,6 +251,13 @@ public class EventView extends JFrame {
 			gbc2.gridheight = 1;
 			gbc2.gridwidth = 1;
 			listPanel.add(deletePersonButton, gbc2);
+			
+			
+			ArrayList<Employee> tempEmployeeArrayList = Employee.getAllEmployees(); 
+			for(int i = 0; i < tempEmployeeArrayList.size(); i++){
+				popListModel.addElement(tempEmployeeArrayList.get(i));
+			}
+			
 			
 			saveButton.addActionListener(new ActionListener() {
 				

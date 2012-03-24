@@ -5,12 +5,15 @@ import no.ntnu.fp.common.Constants;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Notification;
+import no.ntnu.fp.common.model.Employee.Gender;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EmployeeHandler {
 
@@ -32,6 +35,18 @@ public class EmployeeHandler {
     
     public static ArrayList<Employee> getAllEmployees(){
         ArrayList<Employee> list = new ArrayList<Employee>();
+        //TODO fjerne dummies
+        list.add(new Employee("David Storjord", "awsm@test.no", new Date(1990, 12, 31), Gender.MALE));
+        list.add(new Employee("Anne Berit", "awsm@test.no", new Date(1990, 12, 31), Gender.MALE));
+        list.add(new Employee("Anne Ulf", "awsm@test.no", new Date(1990, 12, 31), Gender.MALE));
+        list.add(new Employee("David Myklebust", "awsm@test.no", new Date(1990, 12, 31), Gender.MALE));
+        list.add(new Employee("Rolf Relekang", "awsm@test.no", new Date(1990, 12, 31), Gender.MALE));
+        list.add(new Employee("Rolf Rolfemann", "awsm@test.no", new Date(1990, 12, 31), Gender.MALE));
+        list.add(new Employee("Audun Skjervold", "awsm@test.no", new Date(1990, 12, 31), Gender.MALE));
+        list.add(new Employee("Guttorm", "awsm@test.no", new Date(1990, 12, 31), Gender.MALE));
+        list.add(new Employee("Jenteorm", "awsm@test.no", new Date(1990, 12, 31), Gender.MALE));
+        
+        
         list.add(Employee.getExampleEployee());
         return list;
     }

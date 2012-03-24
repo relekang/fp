@@ -55,6 +55,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		canvas.addMouseMotionListener(this);
 		add(canvas);
 	}
+	
 
     public void setModel(Day day) {
         this.day = day;
@@ -64,6 +65,9 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		return this.day.getDate();
 	}
     
+	public void setDate(Calendar c) {
+		this.date = c;
+	}
     
 	@Override
 	public void mouseClicked(MouseEvent e) {

@@ -36,7 +36,6 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
         event = new Event("");
 		
 		popList = new ArrayList<String>();
-		popList.add("arne");	popList.add("bjarne");	popList.add("ole");	popList.add("mats");
 		popListFound = new ArrayList<String>();
 		
 		toHour = "0";
@@ -65,6 +64,8 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		view.getFromField().addMouseListener(this);
 		view.getToField().addMouseListener(this);
 		
+		view.getTitleField().addMouseListener(this);
+		view.getDescriptionArea().addMouseListener(this);
 		view.getParticipantField().addMouseListener(this);
 		
 		view.getParticipantField().addKeyListener(this);
@@ -101,7 +102,9 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(view.getParticipantPopList().getSelectedIndex() != -1){
-					view.getParticipantField().setText((String) view.getParticipantPopList().getSelectedValue());
+					view.getListModel().addElement(view.getParticipantPopList().getSelectedValue());
+					view.getPopListModel().removeElement(view.getParticipantPopList().getSelectedValue());
+					view.getParticipantField().grabFocus();
 				}
 			}
 		});
@@ -208,8 +211,12 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		if(e.getSource() == view.getFromField()){
-			
+		if (e.getSource() == view.getTitleField()) {
+			if (view.getTitleField().getText().equals("Title")) {
+				view.getTitleField().setText("");
+			}
+		}
+		else if(e.getSource() == view.getFromField()){
 			view.getFromPop().show(view.getFromField(), 0, 30);
 			if (view.getFromField().getText().equals("From")) {
 				view.getFromField().setText("");
@@ -227,6 +234,12 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			view.getParticipantPop().show(view.getParticipantField(), 0, 30);
 			view.getParticipantField().setText("");
 			view.getParticipantField().grabFocus();
+		}
+		else if(e.getSource() == view.getTitleField()){
+			view.getTitleField().setText("");	
+		}
+		else if(e.getSource() == view.getDescriptionArea()){
+			view.getDescriptionArea().setText("");	
 		}
 	}
 
@@ -307,7 +320,9 @@ public void componentHidden(ComponentEvent arg0) {
 		}
 		else if (e.getSource() == view.getDeletePersonButton()) {
 			int temp = view.getParticipantList().getSelectedIndex();
+			Employee tempEmployee = (Employee) view.getParticipantList().getSelectedValue(); 
 			if(temp > -1){
+				view.getPopListModel().addElement(tempEmployee);
 				view.getParticipantList().setSelectedIndex(temp - 1);
 				view.removeParticipant(temp);
 			}
