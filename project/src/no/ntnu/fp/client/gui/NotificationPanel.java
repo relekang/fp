@@ -5,25 +5,31 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Notification;
 import no.ntnu.fp.common.model.Notification.NotificationType;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-public class NotificationPanel extends JPanel{
+public class NotificationPanel extends JPanel implements MouseListener{
     private JList list;
     private DefaultListModel listModel;
     private JLabel label;
-    private JButton closePopupBtn;
     private GridBagConstraints gbc;
-    
-    private JPopupMenu popup;
+    private JFrame popupFrame;
     
     public NotificationPanel(){
     	gbc = new GridBagConstraints();
     	this.setLayout(new GridBagLayout());
+    	
+    	popupFrame = new JFrame();
+    	// TODO: Position the popup frame in the middle of the screen
     	
         label = new JLabel("Notifications");
         label.setFont(GuiConstants.NOTIFICATIONPANE_FONT);
@@ -38,22 +44,11 @@ public class NotificationPanel extends JPanel{
         list.setFixedCellWidth(200);
 		list.setFixedCellHeight(20);
 
-		closePopupBtn = new JButton("Close popup");
-		closePopupBtn.setSize(new Dimension(120, 20));
-		closePopupBtn.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//TODO: Add support for showing correct event
-				getSelectedIndex();
-				popup.setVisible(true);
-			}
-		});
+		list.addMouseListener(this);
 		
-        NotificationPopup notificationPopup = new NotificationPopup(new Notification(1, new Event("Event"), "22.03.2012 15:17", true, NotificationType.CHANGE));
+        NotificationPopup notificationPopup = new NotificationPopup(new Notification(1, Event.getDummyEvent("Event"), "22.03.2012 15:17", true, NotificationType.CHANGE));
         
-        popup = new JPopupMenu();
-        
+
         gbc.gridx = 0; gbc.gridy = 0; gbc.weighty = 0.0;
         gbc.gridwidth = 1;
         add(label, gbc);
@@ -61,10 +56,6 @@ public class NotificationPanel extends JPanel{
         gbc.gridx = 0; gbc.gridy = 1; gbc.weighty = 1.0;
         gbc.gridwidth = 2;
         add(list, gbc);
-        
-        gbc.gridx = 0; gbc.gridy = 2; gbc.weighty = 0.0;
-        gbc.gridwidth = 1;
-        add(closePopupBtn, gbc);
         
     }
     
@@ -88,6 +79,37 @@ public class NotificationPanel extends JPanel{
     
 	public JList getList() {
 		return list;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		Notification selectedValue = (Notification) listModel.get(getSelectedIndex()); 
+		
+		NotificationPopup popup = new NotificationPopup(selectedValue);
+		popupFrame.setContentPane(popup);
+		popupFrame.pack();
+		popupFrame.setVisible(true);
+			
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		
 	}
 	
 }

@@ -62,7 +62,7 @@ public class ClientApplication {
 		return mainViewController;
 	}
 
-	public Employee getCurrentUser() {
+	public static Employee getCurrentUser() {
 		return currentUser;
 	}
 	

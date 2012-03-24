@@ -40,30 +40,6 @@ public class DbHandler {
     public void close() throws SQLException {
         conn.close();
     }
-    
-
-
-
-
-
-    public static void main (String args[]){
-        try {
-            EventHandler eventHandler = new EventHandler();
-            RoomHandler roomHandler = new RoomHandler();
-            System.out.println("Created DbHandler instance");
-            Event e = new Event("Superevent", Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
-            e.setDescription("LOL");
-            Room room = new Room("R1", "Realfagsbygget", 600);
-            System.out.println(roomHandler.createRoom(room));
-            e.setRoom(room);
-            System.out.println(eventHandler.createEvent(e));
-            System.out.print(eventHandler.fetchAllEvents());
-        } catch (SQLException e){
-            System.out.println(e);
-        }
-    }
-
-
     public Connection getConnection() {
         return conn;
     }

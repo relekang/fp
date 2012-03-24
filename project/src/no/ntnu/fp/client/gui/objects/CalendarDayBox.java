@@ -112,7 +112,8 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	}
 	
 	private void createNewEvent(MouseEvent e) {
-		Event label = new Event("");
+        //TODO: SHould use current user
+		Event label = new Event(ClientApplication.getCurrentUser());
 		label.setFromAndToPixel(y, dy);
 		int[] from = Event.getTimeFromPixel(label.getFromPixel());
 		int[] to = Event.getTimeFromPixel(label.getToPixel());

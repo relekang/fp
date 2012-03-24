@@ -64,4 +64,16 @@ public class EmployeeHandler extends DbHandler {
 //        EmployeeHandler employeeHandler = new EmployeeHandler();
 //        return employeeHandler.fetchEmployee(String.format("id = %d", employeeId));
 //    }
+
+    public static Employee getEmployee(int id) {
+        try {
+            EmployeeHandler handler = new EmployeeHandler();
+            Employee e = handler.fetchEmployee("id = " + id);
+            handler.close();
+            return e;
+        } catch (SQLException e1) {
+            e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return  null;
+    }
 }

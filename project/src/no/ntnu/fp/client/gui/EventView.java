@@ -71,6 +71,8 @@ public class EventView extends JFrame {
 		deleteButton = new JButton("Delete");
 		deletePersonButton = new JButton("Remove person");
 		
+		
+		
 		createPanel();
 		
 		eventViewPanel.add(eventPanel);
@@ -218,7 +220,6 @@ public class EventView extends JFrame {
 		dash = new JLabel("-");
 		dash.setSize(5, 1);
 		
-		//TODO creating popups for from, to and participant field
 		fromPop = new JPopupMenu();
 		fromPop.add(calendarFromPopPanel);
 		

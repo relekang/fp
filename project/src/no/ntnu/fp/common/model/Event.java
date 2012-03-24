@@ -50,7 +50,12 @@ public class Event extends EventHandler implements Model{
     	dateFrom = Calendar.getInstance();
     	dateTo = Calendar.getInstance();
     }
-    
+    public Event(Employee admin){
+        this(0);
+        ID = 0;
+        this.admin = admin;
+        participants.add(this.admin);
+    }
     public Event(int fromPx, int toPx, Employee admin) {
     	this(0);
     	this.admin = admin;
@@ -59,52 +64,40 @@ public class Event extends EventHandler implements Model{
 		this.fromPx = calculatePixelLocation(fromPx);
 		this.toPx = calculatePixelLocation(toPx);
     }
-    
-    /**
-     * Constructor, sets the title of the event.
-     * @param title
-     */
-    public Event(String title, Employee admin){
-    	this(0);
-        ID = 0;
-        setTitle(title);
-        this.admin = admin;
-        participants = new ArrayList<Employee>();
-        participants.add(this.admin);
-    }
-    
-    public Event(String title){
-    	this(0);
-    	ID = 0;
-    	setTitle(title);
-    }
-    public Event(JSONObject object) throws JSONException {
-        this(object.getInt("id"), object.getString("title"), Util.dateTimeFromString(object.getString("date_from")), Util.dateTimeFromString(object.getString("date_to")));
-    }
-    
-    /**
-     * Constructor, sets the title of the event, the start and end date.
-     * @param title
-     * @param dateFrom
-     * @param dateTo
-     */
-    public Event(String title, Date dateFrom, Date dateTo){
-    	this(0);
-        setTitle(title);
-        setDateFrom(dateFrom);
-        setDateTo(dateTo);
-    }
-    
-    public Event(int id, String title, Date dateFrom, Date dateTo){
-    	this(0);
+    public Event(int id, String title, Date dateFrom, Date dateTo, Employee admin){
+        this(id);
         ID = id;
         setTitle(title);
         setDateFrom(dateFrom);
         setDateTo(dateTo);
+        this.admin = admin;
+        //Todo: Participants
     }
+
+    public Event(JSONObject object) throws JSONException {
+        this(
+                object.getInt("id"),
+                object.getString("title"),
+                Util.dateTimeFromString(object.getString("date_from")),
+                Util.dateTimeFromString(object.getString("date_to")),
+                new Employee(object.getJSONObject("admin"))
+        );
+    }
+
+    public int getID()               { return ID; }
+    public String getTitle()         { return title; }
+    public int getFromPixel()        { return fromPx; }
+    public int getToPixel()          { return toPx; }
+    public Color getEventColor()     { return eventColor; }
+    public Color getTextColor()      { return textColor; }
+    public Date getDateFrom()        { return dateFrom.getTime(); }
+    public Date getDateTo()          { return dateTo.getTime(); }
+    public Room getRoom()            { return room; }
+    public String getDescription()   { return description == null ? "" : description; }
+    public Employee getAdmin()       { return admin; }
     
     public static Event getDummyEvent(String title) {
-    	Event evt = new Event(title);
+    	Event evt = new Event(new Employee("Lol Lolsson", "lol@super.com", Calendar.getInstance().getTime(), Employee.Gender.MALE));
     	evt.setDateFrom(Calendar.getInstance().getTime());
     	evt.setDateTo(Calendar.getInstance().getTime());
     	evt.setRoom(new Room("Sebra", "P-15", 10));
@@ -171,55 +164,19 @@ public class Event extends EventHandler implements Model{
 	public ArrayList<Employee> getParticipants(){
 		return participants;
 	}
-	
-	public int getFromPixel() {
-		return fromPx;
-	}
-	
-	public void setFromPixel(int px) {
-		this.fromPx = px;
-	}
-	
-	public int getToPixel() {
-		return toPx;
-	}
 
-	public void setToPixel(int px) {
-		this.toPx = px;
-	}
-	
-	public Color getEventColor() {
-		return eventColor;
-	}
+
+	public void setFromPixel(int px) { this.fromPx = px; }
+	public void setToPixel(int px)   { this.toPx = px; }
 
 	public void setEventColor(Color eventColor) {
 		this.eventColor = eventColor;
-	}
-
-	public Color getTextColor() {
-		return textColor;
 	}
 
 	public void setTextColor(Color textColor) {
 		this.textColor = textColor;
 	}
 
-	public int getID(){
-        return ID;
-    }
-    
-    /**
-     * 
-     * @return title
-     */
-    public String getTitle() {
-        return title;
-    }
-    
-    /**
-     * Sets the title if the title length is less than or equals to the max allowed title length (64)
-     * @param title
-     */
     public void setTitle(String title) {
     	if(title.length() <= TITLE_LENGTH){
     		String oldTitle = this.title;
@@ -228,18 +185,6 @@ public class Event extends EventHandler implements Model{
     	}
     }
 
-    /**
-     * Return the date that the event starts from.
-     * @return dateFrom
-     */
-    public Date getDateFrom() {
-        return dateFrom.getTime();
-    }
-    
-    /**
-     * Sets the date that the event starts from.
-     * @param dateFrom
-     */
     public void setDateFrom(Date dateFrom) {
     	Date oldDateFrom = this.dateFrom.getTime();
         this.dateFrom.setTime(dateFrom);
@@ -251,19 +196,9 @@ public class Event extends EventHandler implements Model{
         	setDateTo(c.getTime());
         }
     }
-    
-    /**
-     * Return the date that the event ends.
-     * @return dateTo
-     */
-    public Date getDateTo() {
-        return dateTo.getTime();
-    }
 
-   /**
-    *  Sets the end date if it's after the startdate.
-    * @param dateTo
-    */
+
+
     public void setDateTo(Date dateTo) {
         if(getDateFrom() != null && getDateFrom().before(dateTo)){
         	Date oldDateTo = this.dateTo.getTime();
@@ -272,13 +207,7 @@ public class Event extends EventHandler implements Model{
         }
     }
 	
-    /**
-	 * Returns the selected room for the given event
-	 * @return room
-	 */
-    public Room getRoom() {
-        return room;
-    }
+
     
     /**
      * sets a new room for the given event
@@ -290,18 +219,7 @@ public class Event extends EventHandler implements Model{
         pcs.firePropertyChange(ROOM_CHANGED, oldRoom, this.room);
     }
     
-    /**
-     *	Returnds the description if the description is not null
-     * @return description
-     */
-    public String getDescription() {
-        return description == null ? "" : description;
-    }
-    
-    /**
-     * sets the description
-     * @param description
-     */
+
     public void setDescription(String description) {
     	String oldDescription = this.description;
         this.description = description;
@@ -345,9 +263,11 @@ public class Event extends EventHandler implements Model{
         object.put("title", getTitle());
         object.put("date_from", Util.dateTimeToString(getDateFrom()));
         object.put("date_to", Util.dateTimeToString(getDateTo()));
-        object.put("room", getRoom().toString());
+        object.put("room", getRoom().getId());
         object.put("description", getDescription());
-
+        object.put("admin", getAdmin().toJson());
         return object;
     }
+
+
 }

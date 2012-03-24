@@ -32,7 +32,7 @@ public class RoomListPanel extends JPanel{
             Object[][] data = new String[list.size()][4];
             for (int i = 0; i< list.size(); i++){
                 Room r = list.get(i);
-                data[i][0] = Integer.toString(r.getRoomId());
+                data[i][0] = Integer.toString(r.getId());
                 data[i][1] = r.getName();
                 data[i][2] = r.getLocation();
                 data[i][3] = Integer.toString(r.getCapacity());

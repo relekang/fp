@@ -33,10 +33,10 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	
 	public EventViewController(Employee currentUser){
 		this.currentUser = currentUser;
-        event = new Event("");
+
+        event = new Event(currentUser);
 		
 		popList = new ArrayList<String>();
-		popList.add("arne");	popList.add("bjarne");	popList.add("ole");	popList.add("mats");
 		popListFound = new ArrayList<String>();
 		
 		toHour = "0";
@@ -66,6 +66,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		view.getToField().addMouseListener(this);
 		
 		view.getTitleField().addMouseListener(this);
+		view.getDescriptionArea().addMouseListener(this);
 		view.getParticipantField().addMouseListener(this);
 		
 		view.getParticipantField().addKeyListener(this);

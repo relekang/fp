@@ -57,6 +57,9 @@ public class ServerApplication {
                         handleNotificationRequest(object, conn);
                     } catch (SQLException e) { e.printStackTrace(); }
                 }
+                else{
+                    conn.send(new JSONObject().put("key", "failure").toString());
+                }
 
             } catch (JSONException e) { e.printStackTrace(); }
 
@@ -80,6 +83,15 @@ public class ServerApplication {
                 Event event =  eventHandler.fetchEvent(object.getString("argument"));
                 conn.send(event.toJson().toString());
         }
+        else if(action.equals("save") || action.equals("create")){
+
+            Event event = new Event(object.getJSONObject("event"));
+            if(eventHandler.updateEvent(event) != null)
+                conn.send(new JSONObject().put("key", "success").toString());
+            else
+                conn.send(new JSONObject().put("key", "failure").toString());
+
+        }
         else if(action.equals("all_for_user")){
             String arg = object.getString("argument");
             ArrayList<Event> list = eventHandler.fetchEventsForUser(arg);
@@ -89,10 +101,11 @@ public class ServerApplication {
             }
             String message = new JSONArray(jsonList).toString();
             conn.send(message);
-        }
-        else{
+        } else {
             conn.send(new JSONObject().put("key", "failure").toString());
         }
+
+
     }
     private static void handleNotificationRequest(JSONObject object, ServerConnection conn) throws JSONException, SQLException {
         NotificationHandler notificationHandler = new NotificationHandler();
@@ -107,6 +120,8 @@ public class ServerApplication {
             }
             String message = new JSONArray(jsonList).toString();
             conn.send(message);
+        } else {
+            conn.send(new JSONObject().put("key", "failure").toString());
         }
     }
 

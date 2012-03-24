@@ -56,7 +56,7 @@ public class Room implements Model{
 			this.capacity = capacity;
 	}
     
-    public int getRoomId() {
+    public int getId() {
     	return ROOM_ID;
     }
     
