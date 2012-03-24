@@ -78,7 +78,7 @@ public class MainView extends JFrame implements PropertyChangeListener {
     	gbc.gridy = 2;
     	gbc.gridwidth = 2;
     	gbc.gridheight = 2;
-    	mainPanel.add(overviewPanel, gbc);
+//    	mainPanel.add(overviewPanel, gbc);
     	
     	gbc.gridx = 2;
     	gbc.gridy = 1;

@@ -32,7 +32,9 @@ public class GuiConstants {
 	public static final Font EVENT_LABEL_TITLE_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 13);
 	public static final Font EVENT_LABEL_ROOM_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 9);
 	public static final Font NOTIFICATIONPANE_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
-	
+	public static final Font DATELABEL_BOLD = new Font(Font.SANS_SERIF, Font.BOLD, 12 );
+    public static final Font DATELABEL_NORMAL = new Font(Font.SANS_SERIF, Font.PLAIN, 12 );
+
 //	Colors
 	public static final Color EVENT_TEXT_COLOR = Color.BLACK;
 	public static final Color STD_BACKGROUND = Color.LIGHT_GRAY;
@@ -43,7 +45,8 @@ public class GuiConstants {
 	public static final Color DRAG_NEW_EVENT = new Color(179, 209, 232); //light blue
 	public static final Color SWING_FRAME_GRAY = new Color(238, 238, 238, 200); //The gray background from the Swing frames
 
-	public enum EventType {
+
+    public enum EventType {
 		PERSONAL, BUSNIESS, BUSINESS_ADMIN;
 	}
 	

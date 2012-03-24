@@ -13,7 +13,6 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 public class OverviewCalendarPanel extends JPanel implements MouseListener{
 	
@@ -126,7 +125,6 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
         c.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
         c.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
         c.set(Calendar.WEEK_OF_MONTH, 1);
-        System.out.println(c.getTime());
         dateLabels = new DateLabel[5][7];
         for (int i = 0; i < dateLabels.length; i++) {
             for (int ii = 0; ii < dateLabels[i].length; ii++) {
@@ -134,6 +132,7 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
                 dateLabels[i][ii].addMouseListener(this);
                 gbc.gridx = ii;
                 gbc.gridy = i + 2;
+                dateLabels[i][ii].setFont(GuiConstants.DATELABEL_NORMAL);
                 add(dateLabels[i][ii], gbc);
                 c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
 
@@ -144,17 +143,20 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
     }
     
     private void updateCalendar(int month){
-//    	int year = c.get(Calendar.YEAR);
-//    	c.set(Calendar.DAY_OF_MONTH, 1);
-////        c.set(Calendar.DAY_OF_WEEK, 2);
-//        for (DateLabel[] labels:dateLabels){
-//            for(DateLabel label:labels){
-//                label.setDate(c.getTime());
-//                c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
-//            }
-//        }
-//        c.set(Calendar.MONTH, month);
-//        c.set(Calendar.YEAR, year);
+    	int year = c.get(Calendar.YEAR);
+        c.clear();
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.WEEK_OF_MONTH, 1);
+        for (DateLabel[] labels:dateLabels){
+            for(DateLabel label:labels){
+                label.setDate(c.getTime());
+                c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
+            }
+        }
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.YEAR, year);
     }
 
     private void setBackgrounds(Color color) {
@@ -170,12 +172,22 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
     }
     
     public void setSelectedLabel(DateLabel label) {
+        setFontOnAll(GuiConstants.DATELABEL_NORMAL);
+        label.setFont(GuiConstants.DATELABEL_BOLD);
     	Calendar oldVal = this.selected;
     	selected = label.getCalendar();
     	pcs.firePropertyChange(SELECTED_DAY_CHANGED, oldVal, selected);
 //    	label.setForeground(Color.BLUE);
     }
-    
+
+    private void setFontOnAll(Font font) {
+        for(DateLabel[] row:dateLabels){
+            for(DateLabel label:row){
+                label.setFont(font);
+            }
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         DateLabel label = (DateLabel) mouseEvent.getSource();
