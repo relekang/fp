@@ -88,7 +88,7 @@ public class Login extends JPanel implements ActionListener, KeyListener{
     	passwordField.addActionListener(this);
     	loginButton.addActionListener(this);
     	loginButton.addKeyListener(this);
-		
+
 	}
 
 	@Override
@@ -128,5 +128,20 @@ public class Login extends JPanel implements ActionListener, KeyListener{
             } catch (SQLException exception) {
                 System.err.println(exception);
             }
+    }
+
+    public void autoLogin(){
+        usernameTextField.setText("rolf");
+        passwordField.setText("rolf");
+        long t0, t1;
+
+        t0 =  System.currentTimeMillis();
+
+        do{
+            t1 = System.currentTimeMillis();
+        }
+        while ((t1 - t0) < (1000));
+        actionPerformed(new ActionEvent(loginButton, ActionEvent.ACTION_PERFORMED, ""));
+
     }
 }

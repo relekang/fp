@@ -24,6 +24,8 @@ public class ClientApplication {
         
         mainViewController = new MainViewController((MainView)mainFrame);
         eventViewController = new EventViewController();
+
+        mainViewController.getMainView().autoLogin();
         
         
         findPersonFrame = new FindPersonView();

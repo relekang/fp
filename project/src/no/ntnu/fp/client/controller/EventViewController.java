@@ -32,6 +32,8 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	
 	
 	public EventViewController(){
+
+        event = new Event("");
 		
 		popList = new ArrayList<String>();
 		popList.add("arne");	popList.add("bjarne");	popList.add("ole");	popList.add("mats");
@@ -295,6 +297,7 @@ public void componentHidden(ComponentEvent arg0) {
 			event.setParticipants(participants);
 			event.setRoom((Room) view.getRoomBox().getSelectedItem());
 			
+	        event.save();
 		}
 		else if (e.getSource() == view.getCancelButton()) {
 			this.setVisible(false);
