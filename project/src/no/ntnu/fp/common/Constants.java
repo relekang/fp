@@ -1,7 +1,12 @@
 package no.ntnu.fp.common;
 
 
+import java.security.PublicKey;
+
 public class Constants {
+
+    public final static boolean DEBUG = true;
+
     public final static int CLIENT_PORT = 1234;
     public final static int SERVER_PORT = 4321;
 

@@ -75,4 +75,9 @@ public class Util {
         }
             return "";
     }
+    
+    public static void print(String s )     { if(Constants.DEBUG) System.out.println(s); }
+    public static void print(boolean s )    { if(Constants.DEBUG) System.out.println(s); }
+    public static void print(int s )        { if(Constants.DEBUG) System.out.println(s); }
+    public static void print(Object s )     { if(Constants.DEBUG) System.out.println(s); }
 }
