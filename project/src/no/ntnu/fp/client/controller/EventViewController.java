@@ -31,8 +31,8 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	private ArrayList<String> popList, popListFound;
 	
 	
-	public EventViewController(){
-
+	public EventViewController(Employee currentUser){
+		this.currentUser = currentUser;
         event = new Event("");
 		
 		popList = new ArrayList<String>();

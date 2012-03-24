@@ -1,5 +1,7 @@
 package no.ntnu.fp.client.controller;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
@@ -26,22 +28,20 @@ public class MainViewController implements PropertyChangeListener {
     private ArrayList<Notification> notifications;
     private DefaultListModel weekModel;
 
-    public MainViewController(MainView view) {
+    public MainViewController(Employee currentUser, MainView view) {
+    	this.mainView = view;
+    	this.currentUser = currentUser;
+    	mainView.setVisible(true);
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		mainView.setLocation(screenSize.width / 2 - (mainView.getWidth() / 2),
+				screenSize.height / 2 - (mainView.getHeight() / 2));
+    	
     	events = new ArrayList<Event>();
     	weekModel = new DefaultListModel();
-        mainView = view;
         mainView.setCalendarModel(weekModel);
         
+        System.out.println(currentUser.getName());
         organizePropertyChangeListeners();
-        loadUserEvents();
-        
-//        events.add(Event.getDummyEvent("En"));
-//        events.add(Event.getDummyEvent("To"));
-//        events.add(Event.getDummyEvent("Tre"));
-//        events.add(Event.getDummyEvent("Fire"));
-//        events.add(Event.getDummyEvent("Fem"));
-//        events.add(Event.getDummyEvent("Seks"));
-//        events.add(Event.getDummyEvent("Syv"));
     }
 
     private void organizePropertyChangeListeners() {
@@ -49,6 +49,10 @@ public class MainViewController implements PropertyChangeListener {
     	OverviewCalendarPanel o = mainView.getOverviewCalendarPanel(); 
 		o.addPCL(c);
 	}
+    
+    public void setMainView(MainView view) {
+    	mainView = view;
+    }
     
 	public void setCurrentUser(Employee currentUser) {
         this.currentUser = currentUser;

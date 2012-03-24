@@ -9,6 +9,10 @@ public class FindPersonViewController implements PropertyChangeListener {
 	
 	private Employee currentUser;
 	
+	public FindPersonViewController(Employee currentUser) {
+		this.currentUser = currentUser;
+	}
+	
 	public void setCurrentUser(Employee currentUser){
 		this.currentUser = currentUser;
 	}

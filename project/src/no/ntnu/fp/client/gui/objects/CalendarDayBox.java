@@ -72,22 +72,18 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -116,7 +112,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	}
 	
 	private void createNewEvent(MouseEvent e) {
-		Event label = new Event("Tittel");
+		Event label = new Event("");
 		label.setFromAndToPixel(y, dy);
 		int[] from = Event.getTimeFromPixel(label.getFromPixel());
 		int[] to = Event.getTimeFromPixel(label.getToPixel());

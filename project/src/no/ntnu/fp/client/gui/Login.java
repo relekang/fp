@@ -5,6 +5,7 @@ import no.ntnu.fp.client.Authentication;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,37 +13,32 @@ import java.awt.event.KeyListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class Login extends JPanel implements ActionListener, KeyListener{
+public class Login extends JFrame implements ActionListener, KeyListener{
 	
+	private JPanel background;
 	protected JLabel usernameLabel, passwordLabel, errorMsgLabel;
-
 	protected JTextField usernameTextField;
 	protected JPasswordField passwordField;
-	
 	protected JButton loginButton;
-	protected MainView mv;
 
-	//constructor	
-	public Login(MainView mv){
-		
-		this.mv = mv;
-		
+	public Login(){
+		background = new JPanel(new GridBagLayout());
+		background.setBorder(GuiConstants.EMPTY_BORDER_10);
 		GridBagConstraints c = new GridBagConstraints();
-    	setLayout(new GridBagLayout());
-    	setBorder(GuiConstants.EMPTY_BORDER_10);
-
-        errorMsgLabel = new JLabel();
+        
+		errorMsgLabel = new JLabel();
         c.gridheight = 1;
         c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 0;
     	errorMsgLabel.setBorder(GuiConstants.EMPTY_BORDER_10);
-        add(errorMsgLabel, c);
+        background.add(errorMsgLabel, c);
 
     	// adds usernamelabel and textfield
     	usernameLabel = new JLabel("Username:");
@@ -50,14 +46,14 @@ public class Login extends JPanel implements ActionListener, KeyListener{
     	c.gridwidth = 1;
     	c.gridx = 0;
     	c.gridy = 1;
-    	add(usernameLabel, c);
+    	background.add(usernameLabel, c);
     	
     	usernameTextField = new JTextField();
     	usernameTextField.setMinimumSize(new Dimension(260, 25));
     	usernameTextField.setPreferredSize(new Dimension(260,25));
     	c.gridx = 1;
     	c.gridy = 1;
-    	add(usernameTextField,c);
+    	background.add(usernameTextField,c);
     	
     	
     	
@@ -65,43 +61,43 @@ public class Login extends JPanel implements ActionListener, KeyListener{
     	passwordLabel = new JLabel("Password:");
     	c.gridx = 0;
     	c.gridy = 2;
-    	add(passwordLabel, c);
+    	background.add(passwordLabel, c);
     	
     	passwordField = new JPasswordField();
     	passwordField.setMinimumSize(new Dimension(260, 25));
     	passwordField.setPreferredSize(new Dimension(260,25));
     	c.gridx = 1;
     	c.gridy = 2;
-    	add(passwordField,c);
+    	background.add(passwordField,c);
   
-    	
     	//adds login button
     	loginButton = new JButton("Log in");
     	c.gridx = 1;
     	c.gridy = 3;
-    	add(loginButton, c);
+    	background.add(loginButton, c);
+    	loginButton.setVisible(true);
     	
     	usernameTextField.addActionListener(this);
     	passwordField.addActionListener(this);
     	loginButton.addActionListener(this);
     	loginButton.addKeyListener(this);
-
+    	setContentPane(background);
+    	Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+    	Dimension dd = getPreferredSize();
+    	setLocation((int)(d.getWidth()/2-dd.getWidth()/2), (int)(d.getHeight()/2-dd.getHeight()/2));
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-	
 	}
-
 	@Override
 	public void keyReleased(KeyEvent e) {
-
 	}		
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
-        if (e.getKeyCode() == 10 || e.getKeyCode() == 32) loginAction();
+        if (e.getKeyCode() == 10 || e.getKeyCode() == 32) 
+        	loginAction();
 	}
 
 	@Override
@@ -116,7 +112,6 @@ public class Login extends JPanel implements ActionListener, KeyListener{
                 if(Authentication.authenticate(username, password)){
                     usernameTextField.setText("");
                     passwordField.setText("");
-                    mv.logIn();
                 }
                 else{
                     errorMsgLabel.setText("Wrong username or password");
