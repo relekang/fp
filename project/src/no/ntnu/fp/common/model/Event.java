@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Event implements Model{
+public class Event implements Model {
 	
 	public static final int TITLE_LENGTH = 40;
 	

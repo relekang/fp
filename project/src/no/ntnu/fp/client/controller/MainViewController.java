@@ -35,13 +35,13 @@ public class MainViewController implements PropertyChangeListener {
         organizePropertyChangeListeners();
         loadUserEvents();
         
-        events.add(Event.getDummyEvent("En"));
-        events.add(Event.getDummyEvent("To"));
-        events.add(Event.getDummyEvent("Tre"));
-        events.add(Event.getDummyEvent("Fire"));
-        events.add(Event.getDummyEvent("Fem"));
-        events.add(Event.getDummyEvent("Seks"));
-        events.add(Event.getDummyEvent("Syv"));
+//        events.add(Event.getDummyEvent("En"));
+//        events.add(Event.getDummyEvent("To"));
+//        events.add(Event.getDummyEvent("Tre"));
+//        events.add(Event.getDummyEvent("Fire"));
+//        events.add(Event.getDummyEvent("Fem"));
+//        events.add(Event.getDummyEvent("Seks"));
+//        events.add(Event.getDummyEvent("Syv"));
     }
 
     private void organizePropertyChangeListeners() {

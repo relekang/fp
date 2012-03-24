@@ -17,13 +17,13 @@ public class DateLabel extends JLabel{
 
     public DateLabel(Date date, int month){
         super();
+        this.month = month;
         cal = Calendar.getInstance();
         cal.setFirstDayOfWeek(Calendar.MONDAY);
         cal.setTime(date);
-        this.month = month;
         setText(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
         setBorder(new EmptyBorder(4, 4, 4, 4));
-        if(cal.get(Calendar.MONTH) + 1 != this.month){
+        if(cal.get(Calendar.MONTH) != this.month){
             setForeground(Color.GRAY);
         }
     }
