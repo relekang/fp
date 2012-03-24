@@ -48,6 +48,8 @@ public class Notification implements Model{
                 description = /*getFirstName()*/"Person" + " accepted your invitation to " + event.getTitle(); break;
             case DECLINED:
                 description = /*getFirstName()*/"Person" + " declined your invitation to " + event.getTitle(); break;
+            case CHANGE:
+            	description = /*getFirstName()*/"Person" + " edited " + event.getTitle(); break;
         }
         return description;
     }

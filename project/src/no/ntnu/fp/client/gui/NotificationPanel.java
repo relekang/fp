@@ -89,4 +89,8 @@ public class NotificationPanel extends JPanel{
 		listModel.addElement(notification);
 	}
     
+	public JList getList() {
+		return list;
+	}
+	
 }
