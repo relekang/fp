@@ -53,10 +53,8 @@ public class NotificationPanel extends JPanel{
 			}
 		});
 		
-        /*Employee testGuy = new Employee();*/
-        /*testGuy.setName("Test McYo");*/
-
-
+        NotificationPopup notificationPopup = new NotificationPopup(new Notification(1, new Event("Event"), "22.03.2012 15:17", true, NotificationType.CHANGE));
+        
         popup = new JPopupMenu();
         
         gbc.gridx = 0; gbc.gridy = 0; gbc.weighty = 0.0;
