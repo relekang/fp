@@ -188,21 +188,9 @@ public class EventView extends JFrame {
 	
 	private void createPanel(){
 		
-		//TODO midlertidig eksempler
-		Employee hans = new Employee("Hans", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
-		Employee geir = new Employee("Geir", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
-		Employee bjarne = new Employee("Bjarne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
-		Employee arne = new Employee("Arne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
-		//
 		
 		renderer = new ParticipantRenderer();
 		listModel = new DefaultListModel();
-		
-		listModel.addElement(arne);
-		listModel.addElement(hans);
-		listModel.addElement(geir);
-		listModel.addElement(bjarne);
-
 		
 		participantList = new JList(listModel);
 		participantList.setCellRenderer(renderer);
