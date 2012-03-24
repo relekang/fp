@@ -308,6 +308,10 @@ public class Event implements Model{
     	participants.add(employee);
     	pcs.firePropertyChange(ADDED_NEW_PARTICIPANT, employee, participants);
     }
+    
+    public void setParticipants(ArrayList<Employee> participants){
+    	this.participants = participants;
+    }
 
     public boolean save(){
         try {
