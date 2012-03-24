@@ -47,8 +47,8 @@ public class GuiConstants {
 
 
     public enum EventType {
-		PERSONAL, BUSNIESS, BUSINESS_ADMIN;
-	}
+        PERSONAL, BUSINESS, BUSINESS_ADMIN;
+    }
 	
 //	Borders
 	public static final Border EMPTY_BORDER_10 = BorderFactory.createEmptyBorder(10, 10, 10, 10);

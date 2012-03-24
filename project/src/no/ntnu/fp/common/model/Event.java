@@ -95,7 +95,7 @@ public class Event extends EventHandler implements Model{
     public Room getRoom()            { return room; }
     public String getDescription()   { return description == null ? "" : description; }
     public Employee getAdmin()       { return admin; }
-    
+
     public static Event getDummyEvent(String title) {
     	Event evt = new Event(new Employee("Lol Lolsson", "lol@super.com", Calendar.getInstance().getTime(), Employee.Gender.MALE));
     	evt.setDateFrom(Calendar.getInstance().getTime());
