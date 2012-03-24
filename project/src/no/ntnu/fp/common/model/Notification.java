@@ -9,55 +9,21 @@ import java.beans.PropertyChangeSupport;
 import java.util.Calendar;
 
 public class Notification implements Model{
-    private String description;
-    private final int ID;
+    private int ID;
     private final Calendar cal;
     private boolean is_invitation;
     private Event event;
     private PropertyChangeSupport pcs;
     private NotificationType type;
-    // Temporary timestamp variable:
     private String timestamp;
 
-    public Notification(int id, Event event, String timestamp, boolean is_invitation, NotificationType type/*, Employee employee*/){
+    public Notification(int id, Event event, String timestamp, boolean is_invitation, NotificationType type){
     	this.ID = id;
         this.event = event;
         this.timestamp = timestamp;
         cal = Calendar.getInstance();
         this.is_invitation = is_invitation;
         this.type = type;
-    }
-
-    public Notification(int id, Event event, String timestamp, int is_invitation, NotificationType type, /*Employee employee,*/
-    		boolean titleChanged, boolean timeChanged, boolean roomChanged, boolean descriptionChanged){
-
-    	this.ID = id;
-        this.event = event;
-        this.timestamp = timestamp;
-        cal = Calendar.getInstance();
-
-        if (is_invitation == 1) this.is_invitation = true;
-        else this.is_invitation = false;
-        
-        this.type = type;
-
-        String descr = /*getFirstName()*/"Person" + " changed " + event.getTitle() + ": "; 
-        
-        if (titleChanged) descr += "title";
-        if (timeChanged) {
-        	if (titleChanged) descr += ", time";
-        	else descr += "time";
-        }
-        if (roomChanged) {
-        	if (titleChanged || timeChanged) descr += ", room";
-        	else descr += "room";	
-        }
-        if (descriptionChanged) {
-        	if (titleChanged || timeChanged || roomChanged) descr += ", description";
-        	else descr += "description";	
-        }
-        
-        description = descr;
     }
 
     public Notification(JSONObject object) throws JSONException {
@@ -84,14 +50,6 @@ public class Notification implements Model{
                 description = /*getFirstName()*/"Person" + " declined your invitation to " + event.getTitle(); break;
         }
         return description;
-    }
-    
-    /**
-     * Sets a string for the description
-     * @param description
-     */
-    public void setDescription(String description) {
-        this.description = description;
     }
     
     /**
@@ -148,7 +106,6 @@ public class Notification implements Model{
 
     public JSONObject toJson() throws JSONException {
         JSONObject object = new JSONObject();
-        object.put("description", description);
         object.put("id", ID);
         object.put("is_invitation", is_invitation);
         object.put("event", event.toJson());

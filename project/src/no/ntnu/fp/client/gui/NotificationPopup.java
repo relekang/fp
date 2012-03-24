@@ -100,15 +100,5 @@ public class NotificationPopup extends JPanel {
 		else return "" + number;
 	}
 	
-//	public static void main(String[] args) {
-//		
-//    	NotificationPopup popupTest = new NotificationPopup(new Notification(1, new Event("Event"), "22.03.2012 15:17", 0, NotificationType.CHANGE, true, true, true, true));
-//		
-//		JFrame frame = new JFrame();
-//		frame.setContentPane(popupTest);
-//		
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.pack();
-//		frame.setVisible(true);
-//    }
+
 }
