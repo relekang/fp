@@ -43,10 +43,7 @@ public class EmployeeHandler {
         list.add(new Notification(2, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:37", false, Notification.NotificationType.ACCEPTED));
         list.add(new Notification(3, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:38", false, Notification.NotificationType.DECLINED));
         list.add(new Notification(4, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:40", false, Notification.NotificationType.DELETION));
-        list.add(new Notification(5, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, Notification.NotificationType.CHANGE, true, false, false, false));
-        list.add(new Notification(6, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, Notification.NotificationType.CHANGE, false, true, false, false));
-        list.add(new Notification(7, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, Notification.NotificationType.CHANGE, false, true, false, true));
-        list.add(new Notification(8, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, Notification.NotificationType.CHANGE, true, true, true, false));
+        list.add(new Notification(8, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", true, Notification.NotificationType.CHANGE));
 
         return list;
     }

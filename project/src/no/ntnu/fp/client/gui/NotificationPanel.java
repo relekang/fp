@@ -58,7 +58,7 @@ public class NotificationPanel extends JPanel implements ListSelectionListener {
 			}
 		});
 		
-        NotificationPopup notificationPopup = new NotificationPopup(new Notification(1, new Event("Event"), "22.03.2012 15:17", 0, NotificationType.CHANGE, true, true, true, true));
+        NotificationPopup notificationPopup = new NotificationPopup(new Notification(1, new Event("Event"), "22.03.2012 15:17", true, NotificationType.CHANGE));
         
         popup = new JPopupMenu();
         popup.add(notificationPopup);
