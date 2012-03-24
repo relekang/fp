@@ -40,8 +40,8 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 
     public void addEvents(ArrayList<Event> events) {
         for (Event e : events) {
+        	System.out.println("Event " + e + " added to listModel in CalendarPanel");
             model.addElement(e);
-            System.out.println("Event " + e + " added to listModel in CalendarPanel");
         }
     }
 
@@ -88,6 +88,8 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
             days[i] = new CalendarDayBox(i, c);
             gbc.gridx = i;
             weekPanel.add(days[i]);
+//            TODO: trengs dette?
+            days[i].setParent(this);
         }
     }
 
@@ -132,19 +134,15 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 	        c.set(currentYear, currentMonth, currentDay);
 	        c.set(Calendar.DAY_OF_WEEK, 2+i);
 	        days[i].setDate(c);
+	        System.out.println("Day changed to: " + days[i].getDate());
         }
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String property = evt.getPropertyName();
+        System.out.println(((Calendar)evt.getNewValue()).getTime());
         if (property.equals(OverviewCalendarPanel.SELECTED_DAY_CHANGED)) {
-//        	Calendar c = Calendar.getInstance();
-//        	c.set(Calendar.YEAR, ((Calendar) (evt.getNewValue())).get(Calendar.YEAR));
-//        	c.set(Calendar.MONTH, ((Calendar) (evt.getNewValue())).get(Calendar.MONTH));
-//        	c.set(Calendar.WEEK_OF_YEAR, ((Calendar) (evt.getNewValue())).get(Calendar.WEEK_OF_YEAR));
-//        	c.set(Calendar.DAY_OF_MONTH, ((Calendar) (evt.getNewValue())).get(Calendar.DAY_OF_MONTH));
-//        	
         	currentYear = ((Calendar) (evt.getNewValue())).get(Calendar.YEAR);
         	currentMonth= ((Calendar) (evt.getNewValue())).get(Calendar.MONTH);
             currentWeek = ((Calendar) (evt.getNewValue())).get(Calendar.WEEK_OF_YEAR);

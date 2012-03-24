@@ -121,7 +121,9 @@ public class Event extends EventHandler implements Model{
 	}	
 	
 //	A hack-ish method that draws the representative string for a meeting
-	public void drawRepresentation(Graphics g) {
+	public void getStringRepresentation(Graphics g) {
+		if(title == null)
+			return;
 		g.setFont(GuiConstants.EVENT_LABEL_TITLE_FONT);
 		int maxLines = (toPx - fromPx) / (GuiConstants.HOUR_HEIGHT / 4);
 		int maxChars = 14;
@@ -142,6 +144,8 @@ public class Event extends EventHandler implements Model{
 		if(maxLines != 2)
 			g.drawString(text, 0, getFromPixel()+(++line)*13);
 		if(++line > maxLines)
+			return;
+		if(room == null)
 			return;
 		g.setFont(GuiConstants.EVENT_LABEL_ROOM_FONT);
 		String[] room = {getRoom() != null ? getRoom().toString() : ""}; //check if room is null

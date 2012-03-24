@@ -47,6 +47,7 @@ public class ClientApplication {
 		login.setVisible(false);
 		login = null;
 		mainFrame = new MainView();
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		eventFrame = new EventView();
 		findPersonFrame = new FindPersonView();
 		

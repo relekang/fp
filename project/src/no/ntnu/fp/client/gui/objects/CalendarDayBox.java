@@ -9,21 +9,19 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 
 import no.ntnu.fp.client.controller.ClientApplication;
+import no.ntnu.fp.client.gui.CalendarPanel;
 import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.common.model.Day;
-import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
-import no.ntnu.fp.common.model.Room;
 
 @SuppressWarnings("serial")
 public class CalendarDayBox extends JPanel implements MouseListener, MouseMotionListener, PropertyChangeListener{
@@ -32,7 +30,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	private Calendar date; 
 	private CalendarCanvas canvas;
 	private Day day;
-	
+	private CalendarPanel parent;
 
     public CalendarDayBox(int reprDay, Calendar date) {
     	this.date = date;
@@ -48,6 +46,10 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		}
 		initCanvas();
 	}
+    
+    public void setParent(CalendarPanel parent) {
+    	this.parent = parent;
+    }
 
 	private void initCanvas() {
 		canvas = new CalendarCanvas();
@@ -55,7 +57,6 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		canvas.addMouseMotionListener(this);
 		add(canvas);
 	}
-	
 
     public void setModel(Day day) {
         this.day = day;
@@ -67,27 +68,6 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
     
 	public void setDate(Calendar c) {
 		this.date = c;
-	}
-    
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -112,16 +92,13 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	}
 	
 	private void createNewEvent(MouseEvent e) {
-        //TODO: SHould use current user
-		Event label = new Event(ClientApplication.getCurrentUser());
-		label.setFromAndToPixel(y, dy);
+		Event label = new Event(y, dy, ClientApplication.getCurrentUser());
 		int[] from = Event.getTimeFromPixel(label.getFromPixel());
 		int[] to = Event.getTimeFromPixel(label.getToPixel());
 		Calendar calFrom = fixTime(from);
 		Calendar calTo = fixTime(to);
 		System.out.println("DateFrom: " + calFrom.getTime() + ", DateTo: " + calTo.getTime());
 		day.add(label);
-		
 	}
 	
 	private Calendar fixTime(int[] hourAndMin) {
@@ -133,7 +110,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	
 	private class CalendarCanvas extends JPanel {
 		boolean mouseIsPressed = false;
-		private Color foreground = GuiConstants.DRAG_NEW_EVENT;
+		Color foreground = GuiConstants.DRAG_NEW_EVENT;
 		
 		public CalendarCanvas() {
 			setBorder(BorderFactory.createEmptyBorder(-5, -5, -5, -5));
@@ -158,7 +135,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 				g.setColor(lbl.getEventColor());
 				g.fillRoundRect(0, lbl.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, lbl.getToPixel()-lbl.getFromPixel(), 10, 10);
 				g.setColor(lbl.getTextColor());
-				lbl.drawRepresentation(g);
+				lbl.getStringRepresentation(g);
 			}
 		}
 		private void drawForegroundLines(Graphics g) {
@@ -169,5 +146,12 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		}
 		
 	}
+
+//	TODO: hvis disse trengs...
+	public void mouseClicked(MouseEvent e) {	}
+	public void mouseEntered(MouseEvent e) {	}
+	public void mouseExited(MouseEvent e) {	}
+	public void mouseMoved(MouseEvent e) {	}
+	public void propertyChange(PropertyChangeEvent evt) {	}
 
 }

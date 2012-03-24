@@ -175,9 +175,10 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
         setFontOnAll(GuiConstants.DATELABEL_NORMAL);
         label.setFont(GuiConstants.DATELABEL_BOLD);
     	Calendar oldVal = this.selected;
-    	selected = label.getCalendar();
+    	selected = (Calendar)(label.getCalendar()).clone();
+//    	TODO: THIS IS A MASSIVE, FUCKINGS HACK TO GET THE SUITABLE WEEK_OF_YEAR! OMGOMGOMG! IT DOESN'T EVEN WORK!
+    	selected.set(Calendar.WEEK_OF_YEAR, selected.get(Calendar.WEEK_OF_YEAR)-1);
     	pcs.firePropertyChange(SELECTED_DAY_CHANGED, oldVal, selected);
-//    	label.setForeground(Color.BLUE);
     }
 
     private void setFontOnAll(Font font) {
