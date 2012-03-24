@@ -31,7 +31,10 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
     public OverviewCalendarPanel() {
         c = Calendar.getInstance();
         c.setFirstDayOfWeek(Calendar.MONDAY);
-    	pcs = new PropertyChangeSupport(this);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, 1);
+
+        pcs = new PropertyChangeSupport(this);
     	gbc = new GridBagConstraints();
         setLayout(new GridBagLayout());
         addCalendarHeaders();
@@ -119,11 +122,7 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
     }
 
     private void buildCalendar(int month) {
-        c = Calendar.getInstance();
-        c.setFirstDayOfWeek(Calendar.MONDAY);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, 1);
-        System.out.println(c.get(Calendar.DAY_OF_MONTH));
+        c.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
         c.set(Calendar.DAY_OF_WEEK, 2);
         System.out.println(c.get(Calendar.DAY_OF_MONTH));
         dateLabels = new DateLabel[5][7];
@@ -141,6 +140,7 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
         
     }
     private void updateCalendar(int month){
+
         if(month == 13) {
             c.set(Calendar.MONTH, 12);
             c.set(Calendar.YEAR, c.get(Calendar.YEAR)+1);
@@ -148,7 +148,6 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
             c.set(Calendar.MONTH, 1);
             c.set(Calendar.YEAR, c.get(Calendar.YEAR)-1);
         }
-        c.setFirstDayOfWeek(Calendar.MONDAY);
         c.set(Calendar.DAY_OF_MONTH, 1);
         c.set(Calendar.DAY_OF_WEEK, 2);
         for (DateLabel[] labels:dateLabels){
@@ -221,16 +220,22 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            if(actionEvent.getSource() == nextButton)           setMonth(getMonth() + 1);
-            else if(actionEvent.getSource() == previousButton)  setMonth(getMonth() - 1);
+            if(actionEvent.getSource() == nextButton){
+                System.out.println("next");
+                setMonth(getMonth() + 1);
+            }
+            else if(actionEvent.getSource() == previousButton){
+                System.out.println("previous");
+                setMonth(getMonth() - 1);
+            }
         }
     }
 
     private void setMonth(int newMonth) {
-        updateCalendar(month);
         if(newMonth == 0) newMonth = 12;
         if(newMonth == 13) newMonth = 1;
         this.month = newMonth;
-        this.monthLabel.setText(Util.getMonthText(month));
+        updateCalendar(month);
+        this.monthLabel.setText(Util.getMonthText(month) + c.get(Calendar.YEAR));
     }
 }
