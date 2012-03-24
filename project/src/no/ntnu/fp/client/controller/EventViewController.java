@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionListener;
 import no.ntnu.fp.client.gui.EventView;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
+import no.ntnu.fp.common.model.Room;
 import no.ntnu.fp.server.storage.db.EventHandler;
 
 public class EventViewController implements PropertyChangeListener, KeyListener, MouseListener, ComponentListener, ActionListener {
@@ -292,6 +293,7 @@ public void componentHidden(ComponentEvent arg0) {
 				participants.add((Employee) view.getListModel().get(i));
 			}
 			event.setParticipants(participants);
+			event.setRoom((Room) view.getRoomBox().getSelectedItem());
 			
 		}
 		else if (e.getSource() == view.getCancelButton()) {
