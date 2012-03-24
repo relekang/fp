@@ -5,6 +5,7 @@ import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.server.gui.EventListPanel;
 import no.ntnu.fp.server.gui.RoomListPanel;
 import no.ntnu.fp.server.storage.db.EventHandler;
+import no.ntnu.fp.server.storage.db.NotificationHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +52,11 @@ public class ServerApplication {
                         handleEventRequest(object, conn);
                     } catch (SQLException e) { e.printStackTrace(); }
                 }
+                else if (object.getString("key").equals("notification")){
+                    try {
+                        handleNotificationRequest(object, conn);
+                    } catch (SQLException e) { e.printStackTrace(); }
+                }
 
             } catch (JSONException e) { e.printStackTrace(); }
 
@@ -59,7 +65,8 @@ public class ServerApplication {
 
     private static void handleEventRequest(JSONObject object, ServerConnection conn) throws JSONException, SQLException {
         EventHandler eventHandler = new EventHandler();
-        if(object.getString("action").equals("all")){
+        String action = object.getString("action");
+        if(action.equals("all")){
             ArrayList<Event> list = eventHandler.fetchAllEvents();
             ArrayList<JSONObject> jsonList = new ArrayList<JSONObject>();
             for(Event e:list){
@@ -68,13 +75,37 @@ public class ServerApplication {
             String message = new JSONArray(jsonList).toString();
             conn.send(message);
         }
-        else if(object.getString("action").equals("get")){
+        else if(action.equals("get")){
 
                 Event event =  eventHandler.fetchEvent(object.getString("argument"));
                 conn.send(event.toJson().toString());
         }
+        else if(action.equals("all_for_user")){
+            String arg = object.getString("argument");
+            ArrayList<Event> list = eventHandler.fetchEventsForUser(arg);
+            ArrayList<JSONObject> jsonList = new ArrayList<JSONObject>();
+            for(Event e:list){
+                jsonList.add(e.toJson());
+            }
+            String message = new JSONArray(jsonList).toString();
+            conn.send(message);
+        }
     }
-
+    private static void handleNotificationRequest(JSONObject object, ServerConnection conn) throws JSONException, SQLException {
+        NotificationHandler notificationHandler = new NotificationHandler();
+        String action = object.getString("action");
+        if(action.equals("all_for_user")){
+            String arg = object.getString("argument");
+            ArrayList<Notification> list = notificationHandler.fetchNotificationsForUser(arg);
+            ArrayList<JSONObject> jsonList = new ArrayList<JSONObject>();
+            for(Notification n:list){
+                jsonList.add(n.toJson());
+                System.out.println();
+            }
+            String message = new JSONArray(jsonList).toString();
+            conn.send(message);
+        }
+    }
 
     private static void gui() {
         gbc = new GridBagConstraints();

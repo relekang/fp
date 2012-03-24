@@ -1,23 +1,100 @@
 package no.ntnu.fp.client.controller;
 
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import no.ntnu.fp.client.gui.EventView;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.server.storage.db.EventHandler;
 
-public class EventViewController implements PropertyChangeListener {
+public class EventViewController implements PropertyChangeListener, KeyListener, MouseListener, ComponentListener {
 	
 	private EventView view;
 	private Employee currentUser;
 	private Event event;
+	private String toDate, toHour, toMinute, toTime, fromDate, fromHour, fromMinute, fromTime;
+	private ArrayList<String> popList, popListFound;
+	
 	
 	public EventViewController(){
+		
+		popList = new ArrayList<String>();
+		popList.add("arne");	popList.add("bjarne");	popList.add("ole");	popList.add("mats");
+		popListFound = new ArrayList<String>();
+		
+		toHour = "0";
+		toMinute = "0";
+		toDate = "0.0.0000";
+		
+		fromHour = "0";
+		fromMinute = "0";
+		fromDate = "0.0.0000";
+		
 		view = new EventView();
 		view.setVisible(false);
+		view.addComponentListener(this);
+		
+		view.getCalendarToPopPanel().getHourTextField().addKeyListener(this);
+		view.getCalendarToPopPanel().getMinuteTextField().addKeyListener(this);
+		view.getCalendarFromPopPanel().getHourTextField().addKeyListener(this);
+		view.getCalendarFromPopPanel().getMinuteTextField().addKeyListener(this);
+		
+		view.getFromField().addMouseListener(this);
+		view.getToField().addMouseListener(this);
+		
+		view.getParticipantField().addMouseListener(this);
+		
+		view.getParticipantField().addKeyListener(this);
+		popList = new ArrayList<String>();
+		
+		
+
+		for (int i = 0; i < popList.size(); i++) {
+			view.getPopListModel().addElement(popList.get(i));
+		}
+		
+		view.getCalendarToPopPanel().getOverviewCalendarPanel().addPCL(new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				Calendar cal = (Calendar) evt.getNewValue();
+				toDate = "" + cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + cal.get(Calendar.YEAR);
+				view.getToField().setText(toDate + "/" + toHour + toMinute);
+			}
+		});
+		
+		view.getCalendarFromPopPanel().getOverviewCalendarPanel().addPCL(new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				Calendar cal = (Calendar) evt.getNewValue();
+				fromDate = "" + cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + cal.get(Calendar.YEAR);
+				view.getFromField().setText(fromDate + "/" + fromHour + fromMinute);				
+			}
+		});
+		
+		view.getParticipantPopList().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+//				if(participantPopList.getSelectedIndex() =! -1){
+					view.getParticipantField().setText((String) view.getParticipantPopList().getSelectedValue());
+//				}
+			}
+		});
     }
 	
 	public void setCurrentUser(Employee currentUser){
@@ -31,12 +108,9 @@ public class EventViewController implements PropertyChangeListener {
 	public void showEvent(Event event){
 		this.event = event;
 		view.setVisible(true);
-		view.setTitle(event.getTitle());
-		view.setFromDate(event.getDateFrom().toString());
-		view.setToDate(event.getDateTo().toString());
 	}
 	
-	public void setEventVisible(boolean visible){
+	public void setVisible(boolean visible){
 		view.setVisible(visible);
 	}
 	
@@ -60,6 +134,128 @@ public class EventViewController implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource() == view.getCalendarToPopPanel().getHourTextField()) {
+			toHour = "" + view.getCalendarToPopPanel().getHourField() + ":";
+		}
+		else if (e.getSource() == view.getCalendarToPopPanel().getMinuteTextField()) {
+			toMinute = "" + view.getCalendarToPopPanel().getMinField();
+		}
+		if (e.getSource() == view.getCalendarFromPopPanel().getHourTextField()) {
+			fromHour = "" + view.getCalendarFromPopPanel().getHourField() + ":";
+		}
+		else if (e.getSource() == view.getCalendarFromPopPanel().getMinuteTextField()) {
+			fromMinute = "" + view.getCalendarFromPopPanel().getMinField();
+		}	
+		else if(e.getSource() == view.getParticipantField()){
+			for (int i = 0; i < popList.size(); i++) {
+				if(view.getParticipantField().getText().length() <= 1){
+					if(popList.get(i).charAt(view.getParticipantField().getText().length() - 1) == view.getParticipantField().getText().charAt(view.getParticipantField().getText().length() - 1)){
+						popListFound.add(popList.get(i));
+					}
+				}
+			}
+			for (int y = 0; y < popListFound.size(); y++) {
+				for (int i = 0; i < view.getPopListModel().size(); i++) {
+					if(i< view.getPopListModel().size()){
+						if(view.getPopListModel().get(i) != popListFound.get(y)){
+							view.getPopListModel().remove(i);
+							i--;
+						}
+					}
+				}
+			}
+		}
+		view.getToField().setText(toDate + "/" + toHour + toMinute);
+		view.getFromField().setText(fromDate + "/ " + fromHour + fromMinute);
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+		if(e.getSource() == view.getFromField()){
+			
+			view.getFromPop().show(view.getFromField(), 0, 30);
+			view.getFromField().setText("");
+			view.getFromField().grabFocus();
+		}
+		else if(e.getSource() == view.getToField()){
+			view.getToPop().show(view.getToField(), 0, 30);
+			view.getToField().setText("");
+			view.getToField().grabFocus();
+		}
+		else if (e.getSource() == view.getParticipantField()) {
+			view.getParticipantPop().show(view.getParticipantField(), 0, 30);
+			view.getParticipantField().setText("");
+			view.getParticipantField().grabFocus();
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+public void componentHidden(ComponentEvent arg0) {
+		
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent arg0) {
+		
+//		view.getFromPop().show(view.getFromField(), 0, 30);
+//		view.getToPop().show(view.getToField(), 0, 30);
+//		view.getParticipantPop().show(view.getParticipantField(), 0, 30);
+	}
+
+	@Override
+	public void componentResized(ComponentEvent arg0) {
+		
+//		view.getFromPop().show(view.getFromField(), 0, 30);
+//		view.getToPop().show(view.getToField(), 0, 30);
+//		view.getParticipantPop().show(view.getParticipantField(), 0, 30);
+	}
+
+	@Override
+	public void componentShown(ComponentEvent arg0) {
 		
 	}
 	

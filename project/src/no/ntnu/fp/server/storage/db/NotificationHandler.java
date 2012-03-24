@@ -32,6 +32,29 @@ public class NotificationHandler extends DbHandler {
 
     }
 
+    public ArrayList<Notification> fetchNotificationsForUser(String arg) throws SQLException {
+        ArrayList<Notification> notifications = new ArrayList<Notification>();
+
+        if(!connect())
+            return notifications;
+        Statement stmt = conn.createStatement();
+        String query = "SELECT *  FROM NOTIFICATION INNER JOIN EMPLOYEE_RECEIVE_NOTIFICATION ON (NOTIFICATION.id = EMPLOYEE_RECEIVE_NOTIFICATION.notification_id) WHERE (EMPLOYEE_RECEIVE_NOTIFICATION.employee_id = %s);";
+        query = String.format(query, arg);
+        ResultSet rs = stmt.executeQuery(query);
+
+        while (rs.next()) {
+            boolean is_invitation;
+            if(rs.getInt("is_invitation") == 1) is_invitation = true;
+            else is_invitation = false;
+            Notification notification = new Notification(rs.getInt("id"), EventHandler.getEvent(rs.getInt("event_id")), rs.getString("timestamp"), is_invitation, Notification.NotificationType.valueOf("INVITATION"));
+            notifications.add(notification);
+        }
+        rs.close();
+        close();
+        return notifications;
+
+    }
+
     public Notification fetchNotification(String arg){
         try {
             if(!connect())
@@ -53,6 +76,7 @@ public class NotificationHandler extends DbHandler {
         }
 
     }
+
     public Notification createNotification(Notification notification) throws SQLException {
         if(!connect())
             return null;

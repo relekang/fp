@@ -7,8 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import no.ntnu.fp.client.controller.ClientApplication;
+import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Notification;
 import no.ntnu.fp.common.model.Notification.NotificationType;
@@ -56,19 +58,6 @@ public class NotificationPanel extends JPanel implements ListSelectionListener {
 			}
 		});
 		
-        /*Employee testEmployee = new Employee();*/
-        /*testGuy.setName("Arne McTest");*/
-        
-		// Dummy data
-        addNotification(new Notification(1, new Event("Event"/*, testGuy*/), "2012-03-19 12:04:36", 1, NotificationType.INVITATION/*, testGuy*/));
-        addNotification(new Notification(2, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:37", 0, NotificationType.ACCEPTED));
-        addNotification(new Notification(3, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:38", 0, NotificationType.DECLINED));
-        addNotification(new Notification(4, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:40", 0, NotificationType.DELETION));
-        addNotification(new Notification(5, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, NotificationType.CHANGE, true, false, false, false));
-        addNotification(new Notification(6, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, NotificationType.CHANGE, false, true, false, false));
-        addNotification(new Notification(7, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, NotificationType.CHANGE, false, true, false, true));
-        addNotification(new Notification(8, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", 0, NotificationType.CHANGE, true, true, true, false));
-        
         NotificationPopup notificationPopup = new NotificationPopup(new Notification(1, new Event("Event"), "22.03.2012 15:17", 0, NotificationType.CHANGE, true, true, true, true));
         
         popup = new JPopupMenu();

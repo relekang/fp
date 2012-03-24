@@ -22,19 +22,16 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
     private Employee user;
     private CalendarDayBox[] days;
     private DefaultListModel model;
-    private int currentWeek;
     private int currentYear;
+    private int currentMonth;
+    private int currentWeek;
+    private int currentDay;
 
     public CalendarPanel() {
         setLayout(new GridBagLayout());
         addCalendarHeaders();
         initWeekPanel();
     }
-
-//	public CalendarPanel(Employee user) {
-//		this();
-//		this.user = user;
-//	}
 
     public void addEvents(ArrayList<Event> events) {
         for (Event e : events) {
@@ -67,10 +64,22 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
     }
 
     private void initCalendarDayBoxes() {
+    	if(days != null) {
+    		for(int i = 0; i < 7; i++) {
+    			days[i].removeAll();
+    		}
+//    		TODO: fix at CalendarDayBoxene ikke flytter seg bortover til hoyre
+    		revalidate();
+    	}
         days = new CalendarDayBox[GuiConstants.DAYS.length];
         gbc.gridy = 1;
         for (int i = 0; i < GuiConstants.DAYS.length; i++) {
-            days[i] = new CalendarDayBox(i);
+            Calendar c = Calendar.getInstance();
+            c.setFirstDayOfWeek(Calendar.MONDAY);
+            c.set(Calendar.WEEK_OF_YEAR, currentWeek);
+            c.set(currentYear, currentMonth, currentDay);
+            c.set(Calendar.DAY_OF_WEEK, 2+i);
+            days[i] = new CalendarDayBox(i, c);
             gbc.gridx = i;
             weekPanel.add(days[i]);
         }
@@ -111,15 +120,22 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
     private void loadCurrentWeek() {
         System.out.println("week changed in CalendarPanel to: " + currentWeek);
         initCalendarDayBoxes();
-        
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String property = evt.getPropertyName();
         if (property.equals(OverviewCalendarPanel.SELECTED_DAY_CHANGED)) {
+//        	Calendar c = Calendar.getInstance();
+//        	c.set(Calendar.YEAR, ((Calendar) (evt.getNewValue())).get(Calendar.YEAR));
+//        	c.set(Calendar.MONTH, ((Calendar) (evt.getNewValue())).get(Calendar.MONTH));
+//        	c.set(Calendar.WEEK_OF_YEAR, ((Calendar) (evt.getNewValue())).get(Calendar.WEEK_OF_YEAR));
+//        	c.set(Calendar.DAY_OF_MONTH, ((Calendar) (evt.getNewValue())).get(Calendar.DAY_OF_MONTH));
+//        	
+        	currentYear = ((Calendar) (evt.getNewValue())).get(Calendar.YEAR);
+        	currentMonth= ((Calendar) (evt.getNewValue())).get(Calendar.MONTH);
             currentWeek = ((Calendar) (evt.getNewValue())).get(Calendar.WEEK_OF_YEAR);
-            currentYear = ((Calendar) (evt.getNewValue())).get(Calendar.YEAR);
+            currentDay = ((Calendar) (evt.getNewValue())).get(Calendar.DAY_OF_MONTH);
             loadCurrentWeek();
         }
     }

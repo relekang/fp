@@ -1,12 +1,14 @@
  package no.ntnu.fp.common.model;
 
 
-import no.ntnu.fp.client.gui.objects.EventLabel;
+import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.common.Util;
 import no.ntnu.fp.server.storage.db.EventHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Event extends EventLabel implements Model{
+public class Event implements Model{
 	
 	public static final int TITLE_LENGTH = 40;
 	
@@ -27,22 +29,34 @@ public class Event extends EventLabel implements Model{
 	
     private int ID;	
     private String title;
-    private Date dateFrom;
-    private Date dateTo;
+    private Calendar dateFrom;
+    private Calendar dateTo;
     private Room room;
     private String description;
     private boolean isCanceled;
     private PropertyChangeSupport pcs;
     private ArrayList<Employee> participants;
     private Employee admin;
-
-
+    //used to paint the event to the calendarDayBox
+    private Color eventColor = GuiConstants.EVENT_PENDING;
+    private Color textColor = GuiConstants.EVENT_TEXT_COLOR;
+    private int fromPx = -1;
+    private int toPx = -1;
+    
     private Event() {
-        super(30,60); //TODO: Make those numbers real
     	pcs = new PropertyChangeSupport(this);
     	participants = new ArrayList<Employee>();
-        dateFrom = new Date();
-        dateTo = new Date();
+    	dateFrom = Calendar.getInstance();
+    	dateTo = Calendar.getInstance();
+    }
+    
+    public Event(int fromPx, int toPx, Employee admin) {
+    	this();
+    	this.admin = admin;
+    	if(toPx-fromPx < GuiConstants.HOUR_HEIGHT/2)
+			toPx += GuiConstants.HOUR_HEIGHT/2 - (toPx-fromPx);
+		this.fromPx = calculatePixelLocation(fromPx);
+		this.toPx = calculatePixelLocation(toPx);
     }
     
     /**
@@ -84,9 +98,6 @@ public class Event extends EventLabel implements Model{
         setDateFrom(dateFrom);
         setDateTo(dateTo);
     }
-    public Event(JSONObject object) throws JSONException {
-        this(object.getInt("id"), object.getString("title"), Util.dateTimeFromString(object.getString("date_from")), Util.dateTimeFromString(object.getString("date_to")));
-    }
     
     public static Event getDummyEvent(String title) {
     	Event evt = new Event(title);
@@ -95,6 +106,95 @@ public class Event extends EventLabel implements Model{
     	evt.setRoom(new Room("Sebra", "P-15", 10));
     	return evt;
     }
+
+	public static int[] getTimeFromPixel(int px) {
+		int[] hourAndMin = new int[2];
+		hourAndMin[0] = px / GuiConstants.HOUR_HEIGHT;
+		hourAndMin[1] = px % GuiConstants.HOUR_HEIGHT;
+		return hourAndMin;
+	}
+	
+	private int calculatePixelLocation(int px) {
+		int hour = px / GuiConstants.HOUR_HEIGHT;
+		int minute = px % GuiConstants.HOUR_HEIGHT;
+		int quarter = (minute / (GuiConstants.HOUR_HEIGHT / 4));
+		if(minute % (GuiConstants.HOUR_HEIGHT/4) > GuiConstants.HOUR_HEIGHT/8)
+			quarter++;
+		return hour* GuiConstants.HOUR_HEIGHT + quarter * (GuiConstants.HOUR_HEIGHT/4);
+	}	
+	
+//	A hack-ish method that draws the representative string for a meeting
+	public void drawRepresentation(Graphics g) {
+		g.setFont(GuiConstants.EVENT_LABEL_TITLE_FONT);
+		int maxLines = (toPx - fromPx) / (GuiConstants.HOUR_HEIGHT / 4);
+		int maxChars = 14;
+		String[] titleWords = getTitle().split(" ");
+		int line = 0;
+		String text = "";
+		for(int i = 0; i < titleWords.length; i++) {
+			if(text.length() + titleWords[i].length() >= maxChars) {
+				if(++line > maxLines)
+					return;
+				g.drawString(text, 0, getFromPixel()+line*13);
+				text = "";
+				i--;
+			} else {
+				text += titleWords[i]+ " ";
+			}
+		}
+		if(maxLines != 2)
+			g.drawString(text, 0, getFromPixel()+(++line)*13);
+		if(++line > maxLines)
+			return;
+		g.setFont(GuiConstants.EVENT_LABEL_ROOM_FONT);
+		String[] room = {getRoom() != null ? getRoom().toString() : ""}; //check if room is null
+		if(room[0].length() >= maxChars) {
+			room = room[0].split(", ");
+			g.drawString(room[0]+",", 0, getFromPixel()+line*13);
+			g.drawString(room[1], 0, getFromPixel()+(line)*13+9);
+		} else
+			g.drawString(room[0], 0, getFromPixel()+line*13);
+	}
+	
+	public void setFromAndToPixel(int fromPx, int toPx) {
+		if(toPx-fromPx < GuiConstants.HOUR_HEIGHT/2)
+			toPx += GuiConstants.HOUR_HEIGHT/2 - (toPx-fromPx);
+		this.fromPx = calculatePixelLocation(fromPx);
+		this.toPx = calculatePixelLocation(toPx);
+		System.out.println("from: " + fromPx + ", to : " + toPx);
+	}
+	
+	public int getFromPixel() {
+		return fromPx;
+	}
+	
+	public void setFromPixel(int px) {
+		this.fromPx = px;
+	}
+	
+	public int getToPixel() {
+		return toPx;
+	}
+
+	public void setToPixel(int px) {
+		this.toPx = px;
+	}
+	
+	public Color getEventColor() {
+		return eventColor;
+	}
+
+	public void setEventColor(Color eventColor) {
+		this.eventColor = eventColor;
+	}
+
+	public Color getTextColor() {
+		return textColor;
+	}
+
+	public void setTextColor(Color textColor) {
+		this.textColor = textColor;
+	}
 
 	public int getID(){
         return ID;
@@ -107,7 +207,6 @@ public class Event extends EventLabel implements Model{
     public String getTitle() {
         return title;
     }
-    
     
     /**
      * Sets the title if the title length is less than or equals to the max allowed title length (64)
@@ -126,7 +225,7 @@ public class Event extends EventLabel implements Model{
      * @return dateFrom
      */
     public Date getDateFrom() {
-        return dateFrom;
+        return dateFrom.getTime();
     }
     
     /**
@@ -134,8 +233,8 @@ public class Event extends EventLabel implements Model{
      * @param dateFrom
      */
     public void setDateFrom(Date dateFrom) {
-    	Date oldDateFrom = this.dateFrom;
-        this.dateFrom = dateFrom;
+    	Date oldDateFrom = this.dateFrom.getTime();
+        this.dateFrom.setTime(dateFrom);
         pcs.firePropertyChange(DATEFROM_CHANGED, oldDateFrom, this.dateFrom);
         if(!getDateFrom().before(getDateTo())) {
 //        	TODO: virker dette?
@@ -150,7 +249,7 @@ public class Event extends EventLabel implements Model{
      * @return dateTo
      */
     public Date getDateTo() {
-        return dateTo;
+        return dateTo.getTime();
     }
 
    /**
@@ -159,8 +258,8 @@ public class Event extends EventLabel implements Model{
     */
     public void setDateTo(Date dateTo) {
         if(getDateFrom() != null && getDateFrom().before(dateTo)){
-        	Date oldDateTo = this.dateTo;
-            this.dateTo = dateTo;
+        	Date oldDateTo = this.dateTo.getTime();
+            this.dateTo.setTime(dateTo);
             pcs.firePropertyChange(DATETO_CHANGED, oldDateTo, this.dateTo);
         }
     }
@@ -206,28 +305,6 @@ public class Event extends EventLabel implements Model{
     	pcs.firePropertyChange(ADDED_NEW_PARTICIPANT, employee, participants);
     }
 
-    /**
-     * Gets the date from sql, and converts it to an "util" date
-     * @return date
-     */
-    public String getSqlDateFrom(){
-        if(dateTo != null)
-            return new java.sql.Date(dateFrom.getTime()).toString();
-        else
-            return "0000-00-00";
-    }
-    
-    /**
-     * Gets the date from sql, and converts it to an "util" date
-     * @return
-     */
-    public String getSqlDateTo(){
-        if(dateTo != null)
-            return new java.sql.Date(dateTo.getTime()).toString();
-        else
-            return "0000-00-00";
-    }
-
     public boolean save(){
         try {
             EventHandler eventHandler = new EventHandler();
@@ -258,6 +335,10 @@ public class Event extends EventLabel implements Model{
     	return this.title;
     }
 
+    public Event(JSONObject object) throws JSONException {
+        this(object.getInt("id"), object.getString("title"), Util.dateTimeFromString(object.getString("date_from")), Util.dateTimeFromString(object.getString("date_to")));
+    }
+    
     public JSONObject toJson() throws JSONException {
         JSONObject object = new JSONObject();
         object.put("id", getID());

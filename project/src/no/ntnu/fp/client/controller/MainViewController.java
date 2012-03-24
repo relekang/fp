@@ -66,15 +66,15 @@ public class MainViewController implements PropertyChangeListener {
 //    		mainView.getCalendarPanel().addEvents(events);
 //    	}
         if (currentUser != null) {
-            events = Connection.fetchDayEvents(Calendar.getInstance().getTime(), getCurrentUser());
-            System.out.println("Events for " + getCurrentUser().getName() + " fetched: " + events);
+            events = getCurrentUser().getEvents(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+//            System.out.println("EVENT:" + events.get(0));
             mainView.getCalendarPanel().addEvents(events);
         }
     }
 
     public void loadUserNotifications() {
-    	if(currentUser.getName().equals("Bernt Arne")) {
-    		notifications = new ArrayList<Notification>();
+    	if(currentUser != null) {
+    		notifications = currentUser.getAllNotifications();
     		for(Notification n : notifications) {
     			mainView.getNotificationPanel().addNotification(n);
     		}

@@ -50,15 +50,15 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 	}
 	
 
-	public DateTimePicker(EventView view) {
+	public DateTimePicker() {
         mainPanel = new JPanel();
         semicolon = new JLabel(":");
         datePickerPanel = new OverviewCalendarPanel();
         timePickerPanel = new JPanel();
         hourField = new JTextField("hour",3);
         minuteField = new JTextField("min",3);
-        hourField.addKeyListener(view);
-        minuteField.addKeyListener(view);
+//        hourField.addKeyListener(view);
+//        minuteField.addKeyListener(view);
         
         gbc = new GridBagConstraints();
 		buildMainPanel();

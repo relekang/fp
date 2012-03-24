@@ -30,7 +30,7 @@ public class Connection {
 
     public void send(JSONObject object) {
         try {
-            Socket socket = new Socket("lkng.me", Constants.SERVER_PORT);
+            Socket socket = new Socket(Constants.getServerUrl(), Constants.SERVER_PORT);
             try {
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 System.out.println("Sending string: '" + object.toString() + "'\n");

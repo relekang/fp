@@ -1,5 +1,7 @@
 package no.ntnu.fp.common.model;
 
+import no.ntnu.fp.common.Util;
+import no.ntnu.fp.common.handlers.EmployeeHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,7 +11,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Employee implements Model{
+public class Employee extends EmployeeHandler implements Model{
 
     public enum Gender{
         FEMALE, MALE
@@ -33,43 +35,24 @@ public class Employee implements Model{
 	}
 	
 	public static Employee getExampleEployee() {
-		Employee e = new Employee();
-		e.setName("Bernt Arne");
-		e.setEmail("test@test.com");
-		e.setDateOfBirth(new Date(1990, 12, 31));
-		return e;
+		return new Employee("Bernt Arne", "awsm@test.no", new Date(1990, 12, 31), Gender.MALE);
 	}
 
     public Employee(JSONObject jsonEmployee) throws JSONException {
-        this(jsonEmployee.getInt("id"), jsonEmployee.get("name").toString(), jsonEmployee.get("email").toString(), new Date(), Gender.FEMALE );
+        this(jsonEmployee.getInt("id"), jsonEmployee.getString("name"), jsonEmployee.getString("email"), Util.dateFromString(jsonEmployee.getString("date_of_birth")), Gender.FEMALE );
     }
 	
-	/**
-	 * Default constructor. Must be called to initialise the object's member variables.
-	 * The constructor sets the name and email of this person to empty
-	 * {@link java.lang.String}, while the date of birth is given today's date. The 
-	 * {@linkplain #getId() id field} is set to current time when the object is created.
-	 */
-	public Employee() {
+	private Employee(int id) {
+        super(id);
+        this.ID = 0;
 		name = "";
 		email = "";
 		dateOfBirth = new Date();
-//		id = System.currentTimeMillis();
-        this.ID = 0;
 		propChangeSupp = new PropertyChangeSupport(this);
 	}
 	
-	/**
-	 * Constructs a new <code>Person</code> object with specified name, email, and date
-	 * of birth.
-	 * 
-	 * @param name The name of the person.
-	 * @param email The person's e-mail address
-	 * @param dateOfBirth The person's date of birth.
-	 */
 	public Employee(String name, String email, Date dateOfBirth, Gender gender) {
-		this();
-        this.ID = 0;
+		this(0);
 		this.name = name;
 		this.email = email;
 		this.gender = gender;
@@ -77,7 +60,7 @@ public class Employee implements Model{
 	}
 
     public Employee(int id, String name, String email, Date dateOfBirth, Gender gender) {
-        this();
+        this(id);
     	this.ID = id;
         this.name = name;
         this.email = email;
@@ -85,32 +68,6 @@ public class Employee implements Model{
         this.dateOfBirth = dateOfBirth;
     }
 	
-	/**
-	 * Assigns a new name to the person.<P>
-	 * 
-	 * Calling this method will invoke the 
-	 * <code>propertyChange(java.beans.PropertyChangeEvent)</code> method on 
-	 * all {@linkplain
-	 * #addPropertyChangeListener(java.beans.PropertyChangeListener) registered
-	 * <code>PropertyChangeListener<code> objecs}.  The {@link java.beans.PropertyChangeEvent}
-	 * passed with the {@link java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)}
-	 * method has the following characteristics:
-	 * 
-	 * <ul>
-	 * <li>the <code>getNewValue()</code> method returns a {@link java.lang.String} 
-	 * with the newly assigned name</li>
-	 * <li>the <code>getOldValue()</code> method returns a {@link java.lang.String} 
-	 * with the person's old name</li>
-	 * <li>the <code>getPropertyName()</code> method returns a {@link java.lang.String} 
-	 * with the value {@link #NAME_PROPERTY_NAME}.</li>
-	 * <li>the <code>getSource()</code> method returns this {@link Employee} object
-	 * </ul>
-	 * 
-	 * @param name The person's new name.
-	 *
-	 * @see java.beans.PropertyChangeListener <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeListener.html">java.beans.PropertyChangeListener</a>
-	 * @see java.beans.PropertyChangeEvent <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeEvent.html">java.beans.PropertyChangeEvent</a>
-	 */
 	public void setName(String name) {
 		String oldName = this.name;
 		this.name = name;
@@ -118,32 +75,6 @@ public class Employee implements Model{
 		propChangeSupp.firePropertyChange(event);
 	}
 	
-	/**
-	 * Assigns a new email address to the person.<P>
-	 * 
-	 * Calling this method will invoke the 
-	 * <code>propertyChange(java.beans.PropertyChangeEvent)</code> method on 
-	 * all {@linkplain
-	 * #addPropertyChangeListener(java.beans.PropertyChangeListener) registered
-	 * <code>PropertyChangeListener<code> objecs}.  The {@link java.beans.PropertyChangeEvent}
-	 * passed with the {@link java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)}
-	 * method has the following characteristics:
-	 * 
-	 * <ul>
-	 * <li>the <code>getNewValue()</code> method returns a {@link java.lang.String} 
-	 * with the newly assigned email address</li>
-	 * <li>the <code>getOldValue()</code> method returns a {@link java.lang.String} 
-	 * with the person's old email address</li>
-	 * <li>the <code>getPropertyName()</code> method returns a {@link java.lang.String} 
-	 * with the value {@link #EMAIL_PROPERTY_NAME}.</li>
-	 * <li>the <code>getSource()</code> method returns this {@link Employee} object
-	 * </ul>
-	 * 
-	 * @param email The person's new email address.
-	 *
-	 * @see java.beans.PropertyChangeListener <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeListener.html">java.beans.PropertyChangeListener</a>
-	 * @see java.beans.PropertyChangeEvent <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeEvent.html">java.beans.PropertyChangeEvent</a>
-	 */
 	public void setEmail(String email) {
 		String oldEmail = this.email;
 		this.email = email;
@@ -151,33 +82,7 @@ public class Employee implements Model{
 		propChangeSupp.firePropertyChange(event);
 	}
 	
-	/**
-	 * Assigns a new date of birth to the person.<P>
-	 * 
-	 * Calling this method will invoke the 
-	 * <code>propertyChange(java.beans.PropertyChangeEvent)</code> method on 
-	 * all {@linkplain
-	 * #addPropertyChangeListener(java.beans.PropertyChangeListener) registered
-	 * <code>PropertyChangeListener<code> objecs}.  The {@link java.beans.PropertyChangeEvent}
-	 * passed with the {@link java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)}
-	 * method has the following characteristics:
-	 * 
-	 * <ul>
-	 * <li>the <code>getNewValue()</code> method returns a {@link java.util.Date} 
-	 * with the newly assigned date of birth</li>
-	 * <li>the <code>getOldValue()</code> method returns a {@link java.util.Date} 
-	 * with the person's old date of birth</li>
-	 * <li>the <code>getPropertyName()</code> method returns a {@link java.lang.String} 
-	 * with the value {@link #DATEOFBIRTH_PROPERTY_NAME}.</li>
-	 * <li>the <code>getSource()</code> method returns this {@link Employee} object
-	 * </ul>
-	 * 
-	 * @param dateOfBirth The person's new date of birth.
-	 * 
-	 * @see java.beans.PropertyChangeListener <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/Date.html">java.util.Date</a>
-	 * @see java.beans.PropertyChangeListener <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeListener.html">java.beans.PropertyChangeListener</a>
-	 * @see java.beans.PropertyChangeEvent <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeEvent.html">java.beans.PropertyChangeEvent</a>
-	 */	
+
 	public void setDateOfBirth(Date dateOfBirth) {
 		Date oldDateOfBirth = this.dateOfBirth;
 		this.dateOfBirth = dateOfBirth;
@@ -185,44 +90,13 @@ public class Employee implements Model{
 		propChangeSupp.firePropertyChange(event);
 	}
 	
-	
-	/**
-	 * Assigns a new email address to the person.<P>
-	 * 
-	 * Calling this method will invoke the 
-	 * <code>propertyChange(java.beans.PropertyChangeEvent)</code> method on 
-	 * all {@linkplain
-	 * #addPropertyChangeListener(java.beans.PropertyChangeListener) registered
-	 * <code>PropertyChangeListener<code> objecs}.  The {@link java.beans.PropertyChangeEvent}
-	 * passed with the {@link java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)}
-	 * method has the following characteristics:
-	 * 
-	 * <ul>
-	 * <li>the <code>getNewValue()</code> method returns a {@link java.lang.String} 
-	 * with the newly assigned email address</li>
-	 * <li>the <code>getOldValue()</code> method returns a {@link java.lang.String} 
-	 * with the person's old email address</li>
-	 * <li>the <code>getPropertyName()</code> method returns a {@link java.lang.String} 
-	 * with the value {@link #EMAIL_PROPERTY_NAME}.</li>
-	 * <li>the <code>getSource()</code> method returns this {@link Employee} object
-	 * </ul>
-	 * 
-	 * @param email The person's new email address.
-	 *
-	 * @see java.beans.PropertyChangeListener <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeListener.html">java.beans.PropertyChangeListener</a>
-	 * @see java.beans.PropertyChangeEvent <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/beans/PropertyChangeEvent.html">java.beans.PropertyChangeEvent</a>
-	 */
 	public void setGender(Gender gender) {
 		Gender oldGender = this.gender;
 		this.gender = gender;
 		PropertyChangeEvent event = new PropertyChangeEvent(this, GENDER_PROPERTY_NAME, oldGender, gender);
 		propChangeSupp.firePropertyChange(event);
 	}
-	/**
-	 * Returns the person's name.
-	 * 
-	 * @return The person's name.
-	 */
+
 	public String getName() {
 		return name;
 	}
@@ -322,19 +196,13 @@ public class Employee implements Model{
 		s += "Date of birth: " + getDateOfBirth().toString();
 		return s;
 	}
-	
-	public ArrayList<Event> getRelatedEvents() {
-//		TODO: Fetch all events related to this user
-		
-		return null;
-	}
 
     public JSONObject toJson() throws JSONException {
         JSONObject object = new JSONObject();
         object.put("id", getId());
         object.put("name", getName());
         object.put("email", getEmail());
-        object.put("date", getDateOfBirth().toString());
+        object.put("date_of_birth", Util.dateToString(getDateOfBirth()));
         object.put("gender", getGender().toString());
 
         return object;

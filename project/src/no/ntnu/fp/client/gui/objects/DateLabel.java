@@ -18,6 +18,7 @@ public class DateLabel extends JLabel{
     public DateLabel(Date date, int month){
         super();
         cal = Calendar.getInstance();
+        cal.setFirstDayOfWeek(Calendar.MONDAY);
         cal.setTime(date);
         this.month = month;
         setText(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
@@ -40,10 +41,12 @@ public class DateLabel extends JLabel{
     	
     }
     public int getDay(){
-    	return cal.get(Calendar.DATE);
+    	return cal.get(Calendar.DAY_OF_MONTH);
     	
     }
 
-    
-   
+    public void setDate(Date date) {
+        cal.setTime(date);
+        setText(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
+    }
 }

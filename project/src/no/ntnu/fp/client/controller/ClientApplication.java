@@ -1,10 +1,8 @@
 package no.ntnu.fp.client.controller;
 
-import no.ntnu.fp.client.Connection;
 import no.ntnu.fp.client.gui.MainView;
 import no.ntnu.fp.client.gui.FindPersonView;
 import no.ntnu.fp.common.model.Employee;
-import no.ntnu.fp.common.model.Event;
 
 import javax.swing.*;
 
@@ -18,7 +16,7 @@ public class ClientApplication {
     private static FindPersonViewController findPersonViewController = new FindPersonViewController();
     
     public static void main (String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
-//    	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     	mainFrame = new MainView();
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,11 +30,6 @@ public class ClientApplication {
         findPersonFrame.setLocationRelativeTo(null);
         findPersonFrame.setVisible(false);
 
-
-//        ArrayList<Event> events = Connection.fetchEvents();
-//        for(Event e:events)
-//            System.out.println(e.toString());
-
 //        pack();
     }
 
@@ -47,7 +40,7 @@ public class ClientApplication {
     }
     
     public static void showEventView(){
-    	eventViewController.setEventVisible(true);
+    	eventViewController.setVisible(true);
     }
 
     public static void setMainFrameVisible(boolean visibility){
