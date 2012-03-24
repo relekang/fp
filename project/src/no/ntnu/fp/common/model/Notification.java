@@ -36,8 +36,7 @@ public class Notification implements Model{
         this.timestamp = timestamp;
         cal = Calendar.getInstance();
 
-        if (is_invitation == 1) this.is_invitation = true;
-        else this.is_invitation = false;
+        this.is_invitation = false;
         
         this.type = type;
 
