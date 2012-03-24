@@ -1,20 +1,27 @@
 package no.ntnu.fp.client.controller;
 
+import no.ntnu.fp.client.Connection;
 import no.ntnu.fp.client.gui.EventView;
-import no.ntnu.fp.client.gui.Login;
+import no.ntnu.fp.client.gui.LoginView;
 import no.ntnu.fp.client.gui.MainView;
 import no.ntnu.fp.client.gui.FindPersonView;
 import no.ntnu.fp.common.model.Employee;
 
 import javax.swing.*;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ClientApplication {
 	private static MainView mainFrame;
 	private static EventView eventFrame;
 	private static FindPersonView findPersonFrame; 
-	private static Login login;
+	private static LoginView login;
 
 	private static EventViewController eventViewController;
 	private static MainViewController mainViewController;
@@ -26,7 +33,7 @@ public class ClientApplication {
 			InstantiationException, IllegalAccessException,
 			UnsupportedLookAndFeelException {
 		
-		login = new Login();
+		login = new LoginView();
 		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		login.setVisible(true);
 		login.pack();
@@ -38,7 +45,10 @@ public class ClientApplication {
 	
 	public static void init() {
 		login.setVisible(false);
+		login = null;
 		mainFrame = new MainView();
+		eventFrame = new EventView();
+		findPersonFrame = new FindPersonView();
 		
 		mainViewController = new MainViewController(currentUser, mainFrame);
 		eventViewController = new EventViewController(currentUser);
@@ -70,7 +80,29 @@ public class ClientApplication {
 	}
 	
 	public static void logout() {
+		try {
+			Connection conn = new Connection();
+			try {
+				conn.send(new JSONObject().put("key", "logout"));
+				conn.close();
+			} catch(JSONException ex) {
+				conn.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		currentUser = null;
+		mainFrame.setVisible(false);
+		mainFrame = null;
+		eventFrame.setVisible(false);
+		eventFrame = null;
+		findPersonFrame.setVisible(false);
+		findPersonFrame = null;
+		
+		login = new LoginView();
+		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		login.setVisible(true);
+		login.pack();	
 	}
 	
 }
