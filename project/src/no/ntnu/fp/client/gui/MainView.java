@@ -28,6 +28,7 @@ public class MainView extends JFrame implements PropertyChangeListener {
 		mainPanel = new JPanel();
 		loginPanel = new Login(this);
 
+
 		buildMainPanel();
 
 		mainPanel.setVisible(false);
@@ -171,4 +172,7 @@ public class MainView extends JFrame implements PropertyChangeListener {
 	public void setUserLabel(JLabel userLabel) {
 		this.userLabel = userLabel;
 	}
+    public void autoLogin(){
+        loginPanel.autoLogin();
+    }
 }

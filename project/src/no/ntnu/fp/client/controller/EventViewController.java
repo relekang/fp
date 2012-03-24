@@ -1,5 +1,7 @@
 package no.ntnu.fp.client.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
@@ -8,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -18,9 +19,10 @@ import javax.swing.event.ListSelectionListener;
 import no.ntnu.fp.client.gui.EventView;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
+import no.ntnu.fp.common.model.Room;
 import no.ntnu.fp.server.storage.db.EventHandler;
 
-public class EventViewController implements PropertyChangeListener, KeyListener, MouseListener, ComponentListener {
+public class EventViewController implements PropertyChangeListener, KeyListener, MouseListener, ComponentListener, ActionListener {
 	
 	private EventView view;
 	private Employee currentUser;
@@ -30,6 +32,8 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	
 	
 	public EventViewController(){
+
+        event = new Event("");
 		
 		popList = new ArrayList<String>();
 		popList.add("arne");	popList.add("bjarne");	popList.add("ole");	popList.add("mats");
@@ -51,10 +55,17 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		view.getCalendarToPopPanel().getMinuteTextField().addKeyListener(this);
 		view.getCalendarFromPopPanel().getHourTextField().addKeyListener(this);
 		view.getCalendarFromPopPanel().getMinuteTextField().addKeyListener(this);
+		view.getSaveButton().addActionListener(this);
+		view.getCancelButton().addActionListener(this);
+		view.getDeleteButton().addActionListener(this);
+		view.getAcceptButton().addActionListener(this);
+		view.getDeclineButton().addActionListener(this);
+		view.getDeletePersonButton().addActionListener(this);
 		
 		view.getFromField().addMouseListener(this);
 		view.getToField().addMouseListener(this);
 		
+		view.getTitleField().addMouseListener(this);
 		view.getParticipantField().addMouseListener(this);
 		
 		view.getParticipantField().addKeyListener(this);
@@ -90,9 +101,11 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-//				if(participantPopList.getSelectedIndex() =! -1){
-					view.getParticipantField().setText((String) view.getParticipantPopList().getSelectedValue());
-//				}
+				if(view.getParticipantPopList().getSelectedIndex() != -1){
+					view.getListModel().addElement(view.getParticipantPopList().getSelectedValue());
+					view.getPopListModel().removeElement(view.getParticipantPopList().getSelectedValue());
+					view.getParticipantField().grabFocus();
+				}
 			}
 		});
     }
@@ -116,20 +129,28 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	
 	public void setEvent(Event event){
 		this.event = event;
-	}
-	
-	
-	public Event getEvent (int ID){
-		try {
-			return EventHandler.getEvent(ID);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		view.setTitle(event.getTitle());
+		view.setFromField(event.getDateFrom().toString());
+		view.setToField(event.getDateTo().toString());
+		view.setDescriptionArea(event.getDescription());
+		
+		for (int i = 0; i < event.getParticipants().size(); i++) {
+			view.addParticipant(event.getParticipants().get(i));
 		}
-		
-		return null;
-		
 	}
+	
+//	
+//	public Event getEvent (int ID){
+//		try {
+//			return EventHandler.getEvent(ID);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		return null;
+//		
+//	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -190,21 +211,35 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		if(e.getSource() == view.getFromField()){
-			
+		if (e.getSource() == view.getTitleField()) {
+			if (view.getTitleField().getText().equals("Title")) {
+				view.getTitleField().setText("");
+			}
+		}
+		else if(e.getSource() == view.getFromField()){
 			view.getFromPop().show(view.getFromField(), 0, 30);
-			view.getFromField().setText("");
+			if (view.getFromField().getText().equals("From")) {
+				view.getFromField().setText("");
+			}
 			view.getFromField().grabFocus();
 		}
 		else if(e.getSource() == view.getToField()){
 			view.getToPop().show(view.getToField(), 0, 30);
-			view.getToField().setText("");
+			if (view.getToField().getText().equals("To")) {
+				view.getToField().setText("");
+			}
 			view.getToField().grabFocus();
 		}
 		else if (e.getSource() == view.getParticipantField()) {
 			view.getParticipantPop().show(view.getParticipantField(), 0, 30);
 			view.getParticipantField().setText("");
 			view.getParticipantField().grabFocus();
+		}
+		else if(e.getSource() == view.getTitleField()){
+			view.getTitleField().setText("");	
+		}
+		else if(e.getSource() == view.getDescriptionArea()){
+			view.getDescriptionArea().setText("");	
 		}
 	}
 
@@ -257,6 +292,41 @@ public void componentHidden(ComponentEvent arg0) {
 	@Override
 	public void componentShown(ComponentEvent arg0) {
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		if(e.getSource() == view.getSaveButton()){
+			this.setVisible(false);
+			event.setTitle(view.getTitle());
+//			event.setDateFrom();
+//			event.setDateTo(dateTo);
+			event.setDescription(view.getDescriptionArea().getText());
+			ArrayList<Employee> participants = new ArrayList<Employee>();
+			for (int i = 0; i < view.getListModel().size(); i++) {
+				participants.add((Employee) view.getListModel().get(i));
+			}
+			event.setParticipants(participants);
+			event.setRoom((Room) view.getRoomBox().getSelectedItem());
+			
+	        event.save();
+		}
+		else if (e.getSource() == view.getCancelButton()) {
+			this.setVisible(false);
+		}
+		else if (e.getSource() == view.getDeleteButton()) {
+			this.setVisible(false);
+		}
+		else if (e.getSource() == view.getDeletePersonButton()) {
+			int temp = view.getParticipantList().getSelectedIndex();
+			Employee tempEmployee = (Employee) view.getParticipantList().getSelectedValue(); 
+			if(temp > -1){
+				view.getPopListModel().addElement(tempEmployee);
+				view.getParticipantList().setSelectedIndex(temp - 1);
+				view.removeParticipant(temp);
+			}
+		}
 	}
 	
 	

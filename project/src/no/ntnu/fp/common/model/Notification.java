@@ -27,7 +27,7 @@ public class Notification implements Model{
     }
 
     public Notification(JSONObject object) throws JSONException {
-        this(object.getInt("id"), new Event(object.getJSONObject("event")), object.getString("timestamp"), object.getBoolean("is_invitation"), NotificationType.INVITATION);
+        this(object.getInt("id"), new Event(object.getJSONObject("event")), object.getString("timestamp"), object.getBoolean("is_invitation"), NotificationType.valueOf(object.getString("type")));
     }
 
 
@@ -48,6 +48,8 @@ public class Notification implements Model{
                 description = /*getFirstName()*/"Person" + " accepted your invitation to " + event.getTitle(); break;
             case DECLINED:
                 description = /*getFirstName()*/"Person" + " declined your invitation to " + event.getTitle(); break;
+            case CHANGE:
+            	description = /*getFirstName()*/"Person" + " edited " + event.getTitle(); break;
         }
         return description;
     }

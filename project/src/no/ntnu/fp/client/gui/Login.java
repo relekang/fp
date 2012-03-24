@@ -15,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
 public class Login extends JPanel implements ActionListener, KeyListener{
@@ -26,14 +25,12 @@ public class Login extends JPanel implements ActionListener, KeyListener{
 	protected JPasswordField passwordField;
 	
 	protected JButton loginButton;
-	protected JPopupMenu popup;
 	protected MainView mv;
 
 	//constructor	
 	public Login(MainView mv){
 		
 		this.mv = mv;
-		popup = new JPopupMenu();
 		
 		GridBagConstraints c = new GridBagConstraints();
     	setLayout(new GridBagLayout());
@@ -88,7 +85,7 @@ public class Login extends JPanel implements ActionListener, KeyListener{
     	passwordField.addActionListener(this);
     	loginButton.addActionListener(this);
     	loginButton.addKeyListener(this);
-		
+
 	}
 
 	@Override
@@ -123,10 +120,24 @@ public class Login extends JPanel implements ActionListener, KeyListener{
                 }
                 else{
                     errorMsgLabel.setText("Wrong username or password");
-                    popup.pack();
                 }
             } catch (SQLException exception) {
                 System.err.println(exception);
             }
+    }
+
+    public void autoLogin(){
+        usernameTextField.setText("rolf");
+        passwordField.setText("rolf");
+        long t0, t1;
+
+        t0 =  System.currentTimeMillis();
+
+        do{
+            t1 = System.currentTimeMillis();
+        }
+        while ((t1 - t0) < (1000));
+        actionPerformed(new ActionEvent(loginButton, ActionEvent.ACTION_PERFORMED, ""));
+
     }
 }

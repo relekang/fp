@@ -6,25 +6,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import java.util.Date;
-
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
-
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,8 +25,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory.Default;
 
 public class EventView extends JFrame {
 	
@@ -55,7 +40,6 @@ public class EventView extends JFrame {
 	private DefaultListModel listModel, popListModel;
 	private ParticipantRenderer renderer;
 	private JPopupMenu fromPop, toPop, participantPop;
-	private String toHour, toMinute, fromHour, fromMinute, toDate, fromDate;
 	private boolean shown;
 	private Event model;
 	
@@ -80,6 +64,12 @@ public class EventView extends JFrame {
 		calendarToPopPanel = new DateTimePicker();
 		calendarFromPopPanel = new DateTimePicker();
 		participantPopPanel = new JPanel();
+		acceptButton = new JButton("Accept");
+		declineButton = new JButton("Decline");
+		saveButton = new JButton("Save");
+		cancelButton = new JButton("Cancel");
+		deleteButton = new JButton("Delete");
+		deletePersonButton = new JButton("Remove person");
 		
 		createPanel();
 		
@@ -88,6 +78,34 @@ public class EventView extends JFrame {
 		
 		this.add(eventViewPanel);
 		this.pack();
+	}
+	
+	public JList getParticipantList(){
+		return participantList;
+	}
+	
+	public JButton getAcceptButton(){
+		return acceptButton;
+	}
+	
+	public JButton getDeclineButton(){
+		return declineButton;
+	}
+	
+	public JButton getSaveButton(){
+		return saveButton;
+	}
+	
+	public JButton getCancelButton(){
+		return cancelButton;
+	}
+	
+	public JButton getDeleteButton(){
+		return deleteButton;
+	}
+	
+	public JButton getDeletePersonButton(){
+		return deletePersonButton;
 	}
 	
 	public JTextField getTitleField(){
@@ -170,21 +188,9 @@ public class EventView extends JFrame {
 	
 	private void createPanel(){
 		
-		//TODO midlertidig eksempler
-		Employee hans = new Employee("Hans", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
-		Employee geir = new Employee("Geir", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
-		Employee bjarne = new Employee("Bjarne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
-		Employee arne = new Employee("Arne", "heihei", new Date(1998,2,2), Employee.Gender.MALE);
-		//
 		
 		renderer = new ParticipantRenderer();
 		listModel = new DefaultListModel();
-		
-		listModel.addElement(arne);
-		listModel.addElement(hans);
-		listModel.addElement(geir);
-		listModel.addElement(bjarne);
-
 		
 		participantList = new JList(listModel);
 		participantList.setCellRenderer(renderer);
@@ -196,13 +202,11 @@ public class EventView extends JFrame {
 		popListModel = new DefaultListModel();
 		participantPopList = new JList(popListModel);
 		
-		
-		
 		participantPopList.setPreferredSize(new Dimension(315, 100));
 		participantPopPanel.add(participantPopList);
 		
-		
-		String[] rooms = {"Room", "411, P15", "R2"};
+//		String[] rooms = {"Room", "411, P15", "R2"};
+		Room[] rooms = {new Room("P15", "glosaugen", 200), new Room("411", "Stripa", 10), new Room("R2", "realbygget", 313)};
 		eventTitle = new JTextField("Title", 26);
 		fromField = new JTextField("From", 10);
 		toField = new JTextField("To", 10);
@@ -214,8 +218,6 @@ public class EventView extends JFrame {
 		dash = new JLabel("-");
 		dash.setSize(5, 1);
 		
-		//Add listeners to DateTimePicker
-		
 		//TODO creating popups for from, to and participant field
 		fromPop = new JPopupMenu();
 		fromPop.add(calendarFromPopPanel);
@@ -226,14 +228,8 @@ public class EventView extends JFrame {
 		participantPop = new JPopupMenu();
 		participantPop.add(participantPopPanel);
 		
-		
-		
 		//skal sjekke om brukeren er eventmanager
 		if(true){
-			saveButton = new JButton("Save");
-			cancelButton = new JButton("Cancel");
-			deleteButton = new JButton("Delete");
-			deletePersonButton = new JButton("Remove person");
 			
 			gbc3.gridx = 0;	gbc3.gridy = 0;
 			gbc3.gridwidth = 1;
@@ -255,56 +251,26 @@ public class EventView extends JFrame {
 			gbc2.gridwidth = 1;
 			listPanel.add(deletePersonButton, gbc2);
 			
+			
+			ArrayList<Employee> tempEmployeeArrayList = Employee.getAllEmployees(); 
+			for(int i = 0; i < tempEmployeeArrayList.size(); i++){
+				popListModel.addElement(tempEmployeeArrayList.get(i));
+			}
+			
+			
 			saveButton.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					setVisible(false);
-					
-					
-					int listSize = participantList.getModel().getSize();
-					ArrayList<Employee> participantsArray = new ArrayList<Employee>();
-					
-					for (int i = 0; i < listSize; i++) {
-						participantsArray.add((Employee) participantList.getModel().getElementAt(i));
-					}
-				}
-			});
-			
-			cancelButton.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					setVisible(false);
-				}
-			});
-			
-			deleteButton.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					setVisible(false);
-					
-					//TODO: Should delete event from database
-				}
-			});
-			
-			deletePersonButton.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					int temp = participantList.getSelectedIndex();
-					
-					if(temp > -1){
-						participantList.setSelectedIndex(temp - 1);
-						removeParticipant(temp);
-					}
-//					else
-//					{
-						//list.setSelectedIndex(-1);
-						//persons.setModel(new Person());
-						//removePerson(temp);
+//					setVisible(false);
+//					
+//					
+//					int listSize = participantList.getModel().getSize();
+//					ArrayList<Employee> participantsArray = new ArrayList<Employee>();
+//					
+//					for (int i = 0; i < listSize; i++) {
+//						participantsArray.add((Employee) participantList.getModel().getElementAt(i));
 //					}
 				}
 			});
@@ -317,9 +283,6 @@ public class EventView extends JFrame {
 			roomBox.setEnabled(false);
 			descriptionBox.setEditable(false);
 			participantsField.setVisible(false);
-			
-			acceptButton = new JButton("Accept");
-			declineButton = new JButton("Decline");
 			
 			java.net.URL accept = getClass().getResource("/resources/icons/accept.png");
 			ImageIcon acceptIcon = new ImageIcon(accept);
@@ -377,7 +340,6 @@ public class EventView extends JFrame {
 		gbc1.gridx = 2;	gbc1.gridy = 1;
 		gbc1.gridwidth = 1;
 		gbc1.gridheight = 1;
-		//gbc1.anchor = GridBagConstraints.WEST;
 		eventPanel.add(toField, gbc1);
 		
 		gbc1.gridx = 0;	gbc1.gridy = 2;
@@ -395,16 +357,11 @@ public class EventView extends JFrame {
 		gbc1.gridwidth = 3;
 		eventPanel.add(descriptionBox, gbc1);
 		
-
 		gbc2.gridx = 0;	gbc2.gridy = 0;
 		gbc2.gridheight = 3;
 		gbc2.gridwidth = 3;
 		listPanel.add(participantList, gbc2);
 	}
-	
-	
-	
-	
 	
 	public JList getParticipantPopList(){
 		return participantPopList;
