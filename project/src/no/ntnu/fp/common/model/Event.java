@@ -164,6 +164,10 @@ public class Event implements Model{
 		System.out.println("from: " + fromPx + ", to : " + toPx);
 	}
 	
+	public ArrayList<Employee> getParticipants(){
+		return participants;
+	}
+	
 	public int getFromPixel() {
 		return fromPx;
 	}

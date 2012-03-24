@@ -1,5 +1,7 @@
 package no.ntnu.fp.client.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
@@ -20,7 +22,7 @@ import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.server.storage.db.EventHandler;
 
-public class EventViewController implements PropertyChangeListener, KeyListener, MouseListener, ComponentListener {
+public class EventViewController implements PropertyChangeListener, KeyListener, MouseListener, ComponentListener, ActionListener {
 	
 	private EventView view;
 	private Employee currentUser;
@@ -51,6 +53,12 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		view.getCalendarToPopPanel().getMinuteTextField().addKeyListener(this);
 		view.getCalendarFromPopPanel().getHourTextField().addKeyListener(this);
 		view.getCalendarFromPopPanel().getMinuteTextField().addKeyListener(this);
+		view.getSaveButton().addActionListener(this);
+		view.getCancelButton().addActionListener(this);
+		view.getDeleteButton().addActionListener(this);
+		view.getAcceptButton().addActionListener(this);
+		view.getDeclineButton().addActionListener(this);
+		view.getDeletePersonButton().addActionListener(this);
 		
 		view.getFromField().addMouseListener(this);
 		view.getToField().addMouseListener(this);
@@ -116,20 +124,28 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	
 	public void setEvent(Event event){
 		this.event = event;
-	}
-	
-	
-	public Event getEvent (int ID){
-		try {
-			return EventHandler.getEvent(ID);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		view.setTitle(event.getTitle());
+		view.setFromField(event.getDateFrom().toString());
+		view.setToField(event.getDateTo().toString());
+		view.setDescriptionArea(event.getDescription());
+		
+		for (int i = 0; i < event.getParticipants().size(); i++) {
+			view.addParticipant(event.getParticipants().get(i));
 		}
-		
-		return null;
-		
 	}
+	
+//	
+//	public Event getEvent (int ID){
+//		try {
+//			return EventHandler.getEvent(ID);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		return null;
+//		
+//	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -193,12 +209,16 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		if(e.getSource() == view.getFromField()){
 			
 			view.getFromPop().show(view.getFromField(), 0, 30);
-			view.getFromField().setText("");
+			if (view.getFromField().getText().equals("From")) {
+				view.getFromField().setText("");
+			}
 			view.getFromField().grabFocus();
 		}
 		else if(e.getSource() == view.getToField()){
 			view.getToPop().show(view.getToField(), 0, 30);
-			view.getToField().setText("");
+			if (view.getToField().getText().equals("To")) {
+				view.getToField().setText("");
+			}
 			view.getToField().grabFocus();
 		}
 		else if (e.getSource() == view.getParticipantField()) {
@@ -257,6 +277,28 @@ public void componentHidden(ComponentEvent arg0) {
 	@Override
 	public void componentShown(ComponentEvent arg0) {
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		if(e.getSource() == view.getSaveButton()){
+			System.out.println("her");
+		}
+		else if (e.getSource() == view.getCancelButton()) {
+			this.setVisible(false);
+		}
+		else if (e.getSource() == view.getDeleteButton()) {
+			this.setVisible(false);
+		}
+		else if (e.getSource() == view.getDeletePersonButton()) {
+			int temp = view.getParticipantList().getSelectedIndex();
+			
+			if(temp > -1){
+				view.getParticipantList().setSelectedIndex(temp - 1);
+				view.removeParticipant(temp);
+			}
+		}
 	}
 	
 	
