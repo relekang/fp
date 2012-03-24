@@ -1,5 +1,6 @@
 package no.ntnu.fp.server.storage.db;
 
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Workgroup;
 
 import java.sql.ResultSet;
@@ -60,10 +61,9 @@ public class WorkgroupHandler extends DbHandler {
 
         String query = "INSERT INTO `WORKGROUP` (`id`, `name`, `email`) VALUES (NULL, '%s', '%s');";
         query = String.format(query, group.getName(), group.getEmail());
-        System.out.println(query);
+        Util.print(query);
         Statement stm = conn.createStatement();
         boolean rs = stm.execute(query);
-        System.out.println(rs);
         close();
         return group;
     }

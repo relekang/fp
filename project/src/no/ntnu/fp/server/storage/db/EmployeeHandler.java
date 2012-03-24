@@ -39,7 +39,10 @@ public class EmployeeHandler extends DbHandler {
             if(!connect())
                 return null;
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM EMPLOYEE WHERE " + arg);
+            String query = "SELECT * FROM EMPLOYEE WHERE " + arg;
+            Util.print(query);
+            ResultSet rs = stmt.executeQuery(query);
+            
             Employee employee;
             rs.next();
             employee = new Employee(rs.getInt("id"),rs.getString("name"), rs.getString("email"), Util.dateFromString(rs.getString("date_of_birth")), Employee.Gender.MALE);
