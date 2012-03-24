@@ -90,6 +90,9 @@ public class ServerApplication {
             String message = new JSONArray(jsonList).toString();
             conn.send(message);
         }
+        else{
+            conn.send(new JSONObject().put("key", "failure").toString());
+        }
     }
     private static void handleNotificationRequest(JSONObject object, ServerConnection conn) throws JSONException, SQLException {
         NotificationHandler notificationHandler = new NotificationHandler();

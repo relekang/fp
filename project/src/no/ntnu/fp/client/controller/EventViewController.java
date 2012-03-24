@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -20,6 +19,7 @@ import javax.swing.event.ListSelectionListener;
 import no.ntnu.fp.client.gui.EventView;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
+import no.ntnu.fp.common.model.Room;
 import no.ntnu.fp.server.storage.db.EventHandler;
 
 public class EventViewController implements PropertyChangeListener, KeyListener, MouseListener, ComponentListener, ActionListener {
@@ -32,6 +32,8 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	
 	
 	public EventViewController(){
+
+        event = new Event("");
 		
 		popList = new ArrayList<String>();
 		popList.add("arne");	popList.add("bjarne");	popList.add("ole");	popList.add("mats");
@@ -98,9 +100,9 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-//				if(participantPopList.getSelectedIndex() =! -1){
+				if(view.getParticipantPopList().getSelectedIndex() != -1){
 					view.getParticipantField().setText((String) view.getParticipantPopList().getSelectedValue());
-//				}
+				}
 			}
 		});
     }
@@ -283,7 +285,19 @@ public void componentHidden(ComponentEvent arg0) {
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getSource() == view.getSaveButton()){
-			System.out.println("her");
+			this.setVisible(false);
+			event.setTitle(view.getTitle());
+//			event.setDateFrom();
+//			event.setDateTo(dateTo);
+			event.setDescription(view.getDescriptionArea().getText());
+			ArrayList<Employee> participants = new ArrayList<Employee>();
+			for (int i = 0; i < view.getListModel().size(); i++) {
+				participants.add((Employee) view.getListModel().get(i));
+			}
+			event.setParticipants(participants);
+			event.setRoom((Room) view.getRoomBox().getSelectedItem());
+			
+	        event.save();
 		}
 		else if (e.getSource() == view.getCancelButton()) {
 			this.setVisible(false);
@@ -293,7 +307,6 @@ public void componentHidden(ComponentEvent arg0) {
 		}
 		else if (e.getSource() == view.getDeletePersonButton()) {
 			int temp = view.getParticipantList().getSelectedIndex();
-			
 			if(temp > -1){
 				view.getParticipantList().setSelectedIndex(temp - 1);
 				view.removeParticipant(temp);

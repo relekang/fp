@@ -6,25 +6,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import java.util.Date;
-
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
-
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,8 +25,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory.Default;
 
 public class EventView extends JFrame {
 	
@@ -232,7 +217,8 @@ public class EventView extends JFrame {
 		participantPopList.setPreferredSize(new Dimension(315, 100));
 		participantPopPanel.add(participantPopList);
 		
-		String[] rooms = {"Room", "411, P15", "R2"};
+//		String[] rooms = {"Room", "411, P15", "R2"};
+		Room[] rooms = {new Room("P15", "glosaugen", 200), new Room("411", "Stripa", 10), new Room("R2", "realbygget", 313)};
 		eventTitle = new JTextField("Title", 26);
 		fromField = new JTextField("From", 10);
 		toField = new JTextField("To", 10);

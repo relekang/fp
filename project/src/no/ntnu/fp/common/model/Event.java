@@ -3,7 +3,7 @@
 
 import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.common.Util;
-import no.ntnu.fp.server.storage.db.EventHandler;
+import no.ntnu.fp.common.handlers.EventHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Event implements Model{
+public class Event extends EventHandler implements Model{
 	
 	public static final int TITLE_LENGTH = 40;
 	
@@ -43,7 +43,8 @@ public class Event implements Model{
     private int fromPx = -1;
     private int toPx = -1;
     
-    private Event() {
+    private Event(int id) {
+        super(id);
     	pcs = new PropertyChangeSupport(this);
     	participants = new ArrayList<Employee>();
     	dateFrom = Calendar.getInstance();
@@ -51,7 +52,7 @@ public class Event implements Model{
     }
     
     public Event(int fromPx, int toPx, Employee admin) {
-    	this();
+    	this(0);
     	this.admin = admin;
     	if(toPx-fromPx < GuiConstants.HOUR_HEIGHT/2)
 			toPx += GuiConstants.HOUR_HEIGHT/2 - (toPx-fromPx);
@@ -64,7 +65,7 @@ public class Event implements Model{
      * @param title
      */
     public Event(String title, Employee admin){
-    	this();
+    	this(0);
         ID = 0;
         setTitle(title);
         this.admin = admin;
@@ -73,9 +74,12 @@ public class Event implements Model{
     }
     
     public Event(String title){
-    	this();
+    	this(0);
     	ID = 0;
     	setTitle(title);
+    }
+    public Event(JSONObject object) throws JSONException {
+        this(object.getInt("id"), object.getString("title"), Util.dateTimeFromString(object.getString("date_from")), Util.dateTimeFromString(object.getString("date_to")));
     }
     
     /**
@@ -85,14 +89,14 @@ public class Event implements Model{
      * @param dateTo
      */
     public Event(String title, Date dateFrom, Date dateTo){
-    	this();
+    	this(0);
         setTitle(title);
         setDateFrom(dateFrom);
         setDateTo(dateTo);
     }
     
     public Event(int id, String title, Date dateFrom, Date dateTo){
-    	this();
+    	this(0);
         ID = id;
         setTitle(title);
         setDateFrom(dateFrom);
@@ -308,19 +312,13 @@ public class Event implements Model{
     	participants.add(employee);
     	pcs.firePropertyChange(ADDED_NEW_PARTICIPANT, employee, participants);
     }
+    
+    public void setParticipants(ArrayList<Employee> participants){
+    	this.participants = participants;
+    }
 
     public boolean save(){
-        try {
-            EventHandler eventHandler = new EventHandler();
-            if(ID == 0) {
-                Event e = eventHandler.createEvent(this);
-                this.ID = e.getID();
-                
-            }
-            else eventHandler.updateEvent(this);
-        } catch (SQLException e) {
-            return false;
-        }
+        updateEvent(this);
         return true;
     }
 
@@ -339,9 +337,7 @@ public class Event implements Model{
     	return this.title;
     }
 
-    public Event(JSONObject object) throws JSONException {
-        this(object.getInt("id"), object.getString("title"), Util.dateTimeFromString(object.getString("date_from")), Util.dateTimeFromString(object.getString("date_to")));
-    }
+
     
     public JSONObject toJson() throws JSONException {
         JSONObject object = new JSONObject();
