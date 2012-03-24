@@ -263,6 +263,13 @@ public class EventView extends JFrame {
 			gbc2.gridwidth = 1;
 			listPanel.add(deletePersonButton, gbc2);
 			
+			
+			ArrayList<Employee> tempEmployeeArrayList = Employee.getAllEmployees(); 
+			for(int i = 0; i < tempEmployeeArrayList.size(); i++){
+				popListModel.addElement(tempEmployeeArrayList.get(i));
+			}
+			
+			
 			saveButton.addActionListener(new ActionListener() {
 				
 				@Override
