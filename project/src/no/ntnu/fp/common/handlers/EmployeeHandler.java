@@ -54,11 +54,11 @@ public class EmployeeHandler {
     public ArrayList<Notification> getAllNotifications(){
         if(Constants.use_server) return getNotificationsFromServer();
         ArrayList<Notification> list = new ArrayList<Notification>();
-        list.add(new Notification(1, new Event("Event"/*, testGuy*/), "2012-03-19 12:04:36", true, Notification.NotificationType.INVITATION/*, testGuy*/));
-        list.add(new Notification(2, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:37", false, Notification.NotificationType.ACCEPTED));
-        list.add(new Notification(3, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:38", false, Notification.NotificationType.DECLINED));
-        list.add(new Notification(4, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:40", false, Notification.NotificationType.DELETION));
-        list.add(new Notification(8, new Event("Event"/*, testGuy*/), "2012-03-20 13:05:39", true, Notification.NotificationType.CHANGE));
+        list.add(new Notification(1, Event.getDummyEvent("Event"), "2012-03-19 12:04:36", true, Notification.NotificationType.INVITATION/*, testGuy*/));
+        list.add(new Notification(2, Event.getDummyEvent("Event"), "2012-03-20 13:05:37", false, Notification.NotificationType.ACCEPTED));
+        list.add(new Notification(3, Event.getDummyEvent("Event"), "2012-03-20 13:05:38", false, Notification.NotificationType.DECLINED));
+        list.add(new Notification(4, Event.getDummyEvent("Event"), "2012-03-20 13:05:40", false, Notification.NotificationType.DELETION));
+        list.add(new Notification(8, Event.getDummyEvent("Event"), "2012-03-20 13:05:39", true, Notification.NotificationType.CHANGE));
 
         return list;
     }

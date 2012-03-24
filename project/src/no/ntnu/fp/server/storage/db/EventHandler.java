@@ -1,6 +1,7 @@
 package no.ntnu.fp.server.storage.db;
 
 import no.ntnu.fp.common.Util;
+import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 
 import java.sql.ResultSet;
@@ -22,10 +23,10 @@ public class EventHandler extends DbHandler {
         if(!connect())
             return events;
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM EVENT");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM EVENT INNER JOIN EMPLOYEE_ATTEND_EVENT ON EVENT.id = EMPLOYEE_ATTEND_EVENT.event_id AND is_admin = 1;");
 
         while (rs.next()) {
-            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")));
+            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")), EmployeeHandler.getEmployee(rs.getInt("employee_id")));
             event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
             event.setDescription(rs.getString("description"));
             events.add(event);
@@ -42,10 +43,10 @@ public class EventHandler extends DbHandler {
         if(!connect())
             return events;
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM EVENT WHERE " + arg);
+        ResultSet rs = stmt.executeQuery("SELECT * FROM EVENT INNER JOIN EMPLOYEE_ATTEND_EVENT ON EVENT.id = EMPLOYEE_ATTEND_EVENT.event_id AND is_admin = 1 WHERE " + arg);
 
         while (rs.next()) {
-            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")));
+            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")), EmployeeHandler.getEmployee(rs.getInt("employee_id")));
             event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
             event.setDescription(rs.getString("description"));
             events.add(event);
@@ -61,14 +62,12 @@ public class EventHandler extends DbHandler {
             if(!connect())
                 return null;
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM EVENT WHERE " + arg;
+            String query = "SELECT * FROM EVENT INNER JOIN EMPLOYEE_ATTEND_EVENT ON EVENT.id = EMPLOYEE_ATTEND_EVENT.event_id AND is_admin = 1 WHERE " + arg;
             System.out.println(query);
             ResultSet rs = stmt.executeQuery(query);
             Event event;
             rs.next();
-            event = new Event(rs.getString("title"));
-//            event.setDateFrom(new Date(rs.getString("date_from")));
-//            event.setDateTo(new Date(rs.getString("date_to")));
+            event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")), EmployeeHandler.getEmployee(rs.getInt("employee_id")));
             event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
             event.setDescription(rs.getString("description"));
             rs.close();
@@ -85,7 +84,7 @@ public class EventHandler extends DbHandler {
         if(!connect())
             return null;
         String query = "INSERT INTO `EVENT` (`id`,`room_id`, `date_from`, `date_to`, `title`, `description`, `type`, `canceled`) VALUES (NULL, %d, '%s', '%s', '%s', '%s', '%s', %d);";
-        query = String.format(query, event.getRoom().getRoomId(), Util.dateTimeToString(event.getDateFrom()), Util.dateTimeToString(event.getDateTo()), event.getTitle(), event.getDescription(), "meeting"/*event.getTypeAsString()*/, event.getIsCanceledAsInt());
+        query = String.format(query, event.getRoom().getId(), Util.dateTimeToString(event.getDateFrom()), Util.dateTimeToString(event.getDateTo()), event.getTitle(), event.getDescription(), "meeting"/*event.getTypeAsString()*/, event.getIsCanceledAsInt());
         System.out.println(query);
         Statement stm = conn.createStatement();
         boolean rs = stm.execute(query);
@@ -102,7 +101,7 @@ public class EventHandler extends DbHandler {
         if(!connect())
             return null;
         String query = "UPDATE  `EVENT` SET `room_id` = %d, `date_from` = '%s', `date_to` = '%s', `title` = '%s', `description` = '%s', `type` = '%s', `canceled` = %d, WHERE  `id` =  %d LIMIT 1 ;";
-        query = String.format(query, event.getRoom().getRoomId(), Util.dateTimeToString(event.getDateFrom()), Util.dateTimeToString(event.getDateTo()), event.getTitle(), event.getDescription(), "meeting", event.getIsCanceledAsInt(), event.getID());
+        query = String.format(query, event.getRoom().getId(), Util.dateTimeToString(event.getDateFrom()), Util.dateTimeToString(event.getDateTo()), event.getTitle(), event.getDescription(), "meeting", event.getIsCanceledAsInt(), event.getID());
         System.out.println(query);
         Statement stm = conn.createStatement();
         boolean rs = stm.execute(query);
@@ -123,7 +122,7 @@ public class EventHandler extends DbHandler {
 
 
         while (rs.next()) {
-            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")));
+            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")), getEvent(rs.getInt("id")).getAdmin());
             event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
             event.setDescription(rs.getString("description"));
             events.add(event);

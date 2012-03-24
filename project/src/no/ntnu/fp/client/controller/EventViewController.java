@@ -33,7 +33,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	
 	public EventViewController(){
 
-        event = new Event("");
+        event = new Event(currentUser);
 		
 		popList = new ArrayList<String>();
 		popListFound = new ArrayList<String>();

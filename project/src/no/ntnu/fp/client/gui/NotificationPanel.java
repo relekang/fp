@@ -48,6 +48,9 @@ public class NotificationPanel extends JPanel implements MouseListener{
 
 		list.addMouseListener(this);
 		
+        NotificationPopup notificationPopup = new NotificationPopup(new Notification(1, Event.getDummyEvent("Event"), "22.03.2012 15:17", true, NotificationType.CHANGE));
+        
+
         gbc.gridx = 0; gbc.gridy = 0; gbc.weighty = 0.0;
         gbc.gridwidth = 1;
         add(label, gbc);

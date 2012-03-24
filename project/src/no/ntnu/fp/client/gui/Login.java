@@ -129,14 +129,6 @@ public class Login extends JPanel implements ActionListener, KeyListener{
     public void autoLogin(){
         usernameTextField.setText("rolf");
         passwordField.setText("rolf");
-        long t0, t1;
-
-        t0 =  System.currentTimeMillis();
-
-        do{
-            t1 = System.currentTimeMillis();
-        }
-        while ((t1 - t0) < (1000));
         actionPerformed(new ActionEvent(loginButton, ActionEvent.ACTION_PERFORMED, ""));
 
     }
