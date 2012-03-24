@@ -11,7 +11,7 @@ public class Constants {
     public final static int SERVER_PORT = 4321;
 
     public final static boolean use_server = true;
-    public final static boolean use_local_server = true;
+    public final static boolean use_local_server = false;
 
 
 

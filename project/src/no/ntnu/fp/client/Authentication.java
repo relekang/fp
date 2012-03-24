@@ -46,6 +46,7 @@ public class Authentication {
                 JSONObject jsonEmployee = object.getJSONObject("employee");
                 Employee employee = new Employee(jsonEmployee);
                 ClientApplication.setCurrentUser(employee);
+                ClientApplication.init();
                 return true;
             }
 

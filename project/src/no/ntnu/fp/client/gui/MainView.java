@@ -135,7 +135,7 @@ public class MainView extends JFrame implements PropertyChangeListener {
 	class SignOutEventButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
-			logOut();
+			ClientApplication.logout();
 		}
 	}
 
