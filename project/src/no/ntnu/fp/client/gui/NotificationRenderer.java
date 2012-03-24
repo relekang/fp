@@ -35,9 +35,10 @@ public class NotificationRenderer extends DefaultListCellRenderer implements Lis
 		JLabel label = (JLabel) super.getListCellRendererComponent(list, selectedValue, index, isSelected, cellHasFocus);
 		Notification selected = (Notification) selectedValue;
 		
+		// TODO: Should get timestamp from database
 		Calendar cal = selected.getTimestamp();
 		String date = makeDoubleDigit(cal.get(Calendar.DAY_OF_MONTH)) + ".";
-		String month = makeDoubleDigit((cal.get(Calendar.MONTH) + 1)) + " - ";
+		String month = makeDoubleDigit((cal.get(Calendar.MONTH) + 1)) + ", ";
 		String hour = makeDoubleDigit(cal.get(Calendar.HOUR_OF_DAY)) + ":";
 		String min = makeDoubleDigit(cal.get(Calendar.MINUTE)) + "";
 		
@@ -56,7 +57,7 @@ public class NotificationRenderer extends DefaultListCellRenderer implements Lis
 	}
 	
 	private String makeDoubleDigit(int number) {
-		if (number > 0 && number < 10) return "0" + number;
+		if (number >= 0 && number < 10) return "0" + number;
 		else return "" + number;
 	}
 	

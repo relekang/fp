@@ -49,6 +49,7 @@ public class NotificationPopup extends JPanel {
 		else if (notification.getType() == NotificationType.DECLINED) iconLabel.setIcon(declineIcon);
 		else if (notification.getType() == NotificationType.CHANGE) iconLabel.setIcon(changeIcon);
 		
+		// TODO: Should get timestamp from database
 		Calendar cal = notification.getTimestamp();
 		String date = makeDoubleDigit(cal.get(Calendar.DAY_OF_MONTH)) + ".";
 		String month = makeDoubleDigit((cal.get(Calendar.MONTH) + 1)) + ".";
@@ -76,15 +77,15 @@ public class NotificationPopup extends JPanel {
 		});
 		
 		gbc.gridx = 0; gbc.gridy = 0; gbc.weighty = 1.0;
-        gbc.gridwidth = 1;
+        gbc.gridwidth = 2;
 		this.add(iconLabel, gbc);
 		
 		gbc.gridx = 0; gbc.gridy = 1; gbc.weighty = 1.0;
-        gbc.gridheight = 2;
+        gbc.gridwidth = 2; gbc.gridheight = 2;
 		this.add(textArea, gbc);
 		
 		gbc.gridx = 0; gbc.gridy = 3; gbc.weighty = 1.0;
-        gbc.gridwidth = 1;
+        gbc.gridwidth = 1; gbc.gridheight = 1;
 		this.add(viewEventBtn, gbc);
 		
 		int descriptionLength = notification.getDescription().length();
@@ -99,15 +100,15 @@ public class NotificationPopup extends JPanel {
 		else return "" + number;
 	}
 	
-	public static void main(String[] args) {
-		
-    	NotificationPopup popupTest = new NotificationPopup(new Notification(1, new Event("Event"), "22.03.2012 15:17", 0, NotificationType.CHANGE, true, true, true, true));
-		
-		JFrame frame = new JFrame();
-		frame.setContentPane(popupTest);
-		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
-    }
+//	public static void main(String[] args) {
+//		
+//    	NotificationPopup popupTest = new NotificationPopup(new Notification(1, new Event("Event"), "22.03.2012 15:17", 0, NotificationType.CHANGE, true, true, true, true));
+//		
+//		JFrame frame = new JFrame();
+//		frame.setContentPane(popupTest);
+//		
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.pack();
+//		frame.setVisible(true);
+//    }
 }
