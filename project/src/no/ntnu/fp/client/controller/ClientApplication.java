@@ -33,8 +33,11 @@ public class ClientApplication {
 	}
 	
 	public static void setCurrentUser(Employee employee) {
-		login.setVisible(false);
 		currentUser = employee;
+	}
+	
+	public static void init() {
+		login.setVisible(false);
 		mainFrame = new MainView();
 		
 		mainViewController = new MainViewController(currentUser, mainFrame);
@@ -64,6 +67,10 @@ public class ClientApplication {
 
 	public static Employee getCurrentUser() {
 		return currentUser;
+	}
+	
+	public static void logout() {
+		currentUser = null;
 	}
 	
 }
