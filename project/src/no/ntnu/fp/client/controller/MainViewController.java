@@ -10,6 +10,7 @@ import java.util.Date;
 import no.ntnu.fp.client.Connection;
 import no.ntnu.fp.client.gui.CalendarPanel;
 import no.ntnu.fp.client.gui.MainView;
+import no.ntnu.fp.client.gui.NotificationPopup;
 import no.ntnu.fp.client.gui.OverviewCalendarPanel;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
@@ -17,6 +18,8 @@ import no.ntnu.fp.common.model.Notification;
 import no.ntnu.fp.server.storage.db.EventHandler;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class MainViewController implements PropertyChangeListener {
 

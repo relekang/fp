@@ -76,23 +76,27 @@ public class NotificationPopup extends JPanel {
 
 		});
 		
-		gbc.gridx = 0; gbc.gridy = 0; gbc.weighty = 1.0;
+		gbc.gridx = 1; gbc.gridy = 0; gbc.weighty = 1.0;
         gbc.gridwidth = 2;
 		this.add(iconLabel, gbc);
 		
 		gbc.gridx = 0; gbc.gridy = 1; gbc.weighty = 1.0;
-        gbc.gridwidth = 2; gbc.gridheight = 2;
+        gbc.gridwidth = 3; gbc.gridheight = 2; gbc.weightx = 1.0;
 		this.add(textArea, gbc);
 		
-		gbc.gridx = 0; gbc.gridy = 3; gbc.weighty = 1.0;
-        gbc.gridwidth = 1; gbc.gridheight = 1;
+		gbc.gridx = 2; gbc.gridy = 3; gbc.weighty = 1.0;
+        gbc.gridwidth = 1; gbc.gridheight = 1; gbc.weightx = 0.0;
 		this.add(viewEventBtn, gbc);
+
 		
+		// TODO: Sizes might need to be adjusted from the following (test with long event titles)
 		int descriptionLength = notification.getDescription().length();
 		int descriptionHeight = ((int) (descriptionLength/15))*16 + 16; // About 15 characters per line, about 16px per line
 		int popupSize = descriptionHeight + 60 + 40; // About 60 px for the icon and space around it, and 40 for button and space around that
-		this.setMaximumSize(new Dimension(130, popupSize));
-		this.setPreferredSize(new Dimension(130, popupSize));
+		this.setMaximumSize(new Dimension(200, popupSize));
+		this.setPreferredSize(new Dimension(200, popupSize));
+		
+		textArea.setMinimumSize(new Dimension(180, popupSize - 100));
 	}
 	
 	private String makeDoubleDigit(int number) {
