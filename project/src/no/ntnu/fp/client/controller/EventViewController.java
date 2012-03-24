@@ -211,8 +211,12 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		if(e.getSource() == view.getFromField()){
-			
+		if (e.getSource() == view.getTitleField()) {
+			if (view.getTitleField().getText().equals("Title")) {
+				view.getTitleField().setText("");
+			}
+		}
+		else if(e.getSource() == view.getFromField()){
 			view.getFromPop().show(view.getFromField(), 0, 30);
 			if (view.getFromField().getText().equals("From")) {
 				view.getFromField().setText("");
