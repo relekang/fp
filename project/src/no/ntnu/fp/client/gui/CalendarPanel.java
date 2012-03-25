@@ -1,6 +1,7 @@
 package no.ntnu.fp.client.gui;
 
 import no.ntnu.fp.client.gui.objects.CalendarDayBox;
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Day;
 import no.ntnu.fp.common.model.Employee;
 
@@ -40,7 +41,7 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 
     public void addEvents(ArrayList<Event> events) {
         for (Event e : events) {
-        	System.out.println("Event " + e + " " + e.getDateFrom() +" added to listModel in CalendarPanel");
+        	Util.print("Event " + e + " " + e.getDateFrom() + " added to listModel in CalendarPanel");
             model.addElement(e);
         }
     }
@@ -125,7 +126,7 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
     }
 
     public void loadCurrentWeek() {
-        System.out.println("week changed in CalendarPanel to: " + currentWeek);
+        Util.print("week changed in CalendarPanel to: " + currentWeek);
         weekPanel.removeAll();
         weekPanel.revalidate();
         initHourLabels();
@@ -146,7 +147,7 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String property = evt.getPropertyName();
-        System.out.println(((Calendar)evt.getNewValue()).getTime());
+        Util.print(((Calendar)evt.getNewValue()).getTime());
         if (property.equals(OverviewCalendarPanel.SELECTED_DAY_CHANGED)) {
         	currentYear = ((Calendar) (evt.getNewValue())).get(Calendar.YEAR);
         	currentMonth= ((Calendar) (evt.getNewValue())).get(Calendar.MONTH);

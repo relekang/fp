@@ -1,6 +1,7 @@
 package no.ntnu.fp.client;
 
 import no.ntnu.fp.client.controller.ClientApplication;
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Employee;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,7 +42,7 @@ public class Authentication {
                 String ack = conn.receive();
                 conn.close();
                 JSONObject object = new JSONObject(ack);
-                System.out.println(object.toString());
+                Util.print(object.toString());
 
                 if (object.get("key").toString().equals("success")) {
                     JSONObject jsonEmployee = object.getJSONObject("employee");

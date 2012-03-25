@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import no.ntnu.fp.client.controller.ClientApplication;
 import no.ntnu.fp.client.gui.CalendarPanel;
 import no.ntnu.fp.client.gui.GuiConstants;
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Day;
 import no.ntnu.fp.common.model.Event;
 
@@ -32,7 +33,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 
     public CalendarDayBox(int reprDay, Calendar date) {
     	this.date = date;
-//    	System.out.println("Date in CalendarDayBox: " + date.getTime());
+//    	Util.print("Date in CalendarDayBox: " + date.getTime());
     	day = new Day(date.getTime());
 		switch(reprDay) {
 		case 0: 
@@ -98,7 +99,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		dy = e.getY();
-		System.out.println("Mouse released, y: " + y  + ", dy: " + dy);
+		Util.print("Mouse released, y: " + y + ", dy: " + dy);
 		canvas.mouseIsPressed = false;
 		createNewEvent(e);
 		canvas.repaint();
@@ -112,7 +113,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		Calendar calTo = fixTime(to);
 		event.setDateFrom(calFrom.getTime());
 		event.setDateTo(calTo.getTime());
-		System.out.println("Event created: " + event.getDateFrom() + " : " + event.getDateTo());
+		Util.print("Event created: " + event.getDateFrom() + " : " + event.getDateTo());
 		ClientApplication.getEventViewController().showEvent(event);
 //		ClientApplication.showEventView();
 //		day.add(event);

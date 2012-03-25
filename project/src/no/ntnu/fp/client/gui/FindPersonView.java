@@ -1,5 +1,7 @@
 package no.ntnu.fp.client.gui;
 
+import no.ntnu.fp.common.Util;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -88,7 +90,7 @@ public class FindPersonView extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource() == searchField){
 			// TODO Auto-generated method stub
-			System.out.println("you searched for "+searchField.getText());
+			Util.print("you searched for " + searchField.getText());
 		}
 		else if(arg0.getSource() == previousButton){
 			if(week.getSelectedIndex()>0)
@@ -100,7 +102,7 @@ public class FindPersonView extends JFrame implements ActionListener{
 		}
 		else if(arg0.getSource() == compare){
 			//TODO compare
-			System.out.println("compare");
+			Util.print("compare");
 		}
 	}
 }

@@ -11,6 +11,7 @@ import java.util.Collections;
 import no.ntnu.fp.client.gui.CalendarPanel;
 import no.ntnu.fp.client.gui.MainView;
 import no.ntnu.fp.client.gui.OverviewCalendarPanel;
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Day;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
@@ -64,11 +65,11 @@ public class MainViewController implements PropertyChangeListener {
 	}
 
 	public void loadUserEvents(int week) {
-		System.out.println("Loading events for week: " + week);
+		Util.print("Loading events for week: " + week);
 		if (currentUser != null) {
 			events = currentUser.getEvents(week);
 			Collections.sort(events);
-			System.out.println("sorted: " + events);
+			Util.print("sorted: " + events);
 			DefaultListModel weekModel = new DefaultListModel();
 			for(int i = 0; i < 7; i++) {
 				Calendar c = Calendar.getInstance();
@@ -81,11 +82,11 @@ public class MainViewController implements PropertyChangeListener {
 				c.setTime(e.getDateFrom());
 				if(c.get(Calendar.WEEK_OF_YEAR) == week) {
 					int day = c.get(Calendar.DAY_OF_WEEK)-1;
-					System.out.println("Day in week: " + day);
+					Util.print("Day in week: " + day);
 					((Day)weekModel.get(day)).add(e);
 				}
 			}
-			System.out.println("weekmodel: " + weekModel);
+			Util.print("weekmodel: " + weekModel);
 			mainView.getCalendarPanel().setModel(weekModel);
 		}
 	}
@@ -105,7 +106,7 @@ public class MainViewController implements PropertyChangeListener {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		System.out.println("propertychange in MainViewController: " + evt);
+		Util.print("propertychange in MainViewController: " + evt);
 		String property = evt.getPropertyName();
 		if (property.equals(OverviewCalendarPanel.SELECTED_DAY_CHANGED)) {
 			loadUserEvents(((Calendar) evt.getNewValue()).get(Calendar.WEEK_OF_YEAR));

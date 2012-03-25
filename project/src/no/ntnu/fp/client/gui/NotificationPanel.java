@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Notification;
 import no.ntnu.fp.common.model.Notification.NotificationType;
@@ -73,7 +74,7 @@ public class NotificationPanel extends JPanel implements MouseListener{
 	}
 	
 	public void addNotification(Notification notification) {
-		System.out.println("adding to notificationpanel: " + notification);
+		Util.print("adding to notificationpanel: " + notification);
 		listModel.addElement(notification);
 	}
     

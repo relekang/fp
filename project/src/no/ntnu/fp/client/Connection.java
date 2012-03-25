@@ -34,12 +34,12 @@ public class Connection {
             Socket socket = new Socket(Constants.getServerUrl(), Constants.SERVER_PORT);
             try {
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                System.out.println("Sending string: '" + object.toString() + "'\n");
+                Util.print("Sending string: '" + object.toString() + "'\n");
                 out.print(object.toString());
                 out.close();
                 socket.close();
             } catch (SocketException e) {
-                System.out.print(e.toString());
+                Util.print(e.toString());
                 socket.close();
 
             } catch (UnknownHostException e) {
@@ -49,7 +49,7 @@ public class Connection {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Sent");
+        Util.print("Sent");
     }
 
     public String receive() throws SocketTimeoutException {
@@ -59,14 +59,14 @@ public class Connection {
             try {
                 socket.setSoTimeout(100);
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                System.out.print("Received string: '");
+                Util.print("Received string: '");
 
                 while (!in.ready()) {
                 }
                 message = in.readLine();
-                System.out.println(message);
+                Util.print(message);
 
-                System.out.print("'\n");
+                Util.print("'\n");
                 in.close();
                 socket.close();
             } catch (SocketException e) {
@@ -98,7 +98,7 @@ public class Connection {
             conn.send(message);
             String ack = conn.receive();
             JSONObject object = new JSONObject(ack);
-            System.out.println(object.toString());
+            Util.print(object.toString());
             conn.close();
             return new Event(object, false);
 
@@ -128,7 +128,7 @@ public class Connection {
                 Event e = new Event(object, false);
                 list.add(e);
             }
-            System.out.println(list.toString());
+            Util.print(list.toString());
             conn.close();
             return list;
 
