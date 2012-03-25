@@ -1,6 +1,7 @@
 package no.ntnu.fp.server.storage.db;
 
 import no.ntnu.fp.common.Util;
+import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 
 import java.sql.ResultSet;
@@ -127,14 +128,14 @@ public class EventHandler extends DbHandler {
         if(!connect())
             return events;
         Statement stmt = conn.createStatement();
-        String query = "SELECT EVENT.id, room_id, date_from, date_to, title, description, type, canceled  FROM EVENT INNER JOIN EMPLOYEE_ATTEND_EVENT ON (EVENT.id = EMPLOYEE_ATTEND_EVENT.event_id) WHERE (EMPLOYEE_ATTEND_EVENT.employee_id = %s);";
+        String query = "SELECT EVENT.id, room_id, date_from, date_to, title, description, type, canceled, employee_id  FROM EVENT INNER JOIN EMPLOYEE_ATTEND_EVENT ON (EVENT.id = EMPLOYEE_ATTEND_EVENT.event_id) WHERE (EMPLOYEE_ATTEND_EVENT.employee_id = %s);";
         query = String.format(query, arg);
         Util.print(query);
         ResultSet rs = stmt.executeQuery(query);
 
 
         while (rs.next()) {
-            Event event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")), getEvent(rs.getInt("id")).getAdmin());
+            Event event = new Event(rs.getInt("id"), rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")), EmployeeHandler.getEmployee(rs.getInt("employee_id")));
             event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
             event.setDescription(rs.getString("description"));
             events.add(event);

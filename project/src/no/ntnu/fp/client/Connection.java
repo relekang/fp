@@ -84,7 +84,6 @@ public class Connection {
     }
 
     public void close() throws IOException {
-
         server.close();
     }
 
@@ -100,7 +99,8 @@ public class Connection {
             String ack = conn.receive();
             JSONObject object = new JSONObject(ack);
             System.out.println(object.toString());
-            return new Event(object);
+            conn.close();
+            return new Event(object, false);
 
 
         } catch (IOException e) {
@@ -125,7 +125,7 @@ public class Connection {
             JSONArray jsonArray = new JSONArray(ack);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.optJSONObject(i);
-                Event e = new Event(object);
+                Event e = new Event(object, false);
                 list.add(e);
             }
             System.out.println(list.toString());

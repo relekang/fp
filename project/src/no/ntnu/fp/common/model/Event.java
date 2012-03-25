@@ -78,7 +78,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
         toPx = calculatePixelLocation(this.dateTo);
     }
 
-    public Event(JSONObject object) throws JSONException, SQLException {
+    public Event(JSONObject object, boolean is_server) throws JSONException, SQLException {
         this(
                 object.getInt("id"),
                 object.getString("title"),
@@ -86,10 +86,12 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
                 Util.dateTimeFromString(object.getString("date_to")),
                 new Employee(object.getJSONObject("admin"))
         );
+        Util.print("Creating event from JSONObject: " + object);
         setDescription(object.getString("description"));
-//        setRoom(RoomHandler.getRoom(object.getInt("room")));
-        //TODO
-        setRoom(new Room(1, "Drivhuset", "its", 0));
+        if(is_server)
+            setRoom(RoomHandler.getRoom(object.getInt("room_id")));
+        else
+            setRoom(Room.getRoom(object.getInt("room_id")));
     }
 
     public int getID()               { return ID; }
@@ -108,7 +110,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
     	Event evt = new Event(new Employee("Lol Lolsson", "lol@super.com", Calendar.getInstance().getTime(), Employee.Gender.MALE));
     	evt.setDateFrom(Calendar.getInstance().getTime());
     	evt.setDateTo(Calendar.getInstance().getTime());
-    	evt.setRoom(new Room("Sebra", "P-15", 10));
+    	evt.setRoom(new Room(1,"Sebra", "P-15", 10));
     	return evt;
     }
 
@@ -122,7 +124,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 	private int calculatePixelLocation(Calendar cal) {
 		int hour = cal.get(Calendar.HOUR);
 		int min = cal.get(Calendar.MINUTE);
-		System.out.println("calculatePixelLocation  hour: " + " " + hour + ", min: " + min);
+		Util.localPrint("calculatePixelLocation  hour: " + " " + hour + ", min: " + min);
 		return hour*GuiConstants.HOUR_HEIGHT + min%GuiConstants.HOUR_HEIGHT;
 	}
 	
@@ -177,7 +179,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 			toPx += GuiConstants.HOUR_HEIGHT/2 - (toPx-fromPx);
 		this.fromPx = calculatePixelLocation(fromPx);
 		this.toPx = calculatePixelLocation(toPx);
-		System.out.println("from: " + fromPx + ", to : " + toPx);
+		Util.localPrint("from: " + fromPx + ", to : " + toPx);
 	}
 	
 	public ArrayList<Employee> getParticipants(){
@@ -277,12 +279,13 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 
     
     public JSONObject toJson() throws JSONException {
+        Util.print(String.format("Making json of event: %s(%d)",getTitle(),getID()));
         JSONObject object = new JSONObject();
         object.put("id", getID());
         object.put("title", getTitle());
         object.put("date_from", Util.dateTimeToString(getDateFrom()));
         object.put("date_to", Util.dateTimeToString(getDateTo()));
-        object.put("room", getRoom().getId());
+        object.put("room_id", getRoom().getId());
         object.put("description", getDescription());
         object.put("admin", getAdmin().toJson());
         return object;

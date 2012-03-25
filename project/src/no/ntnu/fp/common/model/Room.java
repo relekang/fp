@@ -1,10 +1,14 @@
 package no.ntnu.fp.common.model;
 
 
+import no.ntnu.fp.common.handlers.RoomHandler;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class Room implements Model{
+public class Room extends RoomHandler implements Model{
 
 	private final int ROOM_ID; 
 	
@@ -14,6 +18,7 @@ public class Room implements Model{
     private PropertyChangeSupport pcs;
     
     private Room(int id) {
+        super(id);
     	pcs = new PropertyChangeSupport(this);
     	ROOM_ID = id;
     }
@@ -31,7 +36,14 @@ public class Room implements Model{
         setCapacity(capacity);
     }
 
-	public String getName() {
+    public Room(JSONObject object) throws JSONException {
+        this(object.getInt("id"));
+        setName(object.getString("name"));
+        setLocation(object.getString("location"));
+        setCapacity(object.getInt("capacity"));
+    }
+
+    public String getName() {
 		return name;
 	}
 
@@ -73,5 +85,14 @@ public class Room implements Model{
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(listener);
+    }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject object = new JSONObject();
+        object.put("id", getId());
+        object.put("name", getName());
+        object.put("location", getLocation());
+        object.put("capacity", getCapacity());
+        return object;
     }
 }

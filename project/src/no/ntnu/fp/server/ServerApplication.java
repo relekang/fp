@@ -6,6 +6,7 @@ import no.ntnu.fp.server.gui.EventListPanel;
 import no.ntnu.fp.server.gui.RoomListPanel;
 import no.ntnu.fp.server.storage.db.EventHandler;
 import no.ntnu.fp.server.storage.db.NotificationHandler;
+import no.ntnu.fp.server.storage.db.RoomHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +59,11 @@ public class ServerApplication {
                         handleNotificationRequest(object, conn);
                     } catch (SQLException e) { e.printStackTrace(); }
                 }
+                else if (object.getString("key").equals("room")){
+                    try {
+                        handleRoomRequest(object, conn);
+                    } catch (SQLException e) { e.printStackTrace(); }
+                }
                 else{
                     conn.send(new JSONObject().put("key", "failure").toString());
                 }
@@ -86,7 +92,7 @@ public class ServerApplication {
         }
         else if(action.equals("save")){
 
-            Event event = new Event(object.getJSONObject("event"));
+            Event event = new Event(object.getJSONObject("event"), true);
             if(eventHandler.updateEvent(event) != null)
                 conn.send(new JSONObject().put("key", "success").toString());
             else
@@ -95,7 +101,7 @@ public class ServerApplication {
         }
         else if(action.equals("create")){
 
-            Event event = new Event(object.getJSONObject("event"));
+            Event event = new Event(object.getJSONObject("event"), true);
             if(eventHandler.createEvent(event) != null)
                 conn.send(new JSONObject().put("key", "success").toString());
             else
@@ -135,5 +141,18 @@ public class ServerApplication {
         }
     }
 
+    private static void handleRoomRequest(JSONObject object, ServerConnection conn) throws JSONException, SQLException {
+        RoomHandler roomHandler = new RoomHandler();
+        String action = object.getString("action");
+        if(action.equals("get")){
+            Room room = roomHandler.fetchRoom(object.getString("argument"));
+            JSONObject message = new JSONObject();
+            message.put("key", "success");
+            message.put("room", room.toJson());
+
+        } else {
+            conn.send(new JSONObject().put("key", "failure").toString());
+        }
+    }
 
 }

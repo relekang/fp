@@ -31,28 +31,30 @@ public class Authentication {
         catch (UnsupportedEncodingException e) { return false; }
         
         try {
-            Connection conn = new Connection();
-            JSONObject message = new JSONObject();
-            message.put("key", "authenticate");
-            message.put("username", username);
-            message.put("password", password);
-            conn.send(message);
-            String ack = conn.receive();
-            conn.close();
-            JSONObject object = new JSONObject(ack);
-            System.out.println(object.toString());
+                Connection conn = new Connection();
+            try {
+                JSONObject message = new JSONObject();
+                message.put("key", "authenticate");
+                message.put("username", username);
+                message.put("password", password);
+                conn.send(message);
+                String ack = conn.receive();
+                conn.close();
+                JSONObject object = new JSONObject(ack);
+                System.out.println(object.toString());
 
-            if (object.get("key").toString().equals("success")) {
-                JSONObject jsonEmployee = object.getJSONObject("employee");
-                Employee employee = new Employee(jsonEmployee);
-                ClientApplication.setCurrentUser(employee);
-                ClientApplication.init();
-                return true;
+                if (object.get("key").toString().equals("success")) {
+                    JSONObject jsonEmployee = object.getJSONObject("employee");
+                    Employee employee = new Employee(jsonEmployee);
+                    ClientApplication.setCurrentUser(employee);
+                    ClientApplication.init();
+                    return true;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                conn.close();
             }
-
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
             e.printStackTrace();
         }
         return false;

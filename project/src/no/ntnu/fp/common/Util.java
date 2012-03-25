@@ -13,7 +13,6 @@ public class Util {
         cal.set(Calendar.YEAR, date[0]);
         cal.set(Calendar.MONTH, date[1]);
         cal.set(Calendar.DAY_OF_MONTH, date[2]);
-        System.out.println(cal.getTime().toString());
         return cal.getTime();
     }
 
@@ -38,7 +37,6 @@ public class Util {
             cal.set(Calendar.DAY_OF_MONTH, date[2]);
             cal.set(Calendar.HOUR, date[3]);
             cal.set(Calendar.MINUTE, date[4]);
-            System.out.println(cal.getTime().toString());
             return cal.getTime();
         }
 
@@ -76,8 +74,12 @@ public class Util {
             return "";
     }
     
-    public static void print(String s )     { if(Constants.DEBUG) System.out.println(s); }
-    public static void print(boolean s )    { if(Constants.DEBUG) System.out.println(s); }
-    public static void print(int s )        { if(Constants.DEBUG) System.out.println(s); }
-    public static void print(Object s )     { if(Constants.DEBUG) System.out.println(s); }
+    public static void print(String s )          { if(Constants.DEBUG) System.out.println(s); }
+    public static void print(boolean s )         { if(Constants.DEBUG) System.out.println(s); }
+    public static void print(int s )             { if(Constants.DEBUG) System.out.println(s); }
+    public static void print(Object s )          { if(Constants.DEBUG) System.out.println(s); }
+    public static void localPrint(String s )     { if(Constants.DEBUG&&!Constants.is_server) System.out.println(s); }
+    public static void localPrint(boolean s )    { if(Constants.DEBUG&&!Constants.is_server) System.out.println(s); }
+    public static void localPrint(int s )        { if(Constants.DEBUG&&!Constants.is_server) System.out.println(s); }
+    public static void localPrint(Object s )     { if(Constants.DEBUG&&!Constants.is_server) System.out.println(s); }
 }
