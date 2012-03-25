@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -73,13 +74,16 @@ public class EmployeeHandler {
                 System.out.println(message);
                 JSONArray jsonArray = new JSONArray(message);
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject object = jsonArray.optJSONObject(i);
+                    JSONObject object = jsonArray.getJSONObject(i);
                     Event e = new Event(object);
                     events.add(e);
                 }
                 conn.close();
 
             } catch (JSONException e) {
+                conn.close();
+                e.printStackTrace();
+            } catch (SQLException e) {
                 conn.close();
                 e.printStackTrace();
             }

@@ -84,10 +84,19 @@ public class ServerApplication {
                 Event event =  eventHandler.fetchEvent(object.getString("argument"));
                 conn.send(event.toJson().toString());
         }
-        else if(action.equals("save") || action.equals("create")){
+        else if(action.equals("save")){
 
             Event event = new Event(object.getJSONObject("event"));
             if(eventHandler.updateEvent(event) != null)
+                conn.send(new JSONObject().put("key", "success").toString());
+            else
+                conn.send(new JSONObject().put("key", "failure").toString());
+
+        }
+        else if(action.equals("create")){
+
+            Event event = new Event(object.getJSONObject("event"));
+            if(eventHandler.createEvent(event) != null)
                 conn.send(new JSONObject().put("key", "success").toString());
             else
                 conn.send(new JSONObject().put("key", "failure").toString());

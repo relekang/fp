@@ -4,6 +4,7 @@
 import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.handlers.EventHandler;
+import no.ntnu.fp.server.storage.db.RoomHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -77,7 +78,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
         toPx = calculatePixelLocation(this.dateTo);
     }
 
-    public Event(JSONObject object) throws JSONException {
+    public Event(JSONObject object) throws JSONException, SQLException {
         this(
                 object.getInt("id"),
                 object.getString("title"),
@@ -85,6 +86,10 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
                 Util.dateTimeFromString(object.getString("date_to")),
                 new Employee(object.getJSONObject("admin"))
         );
+        setDescription(object.getString("description"));
+//        setRoom(RoomHandler.getRoom(object.getInt("room")));
+        //TODO
+        setRoom(new Room(1, "Drivhuset", "its", 0));
     }
 
     public int getID()               { return ID; }

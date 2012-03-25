@@ -208,7 +208,8 @@ public class EventView extends JFrame {
 		participantPopPanel.add(participantPopList);
 		
 //		String[] rooms = {"Room", "411, P15", "R2"};
-		Room[] rooms = {new Room("P15", "glosaugen", 200), new Room("411", "Stripa", 10), new Room("R2", "realbygget", 313)};
+        //TODO FIX ROOMS
+		Room[] rooms = {new Room(1,"Drivhuset", "its", 800)};
 		eventTitle = new JTextField("Title", 26);
 		fromField = new JTextField("From", 10);
 		toField = new JTextField("To", 10);

@@ -89,7 +89,19 @@ public class EventHandler extends DbHandler {
         Util.print(query);
         Statement stm = conn.createStatement();
         boolean rs = stm.execute(query);
-        close();
+        if(rs){
+            query = "SELECT ID FROM EVENT ORDER BY ID DESC LIMIT BY 1";
+            Util.print(query);
+            ResultSet res = stm.executeQuery(query);
+            res.next();
+            int id = res.getInt("id");
+            query = "INSERT INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, 1);";
+            query = String.format(query, event.getAdmin().getId(), id);
+            Util.print(query);
+            stm = conn.createStatement();
+            rs = stm.execute(query);
+            close();
+        }
         return event;
     }
     public static Event getEvent(int eventId) throws SQLException {

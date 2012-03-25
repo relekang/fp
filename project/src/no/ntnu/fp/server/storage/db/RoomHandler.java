@@ -43,7 +43,7 @@ public class RoomHandler extends DbHandler {
             Util.print(query);
             Room room = null;
             while (rs.next()) {
-                room = new Room(rs.getString("name"), rs.getString("location"), rs.getInt("capacity"));
+                room = new Room(rs.getInt("id"), rs.getString("name"), rs.getString("location"), rs.getInt("capacity"));
 
             }
             rs.close();

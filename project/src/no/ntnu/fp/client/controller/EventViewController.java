@@ -302,7 +302,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 
 		if(e.getSource() == eventView.getSaveButton()){
 			this.setVisible(false);
-			event.setTitle(eventView.getTitle());
+			event.setTitle(eventView.getTitleField().getText());
 //			event.setDateFrom();
 //			event.setDateTo(dateTo);
 			event.setDescription(eventView.getDescriptionArea().getText());
