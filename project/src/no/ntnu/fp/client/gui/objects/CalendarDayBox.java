@@ -9,12 +9,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 
 import no.ntnu.fp.client.controller.ClientApplication;
@@ -34,7 +32,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 
     public CalendarDayBox(int reprDay, Calendar date) {
     	this.date = date;
-    	System.out.println("Date in CalendarDayBox: " + date.getTime());
+//    	System.out.println("Date in CalendarDayBox: " + date.getTime());
     	day = new Day(date.getTime());
 		switch(reprDay) {
 		case 0: 
@@ -50,6 +48,11 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
     public void setParent(CalendarPanel parent) {
     	this.parent = parent;
     }
+    
+    public void addEvent(Event event) {
+    	day.add(event);
+    	canvas.repaint();
+    }
 
 	private void initCanvas() {
 		canvas = new CalendarCanvas();
@@ -60,14 +63,24 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 
     public void setModel(Day day) {
         this.day = day;
+        canvas.repaint();
     }
 
 	public Date getDate() {
-		return this.day.getDate();
+		return day.getDate();
 	}
     
 	public void setDate(Calendar c) {
 		this.date = c;
+		this.day.setDate(c);
+	}
+	
+	public void changeDay(Calendar cal) {
+		this.day.setDate(cal);
+	}
+	
+	public void paintEvents() {
+		canvas.repaint();
 	}
 
 	@Override
@@ -92,13 +105,17 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	}
 	
 	private void createNewEvent(MouseEvent e) {
-		Event label = new Event(y, dy, ClientApplication.getCurrentUser());
-		int[] from = Event.getTimeFromPixel(label.getFromPixel());
-		int[] to = Event.getTimeFromPixel(label.getToPixel());
+		Event event = new Event(y, dy, ClientApplication.getCurrentUser());
+		int[] from = Event.getTimeFromPixel(event.getFromPixel());
+		int[] to = Event.getTimeFromPixel(event.getToPixel());
 		Calendar calFrom = fixTime(from);
 		Calendar calTo = fixTime(to);
-		System.out.println("DateFrom: " + calFrom.getTime() + ", DateTo: " + calTo.getTime());
-		day.add(label);
+		event.setDateFrom(calFrom.getTime());
+		event.setDateTo(calTo.getTime());
+		System.out.println("Event created: " + event.getDateFrom() + " : " + event.getDateTo());
+		ClientApplication.getEventViewController().showEvent(event);
+//		ClientApplication.showEventView();
+//		day.add(event);
 	}
 	
 	private Calendar fixTime(int[] hourAndMin) {
@@ -108,6 +125,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		return cal;
 	}
 	
+//	------------INNER CLASS--------------------------------------------------------------
 	private class CalendarCanvas extends JPanel {
 		boolean mouseIsPressed = false;
 		Color foreground = GuiConstants.DRAG_NEW_EVENT;
@@ -123,19 +141,23 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			drawForegroundLines(g);
-			paintEventLabels(g);
+			paintEvents(g);
 			g.setColor(foreground);
 			if(mouseIsPressed) {
-				g.fillRoundRect(0, y, GuiConstants.CANVAS_WIDTH, dy-y, 10, 10);
+				g.fillRect(0, y, GuiConstants.CANVAS_WIDTH, dy-y);
+				g.setColor(Color.BLUE);
+				g.drawRect(0, y, GuiConstants.CANVAS_WIDTH-1, dy-y);
 			}
 		}
 
-		private void paintEventLabels(Graphics g) {
-			for(Event lbl : day) {
-				g.setColor(lbl.getEventColor());
-				g.fillRoundRect(0, lbl.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, lbl.getToPixel()-lbl.getFromPixel(), 10, 10);
-				g.setColor(lbl.getTextColor());
-				lbl.getStringRepresentation(g);
+		private void paintEvents(Graphics g) {
+			for(Event e : day) {
+				g.setColor(e.getEventColor());
+				g.fillRect(0, e.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, e.getToPixel()-e.getFromPixel());
+				g.setColor(e.getEventColorBorder());
+				g.drawRect(0, e.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, e.getToPixel()-e.getFromPixel());
+				g.setColor(e.getTextColor());
+				e.getStringRepresentation(g);
 			}
 		}
 		private void drawForegroundLines(Graphics g) {

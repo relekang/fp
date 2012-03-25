@@ -32,6 +32,10 @@ public class Day extends ArrayList<Event> implements Model{
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(listener);
     }
+    
+    public void setDate(Calendar date) {
+    	this.cal = date;
+    }
 
     public Date getDate() {
         return cal.getTime();

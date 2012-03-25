@@ -40,7 +40,7 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 
     public void addEvents(ArrayList<Event> events) {
         for (Event e : events) {
-        	System.out.println("Event " + e + " added to listModel in CalendarPanel");
+        	System.out.println("Event " + e + " " + e.getDateFrom() +" added to listModel in CalendarPanel");
             model.addElement(e);
         }
     }
@@ -51,7 +51,6 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
         initHourLabels();
         initCalendarDayBoxes();
         initScrollPane();
-//        revalidate();
     }
 
     private void initHourLabels() {
@@ -127,15 +126,21 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 
     public void loadCurrentWeek() {
         System.out.println("week changed in CalendarPanel to: " + currentWeek);
+        weekPanel.removeAll();
+        weekPanel.revalidate();
+        initHourLabels();
         for(int i = 0; i < 7; i++) {
 	        Calendar c = Calendar.getInstance();
 	        c.setFirstDayOfWeek(Calendar.MONDAY);
-	        c.set(Calendar.WEEK_OF_YEAR, currentWeek);
+	        c.set(Calendar.WEEK_OF_YEAR, currentWeek+1);
 	        c.set(currentYear, currentMonth, currentDay);
 	        c.set(Calendar.DAY_OF_WEEK, 2+i);
-	        days[i].setDate(c);
-	        System.out.println("Day changed to: " + days[i].getDate());
+	        days[i].removeAll();
+	        days[i] = new CalendarDayBox(i, c);
+	        days[i].paintEvents();
+	        weekPanel.add(days[i]);
         }
+        revalidate();
     }
 
     @Override
@@ -153,10 +158,9 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
 
     public void setModel(DefaultListModel newModel) {
         this.model = newModel;
-        if (model.size() >= 7) {
+        if (model.size() == 7) {
             for (int i = 0; i < 7; i++) {
                 days[i].setModel((Day) this.model.get(i));
-                System.out.print("weekmodel set in calendarpanel");
             }
         }
     }

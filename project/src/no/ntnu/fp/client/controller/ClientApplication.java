@@ -52,8 +52,8 @@ public class ClientApplication {
 		findPersonFrame = new FindPersonView();
 		
 		mainViewController = new MainViewController(currentUser, mainFrame);
-		eventViewController = new EventViewController(currentUser);
-		findPersonViewController = new FindPersonViewController(currentUser);
+		eventViewController = new EventViewController(currentUser, eventFrame);
+		findPersonViewController = new FindPersonViewController(currentUser, findPersonFrame);
 	}
 
 	public static void showEventView() {
@@ -70,6 +70,10 @@ public class ClientApplication {
 
 	public static void setFindPersonFrameVisible(boolean visibility) {
 		findPersonFrame.setVisible(visibility);
+	}
+	
+	public static EventViewController getEventViewController() {
+		return eventViewController;
 	}
 
 	public static MainViewController getMainViewController() {

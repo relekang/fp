@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Event extends EventHandler implements Model{
+public class Event extends EventHandler implements Model, Comparable<Event> {
 	
 	public static final int TITLE_LENGTH = 40;
 	
@@ -39,6 +39,7 @@ public class Event extends EventHandler implements Model{
     private Employee admin;
     //used to paint the event to the calendarDayBox
     private Color eventColor = GuiConstants.EVENT_PENDING;
+    private Color eventColorBorder = GuiConstants.EVENT_PENDING_BORDER;
     private Color textColor = GuiConstants.EVENT_TEXT_COLOR;
     private int fromPx = -1;
     private int toPx = -1;
@@ -72,6 +73,8 @@ public class Event extends EventHandler implements Model{
         setDateTo(dateTo);
         this.admin = admin;
         //Todo: Participants
+        fromPx = calculatePixelLocation(this.dateFrom);
+        toPx = calculatePixelLocation(this.dateTo);
     }
 
     public Event(JSONObject object) throws JSONException {
@@ -109,6 +112,13 @@ public class Event extends EventHandler implements Model{
 		hourAndMin[0] = px / GuiConstants.HOUR_HEIGHT;
 		hourAndMin[1] = px % GuiConstants.HOUR_HEIGHT;
 		return hourAndMin;
+	}
+	
+	private int calculatePixelLocation(Calendar cal) {
+		int hour = cal.get(Calendar.HOUR);
+		int min = cal.get(Calendar.MINUTE);
+		System.out.println("calculatePixelLocation  hour: " + " " + hour + ", min: " + min);
+		return hour*GuiConstants.HOUR_HEIGHT + min%GuiConstants.HOUR_HEIGHT;
 	}
 	
 	private int calculatePixelLocation(int px) {
@@ -272,6 +282,21 @@ public class Event extends EventHandler implements Model{
         object.put("admin", getAdmin().toJson());
         return object;
     }
+	@Override
+	public int compareTo(Event e) {
+		if(this.getDateFrom().before(e.getDateFrom()))
+			return -1;
+		else if(this.getDateFrom().after(e.getDateTo()))
+			return 1;
+		else
+			return 0;
+	}
+	public Color getEventColorBorder() {
+		return eventColorBorder;
+	}
+	public void setEventColorBorder(Color eventColorBorder) {
+		this.eventColorBorder = eventColorBorder;
+	}
 
 
 }
