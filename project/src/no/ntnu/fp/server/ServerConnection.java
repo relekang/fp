@@ -28,7 +28,7 @@ public class ServerConnection {
             System.out.println("Print: " + ip);
             Socket socket = new Socket(ip.getHostAddress(), Constants.CLIENT_PORT);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            System.out.println("\n----------\nSending string: '" + data + "'\nIP: " + ip +":"+ port);
+            System.out.println("Sending string: '" + data + "'\nIP: " + ip +":"+ port);
             out.print(data);
             out.close();
             socket.close();

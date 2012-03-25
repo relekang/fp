@@ -1,5 +1,6 @@
 package no.ntnu.fp.server.storage.db;
 
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Room;
 
 import java.sql.ResultSet;
@@ -37,7 +38,9 @@ public class RoomHandler extends DbHandler {
             if(!connect())
                 return null;
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ROOM WHERE " + arg);
+            String query = "SELECT * FROM ROOM WHERE " + arg;
+            ResultSet rs = stmt.executeQuery(query);
+            Util.print(query);
             Room room = null;
             while (rs.next()) {
                 room = new Room(rs.getString("name"), rs.getString("location"), rs.getInt("capacity"));
@@ -60,10 +63,9 @@ public class RoomHandler extends DbHandler {
 
         String query = "INSERT INTO `ROOM` (`id`, `name`, `location`, `capacity`) VALUES (NULL, '%s', '%s', %d);";
         query = String.format(query, room.getName(), room.getLocation(), room.getCapacity());
-        System.out.println(query);
+        Util.print(query);
         Statement stm = conn.createStatement();
         boolean rs = stm.execute(query);
-        System.out.println(rs);
         close();
         return room;
     }

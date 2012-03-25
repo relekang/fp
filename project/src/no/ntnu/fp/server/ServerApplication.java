@@ -31,11 +31,12 @@ public class ServerApplication {
         }
 
         while (true) {
+            System.out.println("\n--------------------------------------------------------------------------------");
             message = conn.receive();
             try {
                 JSONObject object = new JSONObject(message);
 
-                System.out.println("\n\n Recieved JSON-object: \n" + object.toString());
+                System.out.println("\n\n Recieved JSON-object: \n" + object.toString() + "\n");
 
                 if (object.getString("key").equals("authenticate")) {
                     Employee employee = null;
@@ -125,22 +126,5 @@ public class ServerApplication {
         }
     }
 
-    private static void gui() {
-        gbc = new GridBagConstraints();
-        frame = new JFrame("Server");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridBagLayout());
-        eventListPanel = new EventListPanel();
-        roomListPanel = new RoomListPanel();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        frame.add(eventListPanel, gbc);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        frame.add(roomListPanel, gbc);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setVisible(true);
-    }
 
 }
