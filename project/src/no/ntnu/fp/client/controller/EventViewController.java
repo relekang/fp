@@ -183,13 +183,13 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == eventView.getCalendarToPopPanel().getHourTextField()) {
-			toDate.set(Calendar.HOUR, Integer.parseInt(eventView.getCalendarToPopPanel().getHourTextField().getText()));
+			toDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(eventView.getCalendarToPopPanel().getHourTextField().getText()));
 		}
 		else if (e.getSource() == eventView.getCalendarToPopPanel().getMinuteTextField()) {
 			toDate.set(Calendar.MINUTE, Integer.parseInt(eventView.getCalendarToPopPanel().getMinuteTextField().getText()));
 		}
 		if (e.getSource() == eventView.getCalendarFromPopPanel().getHourTextField()) {
-			fromDate.set(Calendar.HOUR, Integer.parseInt(eventView.getCalendarFromPopPanel().getHourTextField().getText()));
+			fromDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(eventView.getCalendarFromPopPanel().getHourTextField().getText()));
 		}
 		else if (e.getSource() == eventView.getCalendarFromPopPanel().getMinuteTextField()) {
 			fromDate.set(Calendar.MINUTE, Integer.parseInt(eventView.getCalendarFromPopPanel().getMinuteTextField().getText()));
