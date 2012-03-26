@@ -70,96 +70,61 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 			toPx += GuiConstants.HOUR_HEIGHT / 2 - (toPx - fromPx);
 		this.fromPx = calculatePixelLocation(fromPx);
 		this.toPx = calculatePixelLocation(toPx);
-		participants.add(this.admin);
-	}
+        participants.add(this.admin);
+    }
+    public Event(int id, String title, Date dateFrom, Date dateTo, Employee admin){
+        this(id);
+        ID = id;
+        setTitle(title);
+        setDateFrom(dateFrom);
+        setDateTo(dateTo);
+        this.admin = admin;
+        fromPx = calculatePixelLocation(this.dateFrom);
+        toPx = calculatePixelLocation(this.dateTo);
+    }
 
-	public Event(int id, String title, Date dateFrom, Date dateTo,
-			Employee admin) {
-		this(id);
-		ID = id;
-		setTitle(title);
-		setDateFrom(dateFrom);
-		setDateTo(dateTo);
-		this.admin = admin;
-		// Todo: Participants
-		fromPx = calculatePixelLocation(this.dateFrom);
-		toPx = calculatePixelLocation(this.dateTo);
-		participants.add(this.admin);
-	}
+    public Event(JSONObject object, boolean is_server) throws JSONException, SQLException {
+        this(
+                object.getInt("id"),
+                object.getString("title"),
+                Util.dateTimeFromString(object.getString("date_from")),
+                Util.dateTimeFromString(object.getString("date_to")),
+                new Employee(object.getJSONObject("admin"))
+        );
+        Util.print("Creating event from JSONObject: " + object);
+        setDescription(object.getString("description"));
+        if(is_server)
+            setRoom(RoomHandler.getRoom(object.getInt("room_id")));
+        else
+            setRoom(Room.getRoom(object.getInt("room_id")));
 
-	public Event(JSONObject object, boolean is_server) throws JSONException,
-			SQLException {
-		this(object.getInt("id"), object.getString("title"), Util
-				.dateTimeFromString(object.getString("date_from")), Util
-				.dateTimeFromString(object.getString("date_to")), new Employee(
-				object.getJSONObject("admin")));
-		Util.print("Creating event from JSONObject: " + object);
-		setDescription(object.getString("description"));
-		if (is_server)
-			setRoom(RoomHandler.getRoom(object.getInt("room_id")));
-		else
-			setRoom(Room.getRoom(object.getInt("room_id")));
+        JSONArray participantsArray = object.getJSONArray("participants");
+        for(int i = 0; i<participantsArray.length(); i++){
+            Employee employee = new Employee(participantsArray.getJSONObject(i));
+            participants.add(employee);
+        }
 
-		JSONArray participantsArray = object.getJSONArray("participants");
-		for (int i = 0; i < participantsArray.length(); i++) {
-			Employee employee = new Employee(participantsArray.getJSONObject(i));
-			participants.add(employee);
-		}
+    }
 
-	}
+    public int getID()               { return ID; }
+    public String getTitle()         { return title; }
+    public int getFromPixel()        { return fromPx; }
+    public int getToPixel()          { return toPx; }
+    public Color getEventColor()     { return eventColor; }
+    public Color getTextColor()      { return textColor; }
+    public Date getDateFrom()        { return dateFrom.getTime(); }
+    public Date getDateTo()          { return dateTo.getTime(); }
+    public Room getRoom()            { return room; }
+    public String getDescription()   { return description == null ? "" : description; }
+    public Employee getAdmin()       { return admin; }
 
-	public int getID() {
-		return ID;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public int getFromPixel() {
-		return fromPx;
-	}
-
-	public int getToPixel() {
-		return toPx;
-	}
-
-	public Color getEventColor() {
-		return eventColor;
-	}
-
-	public Color getTextColor() {
-		return textColor;
-	}
-
-	public Date getDateFrom() {
-		return dateFrom.getTime();
-	}
-
-	public Date getDateTo() {
-		return dateTo.getTime();
-	}
-
-	public Room getRoom() {
-		return room;
-	}
-
-	public String getDescription() {
-		return description == null ? "" : description;
-	}
-
-	public Employee getAdmin() {
-		return admin;
-	}
-
-	public static Event getDummyEvent(String title) {
-		Event evt = new Event(new Employee("Lol Lolsson", "lol@super.com",
-				Calendar.getInstance().getTime(), Employee.Gender.MALE));
-		evt.setDateFrom(Calendar.getInstance().getTime());
-		evt.setDateTo(Calendar.getInstance().getTime());
-		evt.setRoom(new Room(1, "Sebra", "P-15", 10));
-		return evt;
-	}
+    public static Event getDummyEvent(String title) {
+    	Event evt = new Event(new Employee("Lol Lolsson", "lol@super.com", Calendar.getInstance().getTime(), Employee.Gender.MALE));
+    	evt.setDateFrom(Calendar.getInstance().getTime());
+    	evt.setDateTo(Calendar.getInstance().getTime());
+    	evt.setRoom(new Room(1,"Sebra", "P-15", 10));
+    	return evt;
+    }
 
 	public static int[] getTimeFromPixel(int px) {
 		int[] hourAndMin = new int[2];
