@@ -76,12 +76,13 @@ public class MainViewController implements PropertyChangeListener {
 				c.set(Calendar.WEEK_OF_YEAR, week);
 				c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY+i);
 				weekModel.addElement(new Day(c.getTime()));
+//				Util.localPrint("Day created in MainViewController: " + c.getTime());
 			}
 			for(Event e : events) {
 				Calendar c = Calendar.getInstance();
 				c.setTime(e.getDateFrom());
 				if(c.get(Calendar.WEEK_OF_YEAR) == week) {
-					int day = c.get(Calendar.DAY_OF_WEEK)-1;
+					int day = c.get(Calendar.DAY_OF_WEEK)-2;//TODO: this (Calendar.DAY_OF_WEEK)-2 works for now 
 					Util.print("Day in week: " + day);
 					((Day)weekModel.get(day)).add(e);
 				}

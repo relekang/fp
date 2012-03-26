@@ -33,7 +33,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 
     public CalendarDayBox(int reprDay, Calendar date) {
     	this.date = date;
-//    	Util.print("Date in CalendarDayBox: " + date.getTime());
+    	Util.print("Date in CalendarDayBox: " + date.getTime());
     	day = new Day(date.getTime());
 		switch(reprDay) {
 		case 0: 
@@ -104,7 +104,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		createNewEvent(e);
 		canvas.repaint();
 	}
-	
+	@Override
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
@@ -189,9 +189,11 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		}
 
 		private void paintEvents(Graphics g) {
+			int num1 = numOccupations(y, dy);
+			int num2 = numOccupations(y, dy);
 			for(Event e : day) {
 				Util.localPrint("numOccupied: " + numOccupations(y, dy));
-				e.drawEvent(g, numOccupations(y, dy));
+				e.drawEvent(g, (num1-num2--));
 //				g.setColor(e.getEventColor());
 //				g.fillRect(0, e.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, e.getToPixel()-e.getFromPixel());
 //				g.setColor(e.getEventColorBorder());
