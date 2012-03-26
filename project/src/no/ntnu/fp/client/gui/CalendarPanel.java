@@ -92,8 +92,8 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
         pane = new JScrollPane(weekPanel);
         pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         pane.getVerticalScrollBar().setUnitIncrement(GuiConstants.STD_SCROLL_SPEED);
-//        for(int i = 0; i < 7; i++)
-//        	(pane.getVerticalScrollBar()).setValue((pane.getVerticalScrollBar()).getValue()+60); //TODO: se om dette kan fikses
+        for(int i = 0; i < 7; i++)
+        	(pane.getVerticalScrollBar()).setValue((pane.getVerticalScrollBar()).getValue()+GuiConstants.HOUR_HEIGHT);
         pane.setMinimumSize(new Dimension(933, GuiConstants.DAYBOX_HEIGHT));
         pane.setViewportBorder(GuiConstants.EMPTY_BORDER_1);
         add(pane, gbc);
