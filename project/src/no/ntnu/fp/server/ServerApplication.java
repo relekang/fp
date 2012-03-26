@@ -4,6 +4,7 @@ import no.ntnu.fp.common.model.*;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.server.gui.EventListPanel;
 import no.ntnu.fp.server.gui.RoomListPanel;
+import no.ntnu.fp.server.storage.db.EmployeeHandler;
 import no.ntnu.fp.server.storage.db.EventHandler;
 import no.ntnu.fp.server.storage.db.NotificationHandler;
 import no.ntnu.fp.server.storage.db.RoomHandler;
@@ -69,6 +70,12 @@ public class ServerApplication {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
+                    } else if (object.getString("key").equals("employees")) {
+                        try {
+                            handleEmployeeRequest(object, conn);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                     } else {
                         conn.send(new JSONObject().put("key", "failure").toString());
                     }
@@ -84,6 +91,22 @@ public class ServerApplication {
                     e1.printStackTrace();
                 }
             }
+        }
+    }
+
+    private static void handleEmployeeRequest(JSONObject object, ServerConnection conn) throws JSONException, SQLException {
+        EmployeeHandler employeeHandler = new EmployeeHandler();
+        String action = object.getString("action");
+        if(action.equals("all")){
+            ArrayList<Employee> list = employeeHandler.fetchAllEmployees();
+            ArrayList<JSONObject> jsonList = new ArrayList<JSONObject>();
+            for(Employee e:list){
+                jsonList.add(e.toJson());
+            }
+            String message = new JSONArray(jsonList).toString();
+            conn.send(message);
+        } else {
+            conn.send(new JSONObject().put("key", "failure").toString());
         }
     }
 
