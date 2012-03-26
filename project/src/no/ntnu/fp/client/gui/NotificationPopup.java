@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.PopupFactory;
 
 import no.ntnu.fp.client.controller.ClientApplication;
 import no.ntnu.fp.common.model.Event;
@@ -24,6 +25,7 @@ public class NotificationPopup extends JPanel {
 	private JButton viewEventBtn;
 	private JLabel iconLabel;
 	private GridBagConstraints gbc;
+	
 	
 	private ImageIcon acceptIcon;
 	private ImageIcon declineIcon;
@@ -68,15 +70,18 @@ public class NotificationPopup extends JPanel {
 		viewEventBtn = new JButton("View event");
 		viewEventBtn.addActionListener(new ActionListener() {
 			
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//TODO: Add support for showing correct event
 				Event temp = notification.getEvent();
 				
 				ClientApplication.getEventViewController().showEvent(temp);
+				
 			}
 
 		});
+		
 		
 		gbc.gridx = 1; gbc.gridy = 0; gbc.weighty = 1.0;
         gbc.gridwidth = 2;
@@ -101,6 +106,10 @@ public class NotificationPopup extends JPanel {
 		textArea.setMinimumSize(new Dimension(180, popupSize - 100));
 	
 	}
+	public JButton getViewEventButton (){
+		return viewEventBtn;
+	}
+	
 	
 	private String makeDoubleDigit(int number) {
 		if (number >= 0 && number < 10) return "0" + number;

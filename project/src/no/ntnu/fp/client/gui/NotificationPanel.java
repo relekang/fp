@@ -25,6 +25,9 @@ public class NotificationPanel extends JPanel implements MouseListener{
     private JLabel label;
     private GridBagConstraints gbc;
     private JFrame popupFrame;
+    private NotificationPopup popup;
+    
+ 
     
     public NotificationPanel(){
     	gbc = new GridBagConstraints();
@@ -34,6 +37,7 @@ public class NotificationPanel extends JPanel implements MouseListener{
     	// TODO: Position the popup frame in the middle of the screen
     	popupFrame.setLocation(200, 200);
     	popupFrame.setLocationRelativeTo(getParent());
+    	
     	
         label = new JLabel("Notifications");
         label.setFont(GuiConstants.NOTIFICATIONPANE_FONT);
@@ -61,7 +65,16 @@ public class NotificationPanel extends JPanel implements MouseListener{
         gbc.gridwidth = 2;
         add(list, gbc);
         
+       popup.getViewEventButton().addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			popupFrame.setVisible(false);
+		}
+	}); 
+        
     }
+    
     
     private int getSelectedIndex() {
 		int selectedIndex = 0;
@@ -89,7 +102,7 @@ public class NotificationPanel extends JPanel implements MouseListener{
 	public void mouseClicked(MouseEvent arg0) {
 		Notification selectedValue = (Notification) listModel.get(getSelectedIndex()); 
 		
-		NotificationPopup popup = new NotificationPopup(selectedValue);
+		popup = new NotificationPopup(selectedValue);
 		popupFrame.setContentPane(popup);
 		popupFrame.pack();
 		//setter popupen midt i skjermen
