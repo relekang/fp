@@ -4,8 +4,6 @@ import no.ntnu.fp.client.controller.ClientApplication;
 
 import javax.swing.*;
 
-import com.sun.org.apache.xerces.internal.impl.RevalidationHandler;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
