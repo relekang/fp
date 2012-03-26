@@ -129,7 +129,7 @@ public class ServerApplication {
 
             Event event = new Event(object.getJSONObject("event"), true);
             if(eventHandler.updateEvent(event) != null) {
-                eventHandler.addParticipants(event, event.getID());
+                eventHandler.updateParticipants(event);
                 conn.send(new JSONObject().put("key", "success").toString());
             }
             else
