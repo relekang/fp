@@ -48,7 +48,7 @@ public class GuiConstants {
 	public static final Color EVENT_DECLINED_BORDER = new Color(182, 73, 38);
 	public static final Color DRAG_NEW_EVENT = new Color(179, 209, 232, 150); //light blue
 	public static final Color DRAG_NEW_EVENT_BORDER = Color.BLUE; 
-	public static final Color SWING_FRAME_GRAY = new Color(238, 238, 238, 150); //The gray background from the Swing frames
+	public static final Color SWING_FRAME_GRAY = new Color(238, 238, 239); //The gray background from the Swing frames
 
 
     public enum EventType {
