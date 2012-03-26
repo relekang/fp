@@ -29,6 +29,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 	public static final String DATETO_CHANGED = "dateTo changed";
 	public static final String DATEFROM_CHANGED = "dateFrom changed";
 	public static final String TITLE_CHANGED = "title changed";
+	public static final String EVENT_SAVED = "event saved";
 	
     private int ID;	
     private String title;
@@ -46,6 +47,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
     private Color textColor = GuiConstants.EVENT_TEXT_COLOR;
     private int fromPx = -1;
     private int toPx = -1;
+    private int width;
 
     private Event(int id) {
         super(id);
