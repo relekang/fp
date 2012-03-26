@@ -78,10 +78,8 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
         setDateFrom(dateFrom);
         setDateTo(dateTo);
         this.admin = admin;
-        //Todo: Participants
         fromPx = calculatePixelLocation(this.dateFrom);
         toPx = calculatePixelLocation(this.dateTo);
-        participants.add(this.admin);
     }
 
     public Event(JSONObject object, boolean is_server) throws JSONException, SQLException {
