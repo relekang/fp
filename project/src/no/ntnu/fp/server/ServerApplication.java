@@ -130,8 +130,10 @@ public class ServerApplication {
         else if(action.equals("save")){
 
             Event event = new Event(object.getJSONObject("event"), true);
-            if(eventHandler.updateEvent(event) != null)
+            if(eventHandler.updateEvent(event) != null) {
+                eventHandler.addParticipants(event);
                 conn.send(new JSONObject().put("key", "success").toString());
+            }
             else
                 conn.send(new JSONObject().put("key", "failure").toString());
 
@@ -139,8 +141,10 @@ public class ServerApplication {
         else if(action.equals("create")){
 
             Event event = new Event(object.getJSONObject("event"), true);
-            if(eventHandler.createEvent(event) != null)
+            if(eventHandler.createEvent(event) != null){
+                eventHandler.addParticipants(event);
                 conn.send(new JSONObject().put("key", "success").toString());
+            }
             else
                 conn.send(new JSONObject().put("key", "failure").toString());
 

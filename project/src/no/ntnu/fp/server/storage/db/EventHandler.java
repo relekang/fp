@@ -90,21 +90,20 @@ public class EventHandler extends DbHandler {
         Util.print(query);
         Statement stm = conn.createStatement();
         boolean rs = stm.execute(query);
-        Util.print("Result of insert is: " + rs);
         stm.close();
-        stm = conn.createStatement();
-        query = "SELECT ID FROM EVENT ORDER BY ID DESC LIMIT 1;";
-        Util.print(query);
-        ResultSet res = stm.executeQuery(query);
-        res.next();
-        int id = res.getInt("id");
-        res.close();
-        query = "INSERT INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, 1);";
-        query = String.format(query, event.getAdmin().getId(), id);
-        Util.print(query);
-        stm.close();
-        stm = conn.createStatement();
-        rs = stm.execute(query);
+//        stm = conn.createStatement();
+//        query = "SELECT ID FROM EVENT ORDER BY ID DESC LIMIT 1;";
+//        Util.print(query);
+//        ResultSet res = stm.executeQuery(query);
+//        res.next();
+//        int id = res.getInt("id");
+//        res.close();
+//        query = "INSERT INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, 1);";
+//        query = String.format(query, event.getAdmin().getId(), id);
+//        Util.print(query);
+//        stm.close();
+//        stm = conn.createStatement();
+//        rs = stm.execute(query);
         close();
         return event;
     }
@@ -168,5 +167,24 @@ public class EventHandler extends DbHandler {
         rs.close();
         close();
         return employees;
+    }
+
+    public void addParticipants(Event event) throws SQLException {
+        if(!connect()) return;
+        String query;
+        Statement stm;
+        int admin;
+        for(Employee participant:event.getParticipants()){
+            if(participant == event.getAdmin()) admin = 1;
+            else admin = 0;
+            query = "INSERT INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, 1);";
+            query = String.format(query, participant.getId(), event.getID());
+            Util.print(query);
+            stm = conn.createStatement();
+            boolean rs = stm.execute(query);
+            stm.close();
+        }
+            close();
+
     }
 }
