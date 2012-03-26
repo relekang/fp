@@ -22,7 +22,7 @@ import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
 import no.ntnu.fp.server.storage.db.EventHandler;
 
-public class EventViewController implements PropertyChangeListener, KeyListener, MouseListener, ComponentListener, ActionListener {
+public class EventViewController implements PropertyChangeListener, KeyListener, MouseListener, ActionListener {
 	
 	private EventView eventView;
 	private Employee currentUser;
@@ -48,7 +48,6 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 
 		eventView = new EventView();
 		eventView.setVisible(false);
-		eventView.addComponentListener(this);
 
 		eventView.getCalendarToPopPanel().getHourTextField().addKeyListener(this);
 		eventView.getCalendarToPopPanel().getMinuteTextField().addKeyListener(this);
@@ -146,20 +145,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			eventView.addParticipant(event.getParticipants().get(i));
 		}
 	}
-
-//
-//	public Event getEvent (int ID){
-//		try {
-//			return EventHandler.getEvent(ID);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		return null;
-//
-//	}
-
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		
@@ -275,40 +261,11 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	}
 
 	@Override
-	public void componentHidden(ComponentEvent arg0) {
-
-
-	}
-
-	@Override
-	public void componentMoved(ComponentEvent arg0) {
-
-//		view.getFromPop().show(view.getFromField(), 0, 30);
-//		view.getToPop().show(view.getToField(), 0, 30);
-//		view.getParticipantPop().show(view.getParticipantField(), 0, 30);
-	}
-
-	@Override
-	public void componentResized(ComponentEvent arg0) {
-
-//		view.getFromPop().show(view.getFromField(), 0, 30);
-//		view.getToPop().show(view.getToField(), 0, 30);
-//		view.getParticipantPop().show(view.getParticipantField(), 0, 30);
-	}
-
-	@Override
-	public void componentShown(ComponentEvent arg0) {
-
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getSource() == eventView.getSaveButton()){
 			this.setVisible(false);
 			event.setTitle(eventView.getTitleField().getText());
-//			event.setDateFrom();
-//			event.setDateTo(dateTo);
 			event.setDescription(eventView.getDescriptionArea().getText());
 			ArrayList<Employee> participants = new ArrayList<Employee>();
 			for (int i = 0; i < eventView.getListModel().size(); i++) {
@@ -335,7 +292,4 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			}
 		}
 	}
-	
-	
-
 }
