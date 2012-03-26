@@ -108,9 +108,10 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
-		for(Event ev : day) {
-			if(ev.getBounds().contains(x, y)) {
-				ClientApplication.getEventViewController().showEvent(ev);
+		for(Event event : day) {
+			Util.print("Bounds: " + event.getBounds());
+			if(event.getBounds().contains(x, y)) {
+				ClientApplication.getEventViewController().showEvent(event);
 			}
 		}
 	}
@@ -133,7 +134,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	private int numOccupations(int y, int dy) {
 		int numOccupations = 0;
 		for(Event ev : day) {
-			if(ev.getFromPixel() <= y && ev.getToPixel() >= dy) {
+			if(ev.getFromPixel() <= y || ev.getToPixel() >= dy) {
 				numOccupations++;
 			}
 		}
@@ -189,6 +190,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 
 		private void paintEvents(Graphics g) {
 			for(Event e : day) {
+				Util.localPrint("numOccupied: " + numOccupations(y, dy));
 				e.drawEvent(g, numOccupations(y, dy));
 //				g.setColor(e.getEventColor());
 //				g.fillRect(0, e.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, e.getToPixel()-e.getFromPixel());

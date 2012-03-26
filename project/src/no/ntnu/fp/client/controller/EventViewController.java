@@ -132,7 +132,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 
 	public void setEvent(Event event){
 		this.event = event;
-		eventView.setTitle(event.getTitle());
+		eventView.getTitleField().setText(event.getTitle());
 		eventView.setFromField(event.getDateFrom().toString());
 		eventView.setToField(event.getDateTo().toString());
 		eventView.setDescriptionArea(event.getDescription());

@@ -155,7 +155,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 	}
 	
 	public void drawEvent(Graphics g, int overlap) {
-		width = GuiConstants.CANVAS_WIDTH-10*overlap;
+		width = GuiConstants.CANVAS_WIDTH/*-10*overlap*/;
 		g.setColor(getEventColor());
 		g.fillRect(0, getFromPixel(), width, getToPixel()-getFromPixel());
 		g.setColor(getEventColorBorder());
