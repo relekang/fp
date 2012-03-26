@@ -5,6 +5,7 @@ import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.handlers.EventHandler;
 import no.ntnu.fp.server.storage.db.RoomHandler;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,7 +28,6 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 	public static final String DATETO_CHANGED = "dateTo changed";
 	public static final String DATEFROM_CHANGED = "dateFrom changed";
 	public static final String TITLE_CHANGED = "title changed";
-	public static final String EVENT_SAVED = "event saved";
 	
     private int ID;	
     private String title;
@@ -45,8 +45,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
     private Color textColor = GuiConstants.EVENT_TEXT_COLOR;
     private int fromPx = -1;
     private int toPx = -1;
-    private int width;
-    
+
     private Event(int id) {
         super(id);
     	pcs = new PropertyChangeSupport(this);
@@ -67,6 +66,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 			toPx += GuiConstants.HOUR_HEIGHT/2 - (toPx-fromPx);
 		this.fromPx = calculatePixelLocation(fromPx);
 		this.toPx = calculatePixelLocation(toPx);
+        participants.add(this.admin);
     }
     public Event(int id, String title, Date dateFrom, Date dateTo, Employee admin){
         this(id);
@@ -78,6 +78,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
         //Todo: Participants
         fromPx = calculatePixelLocation(this.dateFrom);
         toPx = calculatePixelLocation(this.dateTo);
+        participants.add(this.admin);
     }
 
     public Event(JSONObject object, boolean is_server) throws JSONException, SQLException {
@@ -94,6 +95,13 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
             setRoom(RoomHandler.getRoom(object.getInt("room_id")));
         else
             setRoom(Room.getRoom(object.getInt("room_id")));
+
+        JSONArray participantsArray = object.getJSONArray("participants");
+        for(int i = 0; i<participantsArray.length(); i++){
+            Employee employee = new Employee(participantsArray.getJSONObject(i));
+            participants.add(employee);
+        }
+
     }
 
     public int getID()               { return ID; }
@@ -212,12 +220,12 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
     	Date oldDateFrom = this.dateFrom.getTime();
         this.dateFrom.setTime(dateFrom);
         pcs.firePropertyChange(DATEFROM_CHANGED, oldDateFrom, this.dateFrom);
-//        if(!getDateFrom().before(getDateTo())) {
-////        	TODO: virker dette?
-//        	Calendar c = Calendar.getInstance();
-//        	c.setTime(getDateFrom());
-//        	setDateTo(c.getTime());
-//        }
+        if(!getDateFrom().before(getDateTo())) {
+//        	TODO: virker dette?
+        	Calendar c = Calendar.getInstance();
+        	c.setTime(getDateFrom());
+        	setDateTo(c.getTime());
+        }
     }
 
 
@@ -292,6 +300,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
         object.put("room_id", getRoom().getId());
         object.put("description", getDescription());
         object.put("admin", getAdmin().toJson());
+        object.put("participants", getParticipantsAsJsonArray());
         return object;
     }
 	@Override
@@ -311,4 +320,11 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 	}
 
 
+    public JSONArray getParticipantsAsJsonArray() throws JSONException {
+        JSONArray array = new JSONArray();
+        for(Employee employee:getParticipants()){
+            array.put(employee.toJson());
+        }
+        return array;
+    }
 }
