@@ -35,6 +35,7 @@ public class EmployeeHandler {
     }
     
     public static ArrayList<Employee> getAllEmployees(){
+        if(Constants.use_server) return getAllEmployeesFromServer();
         ArrayList<Employee> list = new ArrayList<Employee>();
         //TODO fjerne dummies
         list.add(new Employee("David Storjord", "awsm@test.no", new Date(1990, 12, 31), Gender.MALE));
@@ -50,6 +51,31 @@ public class EmployeeHandler {
         
         list.add(Employee.getExampleEployee());
         return list;
+    }
+
+    private static ArrayList<Employee> getAllEmployeesFromServer() {
+        ArrayList<Employee> employees = new ArrayList<Employee>();
+        try {
+            Connection conn = new Connection();
+            try {
+                conn.send(new JSONObject().put("key", "employees").put("action", "all"));
+                String message = conn.receive();
+                JSONArray jsonArray = new JSONArray(message);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    Employee e = new Employee(object);
+                    employees.add(e);
+                }
+                conn.close();
+
+            } catch (JSONException e) {
+                conn.close();
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return employees;
     }
 
     public ArrayList<Notification> getAllNotifications(){

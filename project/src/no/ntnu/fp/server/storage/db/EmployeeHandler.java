@@ -6,6 +6,7 @@ import no.ntnu.fp.common.model.Employee;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 
 public class EmployeeHandler extends DbHandler {
@@ -78,5 +79,27 @@ public class EmployeeHandler extends DbHandler {
             e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         return  null;
+    }
+
+    public ArrayList<Employee> fetchAllEmployees() {
+        ArrayList<Employee> employees = new ArrayList<Employee>();
+        try {
+            if (!connect())
+                return null;
+            Statement stmt = conn.createStatement();
+            String query = "SELECT * FROM EMPLOYEE";
+            Util.print(query);
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                Employee employee = new Employee(rs.getInt("id"), rs.getString("name"), rs.getString("email"), Util.dateFromString(rs.getString("date_of_birth")), Employee.Gender.MALE);
+                employees.add(employee);
+            }
+            rs.close();
+            close();
+            return employees;
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }

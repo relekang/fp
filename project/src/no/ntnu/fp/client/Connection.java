@@ -10,7 +10,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.events.EventException;
 
-import javax.security.auth.login.FailedLoginException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,7 +17,6 @@ import java.io.PrintWriter;
 import java.net.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class Connection {
@@ -26,7 +24,11 @@ public class Connection {
     BufferedReader in;
 
     public Connection() throws IOException {
+//        try{
         server = new ServerSocket(Constants.CLIENT_PORT);
+//        } catch (Exception e){
+//            //Silence is gold
+//        }
     }
 
     public void send(JSONObject object) {
