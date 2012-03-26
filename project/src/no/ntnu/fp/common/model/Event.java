@@ -27,6 +27,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 	public static final String DATETO_CHANGED = "dateTo changed";
 	public static final String DATEFROM_CHANGED = "dateFrom changed";
 	public static final String TITLE_CHANGED = "title changed";
+	public static final String EVENT_SAVED = "event saved";
 	
     private int ID;	
     private String title;
@@ -44,6 +45,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
     private Color textColor = GuiConstants.EVENT_TEXT_COLOR;
     private int fromPx = -1;
     private int toPx = -1;
+    private int width;
     
     private Event(int id) {
         super(id);
@@ -210,12 +212,12 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
     	Date oldDateFrom = this.dateFrom.getTime();
         this.dateFrom.setTime(dateFrom);
         pcs.firePropertyChange(DATEFROM_CHANGED, oldDateFrom, this.dateFrom);
-        if(!getDateFrom().before(getDateTo())) {
-//        	TODO: virker dette?
-        	Calendar c = Calendar.getInstance();
-        	c.setTime(getDateFrom());
-        	setDateTo(c.getTime());
-        }
+//        if(!getDateFrom().before(getDateTo())) {
+////        	TODO: virker dette?
+//        	Calendar c = Calendar.getInstance();
+//        	c.setTime(getDateFrom());
+//        	setDateTo(c.getTime());
+//        }
     }
 
 
@@ -257,6 +259,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
     }
 
     public boolean save(){
+    	pcs.firePropertyChange(EVENT_SAVED, true, true);
         updateEvent(this);
         return true;
     }

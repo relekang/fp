@@ -312,7 +312,6 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			}
 			event.setParticipants(participants);
 			event.setRoom((Room) eventView.getRoomBox().getSelectedItem());
-			
 	        event.save();
 		}
 		else if (e.getSource() == eventView.getCancelButton()) {

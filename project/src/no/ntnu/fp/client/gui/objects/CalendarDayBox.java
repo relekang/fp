@@ -115,6 +115,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		event.setDateTo(calTo.getTime());
 		Util.print("Event created: " + event.getDateFrom() + " : " + event.getDateTo());
 		ClientApplication.getEventViewController().showEvent(event);
+		event.addPropertyChangeListener(this);
 //		ClientApplication.showEventView();
 //		day.add(event);
 	}
@@ -125,7 +126,33 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		cal.set(Calendar.MINUTE, hourAndMin[1]);
 		return cal;
 	}
+//	TODO: hvis disse trengs...
+	public void mouseClicked(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		for(Event ev : day) {
+			if(ev.getFromPixel() <= y && ev.getToPixel() >= y) {
+				System.out.println(ev);
+				System.out.println(ev.getDateFrom() + " : " + ev.getDateTo());
+				ClientApplication.getEventViewController().showEvent(ev);
+			}
+		}
+	}
 	
+	public void propertyChange(PropertyChangeEvent evt) {
+		Event e;
+		e = (Event)evt.getNewValue();
+		String s = evt.getPropertyName();
+		
+		if(s.equals(Event.EVENT_SAVED)) {
+			Util.print("Event " + e + " saved to day: " + day.getDate());
+			day.add(e);
+		}
+	}
+	
+	public void mouseEntered(MouseEvent e) {	}
+	public void mouseExited(MouseEvent e) {	}
+	public void mouseMoved(MouseEvent e) {	}
 //	------------INNER CLASS--------------------------------------------------------------
 	private class CalendarCanvas extends JPanel {
 		boolean mouseIsPressed = false;
@@ -170,11 +197,5 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		
 	}
 
-//	TODO: hvis disse trengs...
-	public void mouseClicked(MouseEvent e) {	}
-	public void mouseEntered(MouseEvent e) {	}
-	public void mouseExited(MouseEvent e) {	}
-	public void mouseMoved(MouseEvent e) {	}
-	public void propertyChange(PropertyChangeEvent evt) {	}
 
 }
