@@ -208,28 +208,27 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		int maxLines = (toPx - fromPx) / (GuiConstants.HOUR_HEIGHT / 4);
 		int maxChars = (int) (width / 7.5);
 		String[] titleWords = getTitle().split(" ");
-		int line = 0;
 		if (maxChars < titleWords[0].length()) {
 			g.drawString(titleWords[0].substring(0, maxChars - 3) + "...", 0,
 					getFromPixel() + 13);
-		} else {
-			String text = "";
-			for (int i = 0; i < titleWords.length; i++) {
-				if (text.length() + titleWords[i].length() >= maxChars) {
-					if (++line > maxLines)
-						return;
-					g.drawString(text, 0, getFromPixel() + line * 13);
-					text = "";
-					i--;
-				} else {
-					text += titleWords[i] + " ";
-				}
-			}
-			if (maxLines != 2)
-				g.drawString(text, 0, getFromPixel() + (++line) * 13);
-			if (++line > maxLines)
-				return;
 		}
+		int line = 0;
+		String text = "";
+		for (int i = 0; i < titleWords.length; i++) {
+			if (text.length() + titleWords[i].length() >= maxChars) {
+				if (++line > maxLines)
+					return;
+				g.drawString(text, 0, getFromPixel() + line * 13);
+				text = "";
+				i--;
+			} else {
+				text += titleWords[i] + " ";
+			}
+		}
+		if (maxLines != 2)
+			g.drawString(text, 0, getFromPixel() + (++line) * 13);
+		if (++line > maxLines)
+			return;
 		if (room == null)
 			return;
 		g.setFont(GuiConstants.EVENT_LABEL_ROOM_FONT);
