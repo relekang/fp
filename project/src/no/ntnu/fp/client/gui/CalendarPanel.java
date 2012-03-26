@@ -70,19 +70,12 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
     }
 
     private void initCalendarDayBoxes() {
-//    	if(days != null) {
-//    		for(int i = 0; i < 7; i++) {
-//    			days[i].removeAll();
-//    		}
-////    		TODO: fix at CalendarDayBoxene ikke flytter seg bortover til hoyre
-//    		revalidate();
-//    	}
         days = new CalendarDayBox[GuiConstants.DAYS.length];
         gbc.gridy = 1;
         for (int i = 0; i < GuiConstants.DAYS.length; i++) {
             Calendar c = Calendar.getInstance();
             c.setFirstDayOfWeek(Calendar.MONDAY);
-            c.set(Calendar.WEEK_OF_YEAR, currentWeek);
+            c.set(Calendar.WEEK_OF_YEAR, currentWeek+1);//TODO: currentWeek+1 - seams to work, but not sure..
             c.set(currentYear, currentMonth, currentDay);
             c.set(Calendar.DAY_OF_WEEK, 2+i);
             days[i] = new CalendarDayBox(i, c);
@@ -99,7 +92,8 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
         pane = new JScrollPane(weekPanel);
         pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         pane.getVerticalScrollBar().setUnitIncrement(GuiConstants.STD_SCROLL_SPEED);
-//		pane.getVerticalScrollBar().setValue(600); //TODO: se om dette kan fikses
+//        for(int i = 0; i < 7; i++)
+//        	(pane.getVerticalScrollBar()).setValue((pane.getVerticalScrollBar()).getValue()+60); //TODO: se om dette kan fikses
         pane.setMinimumSize(new Dimension(933, GuiConstants.DAYBOX_HEIGHT));
         pane.setViewportBorder(GuiConstants.EMPTY_BORDER_1);
         add(pane, gbc);

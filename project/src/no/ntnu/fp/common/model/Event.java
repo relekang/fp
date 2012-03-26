@@ -78,10 +78,8 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
         setDateFrom(dateFrom);
         setDateTo(dateTo);
         this.admin = admin;
-        //Todo: Participants
         fromPx = calculatePixelLocation(this.dateFrom);
         toPx = calculatePixelLocation(this.dateTo);
-        participants.add(this.admin);
     }
 
     public Event(JSONObject object, boolean is_server) throws JSONException, SQLException {
@@ -155,7 +153,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 	}
 	
 	public void drawEvent(Graphics g, int overlap) {
-		width = GuiConstants.CANVAS_WIDTH/*-10*overlap*/;
+		width = GuiConstants.CANVAS_WIDTH-10*overlap-1;
 		g.setColor(getEventColor());
 		g.fillRect(0, getFromPixel(), width, getToPixel()-getFromPixel());
 		g.setColor(getEventColorBorder());

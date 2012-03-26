@@ -22,35 +22,32 @@ import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
 import no.ntnu.fp.server.storage.db.EventHandler;
 
-public class EventViewController implements PropertyChangeListener, KeyListener, MouseListener, ComponentListener, ActionListener {
+public class EventViewController implements PropertyChangeListener, KeyListener, MouseListener, ActionListener {
 	
 	private EventView eventView;
 	private Employee currentUser;
+	private Calendar fromDate, toDate;
 	private Event event;
-	private String toDate, toHour, toMinute, toTime, fromDate, fromHour, fromMinute, fromTime;
 	private ArrayList<String> popList, popListFound;
 	
 	
 	public EventViewController(Employee currentUser, EventView view){
 		this.currentUser = currentUser;
 		this.eventView = view;
+		
+		event = new Event(currentUser);
 
-        event = new Event(currentUser);
+        toDate = Calendar.getInstance();
+        fromDate = Calendar.getInstance();
+        
+        toDate.setTime(event.getDateTo());
+        fromDate.setTime(event.getDateFrom());
 
 		popList = new ArrayList<String>();
 		popListFound = new ArrayList<String>();
 
-		toHour = "0";
-		toMinute = "0";
-		toDate = "0.0.0000";
-
-		fromHour = "0";
-		fromMinute = "0";
-		fromDate = "0.0.0000";
-
 		eventView = new EventView();
 		eventView.setVisible(false);
-		eventView.addComponentListener(this);
 
 		eventView.getCalendarToPopPanel().getHourTextField().addKeyListener(this);
 		eventView.getCalendarToPopPanel().getMinuteTextField().addKeyListener(this);
@@ -84,8 +81,11 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				Calendar cal = (Calendar) evt.getNewValue();
-				toDate = "" + cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + cal.get(Calendar.YEAR);
-				eventView.getToField().setText(toDate + "/" + toHour + toMinute);
+				toDate.set(Calendar.YEAR, cal.get(Calendar.YEAR));
+				toDate.set(Calendar.MONTH, cal.get(Calendar.MONTH));
+				toDate.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
+				event.setDateTo(toDate.getTime());
+				eventView.getToField().setText(toDate.getTime().toString());
 			}
 		});
 
@@ -94,8 +94,11 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				Calendar cal = (Calendar) evt.getNewValue();
-				fromDate = "" + cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + cal.get(Calendar.YEAR);
-				eventView.getFromField().setText(fromDate + "/" + fromHour + fromMinute);
+				fromDate.set(Calendar.YEAR, cal.get(Calendar.YEAR));
+				fromDate.set(Calendar.MONTH, cal.get(Calendar.MONTH));
+				fromDate.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
+				event.setDateTo(fromDate.getTime());
+				eventView.getFromField().setText(fromDate.getTime().toString());
 			}
 		});
 
@@ -142,24 +145,10 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			eventView.addParticipant(event.getParticipants().get(i));
 		}
 	}
-
-//
-//	public Event getEvent (int ID){
-//		try {
-//			return EventHandler.getEvent(ID);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		return null;
-//
-//	}
-
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -172,16 +161,16 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == eventView.getCalendarToPopPanel().getHourTextField()) {
-			toHour = "" + eventView.getCalendarToPopPanel().getHourField() + ":";
+			toDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(eventView.getCalendarToPopPanel().getHourTextField().getText()));
 		}
 		else if (e.getSource() == eventView.getCalendarToPopPanel().getMinuteTextField()) {
-			toMinute = "" + eventView.getCalendarToPopPanel().getMinField();
+			toDate.set(Calendar.MINUTE, Integer.parseInt(eventView.getCalendarToPopPanel().getMinuteTextField().getText()));
 		}
 		if (e.getSource() == eventView.getCalendarFromPopPanel().getHourTextField()) {
-			fromHour = "" + eventView.getCalendarFromPopPanel().getHourField() + ":";
+			fromDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(eventView.getCalendarFromPopPanel().getHourTextField().getText()));
 		}
 		else if (e.getSource() == eventView.getCalendarFromPopPanel().getMinuteTextField()) {
-			fromMinute = "" + eventView.getCalendarFromPopPanel().getMinField();
+			fromDate.set(Calendar.MINUTE, Integer.parseInt(eventView.getCalendarFromPopPanel().getMinuteTextField().getText()));
 		}
 		else if(e.getSource() == eventView.getParticipantField()){
 			for (int i = 0; i < popList.size(); i++) {
@@ -202,8 +191,8 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 				}
 			}
 		}
-		eventView.getToField().setText(toDate + "/" + toHour + toMinute);
-		eventView.getFromField().setText(fromDate + "/ " + fromHour + fromMinute);
+		eventView.getToField().setText(toDate.getTime().toString());
+		eventView.getFromField().setText(fromDate.getTime().toString());
 	}
 
 	@Override
@@ -272,40 +261,11 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	}
 
 	@Override
-	public void componentHidden(ComponentEvent arg0) {
-
-
-	}
-
-	@Override
-	public void componentMoved(ComponentEvent arg0) {
-
-//		view.getFromPop().show(view.getFromField(), 0, 30);
-//		view.getToPop().show(view.getToField(), 0, 30);
-//		view.getParticipantPop().show(view.getParticipantField(), 0, 30);
-	}
-
-	@Override
-	public void componentResized(ComponentEvent arg0) {
-
-//		view.getFromPop().show(view.getFromField(), 0, 30);
-//		view.getToPop().show(view.getToField(), 0, 30);
-//		view.getParticipantPop().show(view.getParticipantField(), 0, 30);
-	}
-
-	@Override
-	public void componentShown(ComponentEvent arg0) {
-
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getSource() == eventView.getSaveButton()){
 			this.setVisible(false);
 			event.setTitle(eventView.getTitleField().getText());
-//			event.setDateFrom();
-//			event.setDateTo(dateTo);
 			event.setDescription(eventView.getDescriptionArea().getText());
 			ArrayList<Employee> participants = new ArrayList<Employee>();
 			for (int i = 0; i < eventView.getListModel().size(); i++) {
@@ -332,7 +292,4 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			}
 		}
 	}
-	
-	
-
 }

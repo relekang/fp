@@ -3,6 +3,7 @@ package no.ntnu.fp.client.gui;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -91,6 +92,11 @@ public class NotificationPanel extends JPanel implements MouseListener{
 		NotificationPopup popup = new NotificationPopup(selectedValue);
 		popupFrame.setContentPane(popup);
 		popupFrame.pack();
+		//setter popupen midt i skjermen
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		popupFrame.setLocation(screenSize.width / 2 - (popupFrame.getWidth() / 2),
+				screenSize.height / 2 - (popupFrame.getHeight() / 2));
+		
 		popupFrame.setVisible(true);
 			
 	}

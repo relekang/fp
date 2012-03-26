@@ -31,7 +31,7 @@ public class NotificationPopup extends JPanel {
 	private ImageIcon deleteIcon;
 	private ImageIcon changeIcon;
 	
-	public NotificationPopup(Notification notification) {
+	public NotificationPopup(final Notification notification) {
 		gbc = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
 		
@@ -71,7 +71,9 @@ public class NotificationPopup extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//TODO: Add support for showing correct event
-				ClientApplication.showEventView();
+				Event temp = notification.getEvent();
+				
+				ClientApplication.getEventViewController().showEvent(temp);
 			}
 
 		});
