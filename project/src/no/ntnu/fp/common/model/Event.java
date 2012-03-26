@@ -138,7 +138,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 	}
 
 	private int calculatePixelLocation(Calendar cal) {
-		int hour = cal.get(Calendar.HOUR);
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
 		int min = cal.get(Calendar.MINUTE);
 		Util.localPrint("calculatePixelLocation  hour: " + " " + hour
 				+ ", min: " + min);
@@ -368,5 +368,8 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		}
 		return array;
 	}
+    public void delete(){
+        deleteOnServer(this);
+    }
 
 }

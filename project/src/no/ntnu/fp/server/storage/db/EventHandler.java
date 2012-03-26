@@ -115,9 +115,9 @@ public class EventHandler extends DbHandler {
     public Event updateEvent(Event event) throws SQLException {
         if(!connect())
             return null;
-        String query = "UPDATE  `EVENT` SET `room_id` = %d, `date_from` = '%s', `date_to` = '%s', `title` = '%s', `description` = '%s', `type` = '%s', `canceled` = %d, WHERE  `id` =  %d LIMIT 1 ;";
+        String query = "UPDATE  `EVENT` SET `room_id` = %d, `date_from` = '%s', `date_to` = '%s', `title` = '%s', `description` = '%s', `type` = '%s', `canceled` = %d WHERE  `id` =  %d LIMIT 1 ;";
+        query = String.format(query, event.getRoom().getId(), Util.dateTimeToString(event.getDateFrom()), Util.dateTimeToString(event.getDateTo()), event.getTitle(), event.getDescription(), "meeting", event.getIsCanceledAsInt(), event.getID());
         Util.print(query);
-        query = String.format(query, event.getRoom().getId(), Util.dateTimeToString(event.getDateFrom()), Util.dateTimeToString(event.getDateTo()), event.getTitle(), event.getDescription(), event.getIsCanceledAsInt(), event.getID());
         Statement stm = conn.createStatement();
         boolean rs = stm.execute(query);
         close();
@@ -177,8 +177,8 @@ public class EventHandler extends DbHandler {
         for(Employee participant:event.getParticipants()){
             if(participant == event.getAdmin()) admin = 1;
             else admin = 0;
-            query = "INSERT INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, 1);";
-            query = String.format(query, participant.getId(), id);
+            query = "INSERT INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, %d);";
+            query = String.format(query, participant.getId(), id, admin);
             Util.print(query);
             stm = conn.createStatement();
             boolean rs = stm.execute(query);
@@ -186,5 +186,36 @@ public class EventHandler extends DbHandler {
         }
             close();
 
+    }
+
+    public void updateParticipants(Event event) throws SQLException {
+        if (!connect()) return;
+        String query;
+        Statement stm = conn.createStatement();
+        int admin;
+        ArrayList<Employee> participants = fetchParticipantsForEvent(event.getID());
+        for (Employee participant : event.getParticipants()) { Util.print(participant.getName()); }
+        for (Employee participant : participants)            { Util.print(participant.getName()); }
+        for (Employee participant : event.getParticipants()) {
+            if (participant == event.getAdmin()) admin = 1;
+            else admin = 0;
+            if (!participants.contains(participant)) {
+                query = "INSERT INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, %d);";
+                query = String.format(query, participant.getId(), event.getID(), admin);
+                Util.print(query);
+
+                stm.execute(query);
+
+            }
+        }
+        for (Employee p : participants) {
+            if (!event.getParticipants().contains(p)) {
+                query = "DELETE FROM `EMPLOYEE_ATTEND_EVENT` WHERE `employee_id` = '%d' AND `event_id` = '%d' LIMIT 1";
+                query = String.format(query, p.getId(), event.getID());
+                stm.execute(query);
+            }
+        }
+        stm.close();
+        close();
     }
 }

@@ -11,7 +11,7 @@ public class Util {
             date[i] = Integer.parseInt(input.split("-")[i]);
         }
         cal.set(Calendar.YEAR, date[0]);
-        cal.set(Calendar.MONTH, date[1]);
+        cal.set(Calendar.MONTH, date[1] - 1);
         cal.set(Calendar.DAY_OF_MONTH, date[2]);
         return cal.getTime();
     }
@@ -20,7 +20,7 @@ public class Util {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         String output = "%d-%d-%d";
-        output = String.format(output, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        output = String.format(output, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
         return output;
     }
 
@@ -33,7 +33,7 @@ public class Util {
                 date[i] = Integer.parseInt(d[i]);
             }
             cal.set(Calendar.YEAR, date[0]);
-            cal.set(Calendar.MONTH, date[1]);
+            cal.set(Calendar.MONTH, date[1] - 1);
             cal.set(Calendar.DAY_OF_MONTH, date[2]);
             cal.set(Calendar.HOUR_OF_DAY, date[3]);
             cal.set(Calendar.MINUTE, date[4]);
@@ -44,7 +44,7 @@ public class Util {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
             String output = "%d-%d-%d %s:%s:00";
-            output = String.format(output, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
+            output = String.format(output, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH),
             		(""+cal.get(Calendar.HOUR_OF_DAY)).length() == 1 ? "0"+cal.get(Calendar.HOUR_OF_DAY) : ""+cal.get(Calendar.HOUR_OF_DAY), 
             		((""+cal.get(Calendar.MINUTE)).length() == 1) ? cal.get(Calendar.MINUTE)+"0" : ""+cal.get(Calendar.MINUTE));
             return output;

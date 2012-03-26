@@ -153,32 +153,6 @@ public class Employee extends EmployeeHandler implements Model, Comparable<Emplo
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		propChangeSupp.removePropertyChangeListener(listener);
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean equals(Object obj) {
-		if (super.equals(obj))
-			return true;
-		
-		if (obj.getClass() != this.getClass())
-			return false;
-		
-		Employee aPerson = (Employee)obj;
-		
-		if (aPerson.getName().compareTo(getName()) != 0) 
-			return false;
-		if (aPerson.getEmail().compareTo(getEmail()) != 0)
-			return false;
-		if (aPerson.getDateOfBirth().compareTo(getDateOfBirth()) != 0)
-			return false;
-		
-		return true;
-	}
-	
-	/**
-	 * 
-	 */
 	public Status getAccepted(){
 		//TODO connect to database and get if accepted event, pending or declined
 		
@@ -215,4 +189,10 @@ public class Employee extends EmployeeHandler implements Model, Comparable<Emplo
 		return getName().compareTo(e.getName());
 	}
 	
+    @Override
+    public boolean equals(Object o){
+        Employee e = (Employee)o;
+        return (this.getId() == e.getId() && this.getName().equals(e.getName()));
+    }
+
 }

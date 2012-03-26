@@ -56,6 +56,9 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
         nextButton = new JButton();
         previousButton = new JButton();
 
+        nextButton.setBorder(BorderFactory.createEmptyBorder(4,4,4,4));
+        previousButton.setBorder(BorderFactory.createEmptyBorder(4,4,4,4));
+
         monthLabel = new JLabel();
 
         nextButton.addActionListener(new ButtonListener());

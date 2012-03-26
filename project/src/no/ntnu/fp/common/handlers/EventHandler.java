@@ -12,7 +12,7 @@ public class EventHandler {
 
     private int id;
 
-    public EventHandler(int id){
+    public EventHandler(int id) {
         this.id = id;
     }
 
@@ -22,7 +22,7 @@ public class EventHandler {
             Connection conn = new Connection();
             try {
                 json.put("key", "event");
-                if(event.getID() == 0)
+                if (event.getID() == 0)
                     json.put("action", "create");
                 else
                     json.put("action", "save");
@@ -40,6 +40,28 @@ public class EventHandler {
 
         }
 
+    }
+
+    public void deleteOnServer(Event event) {
+        JSONObject json = new JSONObject();
+        try {
+            Connection conn = new Connection();
+            try {
+                json.put("key", "event");
+                json.put("action", "delete");
+                json.put("event_id", event.getID());
+                conn.send(json);
+                conn.receive();
+                conn.close();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                conn.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
     }
 
 }
