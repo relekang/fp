@@ -32,44 +32,58 @@ public class ServerApplication {
         }
 
         while (true) {
-            System.out.println("\n--------------------------------------------------------------------------------");
-            message = conn.receive();
             try {
-                JSONObject object = new JSONObject(message);
+                System.out.println("\n--------------------------------------------------------------------------------");
+                message = conn.receive();
+                try {
+                    JSONObject object = new JSONObject(message);
 
-                System.out.println("\n\n Recieved JSON-object: \n" + object.toString() + "\n");
+                    System.out.println("\n\n Recieved JSON-object: \n" + object.toString() + "\n");
 
-                if (object.getString("key").equals("authenticate")) {
-                    Employee employee = null;
-                    try {
-                        employee = ServerAuthentication.authenticate(object.get("username").toString(), object.get("password").toString());
-                    } catch (SQLException e) { conn.send(new JSONObject().put("key", "failure").toString()); }
-                    if (employee != null)
-                        conn.send(new JSONObject().put("key", "success").put("employee", employee.toJson()).toString());
-                    else
+                    if (object.getString("key").equals("authenticate")) {
+                        Employee employee = null;
+                        try {
+                            employee = ServerAuthentication.authenticate(object.get("username").toString(), object.get("password").toString());
+                        } catch (SQLException e) {
+                            conn.send(new JSONObject().put("key", "failure").toString());
+                        }
+                        if (employee != null)
+                            conn.send(new JSONObject().put("key", "success").put("employee", employee.toJson()).toString());
+                        else
+                            conn.send(new JSONObject().put("key", "failure").toString());
+                    } else if (object.getString("key").equals("event")) {
+                        try {
+                            handleEventRequest(object, conn);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (object.getString("key").equals("notification")) {
+                        try {
+                            handleNotificationRequest(object, conn);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (object.getString("key").equals("room")) {
+                        try {
+                            handleRoomRequest(object, conn);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
                         conn.send(new JSONObject().put("key", "failure").toString());
-                } else
-                if (object.getString("key").equals("event")){
-                    try {
-                        handleEventRequest(object, conn);
-                    } catch (SQLException e) { e.printStackTrace(); }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                else if (object.getString("key").equals("notification")){
-                    try {
-                        handleNotificationRequest(object, conn);
-                    } catch (SQLException e) { e.printStackTrace(); }
-                }
-                else if (object.getString("key").equals("room")){
-                    try {
-                        handleRoomRequest(object, conn);
-                    } catch (SQLException e) { e.printStackTrace(); }
-                }
-                else{
+            } catch (Exception e) {
+                try {
+                    e.printStackTrace();
                     conn.send(new JSONObject().put("key", "failure").toString());
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
                 }
-
-            } catch (JSONException e) { e.printStackTrace(); }
-
+            }
         }
     }
 

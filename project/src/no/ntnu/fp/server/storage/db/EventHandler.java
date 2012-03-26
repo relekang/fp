@@ -141,10 +141,32 @@ public class EventHandler extends DbHandler {
             Event event = new Event(rs.getInt("id"), rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")), EmployeeHandler.getEmployee(rs.getInt("employee_id")));
             event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
             event.setDescription(rs.getString("description"));
+            event.setParticipants(fetchParticipantsForEvent(event.getID()));
             events.add(event);
         }
         rs.close();
         close();
         return events;
+    }
+
+    private ArrayList<Employee> fetchParticipantsForEvent(int eventId) throws SQLException {
+        ArrayList<Employee> employees = new ArrayList<Employee>();
+
+        if(!connect())
+            return employees;
+        Statement stmt = conn.createStatement();
+        String query = "SELECT employee_id, is_attending FROM EMPLOYEE_ATTEND_EVENT WHERE event_id = %d;";
+        query = String.format(query, eventId);
+        Util.print(query);
+        ResultSet rs = stmt.executeQuery(query);
+
+
+        while (rs.next()) {
+            Employee employee = new EmployeeHandler().fetchEmployee("id=" + rs.getInt("employee_id"));
+            employees.add(employee);
+        }
+        rs.close();
+        close();
+        return employees;
     }
 }
