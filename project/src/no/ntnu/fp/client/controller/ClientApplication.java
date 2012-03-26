@@ -12,8 +12,6 @@ import javax.swing.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
