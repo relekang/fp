@@ -97,6 +97,7 @@ public class NotificationPopup extends JPanel {
 		this.setPreferredSize(new Dimension(200, popupSize));
 		
 		textArea.setMinimumSize(new Dimension(180, popupSize - 100));
+	
 	}
 	
 	private String makeDoubleDigit(int number) {

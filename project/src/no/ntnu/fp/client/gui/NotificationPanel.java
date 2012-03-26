@@ -31,6 +31,8 @@ public class NotificationPanel extends JPanel implements MouseListener{
     	
     	popupFrame = new JFrame();
     	// TODO: Position the popup frame in the middle of the screen
+    	popupFrame.setLocation(200, 200);
+    	popupFrame.setLocationRelativeTo(getParent());
     	
         label = new JLabel("Notifications");
         label.setFont(GuiConstants.NOTIFICATIONPANE_FONT);
