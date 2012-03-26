@@ -44,7 +44,6 @@ public class EventView extends JFrame {
 	private Event model;
 	
 	public EventView(){
-		
 		gbc1 = new GridBagConstraints();
 		gbc2 = new GridBagConstraints();
 		gbc3 = new GridBagConstraints();
@@ -71,8 +70,6 @@ public class EventView extends JFrame {
 		deleteButton = new JButton("Delete");
 		deletePersonButton = new JButton("Remove person");
 		
-		
-		
 		createPanel();
 		
 		eventViewPanel.add(eventPanel);
@@ -82,132 +79,19 @@ public class EventView extends JFrame {
 		this.pack();
 	}
 	
-	public JList getParticipantList(){
-		return participantList;
-	}
-	
-	public JButton getAcceptButton(){
-		return acceptButton;
-	}
-	
-	public JButton getDeclineButton(){
-		return declineButton;
-	}
-	
-	public JButton getSaveButton(){
-		return saveButton;
-	}
-	
-	public JButton getCancelButton(){
-		return cancelButton;
-	}
-	
-	public JButton getDeleteButton(){
-		return deleteButton;
-	}
-	
-	public JButton getDeletePersonButton(){
-		return deletePersonButton;
-	}
-	
-	public JTextField getTitleField(){
-		return eventTitle;
-	}
-	
-	public void setTitleField(String title){
-		eventTitle.setText(title);
-	}
-	
-	public JTextField getFromField(){
-		return fromField;
-	}
-	
-	public void setFromField(String fromTime){
-		fromField.setText(fromTime);
-	}
-	
-	public JTextField getToField(){
-		return toField;
-	}
-	
-	public void setToField(String toTime){
-		toField.setText(toTime);
-	}
-	
-	public JComboBox getRoomBox(){
-		return roomBox;
-	}
-	
-	public void setRoomBox(Object room){
-		roomBox.setSelectedItem(room);
-	}
-	
-	public JTextField getParticipantField(){
-		return participantsField;
-	}
-	
-	public void setParticipantField(String participant){
-		participantsField.setText(participant);
-	}
-	
-	public JTextArea getDescriptionArea(){
-		return descriptionBox;
-	}
-	
-	public void setDescriptionArea(String description){
-		descriptionBox.setText(description);
-	}
-	
-	public DateTimePicker getCalendarFromPopPanel(){
-		return calendarFromPopPanel;
-	}
-	
-	public DateTimePicker getCalendarToPopPanel(){
-		return calendarToPopPanel;
-	}
-	
-	public JPopupMenu getFromPop(){
-		return fromPop;
-	}
-	
-	public JPopupMenu getToPop(){
-		return toPop;
-	}
-	
-	public JPopupMenu getParticipantPop(){
-		return participantPop;
-	}
-	
-	public DefaultListModel getListModel(){
-		return listModel;
-	}
-	
-	public DefaultListModel getPopListModel(){
-		return popListModel;
-	}
-	
-	
-	
 	private void createPanel(){
-		
-		
 		renderer = new ParticipantRenderer();
 		listModel = new DefaultListModel();
 		
 		participantList = new JList(listModel);
 		participantList.setCellRenderer(renderer);
-		
 		participantList.setPreferredSize(new Dimension(300, 375));
-		
-		
 		
 		popListModel = new DefaultListModel();
 		participantPopList = new JList(popListModel);
 		
 		participantPopList.setPreferredSize(new Dimension(315, 100));
 		participantPopPanel.add(participantPopList);
-		
-//		String[] rooms = {"Room", "411, P15", "R2"};
         //TODO FIX ROOMS
 		Room[] rooms = {new Room(1,"Drivhuset", "its", 800)};
 		eventTitle = new JTextField("Title", 26);
@@ -368,20 +252,34 @@ public class EventView extends JFrame {
 		listPanel.add(participantList, gbc2);
 	}
 	
-	public JList getParticipantPopList(){
-		return participantPopList;
-	}
-	
-	public void removeParticipant(int i) {
-		listModel.remove(i);
-	}
-	
-	public void addParticipant(Employee person) {
-		listModel.addElement(person);
-	}
-
-
-    public void removeAllParticipants() {
-        listModel.clear();
-    }
+	public JList getParticipantList(){return participantList;}
+	public JButton getAcceptButton(){return acceptButton;}
+	public JButton getDeclineButton(){return declineButton;}
+	public JButton getSaveButton(){return saveButton;}
+	public JButton getCancelButton(){return cancelButton;}
+	public JButton getDeleteButton(){return deleteButton;}
+	public JButton getDeletePersonButton(){return deletePersonButton;}
+	public JTextField getTitleField(){return eventTitle;}
+	public void setTitleField(String title){eventTitle.setText(title);}
+	public JTextField getFromField(){return fromField;}
+	public void setFromField(String fromTime){fromField.setText(fromTime);}
+	public JTextField getToField(){return toField;}
+	public void setToField(String toTime){toField.setText(toTime);}
+	public JComboBox getRoomBox(){return roomBox;}
+	public void setRoomBox(Object room){roomBox.setSelectedItem(room);}	
+	public JTextField getParticipantField(){return participantsField;}	
+	public void setParticipantField(String participant){participantsField.setText(participant);}
+	public JTextArea getDescriptionArea(){return descriptionBox;}
+	public void setDescriptionArea(String description){descriptionBox.setText(description);}
+	public DateTimePicker getCalendarFromPopPanel(){return calendarFromPopPanel;}
+	public DateTimePicker getCalendarToPopPanel(){return calendarToPopPanel;}
+	public JPopupMenu getFromPop(){return fromPop;}
+	public JPopupMenu getToPop(){return toPop;}
+	public JPopupMenu getParticipantPop(){return participantPop;}
+	public DefaultListModel getListModel(){return listModel;}
+	public DefaultListModel getPopListModel(){return popListModel;}
+	public JList getParticipantPopList(){return participantPopList;}
+	public void removeParticipant(int i) {listModel.remove(i);}
+	public void addParticipant(Employee person) {listModel.addElement(person);}
+    public void removeAllParticipants() {listModel.clear();}
 }

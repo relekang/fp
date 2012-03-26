@@ -20,7 +20,6 @@ public class MainView extends JFrame implements PropertyChangeListener {
 	private JButton createEventBtn, findPersonBtn, signOutBtn;
 	private GridBagConstraints gbc;
 	private JLabel userLabel;
-	private DefaultListModel model;
 
 	public MainView() {
 		gbc = new GridBagConstraints();
@@ -90,7 +89,6 @@ public class MainView extends JFrame implements PropertyChangeListener {
 		gbc.gridy = 3;
 		gbc.gridwidth = 2;
 		gbc.gridheight = 2;
-		// gbc.anchor = GridBagConstraints.SOUTH;
 		mainPanel.add(notificationPanel, gbc);
 	}
 
@@ -113,14 +111,10 @@ public class MainView extends JFrame implements PropertyChangeListener {
 	public void logOut() {
 		mainPanel.setVisible(false);
 		remove(mainPanel);
-		// add(loginPanel);
 		pack();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(screenSize.width / 2 - (this.getWidth() / 2),
 				screenSize.height / 2 - (this.getHeight() / 2));
-
-		// ((Login) loginPanel).usernameTextField.requestFocus(true);
-
 	}
 
 	class CreateEventButtonListener implements ActionListener {
@@ -145,12 +139,6 @@ public class MainView extends JFrame implements PropertyChangeListener {
 		}
 	}
 
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public JLabel getUserLabel() {
 		return userLabel;
 	}
@@ -158,5 +146,9 @@ public class MainView extends JFrame implements PropertyChangeListener {
 	public void setUserLabel(JLabel userLabel) {
 		this.userLabel = userLabel;
 	}
-
+	
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+	}
 }
