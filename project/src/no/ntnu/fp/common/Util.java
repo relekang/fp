@@ -43,9 +43,9 @@ public class Util {
         public static String dateTimeToString(Date date){
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            String output = "%d-%d-%d %d:%s:00";
-            output = String.format(output, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), 
-            		cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.HOUR_OF_DAY), 
+            String output = "%d-%d-%d %s:%s:00";
+            output = String.format(output, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
+            		(""+cal.get(Calendar.HOUR_OF_DAY)).length() == 1 ? "0"+cal.get(Calendar.HOUR_OF_DAY) : ""+cal.get(Calendar.HOUR_OF_DAY), 
             		((""+cal.get(Calendar.MINUTE)).length() == 1) ? cal.get(Calendar.MINUTE)+"0" : ""+cal.get(Calendar.MINUTE));
             return output;
         }
