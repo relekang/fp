@@ -2,6 +2,7 @@ package no.ntnu.fp.client.controller;
 
 import no.ntnu.fp.client.Connection;
 import no.ntnu.fp.client.gui.EventView;
+import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.client.gui.LoginView;
 import no.ntnu.fp.client.gui.MainView;
 import no.ntnu.fp.client.gui.FindPersonView;
@@ -12,6 +13,7 @@ import javax.swing.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -30,7 +32,7 @@ public class ClientApplication {
 	public static void main(String args[]) throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException,
 			UnsupportedLookAndFeelException {
-		
+		UIManager.put("Panel.background", GuiConstants.SWING_FRAME_GRAY);
 		login = new LoginView();
 		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		login.setVisible(true);

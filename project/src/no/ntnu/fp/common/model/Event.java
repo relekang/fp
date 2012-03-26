@@ -154,8 +154,16 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		return hour * GuiConstants.HOUR_HEIGHT + quarter
 				* (GuiConstants.HOUR_HEIGHT / 4);
 	}
+	
+	private void fixColors() {
+		if(participants.size() == 1) {
+			eventColor = GuiConstants.EVENT_ACCEPTED;
+			eventColorBorder = GuiConstants.EVENT_ACCEPTED_BORDER;
+		}
+	}
 
 	public void drawEvent(Graphics g, int overlap) {
+		fixColors();
 		width = GuiConstants.CANVAS_WIDTH - 10 * overlap - 1;
 		g.setColor(getEventColor());
 		g.fillRect(0, getFromPixel(), width, getToPixel() - getFromPixel());

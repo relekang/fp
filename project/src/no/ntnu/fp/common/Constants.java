@@ -7,8 +7,8 @@ public class Constants {
 
     public final static boolean DEBUG = true;
 
-    public final static int CLIENT_PORT = 3333;
-    public final static int SERVER_PORT = 4322;
+    public final static int CLIENT_PORT = 1234;
+    public final static int SERVER_PORT = 4321;
 
     public final static boolean IS_SERVER = false;
     public final static boolean USE_SERVER = true;

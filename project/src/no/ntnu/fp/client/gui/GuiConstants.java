@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.border.Border;
 
 public class GuiConstants {
@@ -37,14 +38,14 @@ public class GuiConstants {
 
 //	Colors
 	public static final Color EVENT_TEXT_COLOR = Color.BLACK;
-	public static final Color STD_BACKGROUND = Color.LIGHT_GRAY;
-	public static final Color STD_FOREGROUND = Color.WHITE; //TODO: bedre navn paa variabel :P
-	public static final Color EVENT_ACCEPTED = new Color(131, 240, 60, 150); //light green
-	public static final Color EVENT_ACCEPTED_BORDER = Color.GREEN;
-	public static final Color EVENT_PENDING = new Color(255, 180, 64, 150); //light yellow
-	public static final Color EVENT_PENDING_BORDER = Color.ORANGE;
-	public static final Color EVENT_DECLINED = new Color(251, 63, 81, 150); //light red
-	public static final Color EVENT_DECLINED_BORDER = Color.RED;
+	public static final Color STD_BACKGROUND = /*new Color(255, 240, 165);*/Color.WHITE;
+	public static final Color STD_FOREGROUND = Color.LIGHT_GRAY;//Color.WHITE; //TODO: bedre navn paa variabel :P
+	public static final Color EVENT_ACCEPTED = new Color(70, 132, 102, 150); //light green
+	public static final Color EVENT_ACCEPTED_BORDER = new Color(70, 132, 102);
+	public static final Color EVENT_PENDING = new Color(255, 176, 59, 150); //light yellow
+	public static final Color EVENT_PENDING_BORDER = new Color(255, 176, 59);
+	public static final Color EVENT_DECLINED = new Color(182, 73, 38, 150); //light red
+	public static final Color EVENT_DECLINED_BORDER = new Color(182, 73, 38);
 	public static final Color DRAG_NEW_EVENT = new Color(179, 209, 232, 150); //light blue
 	public static final Color DRAG_NEW_EVENT_BORDER = Color.BLUE; 
 	public static final Color SWING_FRAME_GRAY = new Color(238, 238, 238, 150); //The gray background from the Swing frames
@@ -66,4 +67,17 @@ public class GuiConstants {
 //	Drawable rectangle prefs
 	public static final int RECT_CURVE = 10;
 	public static final int RECT_WIDTH = CANVAS_WIDTH - 10;
+	
+//	Icons
+	public static final ImageIcon ACCEPT_ICON_BIG = new ImageIcon(new Object().getClass().getResource("/resources/icons/32x32/accept.png"));
+	public static final ImageIcon DECLINE_ICON_BIG = new ImageIcon(new Object().getClass().getResource("/resources/icons/32x32/decline.png"));
+	public static final ImageIcon INVITATION_ICON_BIG = new ImageIcon(new Object().getClass().getResource("/resources/icons/32x32/question.png"));
+	public static final ImageIcon DELETE_ICON_BIG = new ImageIcon(new Object().getClass().getResource("/resources/icons/32x32/bin.png"));
+	public static final ImageIcon CHANGE_ICON_BIG = new ImageIcon(new Object().getClass().getResource("/resources/icons/32x32/error.png"));
+	public static final ImageIcon ACCEPT_ICON_SMALL = new ImageIcon(new Object().getClass().getResource("/resources/icons/accept.png"));
+	public static final ImageIcon DECLINE_ICON_SMALL = new ImageIcon(new Object().getClass().getResource("/resources/icons/decline.png"));
+	public static final ImageIcon INVITATION_ICON_SMALL = new ImageIcon(new Object().getClass().getResource("/resources/icons/question.png"));
+	public static final ImageIcon DELETE_ICON_SMALL = new ImageIcon(new Object().getClass().getResource("/resources/icons/bin.png"));
+	public static final ImageIcon CHANGE_ICON_SMALL = new ImageIcon(new Object().getClass().getResource("/resources/icons/error.png"));
+	
 }
