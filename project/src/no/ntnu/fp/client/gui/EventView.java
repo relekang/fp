@@ -8,7 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
@@ -26,7 +29,11 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 public class EventView extends JFrame {
+	
+	public static int STD_COLUMNS = 26;
 	
 	private JList participantList, participantPopList;
 	private JTextArea descriptionBox;
@@ -34,7 +41,6 @@ public class EventView extends JFrame {
 	private JButton saveButton, cancelButton, deleteButton, acceptButton, declineButton, deletePersonButton;
 	private JTextField eventTitle, fromField, toField, participantsField;
 	private JPanel eventPanel, listPanel, eventViewPanel, buttonPanel, participantPopPanel;
-	private JLabel dash;
 	private DateTimePicker calendarToPopPanel, calendarFromPopPanel;
 	private GridBagConstraints gbc1, gbc2, gbc3;
 	private DefaultListModel listModel, popListModel;
@@ -75,7 +81,8 @@ public class EventView extends JFrame {
 		eventViewPanel.add(eventPanel);
 		eventViewPanel.add(listPanel);
 		
-		this.add(eventViewPanel);
+		this.setContentPane(eventViewPanel);
+		this.setResizable(false);
 		this.pack();
 	}
 	
@@ -94,16 +101,14 @@ public class EventView extends JFrame {
 		participantPopPanel.add(participantPopList);
         //TODO FIX ROOMS
 		Room[] rooms = {new Room(1,"Drivhuset", "its", 800)};
-		eventTitle = new JTextField("Title", 26);
-		fromField = new JTextField("From", 10);
-		toField = new JTextField("To", 10);
+		eventTitle = new JTextField(STD_COLUMNS);
+		fromField = new JTextField(STD_COLUMNS);
+		toField = new JTextField(STD_COLUMNS);
 		roomBox = new JComboBox(rooms);
-		descriptionBox = new JTextArea("Description");
-		participantsField = new JTextField("Participants", 26);
+		participantsField = new JTextField(STD_COLUMNS);
 		roomBox.setPreferredSize(new Dimension(290, 25));
+		descriptionBox = new JTextArea();
 		descriptionBox.setPreferredSize(new Dimension(290, 150));
-		dash = new JLabel("-");
-		dash.setSize(5, 1);
 		
 		fromPop = new JPopupMenu();
 		fromPop.add(calendarFromPopPanel);
@@ -139,9 +144,11 @@ public class EventView extends JFrame {
 			
 			
 			ArrayList<Employee> tempEmployeeArrayList = Employee.getAllEmployees(); 
+			Collections.sort(tempEmployeeArrayList);
 			for(int i = 0; i < tempEmployeeArrayList.size(); i++){
 				popListModel.addElement(tempEmployeeArrayList.get(i));
 			}
+			Util.localPrint("POPLIST: " + tempEmployeeArrayList);
 			
 			
 			saveButton.addActionListener(new ActionListener() {
@@ -205,48 +212,94 @@ public class EventView extends JFrame {
 				}
 			});
 		}
+//		gbc1.gridheight = 15;
+//		gbc1.ipadx = 20;
+		gbc1.ipady = 7;
 		
-		gbc1.gridx = 0;	gbc1.gridy = 7;
+		gbc1.anchor = GridBagConstraints.EAST;
+		gbc1.gridx = 0;	
+		gbc1.gridy = 0;
+		gbc1.gridwidth = 1;
+		eventPanel.add(new JLabel("Title: "), gbc1);
+
+		gbc1.gridx = 0;	
+		gbc1.gridy = 1;
+		gbc1.gridwidth = 1;
+		eventPanel.add(new JLabel("From: "), gbc1);
+
+		gbc1.gridx = 0;	
+		gbc1.gridy = 2;
+		gbc1.gridwidth = 1;
+		eventPanel.add(new JLabel("To: "), gbc1);
+
+		gbc1.gridx = 0;
+		gbc1.gridy = 3;
+		gbc1.gridwidth = 1;
+		eventPanel.add(new JLabel("Room: "), gbc1);
+
+		gbc1.gridx = 0;	
+		gbc1.gridy = 4;
+		gbc1.gridwidth = 1;
+		eventPanel.add(new JLabel("Participants: "), gbc1);
+
+		gbc1.gridx = 0;
+		gbc1.gridy = 5;
+//		gbc1.gridy = 6;
+		gbc1.gridwidth = 1;
+		eventPanel.add(new JLabel("Description: "), gbc1);
+		
+		gbc1.anchor = GridBagConstraints.WEST;
+		gbc1.gridx = 0;
+		gbc1.gridy = 7;
+//		gbc1.gridy = 9;
 		gbc1.gridheight = 1;
 		gbc1.gridwidth = 3;
 		eventPanel.add(buttonPanel, gbc1);
 		
-		gbc1.gridx = 0;	gbc1.gridy = 0;
-		gbc1.gridwidth = 3;
+		gbc1.gridx = 1;	
+		gbc1.gridy = 0;
+		gbc1.gridwidth = 2;
 		eventPanel.add(eventTitle, gbc1);
 		
-		gbc1.gridx = 0;
-		gbc1.gridy = 1;
-		gbc1.gridwidth = 1;
-		gbc1.gridheight = 1;
-		gbc1.anchor = GridBagConstraints.EAST;
-		eventPanel.add(fromField, gbc1);
 		gbc1.gridx = 1;
 		gbc1.gridy = 1;
-		eventPanel.add(dash, gbc1);
-
-		gbc1.gridx = 2;
-		gbc1.gridy = 1;
-		gbc1.gridwidth = 1;
+		gbc1.gridwidth = 2;
+		gbc1.gridheight = 1;
+		eventPanel.add(fromField, gbc1);
+		
+		gbc1.gridx = 1;
+		gbc1.gridy = 2;
+		gbc1.gridwidth = 2;
 		gbc1.gridheight = 1;
 		eventPanel.add(toField, gbc1);
 		
-		gbc1.gridx = 0;	gbc1.gridy = 2;
-		gbc1.gridwidth = 3;
+		gbc1.gridx = 1;	
+		gbc1.gridy = 3;
+		gbc1.gridwidth = 2;
 		gbc1.gridheight = 1;
-		gbc1.anchor = GridBagConstraints.CENTER;
 		eventPanel.add(roomBox, gbc1);
 		
-		gbc1.gridx = 0;	gbc1.gridy = 3;
-		gbc1.gridwidth = 3;
+		gbc1.gridx = 1;
+//		gbc1.gridx = 0;
+		gbc1.gridy = 4;
+//		gbc1.gridy = 5;
+		gbc1.gridheight = 1;
+		gbc1.gridwidth = 2;
+//		gbc1.gridwidth = 3;
 		eventPanel.add(participantsField, gbc1);
-		
-		gbc1.gridx = 0;	gbc1.gridy = 4;
+
+		gbc1.gridx = 1;
+//		gbc1.gridx = 0;
+		gbc1.gridy = 5;
+//		gbc1.gridy = 7;
 		gbc1.gridheight = 2;
 		gbc1.gridwidth = 3;
+//		gbc1.gridwidth = 3;
 		eventPanel.add(descriptionBox, gbc1);
 		
-		gbc2.gridx = 0;	gbc2.gridy = 0;
+		gbc1.anchor = GridBagConstraints.CENTER;
+		gbc2.gridx = 0;
+		gbc2.gridy = 0;
 		gbc2.gridheight = 3;
 		gbc2.gridwidth = 3;
 		listPanel.add(participantList, gbc2);

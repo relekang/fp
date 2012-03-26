@@ -18,7 +18,7 @@ public class ParticipantRenderer extends DefaultListCellRenderer implements List
 			int index, boolean isSelected, boolean cellHasFocus){
 
 		JLabel print = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-		
+		print.setBackground(GuiConstants.SWING_FRAME_GRAY);
 		if(((Employee) value).getAccepted() == Status.ACCEPTED){
 			java.net.URL imgURL = getClass().getResource("/resources/icons/accept.png");
 			ImageIcon icon = new ImageIcon(imgURL);

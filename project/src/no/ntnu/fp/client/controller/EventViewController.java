@@ -69,14 +69,11 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		eventView.getParticipantField().addMouseListener(this);
 
 		eventView.getParticipantField().addKeyListener(this);
-		popList = new ArrayList<String>();
-
-
 
 		for (int i = 0; i < popList.size(); i++) {
 			eventView.getPopListModel().addElement(popList.get(i));
 		}
-
+		
 		eventView.getCalendarToPopPanel().getOverviewCalendarPanel().addPCL(new PropertyChangeListener() {
 
 			@Override

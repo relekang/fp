@@ -60,6 +60,7 @@ public class GuiConstants {
 	public static final Border EMPTY_BORDER_5 = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 	public static final Border EMPTY_BORDER_1 = BorderFactory.createEmptyBorder(1, 1, 1, 1);
 	public static final Border EMPTY_BORDER_0 = BorderFactory.createEmptyBorder(0, 0, 0, 0);
+	public static Border getEmptyBorder(int i) {return BorderFactory.createEmptyBorder(i, i, i, i);};
 	
 //	Scroll-speed
 	public static final int STD_SCROLL_SPEED = 16;

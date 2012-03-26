@@ -11,7 +11,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Employee extends EmployeeHandler implements Model{
+public class Employee extends EmployeeHandler implements Model, Comparable<Employee> {
 
     public enum Gender{
         FEMALE, MALE
@@ -209,5 +209,10 @@ public class Employee extends EmployeeHandler implements Model{
     public boolean save() {
         return false;
     }
+
+	@Override
+	public int compareTo(Employee e) {
+		return getName().compareTo(e.getName());
+	}
 	
 }
