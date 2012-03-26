@@ -30,7 +30,7 @@ public class Notification implements Model{
     }
 
     public Notification(JSONObject object) throws JSONException, SQLException {
-        this(object.getInt("id"), new Event(object.getJSONObject("event"), Constants.is_server), object.getString("timestamp"), object.getBoolean("is_invitation"), NotificationType.valueOf(object.getString("type")));
+        this(object.getInt("id"), new Event(object.getJSONObject("event"), Constants.IS_SERVER), object.getString("timestamp"), object.getBoolean("is_invitation"), NotificationType.valueOf(object.getString("type")));
     }
 
 

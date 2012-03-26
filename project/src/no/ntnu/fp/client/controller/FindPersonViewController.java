@@ -14,6 +14,7 @@ public class FindPersonViewController implements PropertyChangeListener {
 	public FindPersonViewController(Employee currentUser, FindPersonView view) {
 		this.currentUser = currentUser;
 		this.findPersonView = view;
+		findPersonView.setLocationRelativeTo(ClientApplication.getMainViewController().getMainView());
 	}
 	
 	public void setCurrentUser(Employee currentUser){

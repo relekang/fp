@@ -24,7 +24,7 @@ public class EmployeeHandler {
         this.id = id;
     }
     public ArrayList<Event> getEvents(int weekNr){
-        if(Constants.use_server) return getEventsFromServer();
+        if(Constants.USE_SERVER) return getEventsFromServer();
         ArrayList<Event> events = new ArrayList<Event>();
         events.add(Event.getDummyEvent("Superevent"));
         return events;
@@ -35,7 +35,7 @@ public class EmployeeHandler {
     }
     
     public static ArrayList<Employee> getAllEmployees(){
-        if(Constants.use_server) return getAllEmployeesFromServer();
+        if(Constants.USE_SERVER) return getAllEmployeesFromServer();
         ArrayList<Employee> list = new ArrayList<Employee>();
         //TODO fjerne dummies
         list.add(new Employee("David Storjord", "awsm@test.no", new Date(1990, 12, 31), Gender.MALE));
@@ -79,7 +79,7 @@ public class EmployeeHandler {
     }
 
     public ArrayList<Notification> getAllNotifications(){
-        if(Constants.use_server) return getNotificationsFromServer();
+        if(Constants.USE_SERVER) return getNotificationsFromServer();
         ArrayList<Notification> list = new ArrayList<Notification>();
         list.add(new Notification(1, Event.getDummyEvent("Event"), "2012-03-19 12:04:36", true, Notification.NotificationType.INVITATION/*, testGuy*/));
         list.add(new Notification(2, Event.getDummyEvent("Event"), "2012-03-20 13:05:37", false, Notification.NotificationType.ACCEPTED));

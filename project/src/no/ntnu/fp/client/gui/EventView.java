@@ -230,7 +230,7 @@ public class EventView extends JFrame {
 		participantPop = new JPopupMenu();
 		participantPop.add(participantPopPanel);
 		
-		//skal sjekke om brukeren er eventmanager
+		//TODO:skal sjekke om brukeren er eventmanager
 		if(true){
 			
 			gbc3.gridx = 0;	gbc3.gridy = 0;
@@ -331,15 +331,18 @@ public class EventView extends JFrame {
 		gbc1.gridwidth = 3;
 		eventPanel.add(eventTitle, gbc1);
 		
-		gbc1.gridx = 0;	gbc1.gridy = 1;
+		gbc1.gridx = 0;
+		gbc1.gridy = 1;
 		gbc1.gridwidth = 1;
 		gbc1.gridheight = 1;
 		gbc1.anchor = GridBagConstraints.EAST;
 		eventPanel.add(fromField, gbc1);
-		gbc1.gridx = 1;	gbc1.gridy = 1;
-		eventPanel.add(dash,gbc1);
-		
-		gbc1.gridx = 2;	gbc1.gridy = 1;
+		gbc1.gridx = 1;
+		gbc1.gridy = 1;
+		eventPanel.add(dash, gbc1);
+
+		gbc1.gridx = 2;
+		gbc1.gridy = 1;
 		gbc1.gridwidth = 1;
 		gbc1.gridheight = 1;
 		eventPanel.add(toField, gbc1);

@@ -1,6 +1,7 @@
 package no.ntnu.fp.client.gui;
 
 import no.ntnu.fp.client.controller.ClientApplication;
+import no.ntnu.fp.common.model.Event;
 
 import javax.swing.*;
 
@@ -125,7 +126,7 @@ public class MainView extends JFrame implements PropertyChangeListener {
 	class CreateEventButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
-			ClientApplication.showEventView();
+			ClientApplication.getEventViewController().showEvent(new Event(ClientApplication.getCurrentUser()));
 
 		}
 	}

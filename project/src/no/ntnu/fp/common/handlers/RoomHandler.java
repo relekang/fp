@@ -18,7 +18,7 @@ public class RoomHandler {
     }
 
     public static Room getRoom(int id){
-        if (Constants.use_server) return getRoomFromServer("id=" + id);
+        if (Constants.USE_SERVER) return getRoomFromServer("id=" + id);
         return new Room(1, "Drivhuset", "its", 100);
     }
 

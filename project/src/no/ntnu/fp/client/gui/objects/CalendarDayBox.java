@@ -153,9 +153,9 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		Util.localPrint(s);
 		if(s.equals(Event.EVENT_SAVED)) {
 			e = (Event)(evt.getNewValue());
+			Util.localPrint("Event " + e + " just got saved");
 			Util.print("Event " + e + " saved to day: " + day.getDate());
 			day.add(e);
-			canvas.repaint();
 		}
 		canvas.repaint();
 	}
@@ -192,14 +192,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 			int num1 = numOccupations(y, dy);
 			int num2 = numOccupations(y, dy);
 			for(Event e : day) {
-				Util.localPrint("numOccupied: " + numOccupations(y, dy));
 				e.drawEvent(g, (num1-num2--));
-//				g.setColor(e.getEventColor());
-//				g.fillRect(0, e.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, e.getToPixel()-e.getFromPixel());
-//				g.setColor(e.getEventColorBorder());
-//				g.drawRect(0, e.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, e.getToPixel()-e.getFromPixel());
-//				g.setColor(e.getTextColor());
-//				e.getStringRepresentation(g);
 			}
 		}
 		private void drawForegroundLines(Graphics g) {

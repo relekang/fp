@@ -17,6 +17,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import no.ntnu.fp.client.gui.EventView;
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
@@ -83,7 +84,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 				Calendar cal = (Calendar) evt.getNewValue();
 				toDate.set(Calendar.YEAR, cal.get(Calendar.YEAR));
 				toDate.set(Calendar.MONTH, cal.get(Calendar.MONTH));
-				toDate.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
+				toDate.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+7);//TODO: Calendar.DAY_OF_MONTH)+7 gives the right result for now..
 				event.setDateTo(toDate.getTime());
 				eventView.getToField().setText(toDate.getTime().toString());
 			}
@@ -96,7 +97,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 				Calendar cal = (Calendar) evt.getNewValue();
 				fromDate.set(Calendar.YEAR, cal.get(Calendar.YEAR));
 				fromDate.set(Calendar.MONTH, cal.get(Calendar.MONTH));
-				fromDate.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
+				fromDate.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+7);//TODO: Calendar.DAY_OF_MONTH)+7 gives the right result for now..
 				event.setDateTo(fromDate.getTime());
 				eventView.getFromField().setText(fromDate.getTime().toString());
 			}
@@ -113,6 +114,8 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 				}
 			}
 		});
+		
+		this.eventView.setLocationRelativeTo(ClientApplication.getMainViewController().getMainView());
     }
 
 	public void setCurrentUser(Employee currentUser){
@@ -148,7 +151,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		
+//		TODO:
 	}
 
 	@Override
@@ -273,7 +276,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			}
 			event.setParticipants(participants);
 			event.setRoom((Room) eventView.getRoomBox().getSelectedItem());
-
+			System.out.println("Save called in eventViewController: " + event + " - " + event.getDateFrom()+  " : " + event.getDateTo());
 	        event.save();
 		}
 		else if (e.getSource() == eventView.getCancelButton()) {

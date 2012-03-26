@@ -197,11 +197,8 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		if (room == null)
 			return;
 		g.setFont(GuiConstants.EVENT_LABEL_ROOM_FONT);
-		String[] room = { getRoom() != null ? getRoom().toString() : "" }; // check
-																			// if
-																			// room
-																			// is
-																			// null
+//		Check if room is null
+		String[] room = { getRoom() != null ? getRoom().toString() : "" }; 
 		if (room[0].length() >= maxChars) {
 			room = room[0].split(", ");
 			g.drawString(room[0] + ",", 0, getFromPixel() + line * 13);

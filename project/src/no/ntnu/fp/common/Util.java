@@ -35,7 +35,7 @@ public class Util {
             cal.set(Calendar.YEAR, date[0]);
             cal.set(Calendar.MONTH, date[1]);
             cal.set(Calendar.DAY_OF_MONTH, date[2]);
-            cal.set(Calendar.HOUR, date[3]);
+            cal.set(Calendar.HOUR_OF_DAY, date[3]);
             cal.set(Calendar.MINUTE, date[4]);
             return cal.getTime();
         }
@@ -43,8 +43,8 @@ public class Util {
         public static String dateTimeToString(Date date){
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            String output = "%d-%d-%d %d:%d:00";
-            output = String.format(output, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE));
+            String output = "%d-%d-%d %d:%s:00";
+            output = String.format(output, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.HOUR_OF_DAY), ((""+cal.get(Calendar.MINUTE)).length() == 1) ? cal.get(Calendar.MINUTE)+"0" : ""+cal.get(Calendar.MINUTE));
             return output;
         }
 
@@ -78,8 +78,8 @@ public class Util {
     public static void print(boolean s )         { if(Constants.DEBUG) System.out.println(s); }
     public static void print(int s )             { if(Constants.DEBUG) System.out.println(s); }
     public static void print(Object s )          { if(Constants.DEBUG) System.out.println(s); }
-    public static void localPrint(String s )     { if(Constants.DEBUG&&!Constants.is_server) System.out.println(s); }
-    public static void localPrint(boolean s )    { if(Constants.DEBUG&&!Constants.is_server) System.out.println(s); }
-    public static void localPrint(int s )        { if(Constants.DEBUG&&!Constants.is_server) System.out.println(s); }
-    public static void localPrint(Object s )     { if(Constants.DEBUG&&!Constants.is_server) System.out.println(s); }
+    public static void localPrint(String s )     { if(Constants.DEBUG&&!Constants.IS_SERVER) System.out.println(s); }
+    public static void localPrint(boolean s )    { if(Constants.DEBUG&&!Constants.IS_SERVER) System.out.println(s); }
+    public static void localPrint(int s )        { if(Constants.DEBUG&&!Constants.IS_SERVER) System.out.println(s); }
+    public static void localPrint(Object s )     { if(Constants.DEBUG&&!Constants.IS_SERVER) System.out.println(s); }
 }
