@@ -105,6 +105,16 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		canvas.repaint();
 	}
 	
+	public void mouseClicked(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		for(Event ev : day) {
+			if(ev.getBounds().contains(x, y)) {
+				ClientApplication.getEventViewController().showEvent(ev);
+			}
+		}
+	}
+	
 	private void createNewEvent(MouseEvent e) {
 		Event event = new Event(y, dy, ClientApplication.getCurrentUser());
 		int[] from = Event.getTimeFromPixel(event.getFromPixel());
@@ -114,10 +124,20 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		event.setDateFrom(calFrom.getTime());
 		event.setDateTo(calTo.getTime());
 		Util.print("Event created: " + event.getDateFrom() + " : " + event.getDateTo());
-		ClientApplication.getEventViewController().showEvent(event);
-		event.addPropertyChangeListener(this);
-//		ClientApplication.showEventView();
-//		day.add(event);
+		if(y != dy || numOccupations(y, dy) == 0) {
+			ClientApplication.getEventViewController().showEvent(event);
+			event.addPropertyChangeListener(this);
+		}
+	}
+	
+	private int numOccupations(int y, int dy) {
+		int numOccupations = 0;
+		for(Event ev : day) {
+			if(ev.getFromPixel() <= y && ev.getToPixel() >= dy) {
+				numOccupations++;
+			}
+		}
+		return numOccupations;
 	}
 	
 	private Calendar fixTime(int[] hourAndMin) {
@@ -126,17 +146,6 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 		cal.set(Calendar.MINUTE, hourAndMin[1]);
 		return cal;
 	}
-//	TODO: hvis disse trengs...
-	public void mouseClicked(MouseEvent e) {
-		int x = e.getX();
-		int y = e.getY();
-		for(Event ev : day) {
-			if(ev.getFromPixel() <= y && ev.getToPixel() >= y) {
-				ClientApplication.getEventViewController().showEvent(ev);
-			}
-		}
-	}
-	
 	public void propertyChange(PropertyChangeEvent evt) {
 		Event e;
 		String s = evt.getPropertyName();
@@ -180,12 +189,13 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 
 		private void paintEvents(Graphics g) {
 			for(Event e : day) {
-				g.setColor(e.getEventColor());
-				g.fillRect(0, e.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, e.getToPixel()-e.getFromPixel());
-				g.setColor(e.getEventColorBorder());
-				g.drawRect(0, e.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, e.getToPixel()-e.getFromPixel());
-				g.setColor(e.getTextColor());
-				e.getStringRepresentation(g);
+				e.drawEvent(g, numOccupations(y, dy));
+//				g.setColor(e.getEventColor());
+//				g.fillRect(0, e.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, e.getToPixel()-e.getFromPixel());
+//				g.setColor(e.getEventColorBorder());
+//				g.drawRect(0, e.getFromPixel(), GuiConstants.CANVAS_WIDTH-10, e.getToPixel()-e.getFromPixel());
+//				g.setColor(e.getTextColor());
+//				e.getStringRepresentation(g);
 			}
 		}
 		private void drawForegroundLines(Graphics g) {

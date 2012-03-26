@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
@@ -123,6 +124,10 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		return hourAndMin;
 	}
 	
+	public Rectangle getBounds() {
+		return new Rectangle(0, fromPx, width, toPx);
+	}
+	
 	private int calculatePixelLocation(Calendar cal) {
 		int hour = cal.get(Calendar.HOUR);
 		int min = cal.get(Calendar.MINUTE);
@@ -137,7 +142,17 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		if(minute % (GuiConstants.HOUR_HEIGHT/4) > GuiConstants.HOUR_HEIGHT/8)
 			quarter++;
 		return hour* GuiConstants.HOUR_HEIGHT + quarter * (GuiConstants.HOUR_HEIGHT/4);
-	}	
+	}
+	
+	public void drawEvent(Graphics g, int overlap) {
+		width = GuiConstants.CANVAS_WIDTH-10*overlap;
+		g.setColor(getEventColor());
+		g.fillRect(0, getFromPixel(), width, getToPixel()-getFromPixel());
+		g.setColor(getEventColorBorder());
+		g.drawRect(0, getFromPixel(), width, getToPixel()-getFromPixel());
+		g.setColor(getTextColor());
+		getStringRepresentation(g);
+	}
 	
 //	A hack-ish method that draws the representative string for a meeting
 	public void getStringRepresentation(Graphics g) {
@@ -145,7 +160,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 			return;
 		g.setFont(GuiConstants.EVENT_LABEL_TITLE_FONT);
 		int maxLines = (toPx - fromPx) / (GuiConstants.HOUR_HEIGHT / 4);
-		int maxChars = 14;
+		int maxChars = (int)(width/7.5);
 		String[] titleWords = getTitle().split(" ");
 		int line = 0;
 		String text = "";
@@ -309,6 +324,11 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 	public void setEventColorBorder(Color eventColorBorder) {
 		this.eventColorBorder = eventColorBorder;
 	}
-
+	public int getWidth() {
+		return width;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
 
 }
