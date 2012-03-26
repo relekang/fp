@@ -12,7 +12,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -29,7 +28,6 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	private Employee currentUser;
 	private Calendar fromDate, toDate;
 	private Event event;
-	private String toHour, toMinute, toTime, fromHour, fromMinute, fromTime;
 	private ArrayList<String> popList, popListFound;
 	
 	
@@ -47,12 +45,6 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 
 		popList = new ArrayList<String>();
 		popListFound = new ArrayList<String>();
-
-		toHour = "0";
-		toMinute = "0";
-
-		fromHour = "0";
-		fromMinute = "0";
 
 		eventView = new EventView();
 		eventView.setVisible(false);
