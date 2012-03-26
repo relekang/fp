@@ -40,7 +40,8 @@ public class MainViewController implements PropertyChangeListener {
 		mainView.setCalendarModel(weekModel);
 
 		organizePropertyChangeListeners();
-		loadUserEvents(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+//		loadUserEvents(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+		setCurrentUser(currentUser);
 	}
 
 	private void organizePropertyChangeListeners() {
@@ -54,7 +55,6 @@ public class MainViewController implements PropertyChangeListener {
 		mainView = view;
 	}
 
-	// TODO: brukes ikke
 	public void setCurrentUser(Employee currentUser) {
 		this.currentUser = currentUser;
 		currentUser.addPropertyChangeListener(this);

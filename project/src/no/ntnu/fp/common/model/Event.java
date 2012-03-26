@@ -237,12 +237,12 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
     	Date oldDateFrom = this.dateFrom.getTime();
         this.dateFrom.setTime(dateFrom);
         pcs.firePropertyChange(DATEFROM_CHANGED, oldDateFrom, this.dateFrom);
-        if(!getDateFrom().before(getDateTo())) {
-//        	TODO: virker dette?
-        	Calendar c = Calendar.getInstance();
-        	c.setTime(getDateFrom());
-        	setDateTo(c.getTime());
-        }
+//        if(!getDateFrom().before(getDateTo())) {
+////        	TODO: virker dette?
+//        	Calendar c = Calendar.getInstance();
+//        	c.setTime(getDateFrom());
+//        	setDateTo(c.getTime());
+//        }
     }
 
 
