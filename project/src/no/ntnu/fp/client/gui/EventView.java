@@ -376,4 +376,9 @@ public class EventView extends JFrame {
 	public void addParticipant(Employee person) {
 		listModel.addElement(person);
 	}
+
+
+    public void removeAllParticipants() {
+        listModel.clear();
+    }
 }
