@@ -101,8 +101,12 @@ public class EmployeeHandler {
                 JSONArray jsonArray = new JSONArray(message);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.optJSONObject(i);
-                    Notification notification = new Notification(object);
-                    notifications.add(notification);
+                    try {
+                    	Notification notification = new Notification(object);
+                    	notifications.add(notification);
+                    } catch(SQLException e ){
+                    	e.printStackTrace();
+                    }
                 }
                 conn.close();
             } catch (JSONException e) {

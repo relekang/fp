@@ -260,6 +260,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 
     public boolean save(){
     	pcs.firePropertyChange(EVENT_SAVED, true, true);
+    	
         updateEvent(this);
         return true;
     }

@@ -1,11 +1,14 @@
 package no.ntnu.fp.common.model;
 
 
+import no.ntnu.fp.common.Constants;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.sql.SQLException;
 import java.util.Calendar;
 
 public class Notification implements Model{
@@ -26,8 +29,8 @@ public class Notification implements Model{
         this.type = type;
     }
 
-    public Notification(JSONObject object) throws JSONException {
-        this(object.getInt("id"), new Event(object.getJSONObject("event")), object.getString("timestamp"), object.getBoolean("is_invitation"), NotificationType.valueOf(object.getString("type")));
+    public Notification(JSONObject object) throws JSONException, SQLException {
+        this(object.getInt("id"), new Event(object.getJSONObject("event"), Constants.is_server), object.getString("timestamp"), object.getBoolean("is_invitation"), NotificationType.valueOf(object.getString("type")));
     }
 
 
