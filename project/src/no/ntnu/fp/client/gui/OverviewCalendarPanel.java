@@ -57,8 +57,10 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
         previousButton = new JButton();
 
         nextButton.setBorder(BorderFactory.createEmptyBorder(4,4,4,4));
+        nextButton.setBackground(GuiConstants.SWING_FRAME_GRAY);
         previousButton.setBorder(BorderFactory.createEmptyBorder(4,4,4,4));
-
+        previousButton.setBackground(GuiConstants.SWING_FRAME_GRAY);
+        
         monthLabel = new JLabel();
 
         nextButton.addActionListener(new ButtonListener());
@@ -246,7 +248,7 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
     private void setMonth(int newMonth) {
         c.set(Calendar.MONTH, newMonth);
         updateCalendar(c.get(Calendar.MONTH));
-        this.monthLabel.setText(Util.getMonthText(c.get(Calendar.MONTH)) + c.get(Calendar.YEAR));
+        this.monthLabel.setText(Util.getMonthText(c.get(Calendar.MONTH))+ " '" + (""+c.get(Calendar.YEAR)).substring(2));
     }
 
 }
