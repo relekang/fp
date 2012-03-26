@@ -13,9 +13,13 @@ import javax.swing.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+
+import static sun.applet.AppletResourceLoader.getImage;
 
 public class ClientApplication {
 	private static MainView mainFrame;
@@ -48,7 +52,7 @@ public class ClientApplication {
 		login = null;
 		mainFrame = new MainView();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		eventFrame = new EventView();
+        eventFrame = new EventView();
 		findPersonFrame = new FindPersonView();
 		
 		mainViewController = new MainViewController(currentUser, mainFrame);

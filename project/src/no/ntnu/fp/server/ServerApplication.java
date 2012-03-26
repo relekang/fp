@@ -157,6 +157,14 @@ public class ServerApplication {
             }
             String message = new JSONArray(jsonList).toString();
             conn.send(message);
+        } else if(action.equals("delete")){
+            Event event = new Event(object.getJSONObject("event"), true);
+            String arg = "id = " + event.getID();
+            eventHandler.delete(arg);
+            for(Employee p:event.getParticipants()){
+                eventHandler.deleteParticipantFromEvent(p, event.getID());
+            }
+            conn.send(new JSONObject().put("key", "success").toString());
         } else {
             conn.send(new JSONObject().put("key", "failure").toString());
         }

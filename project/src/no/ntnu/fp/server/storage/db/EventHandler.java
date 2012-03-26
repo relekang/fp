@@ -218,4 +218,24 @@ public class EventHandler extends DbHandler {
         stm.close();
         close();
     }
+
+    public void delete(String arg) throws SQLException {
+        if (!connect()) return;
+        Statement stm = conn.createStatement();
+        String query = "DELETE FROM `EVENT` WHERE %s LIMIT 1";
+        query = String.format(query,arg);
+        stm.execute(query);
+        stm.close();
+        close();
+    }
+
+    public void deleteParticipantFromEvent(Employee p, int event_id) throws SQLException {
+        if (!connect()) return;
+        Statement stm = conn.createStatement();
+        String query = "DELETE FROM `EMPLOYEE_ATTEND_EVENT` WHERE `employee_id` = '%d' AND `event_id` = '%d' LIMIT 1";
+        query = String.format(query, p.getId(), event_id);
+        stm.execute(query);
+        stm.close();
+        close();
+    }
 }

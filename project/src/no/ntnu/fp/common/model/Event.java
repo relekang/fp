@@ -1,5 +1,6 @@
 package no.ntnu.fp.common.model;
 
+import no.ntnu.fp.client.controller.ClientApplication;
 import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.handlers.EventHandler;
@@ -328,7 +329,9 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		object.put("title", getTitle());
 		object.put("date_from", Util.dateTimeToString(getDateFrom()));
 		object.put("date_to", Util.dateTimeToString(getDateTo()));
-		object.put("room_id", getRoom().getId());
+        //TODO: Remove this if statement
+		if(getRoom()!= null)object.put("room_id", getRoom().getId());
+        else object.put("room_id", 1);
 		object.put("description", getDescription());
 		object.put("admin", getAdmin().toJson());
 		object.put("participants", getParticipantsAsJsonArray());
@@ -369,7 +372,9 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		return array;
 	}
     public void delete(){
+        //TODO: Update weekpanel without fetching from database
+        int week = ClientApplication.getMainViewController().getMainView().getOverviewCalendarPanel().getWeek();
         deleteOnServer(this);
+        ClientApplication.getMainViewController().loadUserEvents(week);
     }
-
 }

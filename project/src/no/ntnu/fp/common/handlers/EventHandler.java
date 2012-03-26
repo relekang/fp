@@ -49,7 +49,7 @@ public class EventHandler {
             try {
                 json.put("key", "event");
                 json.put("action", "delete");
-                json.put("event_id", event.getID());
+                json.put("event", event.toJson());
                 conn.send(json);
                 conn.receive();
                 conn.close();

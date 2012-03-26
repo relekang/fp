@@ -281,6 +281,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		}
 		else if (e.getSource() == eventView.getDeleteButton()) {
 			this.setVisible(false);
+            event.delete();
 		}
 		else if (e.getSource() == eventView.getDeletePersonButton()) {
 			int temp = eventView.getParticipantList().getSelectedIndex();
@@ -290,6 +291,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 				eventView.getParticipantList().setSelectedIndex(temp - 1);
 				eventView.removeParticipant(temp);
 			}
+
 		}
 	}
 }
