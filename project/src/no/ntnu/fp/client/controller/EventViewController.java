@@ -36,23 +36,22 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		this.eventView = view;
 
         event = new Event(currentUser);
-        event.addPropertyChangeListener(this);
-		
+
 		popList = new ArrayList<String>();
 		popListFound = new ArrayList<String>();
-		
+
 		toHour = "0";
 		toMinute = "0";
 		toDate = "0.0.0000";
-		
+
 		fromHour = "0";
 		fromMinute = "0";
 		fromDate = "0.0.0000";
-		
+
 		eventView = new EventView();
 		eventView.setVisible(false);
 		eventView.addComponentListener(this);
-		
+
 		eventView.getCalendarToPopPanel().getHourTextField().addKeyListener(this);
 		eventView.getCalendarToPopPanel().getMinuteTextField().addKeyListener(this);
 		eventView.getCalendarFromPopPanel().getHourTextField().addKeyListener(this);
@@ -63,46 +62,45 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		eventView.getAcceptButton().addActionListener(this);
 		eventView.getDeclineButton().addActionListener(this);
 		eventView.getDeletePersonButton().addActionListener(this);
-		
+
 		eventView.getFromField().addMouseListener(this);
 		eventView.getToField().addMouseListener(this);
-		
+
 		eventView.getTitleField().addMouseListener(this);
 		eventView.getDescriptionArea().addMouseListener(this);
 		eventView.getParticipantField().addMouseListener(this);
-		
+
 		eventView.getParticipantField().addKeyListener(this);
 		popList = new ArrayList<String>();
-		
-		
+
+
 
 		for (int i = 0; i < popList.size(); i++) {
 			eventView.getPopListModel().addElement(popList.get(i));
 		}
-		
+
 		eventView.getCalendarToPopPanel().getOverviewCalendarPanel().addPCL(new PropertyChangeListener() {
-			
+
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				Calendar cal = (Calendar) evt.getNewValue();
-				System.out.println("her");
 				toDate = "" + cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + cal.get(Calendar.YEAR);
 				eventView.getToField().setText(toDate + "/" + toHour + toMinute);
 			}
 		});
-		
+
 		eventView.getCalendarFromPopPanel().getOverviewCalendarPanel().addPCL(new PropertyChangeListener() {
-			
+
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				Calendar cal = (Calendar) evt.getNewValue();
-				event.setDateFrom(cal.getTime());
-//				eventView.getFromField().setText(fromDate + "/" + fromHour + fromMinute);				
+				fromDate = "" + cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + cal.get(Calendar.YEAR);
+				eventView.getFromField().setText(fromDate + "/" + fromHour + fromMinute);
 			}
 		});
-		
+
 		eventView.getParticipantPopList().addListSelectionListener(new ListSelectionListener() {
-			
+
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(eventView.getParticipantPopList().getSelectedIndex() != -1){
@@ -113,38 +111,39 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			}
 		});
     }
-	
+
 	public void setCurrentUser(Employee currentUser){
 		this.currentUser = currentUser;
 	}
-	
+
 	public void showEvent(){
-		
+
 	}
-	
+
 	public void showEvent(Event event){
 		eventView.setLocationRelativeTo(ClientApplication.getMainViewController().getMainView());
 		setEvent(event);
 		eventView.setVisible(true);
 	}
-	
+
 	public void setVisible(boolean visible){
 		eventView.setVisible(visible);
 	}
-	
+
 	public void setEvent(Event event){
 		this.event = event;
-		eventView.getTitleField().setText(event.getTitle());
+		eventView.setTitle(event.getTitle());
 		eventView.setFromField(event.getDateFrom().toString());
 		eventView.setToField(event.getDateTo().toString());
 		eventView.setDescriptionArea(event.getDescription());
-		
+
+        eventView.removeAllParticipants();
 		for (int i = 0; i < event.getParticipants().size(); i++) {
 			eventView.addParticipant(event.getParticipants().get(i));
 		}
 	}
-	
-//	
+
+//
 //	public Event getEvent (int ID){
 //		try {
 //			return EventHandler.getEvent(ID);
@@ -152,24 +151,21 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-//		
+//
 //		return null;
-//		
+//
 //	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		System.out.println(evt.getPropertyName());
-		if(evt.getPropertyName().equals(Event.DATEFROM_CHANGED)){
-			System.out.println("kommer du hit?");
-			eventView.getFromField().setText(event.getDateFrom().toString());
-		}
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -186,7 +182,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		}
 		else if (e.getSource() == eventView.getCalendarFromPopPanel().getMinuteTextField()) {
 			fromMinute = "" + eventView.getCalendarFromPopPanel().getMinField();
-		}	
+		}
 		else if(e.getSource() == eventView.getParticipantField()){
 			for (int i = 0; i < popList.size(); i++) {
 				if(eventView.getParticipantField().getText().length() <= 1){
@@ -213,12 +209,12 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+
 		if (e.getSource() == eventView.getTitleField()) {
 			if (eventView.getTitleField().getText().equals("Title")) {
 				eventView.getTitleField().setText("");
@@ -244,46 +240,46 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			eventView.getParticipantField().grabFocus();
 		}
 		else if(e.getSource() == eventView.getTitleField()){
-			eventView.getTitleField().setText("");	
+			eventView.getTitleField().setText("");
 		}
 		else if(e.getSource() == eventView.getDescriptionArea()){
-			eventView.getDescriptionArea().setText("");	
+			eventView.getDescriptionArea().setText("");
 		}
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void componentHidden(ComponentEvent arg0) {
-		
-		
+
+
 	}
 
 	@Override
 	public void componentMoved(ComponentEvent arg0) {
-		
+
 //		view.getFromPop().show(view.getFromField(), 0, 30);
 //		view.getToPop().show(view.getToField(), 0, 30);
 //		view.getParticipantPop().show(view.getParticipantField(), 0, 30);
@@ -291,7 +287,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 
 	@Override
 	public void componentResized(ComponentEvent arg0) {
-		
+
 //		view.getFromPop().show(view.getFromField(), 0, 30);
 //		view.getToPop().show(view.getToField(), 0, 30);
 //		view.getParticipantPop().show(view.getParticipantField(), 0, 30);
@@ -299,7 +295,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 
 	@Override
 	public void componentShown(ComponentEvent arg0) {
-		
+
 	}
 
 	@Override
@@ -317,6 +313,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			}
 			event.setParticipants(participants);
 			event.setRoom((Room) eventView.getRoomBox().getSelectedItem());
+
 	        event.save();
 		}
 		else if (e.getSource() == eventView.getCancelButton()) {
