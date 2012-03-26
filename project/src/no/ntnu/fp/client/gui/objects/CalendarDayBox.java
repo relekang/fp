@@ -134,7 +134,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	private int numOccupations(int y, int dy) {
 		int numOccupations = 0;
 		for(Event ev : day) {
-			if(ev.getFromPixel() <= y || ev.getToPixel() >= dy) {
+			if(ev.getFromPixel() <= y && ev.getToPixel() >= dy) {
 				numOccupations++;
 			}
 		}
