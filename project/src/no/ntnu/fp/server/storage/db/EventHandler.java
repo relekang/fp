@@ -82,22 +82,22 @@ public class EventHandler extends DbHandler {
         }
 
     }
-    public Event createEvent(Event event) throws SQLException {
+    public int createEvent(Event event) throws SQLException {
         if(!connect())
-            return null;
+            return 0;
         String query = "INSERT INTO `EVENT` (`id`,`room_id`, `date_from`, `date_to`, `title`, `description`, `type`, `canceled`) VALUES (NULL, %d, '%s', '%s', '%s', '%s', '%s', %d);";
         query = String.format(query, event.getRoom().getId(), Util.dateTimeToString(event.getDateFrom()), Util.dateTimeToString(event.getDateTo()), event.getTitle(), event.getDescription(), "meeting"/*event.getTypeAsString()*/, event.getIsCanceledAsInt());
         Util.print(query);
         Statement stm = conn.createStatement();
         boolean rs = stm.execute(query);
         stm.close();
-//        stm = conn.createStatement();
-//        query = "SELECT ID FROM EVENT ORDER BY ID DESC LIMIT 1;";
-//        Util.print(query);
-//        ResultSet res = stm.executeQuery(query);
-//        res.next();
-//        int id = res.getInt("id");
-//        res.close();
+        stm = conn.createStatement();
+        query = "SELECT ID FROM EVENT ORDER BY ID DESC LIMIT 1;";
+        Util.print(query);
+        ResultSet res = stm.executeQuery(query);
+        res.next();
+        int id = res.getInt("id");
+        res.close();
 //        query = "INSERT INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, 1);";
 //        query = String.format(query, event.getAdmin().getId(), id);
 //        Util.print(query);
@@ -105,7 +105,7 @@ public class EventHandler extends DbHandler {
 //        stm = conn.createStatement();
 //        rs = stm.execute(query);
         close();
-        return event;
+        return id;
     }
     public static Event getEvent(int eventId) throws SQLException {
         EventHandler eventHandler = new EventHandler();
@@ -169,7 +169,7 @@ public class EventHandler extends DbHandler {
         return employees;
     }
 
-    public void addParticipants(Event event) throws SQLException {
+    public void addParticipants(Event event, int id) throws SQLException {
         if(!connect()) return;
         String query;
         Statement stm;
@@ -178,7 +178,7 @@ public class EventHandler extends DbHandler {
             if(participant == event.getAdmin()) admin = 1;
             else admin = 0;
             query = "INSERT INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, 1);";
-            query = String.format(query, participant.getId(), event.getID());
+            query = String.format(query, participant.getId(), id);
             Util.print(query);
             stm = conn.createStatement();
             boolean rs = stm.execute(query);
