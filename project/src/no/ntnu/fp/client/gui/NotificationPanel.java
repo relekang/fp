@@ -65,13 +65,13 @@ public class NotificationPanel extends JPanel implements MouseListener{
         gbc.gridwidth = 2;
         add(list, gbc);
         
-       popup.getViewEventButton().addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			popupFrame.setVisible(false);
-		}
-	}); 
+//       popup.getViewEventButton().addActionListener(new ActionListener() {
+//		
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			popupFrame.setVisible(false);
+//		}
+//	}); 
         
     }
     
