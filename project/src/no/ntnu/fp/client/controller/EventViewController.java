@@ -36,6 +36,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		this.eventView = view;
 
         event = new Event(currentUser);
+        event.addPropertyChangeListener(this);
 		
 		popList = new ArrayList<String>();
 		popListFound = new ArrayList<String>();
@@ -84,6 +85,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				Calendar cal = (Calendar) evt.getNewValue();
+				System.out.println("her");
 				toDate = "" + cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + cal.get(Calendar.YEAR);
 				eventView.getToField().setText(toDate + "/" + toHour + toMinute);
 			}
@@ -94,8 +96,8 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				Calendar cal = (Calendar) evt.getNewValue();
-				fromDate = "" + cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + cal.get(Calendar.YEAR);
-				eventView.getFromField().setText(fromDate + "/" + fromHour + fromMinute);				
+				event.setDateFrom(cal.getTime());
+//				eventView.getFromField().setText(fromDate + "/" + fromHour + fromMinute);				
 			}
 		});
 		
@@ -157,8 +159,11 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
+		System.out.println(evt.getPropertyName());
+		if(evt.getPropertyName().equals(Event.DATEFROM_CHANGED)){
+			System.out.println("kommer du hit?");
+			eventView.getFromField().setText(event.getDateFrom().toString());
+		}
 	}
 
 	@Override
