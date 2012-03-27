@@ -13,9 +13,13 @@ import java.util.Date;
 
 public class Employee extends EmployeeHandler implements Model, Comparable<Employee> {
 
-    public enum Gender{
-        FEMALE, MALE
-    };
+    public String getFirstName() {
+        if(name.split(" ").length >= 1)
+            return name.split(" ")[0];
+        return "";
+    }
+
+    public enum Gender{ FEMALE, MALE }
 
     private int ID;
 	private String name;

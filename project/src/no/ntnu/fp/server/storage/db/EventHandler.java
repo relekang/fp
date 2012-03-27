@@ -64,10 +64,10 @@ public class EventHandler extends DbHandler {
             if(!connect())
                 return null;
             Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM EVENT INNER JOIN EMPLOYEE_ATTEND_EVENT ON EVENT.id = EMPLOYEE_ATTEND_EVENT.event_id AND is_admin = 1 WHERE " + arg;
+            String query = "SELECT * FROM EVENT INNER JOIN EMPLOYEE_ATTEND_EVENT ON EVENT.id = EMPLOYEE_ATTEND_EVENT.event_id AND is_admin = 1 WHERE " + arg + ";";
             Util.print(query);
             ResultSet rs = stmt.executeQuery(query);
-            Event event;
+            Event event = null;
             rs.next();
             event = new Event(rs.getInt("id") , rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")), EmployeeHandler.getEmployee(rs.getInt("employee_id")));
             event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
@@ -98,12 +98,12 @@ public class EventHandler extends DbHandler {
         res.next();
         int id = res.getInt("id");
         res.close();
-//        query = "INSERT INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, 1);";
-//        query = String.format(query, event.getAdmin().getId(), id);
-//        Util.print(query);
-//        stm.close();
-//        stm = conn.createStatement();
-//        rs = stm.execute(query);
+        query = "INSERT INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, 1);";
+        query = String.format(query, event.getAdmin().getId(), id);
+        Util.print(query);
+        stm.close();
+        stm = conn.createStatement();
+        rs = stm.execute(query);
         close();
         return id;
     }
