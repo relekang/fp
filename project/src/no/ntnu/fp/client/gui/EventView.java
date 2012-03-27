@@ -5,12 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Room;
@@ -27,8 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class EventView extends JFrame {
 	
@@ -167,8 +161,6 @@ public class EventView extends JFrame {
 		}
 		Util.localPrint("POPLIST: " + tempEmployeeArrayList);
 		
-//		gbc1.gridheight = 15;
-//		gbc1.ipadx = 20;
 		gbc1.ipady = 7;
 		
 		gbc1.anchor = GridBagConstraints.EAST;
@@ -199,14 +191,12 @@ public class EventView extends JFrame {
 
 		gbc1.gridx = 0;
 		gbc1.gridy = 5;
-//		gbc1.gridy = 6;
 		gbc1.gridwidth = 1;
 		eventPanel.add(new JLabel("Description: "), gbc1);
 		
 		gbc1.anchor = GridBagConstraints.WEST;
 		gbc1.gridx = 1;
 		gbc1.gridy = 7;
-//		gbc1.gridy = 9;
 		gbc1.gridheight = 1;
 		gbc1.gridwidth = 3;
 		eventPanel.add(buttonPanel, gbc1);
@@ -235,21 +225,15 @@ public class EventView extends JFrame {
 		eventPanel.add(roomBox, gbc1);
 		
 		gbc1.gridx = 1;
-//		gbc1.gridx = 0;
 		gbc1.gridy = 4;
-//		gbc1.gridy = 5;
 		gbc1.gridheight = 1;
 		gbc1.gridwidth = 2;
-//		gbc1.gridwidth = 3;
 		eventPanel.add(participantsField, gbc1);
 
 		gbc1.gridx = 1;
-//		gbc1.gridx = 0;
 		gbc1.gridy = 5;
-//		gbc1.gridy = 7;
 		gbc1.gridheight = 2;
 		gbc1.gridwidth = 3;
-//		gbc1.gridwidth = 3;
 		eventPanel.add(descriptionBox, gbc1);
 		
 		gbc1.anchor = GridBagConstraints.CENTER;
