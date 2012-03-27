@@ -1,5 +1,6 @@
 package no.ntnu.fp.client.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,6 +14,8 @@ import java.util.Date;
 import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Room;
+
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,11 +46,8 @@ public class EventView extends JFrame {
 	private ParticipantRenderer renderer;
 	private JPopupMenu fromPop, toPop, participantPop;
 	private Employee currentUser;
-	private boolean currentUserIsAdmin;
 	
 	public EventView(){
-		
-		currentUserIsAdmin = true;
 		
 		gbc1 = new GridBagConstraints();
 		gbc2 = new GridBagConstraints();
@@ -85,32 +85,6 @@ public class EventView extends JFrame {
 		this.pack();
 	}
 	
-	public void currentUserIsAdmin(boolean currentUserIsAdmin){
-		this.currentUserIsAdmin = currentUserIsAdmin;
-	}
-	
-	public void addSaveButton(){
-		gbc3.gridx = 0;	gbc3.gridy = 0;
-		gbc3.gridwidth = 1;
-		gbc3.gridheight = 1;
-		buttonPanel.add(saveButton, gbc3);
-		
-	}
-	
-	public void addAcceptButton(){
-		gbc3.gridx = 0; gbc3.gridy = 0;
-		gbc3.gridwidth = 1;
-		gbc3.gridheight = 1;
-		buttonPanel.add(acceptButton, gbc3);
-	}
-	
-	public void addDeclineButton(){
-		gbc3.gridx = 1; gbc3.gridy = 0;
-		gbc3.gridwidth = 1;
-		gbc3.gridheight = 1;
-		buttonPanel.add(declineButton, gbc3);
-	}
-	
 	private void createPanel(){
 		renderer = new ParticipantRenderer();
 		listModel = new DefaultListModel();
@@ -118,22 +92,56 @@ public class EventView extends JFrame {
 		participantList = new JList(listModel);
 		participantList.setCellRenderer(renderer);
 		participantList.setPreferredSize(new Dimension(300, 375));
+		participantList.setMinimumSize(new Dimension(300, 375));
 		
 		popListModel = new DefaultListModel();
 		participantPopList = new JList(popListModel);
 		
 		participantPopList.setPreferredSize(new Dimension(315, 100));
 		participantPopPanel.add(participantPopList);
+		
         //TODO FIX ROOMS
 		Room[] rooms = {new Room(1,"Drivhuset", "its", 800)};
 		eventTitle = new JTextField(STD_COLUMNS);
+		eventTitle.setPreferredSize(new Dimension(290, 20));
+		eventTitle.setMinimumSize(new Dimension(290, 20));
+		
 		fromField = new JTextField(STD_COLUMNS);
+		fromField.setPreferredSize(new Dimension(290, 20));
+		fromField.setMinimumSize(new Dimension(290, 20));
+		
 		toField = new JTextField(STD_COLUMNS);
-		roomBox = new JComboBox(rooms);
+		toField.setPreferredSize(new Dimension(290, 20));
+		toField.setMinimumSize(new Dimension(290, 20));
+		
 		participantsField = new JTextField(STD_COLUMNS);
-		roomBox.setPreferredSize(new Dimension(290, 25));
+		participantsField.setPreferredSize(new Dimension(290, 20));
+		participantsField.setMinimumSize(new Dimension(290, 20));
+		
+		roomBox = new JComboBox(rooms);
+		roomBox.setPreferredSize(new Dimension(290, 20));
+		roomBox.setMinimumSize(new Dimension(290, 20));
+		
 		descriptionBox = new JTextArea();
-		descriptionBox.setPreferredSize(new Dimension(290, 150));
+		descriptionBox.setPreferredSize(new Dimension(315, 150));
+		descriptionBox.setMinimumSize(new Dimension(315, 150));
+		
+		buttonPanel.setPreferredSize(new Dimension(290, 30));
+		buttonPanel.setMinimumSize(new Dimension(290, 30));
+		
+		java.net.URL accept = getClass().getResource("/resources/icons/accept.png");
+		ImageIcon acceptIcon = new ImageIcon(accept);
+		acceptButton.setIcon(acceptIcon);
+		
+		java.net.URL decline = getClass().getResource("/resources/icons/decline.png");
+		ImageIcon declineIcon = new ImageIcon(decline);
+		declineButton.setIcon(declineIcon);
+		
+		eventTitle.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+		fromField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+		toField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+		participantsField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+		descriptionBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 		
 		fromPop = new JPopupMenu();
 		fromPop.add(calendarFromPopPanel);
@@ -143,88 +151,14 @@ public class EventView extends JFrame {
 		
 		participantPop = new JPopupMenu();
 		participantPop.add(participantPopPanel);
+			
+		ArrayList<Employee> tempEmployeeArrayList = Employee.getAllEmployees(); 
+		Collections.sort(tempEmployeeArrayList);
 		
-		//skal sjekke om brukeren er eventmanager
-		if(currentUserIsAdmin){
-			gbc3.gridx = 0;	gbc3.gridy = 0;
-			gbc3.gridwidth = 1;
-			gbc3.gridheight = 1;
-			buttonPanel.add(saveButton, gbc3);
-			
-			gbc3.gridx = 1;	gbc3.gridy = 0;
-			gbc3.gridwidth = 1;
-			gbc3.gridheight = 1;
-			buttonPanel.add(cancelButton, gbc3);
-			
-			gbc3.gridx = 2;	gbc3.gridy = 0;
-			gbc3.gridwidth = 1;
-			gbc3.gridheight = 1;
-			buttonPanel.add(deleteButton, gbc3);
-			
-			gbc2.gridx = 2;	gbc2.gridy = 3;
-			gbc2.gridheight = 1;
-			gbc2.gridwidth = 1;
-			listPanel.add(deletePersonButton, gbc2);
-			
-			
-			ArrayList<Employee> tempEmployeeArrayList = Employee.getAllEmployees(); 
-			Collections.sort(tempEmployeeArrayList);
-			
-			for(int i = 0; i < tempEmployeeArrayList.size(); i++){
-				popListModel.addElement(tempEmployeeArrayList.get(i));
-			}
-			Util.localPrint("POPLIST: " + tempEmployeeArrayList);
-			
-			
-			saveButton.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-
-//					setVisible(false);
-//					
-//					
-//					int listSize = participantList.getModel().getSize();
-//					ArrayList<Employee> participantsArray = new ArrayList<Employee>();
-//					
-//					for (int i = 0; i < listSize; i++) {
-//						participantsArray.add((Employee) participantList.getModel().getElementAt(i));
-//					}
-				}
-			});
+		for(int i = 0; i < tempEmployeeArrayList.size(); i++){
+			popListModel.addElement(tempEmployeeArrayList.get(i));
 		}
-		
-		else{
-			System.out.println("her da");
-			eventTitle.setEditable(false);
-			fromField.setEditable(false);
-			toField.setEditable(false);
-			roomBox.setEnabled(false);
-			descriptionBox.setEditable(false);
-			participantsField.setVisible(false);
-			
-			java.net.URL accept = getClass().getResource("/resources/icons/accept.png");
-			ImageIcon acceptIcon = new ImageIcon(accept);
-			acceptButton.setIcon(acceptIcon);
-			
-			java.net.URL decline = getClass().getResource("/resources/icons/decline.png");
-			ImageIcon declineIcon = new ImageIcon(decline);
-			declineButton.setIcon(declineIcon);
-
-			gbc3.gridx = 0; gbc3.gridy = 0;
-			gbc3.gridwidth = 1;
-			gbc3.gridheight = 1;
-			buttonPanel.add(acceptButton, gbc3);
-			
-			gbc1.gridx = 2; gbc1.gridy = 0;
-			gbc1.gridwidth = 1;
-			gbc1.gridheight = 1;
-			buttonPanel.add(declineButton, gbc3);
-			
-		}
-		
-			
-			
+		Util.localPrint("POPLIST: " + tempEmployeeArrayList);
 		
 //		gbc1.gridheight = 15;
 //		gbc1.ipadx = 20;
@@ -263,7 +197,7 @@ public class EventView extends JFrame {
 		eventPanel.add(new JLabel("Description: "), gbc1);
 		
 		gbc1.anchor = GridBagConstraints.WEST;
-		gbc1.gridx = 0;
+		gbc1.gridx = 1;
 		gbc1.gridy = 7;
 //		gbc1.gridy = 9;
 		gbc1.gridheight = 1;
@@ -319,6 +253,50 @@ public class EventView extends JFrame {
 		listPanel.add(participantList, gbc2);
 	}
 	
+	public void addSaveButton(){
+		gbc3.gridx = 0;	gbc3.gridy = 0;
+		gbc3.gridwidth = 1;
+		gbc3.gridheight = 1;
+		buttonPanel.add(saveButton, gbc3);
+		
+	}
+	
+	public void addAcceptButton(){
+		gbc3.gridx = 0; gbc3.gridy = 0;
+		gbc3.gridwidth = 1;
+		gbc3.gridheight = 1;
+		buttonPanel.add(acceptButton, gbc3);
+	}
+	
+	public void addDeclineButton(){
+		gbc3.gridx = 1; gbc3.gridy = 0;
+		gbc3.gridwidth = 1;
+		gbc3.gridheight = 1;
+		buttonPanel.add(declineButton, gbc3);
+	}
+	
+	public void addCancelButton(){
+		gbc3.gridx = 1;	gbc3.gridy = 0;
+		gbc3.gridwidth = 1;
+		gbc3.gridheight = 1;
+		buttonPanel.add(cancelButton, gbc3);
+	}
+	
+	public void addDeleteButton(){
+		gbc3.anchor = GridBagConstraints.WEST;
+		gbc3.gridx = 2;	gbc3.gridy = 0;
+		gbc3.gridwidth = 1;
+		gbc3.gridheight = 1;
+		buttonPanel.add(deleteButton, gbc3);
+	}
+	
+	public void addDeletePersonButton(){
+		gbc2.gridx = 2;	gbc2.gridy = 3;
+		gbc2.gridheight = 1;
+		gbc2.gridwidth = 1;
+		listPanel.add(deletePersonButton, gbc2);
+	}
+	
 	
 	public JList getParticipantList(){return participantList;}
 	public JButton getAcceptButton(){return acceptButton;}
@@ -351,4 +329,5 @@ public class EventView extends JFrame {
 	public void addParticipant(Employee person) {listModel.addElement(person);}
     public void removeAllParticipants() {listModel.clear();}
     public JPanel getButtonPanel() {return buttonPanel;}
+    public JPanel getListPanel(){return listPanel;}
 }
