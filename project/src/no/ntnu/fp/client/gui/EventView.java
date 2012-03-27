@@ -129,13 +129,20 @@ public class EventView extends JFrame {
 		buttonPanel.setPreferredSize(new Dimension(290, 30));
 		buttonPanel.setMinimumSize(new Dimension(290, 30));
 		
+		java.net.URL save = getClass().getResource("/resources/icons/save.png");
+		saveButton.setIcon(new ImageIcon(save));
+		
+		java.net.URL cancel = getClass().getResource("/resources/icons/delete.png");
+		cancelButton.setIcon(new ImageIcon(cancel));
+		
+		java.net.URL delete = getClass().getResource("/resources/icons/delete.png");
+		deleteButton.setIcon(new ImageIcon(delete));
+		
 		java.net.URL accept = getClass().getResource("/resources/icons/accept.png");
-		ImageIcon acceptIcon = new ImageIcon(accept);
-		acceptButton.setIcon(acceptIcon);
+		acceptButton.setIcon(new ImageIcon(accept));
 		
 		java.net.URL decline = getClass().getResource("/resources/icons/decline.png");
-		ImageIcon declineIcon = new ImageIcon(decline);
-		declineButton.setIcon(declineIcon);
+		declineButton.setIcon(new ImageIcon(decline));
 		
 		eventTitle.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 		fromField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
