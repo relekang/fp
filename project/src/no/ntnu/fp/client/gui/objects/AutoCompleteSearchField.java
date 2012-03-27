@@ -41,6 +41,7 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 	private JPopupMenu resultPanel;
 //	private PropertyChangeSupport pcs;
 	private String srchStr = "";
+	private int x = 0, y = STD_ROW_HEIGHT;
 	
 	public static void main(String[] args) {
 		ArrayList<Employee> l = new ArrayList<Employee>();
@@ -97,7 +98,7 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 	}
 	
 	private void displayResults() {
-		resultPanel.show(this, 0, STD_ROW_HEIGHT);
+		resultPanel.show(this, x, y);
 		results.updateUI();
 	}
 	@Override
@@ -108,6 +109,11 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 		if(c == KeyEvent.VK_BACK_SPACE)
 			srchStr = getText();
 		search(srchStr);
+	}
+	
+	public void setPopupOffset(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
 	
 	public void addElement(E element) {
@@ -143,6 +149,11 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 	
 	public E getSelectedValue() {
 		return (E)results.getSelectedValue();
+	}
+	
+	@Override
+	public String toString() {
+		return "SearchFieldSet: " + set;
 	}
 	
 	private class AutoCompleteCellRenderer extends DefaultListCellRenderer implements ListCellRenderer {

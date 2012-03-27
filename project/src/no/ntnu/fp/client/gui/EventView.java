@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import no.ntnu.fp.client.gui.objects.AutoCompleteSearchField;
 import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Room;
@@ -40,9 +42,9 @@ public class EventView extends JFrame {
 	private ParticipantRenderer renderer;
 	private JPopupMenu fromPop, toPop, participantPop;
 	private Employee currentUser;
+	private AutoCompleteSearchField<Employee> searchField;
 	
 	public EventView(){
-		
 		gbc1 = new GridBagConstraints();
 		gbc2 = new GridBagConstraints();
 		gbc3 = new GridBagConstraints();
@@ -153,13 +155,13 @@ public class EventView extends JFrame {
 		participantPop = new JPopupMenu();
 		participantPop.add(participantPopPanel);
 			
-		ArrayList<Employee> tempEmployeeArrayList = Employee.getAllEmployees(); 
-		Collections.sort(tempEmployeeArrayList);
-		
+		ArrayList<Employee> tempEmployeeArrayList = Employee.getAllEmployees();
+		searchField = new AutoCompleteSearchField<Employee>(tempEmployeeArrayList, 8);
+		searchField.setPreferredSize(participantsField.getPreferredSize());
+		System.out.println(searchField);
 		for(int i = 0; i < tempEmployeeArrayList.size(); i++){
 			popListModel.addElement(tempEmployeeArrayList.get(i));
 		}
-		Util.localPrint("POPLIST: " + tempEmployeeArrayList);
 		
 		gbc1.ipady = 7;
 		
