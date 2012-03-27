@@ -41,16 +41,13 @@ public class NotificationHandler extends DbHandler {
         if(!connect())
             return notifications;
         Statement stmt = conn.createStatement();
-        String query = "SELECT *  FROM NOTIFICATION INNER JOIN EMPLOYEE_RECEIVE_NOTIFICATION ON (NOTIFICATION.id = EMPLOYEE_RECEIVE_NOTIFICATION.notification_id) WHERE (EMPLOYEE_RECEIVE_NOTIFICATION.employee_id = %s);";
+        String query = "SELECT *  FROM NOTIFICATION WHERE employee_id = %s;";
         query = String.format(query, arg);
         Util.print(query);
         ResultSet rs = stmt.executeQuery(query);
 
         while (rs.next()) {
-            boolean is_invitation;
-            if(rs.getInt("is_invitation") == 1) is_invitation = true;
-            else is_invitation = false;
-            Notification notification = new Notification(rs.getInt("id"), EventHandler.getEvent(rs.getInt("event_id")), rs.getString("timestamp"), is_invitation, Notification.NotificationType.valueOf(rs.getString("type")));
+            Notification notification = new Notification(rs.getInt("id"), EventHandler.getEvent(rs.getInt("event_id")), rs.getString("timestamp"), Notification.NotificationType.valueOf(rs.getString("type")));
             notifications.add(notification);
         }
         rs.close();
@@ -88,8 +85,8 @@ public class NotificationHandler extends DbHandler {
             return null;
 
 
-        String query = "INSERT INTO `NOTIFICATION` (`id`, `event_id`, `established`, `description`, `is_invitation`) VALUES (NULL, %d, '%s', '%s', %d)";
-        query = String.format(query, notification.getID(), notification.getEvent().getID(), notification.getTimestampString(), notification.getDescription(), notification.isInvitationAsInt());
+        String query = "INSERT INTO `NOTIFICATION` (`id`, `event_id`, `timestamp`) VALUES (NULL, %d, '%s', '%s', %d)";
+        query = String.format(query, notification.getID(), notification.getEvent().getID(), notification.getTimestampString(), notification.getDescription());
         Util.print(query);
         Statement stm = conn.createStatement();
         boolean rs = stm.execute(query);

@@ -180,7 +180,7 @@ public class ServerApplication {
             ArrayList<JSONObject> jsonList = new ArrayList<JSONObject>();
             for(Notification n:list){
                 jsonList.add(n.toJson());
-                System.out.println();
+                System.out.println("Notification: " + n.toJson().toString());
             }
             String message = new JSONArray(jsonList).toString();
             conn.send(message);

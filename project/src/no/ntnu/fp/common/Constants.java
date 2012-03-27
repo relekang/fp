@@ -12,7 +12,7 @@ public class Constants {
 
     public final static boolean IS_SERVER = true;
     public final static boolean USE_SERVER = true;
-    public final static boolean USE_LOCAL_SERVER = false;
+    public final static boolean USE_LOCAL_SERVER = true;
 
 
 

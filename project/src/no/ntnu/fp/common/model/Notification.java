@@ -14,23 +14,21 @@ import java.util.Calendar;
 public class Notification implements Model{
     private int ID;
     private final Calendar cal;
-    private boolean is_invitation;
     private Event event;
     private PropertyChangeSupport pcs;
     private NotificationType type;
     private String timestamp;
 
-    public Notification(int id, Event event, String timestamp, boolean is_invitation, NotificationType type){
+    public Notification(int id, Event event, String timestamp, NotificationType type){
+        cal = Calendar.getInstance();
     	this.ID = id;
         this.event = event;
         this.timestamp = timestamp;
-        cal = Calendar.getInstance();
-        this.is_invitation = is_invitation;
         this.type = type;
     }
 
     public Notification(JSONObject object) throws JSONException, SQLException {
-        this(object.getInt("id"), new Event(object.getJSONObject("event"), Constants.IS_SERVER), object.getString("timestamp"), object.getBoolean("is_invitation"), NotificationType.valueOf(object.getString("type")));
+        this(object.getInt("id"), new Event(object.getJSONObject("event"), Constants.IS_SERVER), object.getString("timestamp"), NotificationType.valueOf(object.getString("type")));
     }
 
 
@@ -44,15 +42,15 @@ public class Notification implements Model{
         if (event == null) return description;
         switch(type) {
             case INVITATION:
-                description = /*getFirstName()*/"Person" + " invited you to " + event.getTitle(); break;
+                description = event.getAdmin().getFirstName() + " invited you to " + event.getTitle(); break;
             case DELETION:
-                description = /*getFirstName()*/"Person" + " deleted " + event.getTitle(); break;
+                description = event.getAdmin().getFirstName() + " deleted " + event.getTitle(); break;
             case ACCEPTED:
-                description = /*getFirstName()*/"Person" + " accepted your invitation to " + event.getTitle(); break;
+                description = event.getAdmin().getFirstName() + " accepted your invitation to " + event.getTitle(); break;
             case DECLINED:
-                description = /*getFirstName()*/"Person" + " declined your invitation to " + event.getTitle(); break;
+                description = event.getAdmin().getFirstName() + " declined your invitation to " + event.getTitle(); break;
             case CHANGE:
-            	description = /*getFirstName()*/"Person" + " edited " + event.getTitle(); break;
+            	description = event.getAdmin().getFirstName() + " edited " + event.getTitle(); break;
         }
         return description;
     }
@@ -89,11 +87,6 @@ public class Notification implements Model{
     	return type;
     }
 
-    public int isInvitationAsInt() {
-        if (this.is_invitation) return 1;
-        else return 0;
-
-    }
 
     @Override
     public boolean save() {
@@ -112,7 +105,6 @@ public class Notification implements Model{
     public JSONObject toJson() throws JSONException {
         JSONObject object = new JSONObject();
         object.put("id", ID);
-        object.put("is_invitation", is_invitation);
         object.put("event", event.toJson());
         object.put("type", type.toString());
         object.put("timestamp", timestamp);
