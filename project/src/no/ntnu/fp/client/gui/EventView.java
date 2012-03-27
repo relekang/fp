@@ -7,13 +7,15 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
 import no.ntnu.fp.common.Util;
+=======
+>>>>>>> begynt å fikse på eventview når bruker ikke er admin
 import no.ntnu.fp.common.model.Employee;
-import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -26,8 +28,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
@@ -46,10 +46,16 @@ public class EventView extends JFrame {
 	private DefaultListModel listModel, popListModel;
 	private ParticipantRenderer renderer;
 	private JPopupMenu fromPop, toPop, participantPop;
-	private boolean shown;
-	private Event model;
+	private Employee currentUser;
+	private boolean currentUserIsAdmin;
 	
 	public EventView(){
+<<<<<<< HEAD
+=======
+		
+		currentUserIsAdmin = true;
+		
+>>>>>>> begynt å fikse på eventview når bruker ikke er admin
 		gbc1 = new GridBagConstraints();
 		gbc2 = new GridBagConstraints();
 		gbc3 = new GridBagConstraints();
@@ -85,7 +91,123 @@ public class EventView extends JFrame {
 		this.setResizable(false);
 		this.pack();
 	}
+	public void setCurrentUser(Employee currentUser){
+		this.currentUser = currentUser;
+	}
 	
+<<<<<<< HEAD
+=======
+	public JList getParticipantList(){
+		return participantList;
+	}
+	
+	public JButton getAcceptButton(){
+		return acceptButton;
+	}
+	
+	public JButton getDeclineButton(){
+		return declineButton;
+	}
+	
+	public JButton getSaveButton(){
+		return saveButton;
+	}
+	
+	public JButton getCancelButton(){
+		return cancelButton;
+	}
+	
+	public JButton getDeleteButton(){
+		return deleteButton;
+	}
+	
+	public JButton getDeletePersonButton(){
+		return deletePersonButton;
+	}
+	
+	public JTextField getTitleField(){
+		return eventTitle;
+	}
+	
+	public void setTitleField(String title){
+		eventTitle.setText(title);
+	}
+	
+	public JTextField getFromField(){
+		return fromField;
+	}
+	
+	public void setFromField(String fromTime){
+		fromField.setText(fromTime);
+	}
+	
+	public JTextField getToField(){
+		return toField;
+	}
+	
+	public void setToField(String toTime){
+		toField.setText(toTime);
+	}
+	
+	public JComboBox getRoomBox(){
+		return roomBox;
+	}
+	
+	public void setRoomBox(Object room){
+		roomBox.setSelectedItem(room);
+	}
+	
+	public JTextField getParticipantField(){
+		return participantsField;
+	}
+	
+	public void setParticipantField(String participant){
+		participantsField.setText(participant);
+	}
+	
+	public JTextArea getDescriptionArea(){
+		return descriptionBox;
+	}
+	
+	public void setDescriptionArea(String description){
+		descriptionBox.setText(description);
+	}
+	
+	public DateTimePicker getCalendarFromPopPanel(){
+		return calendarFromPopPanel;
+	}
+	
+	public DateTimePicker getCalendarToPopPanel(){
+		return calendarToPopPanel;
+	}
+	
+	public JPopupMenu getFromPop(){
+		return fromPop;
+	}
+	
+	public JPopupMenu getToPop(){
+		return toPop;
+	}
+	
+	public JPopupMenu getParticipantPop(){
+		return participantPop;
+	}
+	
+	public DefaultListModel getListModel(){
+		return listModel;
+	}
+	
+	public DefaultListModel getPopListModel(){
+		return popListModel;
+	}
+	
+	public void currentUserIsAdmin(boolean currentUserIsAdmin){
+		this.currentUserIsAdmin = currentUserIsAdmin;
+	}
+	
+	
+	
+>>>>>>> begynt å fikse på eventview når bruker ikke er admin
 	private void createPanel(){
 		renderer = new ParticipantRenderer();
 		listModel = new DefaultListModel();
@@ -119,9 +241,15 @@ public class EventView extends JFrame {
 		participantPop = new JPopupMenu();
 		participantPop.add(participantPopPanel);
 		
+<<<<<<< HEAD
 		//TODO:skal sjekke om brukeren er eventmanager
 		if(true){
 			
+=======
+		//skal sjekke om brukeren er eventmanager
+		if(currentUserIsAdmin){
+			System.out.println("her");
+>>>>>>> begynt å fikse på eventview når bruker ikke er admin
 			gbc3.gridx = 0;	gbc3.gridy = 0;
 			gbc3.gridwidth = 1;
 			gbc3.gridheight = 1;
@@ -170,6 +298,7 @@ public class EventView extends JFrame {
 		}
 		
 		else{
+			System.out.println("her da");
 			eventTitle.setEditable(false);
 			fromField.setEditable(false);
 			toField.setEditable(false);
