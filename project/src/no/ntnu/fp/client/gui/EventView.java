@@ -7,14 +7,10 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-
 import no.ntnu.fp.common.Util;
-=======
->>>>>>> begynt å fikse på eventview når bruker ikke er admin
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Room;
 import javax.swing.DefaultListModel;
@@ -50,12 +46,9 @@ public class EventView extends JFrame {
 	private boolean currentUserIsAdmin;
 	
 	public EventView(){
-<<<<<<< HEAD
-=======
 		
 		currentUserIsAdmin = true;
 		
->>>>>>> begynt å fikse på eventview når bruker ikke er admin
 		gbc1 = new GridBagConstraints();
 		gbc2 = new GridBagConstraints();
 		gbc3 = new GridBagConstraints();
@@ -91,123 +84,33 @@ public class EventView extends JFrame {
 		this.setResizable(false);
 		this.pack();
 	}
-	public void setCurrentUser(Employee currentUser){
-		this.currentUser = currentUser;
-	}
-	
-<<<<<<< HEAD
-=======
-	public JList getParticipantList(){
-		return participantList;
-	}
-	
-	public JButton getAcceptButton(){
-		return acceptButton;
-	}
-	
-	public JButton getDeclineButton(){
-		return declineButton;
-	}
-	
-	public JButton getSaveButton(){
-		return saveButton;
-	}
-	
-	public JButton getCancelButton(){
-		return cancelButton;
-	}
-	
-	public JButton getDeleteButton(){
-		return deleteButton;
-	}
-	
-	public JButton getDeletePersonButton(){
-		return deletePersonButton;
-	}
-	
-	public JTextField getTitleField(){
-		return eventTitle;
-	}
-	
-	public void setTitleField(String title){
-		eventTitle.setText(title);
-	}
-	
-	public JTextField getFromField(){
-		return fromField;
-	}
-	
-	public void setFromField(String fromTime){
-		fromField.setText(fromTime);
-	}
-	
-	public JTextField getToField(){
-		return toField;
-	}
-	
-	public void setToField(String toTime){
-		toField.setText(toTime);
-	}
-	
-	public JComboBox getRoomBox(){
-		return roomBox;
-	}
-	
-	public void setRoomBox(Object room){
-		roomBox.setSelectedItem(room);
-	}
-	
-	public JTextField getParticipantField(){
-		return participantsField;
-	}
-	
-	public void setParticipantField(String participant){
-		participantsField.setText(participant);
-	}
-	
-	public JTextArea getDescriptionArea(){
-		return descriptionBox;
-	}
-	
-	public void setDescriptionArea(String description){
-		descriptionBox.setText(description);
-	}
-	
-	public DateTimePicker getCalendarFromPopPanel(){
-		return calendarFromPopPanel;
-	}
-	
-	public DateTimePicker getCalendarToPopPanel(){
-		return calendarToPopPanel;
-	}
-	
-	public JPopupMenu getFromPop(){
-		return fromPop;
-	}
-	
-	public JPopupMenu getToPop(){
-		return toPop;
-	}
-	
-	public JPopupMenu getParticipantPop(){
-		return participantPop;
-	}
-	
-	public DefaultListModel getListModel(){
-		return listModel;
-	}
-	
-	public DefaultListModel getPopListModel(){
-		return popListModel;
-	}
 	
 	public void currentUserIsAdmin(boolean currentUserIsAdmin){
 		this.currentUserIsAdmin = currentUserIsAdmin;
 	}
 	
+	public void addSaveButton(){
+		gbc3.gridx = 0;	gbc3.gridy = 0;
+		gbc3.gridwidth = 1;
+		gbc3.gridheight = 1;
+		buttonPanel.add(saveButton, gbc3);
+		
+	}
 	
+	public void addAcceptButton(){
+		gbc3.gridx = 0; gbc3.gridy = 0;
+		gbc3.gridwidth = 1;
+		gbc3.gridheight = 1;
+		buttonPanel.add(acceptButton, gbc3);
+	}
 	
->>>>>>> begynt å fikse på eventview når bruker ikke er admin
+	public void addDeclineButton(){
+		gbc3.gridx = 1; gbc3.gridy = 0;
+		gbc3.gridwidth = 1;
+		gbc3.gridheight = 1;
+		buttonPanel.add(declineButton, gbc3);
+	}
+	
 	private void createPanel(){
 		renderer = new ParticipantRenderer();
 		listModel = new DefaultListModel();
@@ -241,15 +144,8 @@ public class EventView extends JFrame {
 		participantPop = new JPopupMenu();
 		participantPop.add(participantPopPanel);
 		
-<<<<<<< HEAD
-		//TODO:skal sjekke om brukeren er eventmanager
-		if(true){
-			
-=======
 		//skal sjekke om brukeren er eventmanager
 		if(currentUserIsAdmin){
-			System.out.println("her");
->>>>>>> begynt å fikse på eventview når bruker ikke er admin
 			gbc3.gridx = 0;	gbc3.gridy = 0;
 			gbc3.gridwidth = 1;
 			gbc3.gridheight = 1;
@@ -273,6 +169,7 @@ public class EventView extends JFrame {
 			
 			ArrayList<Employee> tempEmployeeArrayList = Employee.getAllEmployees(); 
 			Collections.sort(tempEmployeeArrayList);
+			
 			for(int i = 0; i < tempEmployeeArrayList.size(); i++){
 				popListModel.addElement(tempEmployeeArrayList.get(i));
 			}
@@ -324,23 +221,11 @@ public class EventView extends JFrame {
 			gbc1.gridheight = 1;
 			buttonPanel.add(declineButton, gbc3);
 			
-			
-			acceptButton.addActionListener(new ActionListener(){
-				
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					
-				}
-			});
-			
-			declineButton.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					
-				}
-			});
 		}
+		
+			
+			
+		
 //		gbc1.gridheight = 15;
 //		gbc1.ipadx = 20;
 		gbc1.ipady = 7;
@@ -434,6 +319,7 @@ public class EventView extends JFrame {
 		listPanel.add(participantList, gbc2);
 	}
 	
+	
 	public JList getParticipantList(){return participantList;}
 	public JButton getAcceptButton(){return acceptButton;}
 	public JButton getDeclineButton(){return declineButton;}
@@ -464,4 +350,5 @@ public class EventView extends JFrame {
 	public void removeParticipant(int i) {listModel.remove(i);}
 	public void addParticipant(Employee person) {listModel.addElement(person);}
     public void removeAllParticipants() {listModel.clear();}
+    public JPanel getButtonPanel() {return buttonPanel;}
 }

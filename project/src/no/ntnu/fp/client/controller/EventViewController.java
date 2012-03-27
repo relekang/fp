@@ -121,7 +121,6 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 
 	public void showEvent(Event event){
 		eventView.setLocationRelativeTo(ClientApplication.getMainViewController().getMainView());
-		System.out.println(currentUser == event.getAdmin());
 		if(currentUser != event.getAdmin()){
 			eventView.getTitleField().setEditable(false);
 			eventView.getFromField().setEditable(false);
@@ -129,6 +128,11 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			eventView.getRoomBox().setEnabled(false);
 			eventView.getDescriptionArea().setEditable(false);
 			eventView.getParticipantField().setVisible(false);
+			eventView.getButtonPanel().remove(eventView.getSaveButton());
+			eventView.getButtonPanel().remove(eventView.getCancelButton());
+			eventView.getButtonPanel().remove(eventView.getDeleteButton());
+			eventView.addAcceptButton();
+			eventView.addDeclineButton();
 		}
 		setEvent(event);
 		eventView.setVisible(true);
