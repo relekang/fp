@@ -170,12 +170,13 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 	private class CalendarCanvas extends JPanel {
 		boolean mouseIsPressed = false;
 		Color foreground = GuiConstants.DRAG_NEW_EVENT;
+		Color background = GuiConstants.STD_BACKGROUND;
 		
 		public CalendarCanvas() {
 			setBorder(BorderFactory.createEmptyBorder(-5, -5, -5, -5));
 			setPreferredSize(new Dimension(GuiConstants.CANVAS_WIDTH, GuiConstants.CANVAS_HEIGHT));
 			setForeground(foreground);
-			setBackground(GuiConstants.STD_BACKGROUND);
+			setBackground(background);
 		}
 				
 		@Override
@@ -205,6 +206,13 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 			}
 		}
 		
+	}
+	public void setSelected(boolean b) {
+		if(b)
+			canvas.background = Color.BLACK;
+		else
+			canvas.background = GuiConstants.STD_BACKGROUND;
+		canvas.repaint();
 	}
 
 

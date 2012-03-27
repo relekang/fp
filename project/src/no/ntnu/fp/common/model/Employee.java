@@ -5,10 +5,13 @@ import no.ntnu.fp.common.handlers.EmployeeHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.sun.xml.internal.ws.message.EmptyMessageImpl;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class Employee extends EmployeeHandler implements Model, Comparable<Employee> {
@@ -183,6 +186,12 @@ public class Employee extends EmployeeHandler implements Model, Comparable<Emplo
     public boolean save() {
         return false;
     }
+    
+    public static void main(String[] args) {
+		ArrayList<Employee> a = new ArrayList<Employee>();
+		
+		Collections.sort(a);
+	}
 
 	@Override
 	public int compareTo(Employee e) {

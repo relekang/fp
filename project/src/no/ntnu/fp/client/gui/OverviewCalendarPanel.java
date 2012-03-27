@@ -27,10 +27,10 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
     private Calendar c;
 
     public OverviewCalendarPanel() {
+    	selected = Calendar.getInstance();
         c = Calendar.getInstance();
         c.setFirstDayOfWeek(Calendar.MONDAY);
 //        c.set(Calendar.MONTH, month);
-        
 
         pcs = new PropertyChangeSupport(this);
     	gbc = new GridBagConstraints();

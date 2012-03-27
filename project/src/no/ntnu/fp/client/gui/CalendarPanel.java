@@ -81,7 +81,6 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
             days[i] = new CalendarDayBox(i, c);
             gbc.gridx = i;
             weekPanel.add(days[i]);
-//            TODO: trengs dette?
             days[i].setParent(this);
         }
     }
@@ -127,14 +126,16 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
         for(int i = 0; i < 7; i++) {
 	        Calendar c = Calendar.getInstance();
 	        c.setFirstDayOfWeek(Calendar.MONDAY);
-	        c.set(Calendar.WEEK_OF_YEAR, currentWeek+1);
+	        c.set(Calendar.WEEK_OF_YEAR, currentWeek+1);//TODO:hack med currentWeek+1
 	        c.set(currentYear, currentMonth, currentDay);
 	        c.set(Calendar.DAY_OF_WEEK, 2+i);
 	        days[i].removeAll();
 	        days[i] = new CalendarDayBox(i, c);
 	        days[i].paintEvents();
 	        weekPanel.add(days[i]);
-        }
+//	        days[i].setSelected(false);
+        }    
+//        days[currentDay%7].setSelected(true);
         revalidate();
     }
 
