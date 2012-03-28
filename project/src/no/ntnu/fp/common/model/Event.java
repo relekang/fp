@@ -53,8 +53,8 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		super(id);
 		pcs = new PropertyChangeSupport(this);
 		participants = new ArrayList<Employee>();
-		dateFrom = Calendar.getInstance();
-		dateTo = Calendar.getInstance();
+		dateFrom = Util.getCalendar();
+		dateTo = Util.getCalendar();
 	}
 
 	public Event(Employee admin) {
@@ -121,9 +121,9 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
     public Employee getAdmin()       { return admin; }
 
     public static Event getDummyEvent(String title) {
-    	Event evt = new Event(new Employee("Lol Lolsson", "lol@super.com", Calendar.getInstance().getTime(), Employee.Gender.MALE));
-    	evt.setDateFrom(Calendar.getInstance().getTime());
-    	evt.setDateTo(Calendar.getInstance().getTime());
+    	Event evt = new Event(new Employee("Lol Lolsson", "lol@super.com", Util.getCalendar().getTime(), Employee.Gender.MALE));
+    	evt.setDateFrom(Util.getCalendar().getTime());
+    	evt.setDateTo(Util.getCalendar().getTime());
     	evt.setRoom(new Room(1,"Sebra", "P-15", 10));
     	return evt;
     }
@@ -184,7 +184,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		int maxChars = (int) (width / 7.5);
 		String[] titleWords = getTitle().split(" ");
 		if (maxChars < titleWords[0].length()) {
-			g.drawString(titleWords[0].substring(0, maxChars - 3) + "...", 0,
+			g.drawString(titleWords[0].substring(0, maxChars - 3) + "...", 0,//TODO:fix StringIndexOutOfbounds
 					getFromPixel() + 13);
 		}
 		int line = 0;
@@ -259,7 +259,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		pcs.firePropertyChange(DATEFROM_CHANGED, oldDateFrom, this.dateFrom);
 		// if(!getDateFrom().before(getDateTo())) {
 		// // TODO: virker dette?
-		// Calendar c = Calendar.getInstance();
+		// Calendar c = Util.getCalendar();
 		// c.setTime(getDateFrom());
 		// setDateTo(c.getTime());
 		// }

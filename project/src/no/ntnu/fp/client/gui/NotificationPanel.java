@@ -20,23 +20,20 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class NotificationPanel extends JPanel implements MouseListener{
-    private JList list;
+
+	private JList list;
     private DefaultListModel listModel;
     private JLabel label;
     private GridBagConstraints gbc;
     private JFrame popupFrame;
     private NotificationPopup popup;
     
- 
-    
     public NotificationPanel(){
     	gbc = new GridBagConstraints();
     	this.setLayout(new GridBagLayout());
     	
     	popupFrame = new JFrame();
-    	// TODO: Position the popup frame in the middle of the screen
     	popupFrame.setLocationRelativeTo(getParent());
-    	
     	
         label = new JLabel("Notifications");
         label.setFont(GuiConstants.NOTIFICATIONPANE_FONT);
@@ -54,7 +51,6 @@ public class NotificationPanel extends JPanel implements MouseListener{
 		list.addMouseListener(this);
 		
 //        NotificationPopup notificationPopup = new NotificationPopup(new Notification(1, Event.getDummyEvent("Event"), "22.03.2012 15:17", NotificationType.CHANGE));
-        
 
         gbc.gridx = 0; gbc.gridy = 0; gbc.weighty = 0.0;
         gbc.gridwidth = 1;
@@ -63,10 +59,7 @@ public class NotificationPanel extends JPanel implements MouseListener{
         gbc.gridx = 0; gbc.gridy = 1; gbc.weighty = 1.0;
         gbc.gridwidth = 2;
         add(list, gbc);
-        
-        
     }
-    
     
     private int getSelectedIndex() {
 		int selectedIndex = 0;
@@ -101,7 +94,6 @@ public class NotificationPanel extends JPanel implements MouseListener{
 		}); 
 		popupFrame.setContentPane(popup);
 		popupFrame.pack();
-		//setter popupen midt i skjermen
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		popupFrame.setLocation(screenSize.width / 2 - (popupFrame.getWidth() / 2),
 				screenSize.height / 2 - (popupFrame.getHeight() / 2));
@@ -110,24 +102,9 @@ public class NotificationPanel extends JPanel implements MouseListener{
 			
 	}
 
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		
-	}
+	public void mouseEntered(MouseEvent arg0) {}
+	public void mouseExited(MouseEvent arg0) {}
+	public void mousePressed(MouseEvent arg0) {}
+	public void mouseReleased(MouseEvent arg0) {}
 
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		
-	}
-	
 }

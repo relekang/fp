@@ -2,6 +2,9 @@ package no.ntnu.fp.client.gui.objects;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import no.ntnu.fp.common.Util;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -18,7 +21,7 @@ public class DateLabel extends JLabel{
     public DateLabel(Date date, int month){
         super();
         this.month = month;
-        cal = Calendar.getInstance();
+        cal = Util.getCalendar();
         cal.setFirstDayOfWeek(Calendar.MONDAY);
         cal.setTime(date);
         setText(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));

@@ -2,8 +2,6 @@ package no.ntnu.fp.client.gui;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -11,7 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class DateTimePicker extends JPanel implements MouseListener, KeyListener{
+public class DateTimePicker extends JPanel implements MouseListener {
+
 	private JPanel timePickerPanel, mainPanel;
 	private OverviewCalendarPanel datePickerPanel;
 	private GridBagConstraints gbc;
@@ -19,8 +18,6 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 	protected JTextField hourField, minuteField;
 	private int hour, min; 
 
-	
-	
 	public int getHourField(){
 		int temp;
 		try{
@@ -33,6 +30,7 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 			hour = temp;
 		return hour;
 	}
+	
 	public int getMinField(){
 		int temp;
 		try{
@@ -45,10 +43,10 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 			min = temp;
 		return min;
 	}
+
 	public JPanel getDatePickerPanel(){
 		return datePickerPanel;
 	}
-	
 
 	public DateTimePicker() {
         mainPanel = new JPanel();
@@ -57,14 +55,9 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
         timePickerPanel = new JPanel();
         hourField = new JTextField("hour",3);
         minuteField = new JTextField("min",3);
-//        hourField.addKeyListener(view);
-//        minuteField.addKeyListener(view);
-        
         gbc = new GridBagConstraints();
 		buildMainPanel();
 		mainPanel.setVisible(true);
-
-	    
 	}
 	
 	public OverviewCalendarPanel getOverviewCalendarPanel(){
@@ -78,7 +71,6 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 	public JTextField getMinuteTextField(){
 		return minuteField;
 	}
-	
 	
 	private void buildMainPanel(){
 		//mainpanel
@@ -96,13 +88,8 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 		
 		hourField.addMouseListener(this);
 		minuteField.addMouseListener(this);
-//		hourField.addKeyListener(this);
-//		minuteField.addKeyListener(this);
-		
 	}
 	
-
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(hourField.getText().equals("")){
@@ -122,50 +109,8 @@ public class DateTimePicker extends JPanel implements MouseListener, KeyListener
 			minuteField.requestFocus();
 		}
 	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-	
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		
-	}
-
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+	public void mouseEntered(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {}
 }

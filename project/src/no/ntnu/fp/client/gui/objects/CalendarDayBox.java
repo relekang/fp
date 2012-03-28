@@ -156,7 +156,7 @@ public class CalendarDayBox extends JPanel implements MouseListener, MouseMotion
 			Util.localPrint("Event " + e + " just got saved");
 			Util.print("Event " + e + " saved to day: " + day.getDate());
 			day.add(e);
-			Calendar c = Calendar.getInstance();
+			Calendar c = Util.getCalendar();
 			c.setTime(e.getDateFrom());
 			ClientApplication.getMainViewController().loadUserEvents(c.get(Calendar.WEEK_OF_YEAR));
 		}

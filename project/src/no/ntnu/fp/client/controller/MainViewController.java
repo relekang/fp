@@ -40,7 +40,7 @@ public class MainViewController implements PropertyChangeListener {
 		mainView.setCalendarModel(weekModel);
 
 		organizePropertyChangeListeners();
-//		loadUserEvents(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+//		loadUserEvents(Util.getCalendar().get(Calendar.WEEK_OF_YEAR));
 		setCurrentUser(currentUser);
 	}
 
@@ -59,8 +59,8 @@ public class MainViewController implements PropertyChangeListener {
 		this.currentUser = currentUser;
 		currentUser.addPropertyChangeListener(this);
 		mainView.getUserLabel()
-				.setText("Signed in as " + currentUser.getName());
-		loadUserEvents(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+				.setText("Signed in as " + currentUser.getName()+"lol");
+		loadUserEvents(Util.getCalendar().get(Calendar.WEEK_OF_YEAR)-1);//TODO: works the first time when this is initialized 
 		loadUserNotifications();
 	}
 
@@ -72,17 +72,21 @@ public class MainViewController implements PropertyChangeListener {
 			Util.print("sorted: " + events);
 			DefaultListModel weekModel = new DefaultListModel();
 			for(int i = 0; i < 7; i++) {
-				Calendar c = Calendar.getInstance();
-				c.set(Calendar.WEEK_OF_YEAR, week);
+				Calendar c = Util.getCalendar();
+				c.set(Calendar.WEEK_OF_YEAR, week+1);
 				c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY+i);
 				weekModel.addElement(new Day(c.getTime()));
-//				Util.localPrint("Day created in MainViewController: " + c.getTime());
+				Util.print("Day created in MainViewController: " + c.getTime());
 			}
+			Util.print(events);
 			for(Event e : events) {
-				Calendar c = Calendar.getInstance();
+				Calendar c = Util.getCalendar();
+				Util.print(c.getTime() );
 				c.setTime(e.getDateFrom());
 				if(c.get(Calendar.WEEK_OF_YEAR) == week) {
-					int day = c.get(Calendar.DAY_OF_WEEK)-2	;//TODO: this (Calendar.DAY_OF_WEEK)-2 works for now 
+					int day = (c.get(Calendar.DAY_OF_WEEK)-2);//TODO: this (Calendar.DAY_OF_WEEK)-2 works for now
+					if(day == -1)
+						day = Calendar.SUNDAY;
 					Util.print("Day in week: " + day);
 					((Day)weekModel.get(day)).add(e);
 				}

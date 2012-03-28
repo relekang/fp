@@ -2,6 +2,7 @@ package no.ntnu.fp.common.model;
 
 
 import no.ntnu.fp.common.Constants;
+import no.ntnu.fp.common.Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,7 +21,7 @@ public class Notification implements Model{
     private String timestamp;
 
     public Notification(int id, Event event, String timestamp, NotificationType type){
-        cal = Calendar.getInstance();
+        cal = Util.getCalendar();
     	this.ID = id;
         this.event = event;
         this.timestamp = timestamp;
@@ -80,7 +81,7 @@ public class Notification implements Model{
     }
     
     public Calendar getTimestamp() {
-    	return Calendar.getInstance();
+    	return Util.getCalendar();
     }
     
     public NotificationType getType() {

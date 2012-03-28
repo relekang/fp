@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Util {
     public static Date dateFromString(String input){
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = Util.getCalendar();
         int[] date = new int[3];
         for(int i = 0; i < date.length; i++){
             date[i] = Integer.parseInt(input.split("-")[i]);
@@ -15,9 +15,15 @@ public class Util {
         cal.set(Calendar.DAY_OF_MONTH, date[2]);
         return cal.getTime();
     }
+    
+    public static Calendar getCalendar() {
+    	Calendar c = Calendar.getInstance();
+    	c.setFirstDayOfWeek(Calendar.MONDAY);
+    	return c;
+    }
 
     public static String dateToString(Date date){
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = Util.getCalendar();
         cal.setTime(date);
         String output = "%d-%d-%d";
         output = String.format(output, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
@@ -25,7 +31,7 @@ public class Util {
     }
 
     public static Date dateTimeFromString(String input){
-            Calendar cal = Calendar.getInstance();
+            Calendar cal = Util.getCalendar();
             int[] date = new int[5];
             String[] d = combineArray(input.split(" ")[0].split("-"), input.split(" ")[1].split(":"));
 
@@ -41,7 +47,7 @@ public class Util {
         }
 
         public static String dateTimeToString(Date date){
-            Calendar cal = Calendar.getInstance();
+            Calendar cal = Util.getCalendar();
             cal.setTime(date);
             String output = "%d-%d-%d %s:%s:00";
             output = String.format(output, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH),

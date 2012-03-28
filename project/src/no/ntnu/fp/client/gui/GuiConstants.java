@@ -39,7 +39,7 @@ public class GuiConstants {
 //	Colors
 	public static final Color EVENT_TEXT_COLOR = Color.BLACK;
 	public static final Color STD_BACKGROUND = /*new Color(255, 240, 165);*/Color.WHITE;
-	public static final Color STD_FOREGROUND = Color.LIGHT_GRAY;//Color.WHITE; //TODO: bedre navn paa variabel :P
+	public static final Color STD_FOREGROUND = Color.LIGHT_GRAY;//Color.WHITE; 
 	public static final Color EVENT_ACCEPTED = new Color(70, 132, 102, 150); //light green
 	public static final Color EVENT_ACCEPTED_BORDER = new Color(70, 132, 102);
 	public static final Color EVENT_PENDING = new Color(255, 176, 59, 150); //light yellow

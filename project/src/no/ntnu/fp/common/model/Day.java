@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import no.ntnu.fp.common.Util;
+
 public class Day extends ArrayList<Event> implements Model{
 
     private PropertyChangeSupport pcs;
@@ -18,7 +20,7 @@ public class Day extends ArrayList<Event> implements Model{
     }
     
     public Day(Date date) {
-    	cal = Calendar.getInstance();
+    	cal = Util.getCalendar();
         cal.setTime(date);
         pcs = new PropertyChangeSupport(this);
     }

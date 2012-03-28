@@ -88,8 +88,8 @@ public class FindPersonView extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		// TODO Fix logic and and other stuff for this view
 		if(arg0.getSource() == searchField){
-			// TODO Auto-generated method stub
 			Util.print("you searched for " + searchField.getText());
 		}
 		else if(arg0.getSource() == previousButton){
@@ -101,7 +101,6 @@ public class FindPersonView extends JFrame implements ActionListener{
 			week.setSelectedIndex(week.getSelectedIndex()+1);
 		}
 		else if(arg0.getSource() == compare){
-			//TODO compare
 			Util.print("compare");
 		}
 	}

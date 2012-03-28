@@ -8,10 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
-public class MainView extends JFrame implements PropertyChangeListener {
+public class MainView extends JFrame {
 
 	private JPanel mainPanel;
 	private CalendarPanel calendarPanel;
@@ -147,8 +145,4 @@ public class MainView extends JFrame implements PropertyChangeListener {
 		this.userLabel = userLabel;
 	}
 	
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-	}
 }

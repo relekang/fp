@@ -27,8 +27,8 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
     private Calendar c;
 
     public OverviewCalendarPanel() {
-    	selected = Calendar.getInstance();
-        c = Calendar.getInstance();
+    	selected = Util.getCalendar();
+        c = Util.getCalendar();
         c.setFirstDayOfWeek(Calendar.MONDAY);
 //        c.set(Calendar.MONTH, month);
 
@@ -36,7 +36,7 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
     	gbc = new GridBagConstraints();
         setLayout(new GridBagLayout());
         addCalendarHeaders();
-//        Calendar c = Calendar.getInstance();
+//        Calendar c = Util.getCalendar();
         c.setFirstDayOfWeek(Calendar.MONDAY);
         buildCalendar(c.get(Calendar.MONTH));
         setMonth(c.get(Calendar.MONTH));
@@ -127,8 +127,8 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
     private void buildCalendar(int month) {
     	c.clear();
     	c.setFirstDayOfWeek(Calendar.MONDAY);
-        c.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
-        c.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
+        c.set(Calendar.YEAR, Util.getCalendar().get(Calendar.YEAR));
+        c.set(Calendar.MONTH, Util.getCalendar().get(Calendar.MONTH));
         c.set(Calendar.WEEK_OF_MONTH, 1);
         dateLabels = new DateLabel[5][7];
         for (int i = 0; i < dateLabels.length; i++) {
@@ -143,7 +143,7 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
 
             }
         }
-        c.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
+        c.set(Calendar.YEAR, Util.getCalendar().get(Calendar.YEAR));
         c.set(Calendar.MONTH, month);
     }
     

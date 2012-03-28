@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
 import no.ntnu.fp.client.gui.GuiConstants;
+import no.ntnu.fp.common.Util;
 
 public class AutoCompleteSearchField<E> extends JTextField implements KeyListener {
 	
@@ -31,7 +32,7 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 //		ArrayList<Employee> l = new ArrayList<Employee>();
 //		char[] chars = {'v', 'a', 'g', 'q', 'k', 'h', 'i', 'i'};
 //		for(int i = 0; i < chars.length; i++) {
-//			l.add(new Employee(""+chars[i]+""+chars[chars.length-1-i]+"andra", "g@mail.com", Calendar.getInstance().getTime(), Employee.Gender.MALE));
+//			l.add(new Employee(""+chars[i]+""+chars[chars.length-1-i]+"andra", "g@mail.com", Util.getCalendar().getTime(), Employee.Gender.MALE));
 //		}
 //		AutoCompleteSearchField<Employee> s = new AutoCompleteSearchField<Employee>(l, 3);
 //		JFrame f = new JFrame();
