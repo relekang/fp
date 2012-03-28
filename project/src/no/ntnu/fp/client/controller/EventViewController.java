@@ -154,6 +154,9 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
         eventView.setRoomChoices(Room.getRooms());
         eventView.setRoomBox(event.getRoom());
         eventView.removeAllParticipants();
+        for(Employee e:event.getParticipants()){
+            eventView.getParticipantField().removeElement(e);
+        }
 		for (int i = 0; i < event.getParticipants().size(); i++) {
 			eventView.addParticipant(event.getParticipants().get(i));
 		}

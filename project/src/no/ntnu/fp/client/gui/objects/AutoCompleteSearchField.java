@@ -6,24 +6,13 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPopupMenu;
-import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
+import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
 import no.ntnu.fp.client.gui.GuiConstants;
 
-//@SuppressWarnings(serial)
 public class AutoCompleteSearchField<E> extends JTextField implements KeyListener {
 	
 	public static final int STD_ROW_HEIGHT = 20;
@@ -42,9 +31,9 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 //		ArrayList<Employee> l = new ArrayList<Employee>();
 //		char[] chars = {'v', 'a', 'g', 'q', 'k', 'h', 'i', 'i'};
 //		for(int i = 0; i < chars.length; i++) {
-//			l.add(new Employee(""+chars[i]+""+chars[chars.length-1-i]+"andra, g@mail.com", Calendar.getInstance().getTime(), Gender.MALE));
+//			l.add(new Employee(""+chars[i]+""+chars[chars.length-1-i]+"andra", "g@mail.com", Calendar.getInstance().getTime(), Employee.Gender.MALE));
 //		}
-//		AutoCompleteSearchFieldEmployee s = new AutoCompleteSearchFieldEmployee(l, 3);
+//		AutoCompleteSearchField<Employee> s = new AutoCompleteSearchField<Employee>(l, 3);
 //		JFrame f = new JFrame();
 //		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		f.setContentPane(s);
@@ -113,11 +102,7 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 		this.x = x;
 		this.y = y;
 	}
-	
-//	public E getSelectedValue() {
-//		
-//	}
-	
+
 	public void addElement(E element) {
 		set.add(element);
 	}
@@ -139,11 +124,21 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 	}
 	
 	public E removeElementAt(int index) {
-		E e = (E)model.get(index);
-		set.remove(e);
-		results.updateUI();
-		return e;
-	}
+        E e = (E)model.get(index);
+        set.remove(e);
+        model.remove(index);
+        results.updateUI();
+        it = set.iterator();
+        return e;
+    }
+    public E removeElement(E e) {
+        set.remove(e);
+        int index = model.indexOf(e);
+        if(index >= 0) model.remove(index);
+        results.updateUI();
+        it = set.iterator();
+        return e;
+    }
 	
 	public void addListSelectionListener(ListSelectionListener listener) {
 		this.results.addListSelectionListener(listener);

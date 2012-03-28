@@ -60,6 +60,7 @@ public class EventView extends JFrame {
     public void setParticipantFieldVisible(boolean b) {
         if(b){
             gbc.gridx = 0; gbc.gridy = 4;
+            gbc.gridwidth = 1;
             eventPanel.add(labels[4], gbc);
             addParticipantSearchField();
         } else {
