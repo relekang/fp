@@ -104,23 +104,10 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 				if(index > -1) {
 					eventView.getListModel().addElement(eventView.getParticipantField().getSelectedValue());
 					eventView.getParticipantField().removeElementAt(index);
-//					eventView.getParticipantField().grabFocus();
 				}
 			}
 		});
 
-//		eventView.getParticipantPopList().addListSelectionListener(new ListSelectionListener() {
-//
-//			@Override
-//			public void valueChanged(ListSelectionEvent e) {
-//				if(eventView.getParticipantPopList().getSelectedIndex() != -1){
-//					eventView.getListModel().addElement(eventView.getParticipantPopList().getSelectedValue());
-//					eventView.getPopListModel().removeElement(eventView.getParticipantPopList().getSelectedValue());
-//					eventView.getParticipantField().grabFocus();
-//				}
-//			}
-//		});
-		
 		this.eventView.setLocationRelativeTo(ClientApplication.getMainViewController().getMainView());
     }
 
@@ -130,33 +117,22 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 
 	public void showEvent(Event event){
 		eventView.setLocationRelativeTo(ClientApplication.getMainViewController().getMainView());
-		if(currentUser != event.getAdmin()){
-			eventView.getTitleField().setEditable(false);
-			eventView.getFromField().setEditable(false);
-			eventView.getToField().setEditable(false);
-			eventView.getRoomBox().setEnabled(false);
-			eventView.getDescriptionArea().setEditable(false);
-			eventView.getParticipantField().setVisible(false);
-//			eventView.getSaveButton().removeAll();
-//			eventView.getCancelButton().removeAll();
-//			eventView.getDeleteButton().removeAll();
-//			eventView.getDeletePersonButton().removeAll();
+		boolean isAdmin = currentUser.equals(event.getAdmin());
+		System.out.println("IS ADMIN: " + isAdmin);
+		eventView.getTitleField().setEditable(isAdmin);
+		eventView.getFromField().setEditable(isAdmin);
+		eventView.getToField().setEditable(isAdmin);
+		eventView.getRoomBox().setEnabled(isAdmin);
+		eventView.getDescriptionArea().setEditable(isAdmin);
+		eventView.getParticipantField().setVisible(isAdmin);
+		if(!isAdmin) {
 			eventView.remove(eventView.getSaveButton());
 			eventView.remove(eventView.getCancelButton());
 			eventView.remove(eventView.getDeleteButton());
 			eventView.remove(eventView.getDeletePersonButton());
 			eventView.addAcceptButton();
 			eventView.addDeclineButton();
-		}
-		else{
-			eventView.getTitleField().setEditable(true);
-			eventView.getFromField().setEditable(true);
-			eventView.getToField().setEditable(true);
-			eventView.getRoomBox().setEnabled(true);
-			eventView.getDescriptionArea().setEditable(true);
-			eventView.getParticipantField().setVisible(true);
-//			eventView.getAcceptButton().removeAll();
-//			eventView.getDeclineButton().removeAll();
+		} else {
 			eventView.remove(eventView.getAcceptButton());
 			eventView.remove(eventView.getDeclineButton());
 			eventView.addSaveButton();
