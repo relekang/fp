@@ -32,8 +32,9 @@ public class RoomHandler {
                 json.put("argument", arg);
                 conn.send(json);
                 JSONObject object = new JSONObject(conn.receive());
-                Room room = new Room(object);
                 conn.close();
+                if(object.getString("key").equals("failure")) return null;
+                Room room = new Room(object.getJSONObject("room"));
                 return room;
 
             } catch (JSONException e) {

@@ -97,13 +97,14 @@ public class EmployeeHandler {
             try {
                 conn.send(new JSONObject().put("key", "event").put("action", "all_for_user").put("argument", Integer.toString(this.id)));
                 String message = conn.receive();
+                conn.close();
                 JSONArray jsonArray = new JSONArray(message);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
                     Event e = new Event(object, false);
                     events.add(e);
                 }
-                conn.close();
+
 
             } catch (JSONException e) {
                 conn.close();
@@ -124,6 +125,7 @@ public class EmployeeHandler {
             try {
                 conn.send(new JSONObject().put("key", "notification").put("action", "all_for_user").put("argument", Integer.toString(this.id)));
                 String message = conn.receive();
+                conn.close();
                 JSONArray jsonArray = new JSONArray(message);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.optJSONObject(i);
@@ -134,7 +136,7 @@ public class EmployeeHandler {
                     	e.printStackTrace();
                     }
                 }
-                conn.close();
+
             } catch (JSONException e) {
                 conn.close();
                 e.printStackTrace();
