@@ -71,8 +71,10 @@ public class EventView extends JFrame {
 
     public void setParticipantFieldVisible(boolean b) {
         if(b){
-            eventPanel.add(getParticipantField());
-            eventPanel.add(labels[4]);
+            gbc.gridx = 0; gbc.gridy = 4;
+            eventPanel.add(labels[4], gbc);
+            gbc.gridx = 1; gbc.gridy = 4;
+            eventPanel.add(getParticipantField(), gbc);
         } else {
             eventPanel.remove(getParticipantField());
             eventPanel.remove(labels[4]);

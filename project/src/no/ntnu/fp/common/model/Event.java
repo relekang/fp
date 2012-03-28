@@ -94,10 +94,11 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
         );
         Util.print("Creating event from JSONObject: " + object);
         setDescription(object.getString("description"));
-        if(is_server)
-            setRoom(RoomHandler.getRoom(object.getInt("room_id")));
-        else
-            setRoom(Room.getRoom(object.getInt("room_id")));
+        setRoom(new Room(object.getJSONObject("room")));
+//        if(is_server)
+//            setRoom(RoomHandler.getRoom(object.getInt("room_id")));
+//        else
+//            setRoom(Room.getRoom(object.getInt("room_id")));
 
         JSONArray participantsArray = object.getJSONArray("participants");
         for(int i = 0; i<participantsArray.length(); i++){
@@ -329,9 +330,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		object.put("title", getTitle());
 		object.put("date_from", Util.dateTimeToString(getDateFrom()));
 		object.put("date_to", Util.dateTimeToString(getDateTo()));
-        //TODO: Remove this if statement
-		if(getRoom()!= null)object.put("room_id", getRoom().getId());
-        else object.put("room_id", 1);
+		object.put("room", getRoom());
 		object.put("description", getDescription());
 		object.put("admin", getAdmin().toJson());
 		object.put("participants", getParticipantsAsJsonArray());
