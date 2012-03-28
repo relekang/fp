@@ -238,4 +238,22 @@ public class EventHandler extends DbHandler {
         stm.close();
         close();
     }
+    public void acceptEventInvitation(int employee_id, int event_id) throws SQLException {
+        if (!connect()) return;
+        Statement stm = conn.createStatement();
+        String query = "UPDATE `EMPLOYEE_ATTEND_EVENT` SET `is_attending` = 1 WHERE  `id` =  %d LIMIT 1 ;";
+        query = String.format(query, employee_id, event_id);
+        stm.execute(query);
+        stm.close();
+        close();
+    }
+    public void declineEventInvitation(int employee_id, int event_id) throws SQLException {
+        if (!connect()) return;
+        Statement stm = conn.createStatement();
+        String query = "UPDATE `EMPLOYEE_ATTEND_EVENT` SET `is_attending` = 1 WHERE  `id` =  %d LIMIT 1 ;";
+        query = String.format(query, employee_id, event_id);
+        stm.execute(query);
+        stm.close();
+        close();
+    }
 }
