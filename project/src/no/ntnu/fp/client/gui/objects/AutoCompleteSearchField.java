@@ -7,28 +7,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import no.ntnu.fp.client.gui.GuiConstants;
-import no.ntnu.fp.common.model.Employee;
-import no.ntnu.fp.common.model.Employee.Gender;
 
-@SuppressWarnings("serial")
+//@SuppressWarnings(serial)
 public class AutoCompleteSearchField<E> extends JTextField implements KeyListener {
 	
 	public static final int STD_ROW_HEIGHT = 20;
@@ -39,37 +34,43 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 	private Iterator<E> it;
 	private int numDisplayableResults;
 	private JPopupMenu resultPanel;
-//	private PropertyChangeSupport pcs;
+	private PropertyChangeSupport pcs;
 	private String srchStr = "";
-	private int x = 0, y = STD_ROW_HEIGHT;
+	private int x = 4, y = STD_ROW_HEIGHT+5;
 	
-	public static void main(String[] args) {
-		ArrayList<Employee> l = new ArrayList<Employee>();
-		char[] chars = {'v', 'a', 'g', 'q', 'k'};
-		for(int i = 0; i < chars.length; i++) {
-			l.add(new Employee(""+chars[i]+""+chars[chars.length-1-i]+"andra", "g@mail.com", Calendar.getInstance().getTime(), Gender.MALE));
-		}
-		AutoCompleteSearchField<Employee> s = new AutoCompleteSearchField<Employee>(l, 5);
-		JFrame f = new JFrame();
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setContentPane(s);
-		f.setVisible(true);
-		f.setSize(new Dimension(200, 50));
+//	public static void main(String[] args) {
+//		ArrayList<Employee> l = new ArrayList<Employee>();
+//		char[] chars = {'v', 'a', 'g', 'q', 'k', 'h', 'i', 'i'};
+//		for(int i = 0; i < chars.length; i++) {
+//			l.add(new Employee(""+chars[i]+""+chars[chars.length-1-i]+"andra, g@mail.com", Calendar.getInstance().getTime(), Gender.MALE));
+//		}
+//		AutoCompleteSearchFieldEmployee s = new AutoCompleteSearchFieldEmployee(l, 3);
+//		JFrame f = new JFrame();
+//		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		f.setContentPane(s);
+//		f.setVisible(true);
+//		f.setSize(new Dimension(200, 50));
+//	}
+	
+	public AutoCompleteSearchField(int columns, int numDisplayedResults) {
+		this(new ArrayList<E>(), numDisplayedResults);
+		setColumns(columns);
 	}
 	
 	public AutoCompleteSearchField(ArrayList<E> list, int numDisplayedResults) {
-//		pcs = new PropertyChangeSupport(this);
+		pcs = new PropertyChangeSupport(this);
 		set.addAll(list);
 		System.out.println(set);
 		it = set.iterator();
 		this.numDisplayableResults = numDisplayedResults;
 		results.setVisibleRowCount(this.numDisplayableResults);
-		results.setBorder(GuiConstants.getEmptyBorder(4));
+//		results.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 		results.setBackground(GuiConstants.SWING_FRAME_GRAY);
 		resultPanel = new JPopupMenu();
-		resultPanel.setPreferredSize(new Dimension(100, numDisplayableResults*STD_ROW_HEIGHT));
+		resultPanel.setPreferredSize(new Dimension(190, numDisplayableResults*STD_ROW_HEIGHT+4));
 		results.setPreferredSize(resultPanel.getPreferredSize());
 		resultPanel.add(results);
+		resultPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 		results.setCellRenderer(new AutoCompleteCellRenderer());
 		addKeyListener(this);
 	}
@@ -90,9 +91,6 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 				model.addElement(obj);
 		}
 		it = set.iterator();
-		results.setVisibleRowCount(model.getSize() > numDisplayableResults ? model.getSize() : numDisplayableResults);
-		resultPanel.setPreferredSize(new Dimension(100, results.getVisibleRowCount()*STD_ROW_HEIGHT));
-		results.setPreferredSize(resultPanel.getPreferredSize());
 		displayResults();
 		grabFocus();
 	}
@@ -115,6 +113,10 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 		this.x = x;
 		this.y = y;
 	}
+	
+//	public E getSelectedValue() {
+//		
+//	}
 	
 	public void addElement(E element) {
 		set.add(element);
@@ -153,7 +155,7 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 	
 	@Override
 	public String toString() {
-		return "SearchFieldSet: " + set;
+		return "SearchFieldSet"  + set;
 	}
 	
 	private class AutoCompleteCellRenderer extends DefaultListCellRenderer implements ListCellRenderer {

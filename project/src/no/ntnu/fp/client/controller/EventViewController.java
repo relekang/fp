@@ -27,7 +27,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	private Employee currentUser;
 	private Calendar fromDate, toDate;
 	private Event event;
-	private ArrayList<String> popList, popListFound;
+//	private ArrayList<String> popList;//, popListFound;
 	
 	
 	public EventViewController(Employee currentUser, EventView view){
@@ -42,8 +42,8 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
         toDate.setTime(event.getDateTo());
         fromDate.setTime(event.getDateFrom());
 
-		popList = new ArrayList<String>();
-		popListFound = new ArrayList<String>();
+//		popList = new ArrayList<String>();
+//		popListFound = new ArrayList<String>();
 
 		eventView = new EventView();
 		eventView.setVisible(false);
@@ -65,12 +65,12 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		eventView.getTitleField().addMouseListener(this);
 		eventView.getDescriptionArea().addMouseListener(this);
 		eventView.getParticipantField().addMouseListener(this);
-
 		eventView.getParticipantField().addKeyListener(this);
 
-		for (int i = 0; i < popList.size(); i++) {
-			eventView.getPopListModel().addElement(popList.get(i));
-		}
+
+//		for (int i = 0; i < popList.size(); i++) {
+//			eventView.getPopListModel().addElement(popList.get(i));
+//		}
 		
 		eventView.getCalendarToPopPanel().getOverviewCalendarPanel().addPCL(new PropertyChangeListener() {
 
@@ -97,18 +97,29 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 				eventView.getFromField().setText(fromDate.getTime().toString());
 			}
 		});
-
-		eventView.getParticipantPopList().addListSelectionListener(new ListSelectionListener() {
-
-			@Override
+		
+		eventView.getParticipantField().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				if(eventView.getParticipantPopList().getSelectedIndex() != -1){
-					eventView.getListModel().addElement(eventView.getParticipantPopList().getSelectedValue());
-					eventView.getPopListModel().removeElement(eventView.getParticipantPopList().getSelectedValue());
-					eventView.getParticipantField().grabFocus();
+				int index = eventView.getParticipantField().getSelectedIndex();
+				if(index > -1) {
+					eventView.getListModel().addElement(eventView.getParticipantField().getSelectedValue());
+					eventView.getParticipantField().removeElementAt(index);
+//					eventView.getParticipantField().grabFocus();
 				}
 			}
 		});
+
+//		eventView.getParticipantPopList().addListSelectionListener(new ListSelectionListener() {
+//
+//			@Override
+//			public void valueChanged(ListSelectionEvent e) {
+//				if(eventView.getParticipantPopList().getSelectedIndex() != -1){
+//					eventView.getListModel().addElement(eventView.getParticipantPopList().getSelectedValue());
+//					eventView.getPopListModel().removeElement(eventView.getParticipantPopList().getSelectedValue());
+//					eventView.getParticipantField().grabFocus();
+//				}
+//			}
+//		});
 		
 		this.eventView.setLocationRelativeTo(ClientApplication.getMainViewController().getMainView());
     }
@@ -126,10 +137,14 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			eventView.getRoomBox().setEnabled(false);
 			eventView.getDescriptionArea().setEditable(false);
 			eventView.getParticipantField().setVisible(false);
-			eventView.getButtonPanel().remove(eventView.getSaveButton());
-			eventView.getButtonPanel().remove(eventView.getCancelButton());
-			eventView.getButtonPanel().remove(eventView.getDeleteButton());
-			eventView.getListPanel().remove(eventView.getDeletePersonButton());
+//			eventView.getSaveButton().removeAll();
+//			eventView.getCancelButton().removeAll();
+//			eventView.getDeleteButton().removeAll();
+//			eventView.getDeletePersonButton().removeAll();
+			eventView.remove(eventView.getSaveButton());
+			eventView.remove(eventView.getCancelButton());
+			eventView.remove(eventView.getDeleteButton());
+			eventView.remove(eventView.getDeletePersonButton());
 			eventView.addAcceptButton();
 			eventView.addDeclineButton();
 		}
@@ -140,8 +155,10 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			eventView.getRoomBox().setEnabled(true);
 			eventView.getDescriptionArea().setEditable(true);
 			eventView.getParticipantField().setVisible(true);
-			eventView.getButtonPanel().remove(eventView.getAcceptButton());
-			eventView.getButtonPanel().remove(eventView.getDeclineButton());
+//			eventView.getAcceptButton().removeAll();
+//			eventView.getDeclineButton().removeAll();
+			eventView.remove(eventView.getAcceptButton());
+			eventView.remove(eventView.getDeclineButton());
 			eventView.addSaveButton();
 			eventView.addCancelButton();
 			eventView.addDeleteButton();
@@ -185,7 +202,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	    JTextField endMinuteField = eventView.getCalendarToPopPanel().getMinuteTextField();
 	    JTextField startHourField = eventView.getCalendarFromPopPanel().getHourTextField();
 	    JTextField startMinuteField = eventView.getCalendarFromPopPanel().getHourTextField();
-	    JTextField participantField = eventView.getParticipantField();
+//	    JTextField participantField = eventView.getParticipantField();
 
 
 	    if (e.getSource() == endHourField) {
@@ -200,20 +217,20 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	    else if (e.getSource() == startMinuteField) {
 	        fromDate.set(Calendar.MINUTE, Integer.parseInt(startMinuteField.getText()));
 	    }
-	    else if(e.getSource() == participantField){
-	        updateAutocompletionResults();
-	    }
+//	    else if(e.getSource() == participantField){
+//	        updateAutocompletionResults();
+//	    }
 	    updateToAndFromFieldDisplay();
 	}
 
-	private void updateAutocompletionResults() {
-	    String participantText = eventView.getParticipantField().getText();
-	    eventView.getPopListModel().clear(); // Vi clearer hele lista og bare fylle den pŒ nytt hver gang..
-	    for (String employee : popList) {
-	        if (employee.contains(participantText))
-	                eventView.getPopListModel().addElement(employee);
-	    } 
-	}
+//	private void updateAutocompletionResults() {
+//	    String participantText = eventView.getParticipantField().getText();
+//	    eventView.getPopListModel().clear(); // Vi clearer hele lista og bare fylle den pï¿½ nytt hver gang..
+//	    for (String employee : popList) {
+//	        if (employee.contains(participantText))
+//	                eventView.getPopListModel().addElement(employee);
+//	    } 
+//	}
 
 	private void updateToAndFromFieldDisplay() {
 	    eventView.getToField().setText(toDate.getTime().toString());
@@ -252,11 +269,11 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			}
 			eventView.getToField().grabFocus();
 		}
-		else if (e.getSource() == eventView.getParticipantField()) {
-			eventView.getParticipantPop().show(eventView.getParticipantField(), 0, 30);
-			eventView.getParticipantField().setText("");
-			eventView.getParticipantField().grabFocus();
-		}
+//		else if (e.getSource() == eventView.getParticipantField()) {
+//			eventView.getParticipantPop().show(eventView.getParticipantField(), 0, 30);
+//			eventView.getParticipantField().setText("");
+//			eventView.getParticipantField().grabFocus();
+//		}
 		else if(e.getSource() == eventView.getTitleField()){
 			eventView.getTitleField().setText("");
 		}
@@ -313,12 +330,12 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
             event.delete();
 		}
 		else if (e.getSource() == eventView.getDeletePersonButton()) {
-			int temp = eventView.getParticipantList().getSelectedIndex();
+			int index = eventView.getParticipantList().getSelectedIndex();
 			Employee tempEmployee = (Employee) eventView.getParticipantList().getSelectedValue(); 
-			if(temp > -1){
-				eventView.getPopListModel().addElement(tempEmployee);
-				eventView.getParticipantList().setSelectedIndex(temp - 1);
-				eventView.removeParticipant(temp);
+			if(index > -1){
+				eventView.getParticipantField().addElement(tempEmployee);
+				eventView.getParticipantList().setSelectedIndex(index - 1);
+				eventView.removeParticipant(index);
 			}
 
 		}
