@@ -27,7 +27,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	private Employee currentUser;
 	private Calendar fromDate, toDate;
 	private Event event;
-//	private ArrayList<String> popList;//, popListFound;
+
 	
 	
 	public EventViewController(Employee currentUser, EventView view){
@@ -41,9 +41,6 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
         
         toDate.setTime(event.getDateTo());
         fromDate.setTime(event.getDateFrom());
-
-//		popList = new ArrayList<String>();
-//		popListFound = new ArrayList<String>();
 
 		eventView = new EventView();
 		eventView.setVisible(false);
@@ -104,23 +101,10 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 				if(index > -1) {
 					eventView.getListModel().addElement(eventView.getParticipantField().getSelectedValue());
 					eventView.getParticipantField().removeElementAt(index);
-//					eventView.getParticipantField().grabFocus();
 				}
 			}
 		});
 
-//		eventView.getParticipantPopList().addListSelectionListener(new ListSelectionListener() {
-//
-//			@Override
-//			public void valueChanged(ListSelectionEvent e) {
-//				if(eventView.getParticipantPopList().getSelectedIndex() != -1){
-//					eventView.getListModel().addElement(eventView.getParticipantPopList().getSelectedValue());
-//					eventView.getPopListModel().removeElement(eventView.getParticipantPopList().getSelectedValue());
-//					eventView.getParticipantField().grabFocus();
-//				}
-//			}
-//		});
-		
 		this.eventView.setLocationRelativeTo(ClientApplication.getMainViewController().getMainView());
     }
 
@@ -136,11 +120,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			eventView.getToField().setEditable(false);
 			eventView.getRoomBox().setEnabled(false);
 			eventView.getDescriptionArea().setEditable(false);
-			eventView.getParticipantField().setVisible(false);
-//			eventView.getSaveButton().removeAll();
-//			eventView.getCancelButton().removeAll();
-//			eventView.getDeleteButton().removeAll();
-//			eventView.getDeletePersonButton().removeAll();
+			eventView.setParticipantFieldVisible(false);
 			eventView.remove(eventView.getSaveButton());
 			eventView.remove(eventView.getCancelButton());
 			eventView.remove(eventView.getDeleteButton());
