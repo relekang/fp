@@ -330,7 +330,7 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
 		object.put("title", getTitle());
 		object.put("date_from", Util.dateTimeToString(getDateFrom()));
 		object.put("date_to", Util.dateTimeToString(getDateTo()));
-		object.put("room", getRoom());
+		object.put("room", getRoom().toJson());
 		object.put("description", getDescription());
 		object.put("admin", getAdmin().toJson());
 		object.put("participants", getParticipantsAsJsonArray());
