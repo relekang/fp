@@ -134,7 +134,7 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 		return results.getSelectedIndex();
 	}
 	
-	public E getELemnt(int index) {
+	public E getElement(int index) {
 		return (E)model.get(index);
 	}
 	

@@ -48,7 +48,8 @@ public class EventView extends JFrame {
 		addTitleField();
 		addDateFields();
 		addRoomField();
-		addParticipantSearchField();
+		createParticipantSearchField();
+        setParticipantFieldVisible(true);
 		addDescriptionField();
 		addParticipantList();
 		addSaveButton();
@@ -163,19 +164,21 @@ public class EventView extends JFrame {
 		eventPanel.add(roomBox, gbc);
 	}
 
-	private void addParticipantSearchField() {
+	private void createParticipantSearchField() {
 		participantField = new AutoCompleteSearchField<Employee>(Employee.getAllEmployees(), 5);
-		
+
 		participantField.setMinimumSize(STD_FIELD_DIM);
 		participantField.setPreferredSize(STD_FIELD_DIM);
 		participantField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+	}
+	private void addParticipantSearchField() {
 		gbc.gridx = 1;
 		gbc.gridy = 4;
 		gbc.gridwidth = 3;
 		gbc.gridheight = 1;
 		eventPanel.add(participantField, gbc);
 	}
-	
+
 	private void addDescriptionField() {
 		descriptionBox = new JTextArea(3, STD_COLUMNS);
 		descriptionBox.setPreferredSize(new Dimension(290, 100));

@@ -65,16 +65,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 
 		eventView.getTitleField().addMouseListener(this);
 		eventView.getDescriptionArea().addMouseListener(this);
-		eventView.getParticipantField().addMouseListener(this);
-		eventView.getParticipantField().addKeyListener(this);
 
-
-
-
-//		for (int i = 0; i < popList.size(); i++) {
-//			eventView.getPopListModel().addElement(popList.get(i));
-//		}
-		
 		eventView.getCalendarToPopPanel().getOverviewCalendarPanel().addPCL(new PropertyChangeListener() {
 
 			@Override
@@ -105,8 +96,10 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			public void valueChanged(ListSelectionEvent e) {
 				int index = eventView.getParticipantField().getSelectedIndex();
 				if(index > -1) {
-					eventView.getListModel().addElement(eventView.getParticipantField().getSelectedValue());
-					eventView.getParticipantField().removeElementAt(index);
+                    if(!eventView.getListModel().contains(eventView.getParticipantField().getSelectedValue())){
+                        eventView.getListModel().addElement(eventView.getParticipantField().getSelectedValue());
+                        eventView.getParticipantField().removeElementAt(index);
+                    }
 				}
 			}
 		});
