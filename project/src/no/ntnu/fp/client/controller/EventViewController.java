@@ -118,7 +118,6 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	public void showEvent(Event event){
 		eventView.setLocationRelativeTo(ClientApplication.getMainViewController().getMainView());
 		boolean isAdmin = currentUser.equals(event.getAdmin());
-		System.out.println("IS ADMIN: " + isAdmin);
 		eventView.getTitleField().setEditable(isAdmin);
 		eventView.getFromField().setEditable(isAdmin);
 		eventView.getToField().setEditable(isAdmin);
