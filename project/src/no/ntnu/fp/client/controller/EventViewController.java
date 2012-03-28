@@ -16,6 +16,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import no.ntnu.fp.client.gui.EventView;
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
@@ -114,29 +115,23 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 
 	public void showEvent(Event event){
 		eventView.setLocationRelativeTo(ClientApplication.getMainViewController().getMainView());
-		if(currentUser != event.getAdmin()){
-			eventView.getTitleField().setEditable(false);
-			eventView.getFromField().setEditable(false);
-			eventView.getToField().setEditable(false);
-			eventView.getRoomBox().setEnabled(false);
-			eventView.getDescriptionArea().setEditable(false);
-			eventView.setParticipantFieldVisible(false);
+		boolean isAdmin = currentUser.equals(event.getAdmin());
+		Util.print("IS ADMIN: " + isAdmin);
+		eventView.getTitleField().setEditable(isAdmin);
+		eventView.getFromField().setEditable(isAdmin);
+		eventView.getToField().setEditable(isAdmin);
+		eventView.getRoomBox().setEnabled(isAdmin);
+		eventView.getDescriptionArea().setEditable(isAdmin);
+		eventView.getParticipantField().setVisible(isAdmin);
+        eventView.setParticipantFieldVisible(isAdmin);
+		if(!isAdmin) {
 			eventView.remove(eventView.getSaveButton());
 			eventView.remove(eventView.getCancelButton());
 			eventView.remove(eventView.getDeleteButton());
 			eventView.remove(eventView.getDeletePersonButton());
 			eventView.addAcceptButton();
 			eventView.addDeclineButton();
-		}
-		else{
-			eventView.getTitleField().setEditable(true);
-			eventView.getFromField().setEditable(true);
-			eventView.getToField().setEditable(true);
-			eventView.getRoomBox().setEnabled(true);
-			eventView.getDescriptionArea().setEditable(true);
-			eventView.getParticipantField().setVisible(true);
-//			eventView.getAcceptButton().removeAll();
-//			eventView.getDeclineButton().removeAll();
+		} else {
 			eventView.remove(eventView.getAcceptButton());
 			eventView.remove(eventView.getDeclineButton());
 			eventView.addSaveButton();
@@ -299,7 +294,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			}
 			event.setParticipants(participants);
 			event.setRoom((Room) eventView.getRoomBox().getSelectedItem());
-			System.out.println("Save called in eventViewController: " + event + " - " + event.getDateFrom()+  " : " + event.getDateTo());
+			System.out.println("Save called in eventViewController: " + event + " - " + event.getDateFrom() + " : " + event.getDateTo());
 	        event.save();
 		}
 		else if (e.getSource() == eventView.getCancelButton()) {
