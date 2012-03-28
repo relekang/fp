@@ -199,6 +199,17 @@ public class ServerApplication {
             message.put("room", room.toJson());
             conn.send(message.toString());
 
+        } else if(action.equals("all")){
+            ArrayList<Room> rooms = roomHandler.fetchAllRooms();
+            JSONObject message = new JSONObject();
+            message.put("key", "success");
+            JSONArray list = new JSONArray();
+            for(Room room:rooms){
+                list.put(room.toJson());
+            }
+            message.put("rooms", list);
+            conn.send(message.toString());
+
         } else {
             conn.send(new JSONObject().put("key", "failure").toString());
         }

@@ -13,20 +13,7 @@ import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Room;
 import no.ntnu.fp.common.model.Employee.Gender;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 
 public class EventView extends JFrame {
 	
@@ -73,11 +60,10 @@ public class EventView extends JFrame {
         if(b){
             gbc.gridx = 0; gbc.gridy = 4;
             eventPanel.add(labels[4], gbc);
-            gbc.gridx = 1; gbc.gridy = 4;
-            eventPanel.add(getParticipantField(), gbc);
+            addParticipantSearchField();
         } else {
-            eventPanel.remove(getParticipantField());
             eventPanel.remove(labels[4]);
+            eventPanel.remove(getParticipantField());
         }
     }
     
@@ -166,7 +152,7 @@ public class EventView extends JFrame {
 	}
 	
 	private void addRoomField() {
-		Room[] rooms = {new Room(1,"Drivhuset", "its", 800)};
+        Room[] rooms = {new Room(1,"Drivhuset", "its", 800)};
 		roomBox = new JComboBox(rooms);
 		roomBox.setPreferredSize(STD_FIELD_DIM);
 		roomBox.setMinimumSize(STD_FIELD_DIM);	
@@ -256,7 +242,14 @@ public class EventView extends JFrame {
 		gbc.gridheight = 1;
 		eventPanel.add(deletePersonButton, gbc);
 	}
-	
+
+    public void setRoomChoices(ArrayList<Room> list){
+        roomBox.removeAllItems();
+        for(Room r:list){
+            roomBox.addItem(r);
+        }
+    }
+
 	public JList getParticipantList(){return participantList;}
 	public JButton getAcceptButton(){return acceptButton;}
 	public JButton getDeclineButton(){return declineButton;}

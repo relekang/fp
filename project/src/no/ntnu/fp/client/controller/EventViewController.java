@@ -11,7 +11,8 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -46,6 +47,8 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		eventView = new EventView();
 		eventView.setVisible(false);
 
+        eventView.setRoomChoices(Room.getRooms());
+
 		eventView.getCalendarToPopPanel().getHourTextField().addKeyListener(this);
 		eventView.getCalendarToPopPanel().getMinuteTextField().addKeyListener(this);
 		eventView.getCalendarFromPopPanel().getHourTextField().addKeyListener(this);
@@ -66,6 +69,8 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 		eventView.getParticipantField().addKeyListener(this);
 
 
+
+
 //		for (int i = 0; i < popList.size(); i++) {
 //			eventView.getPopListModel().addElement(popList.get(i));
 //		}
@@ -79,7 +84,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 				toDate.set(Calendar.MONTH, cal.get(Calendar.MONTH));
 				toDate.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+7);//TODO: Calendar.DAY_OF_MONTH)+7 gives the right result for now..
 				event.setDateTo(toDate.getTime());
-				eventView.getToField().setText(toDate.getTime().toString());
+				eventView.getToField().setText(Util.dateTimeToString(toDate.getTime()));
 			}
 		});
 
@@ -92,7 +97,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 				fromDate.set(Calendar.MONTH, cal.get(Calendar.MONTH));
 				fromDate.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+7);//TODO: Calendar.DAY_OF_MONTH)+7 gives the right result for now..
 				event.setDateTo(fromDate.getTime());
-				eventView.getFromField().setText(fromDate.getTime().toString());
+				eventView.getFromField().setText(Util.dateTimeToString(fromDate.getTime()));
 			}
 		});
 		
@@ -150,10 +155,11 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	private void setEvent(Event event){
 		this.event = event;
 		eventView.getTitleField().setText(event.getTitle());
-		eventView.setFromField(event.getDateFrom().toString());
-		eventView.setToField(event.getDateTo().toString());
+		eventView.setFromField(Util.dateTimeToString(event.getDateFrom()));
+		eventView.setToField(Util.dateTimeToString(event.getDateTo()));
 		eventView.setDescriptionArea(event.getDescription());
-
+        eventView.setRoomChoices(Room.getRooms());
+        eventView.setRoomBox(event.getRoom());
         eventView.removeAllParticipants();
 		for (int i = 0; i < event.getParticipants().size(); i++) {
 			eventView.addParticipant(event.getParticipants().get(i));
@@ -208,8 +214,8 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 //	}
 
 	private void updateToAndFromFieldDisplay() {
-	    eventView.getToField().setText(toDate.getTime().toString());
-	    eventView.getFromField().setText(fromDate.getTime().toString());
+	    eventView.getToField().setText(Util.dateTimeToString(toDate.getTime()));
+	    eventView.getFromField().setText(Util.dateTimeToString(fromDate.getTime()));
 	}
 
 	@Override

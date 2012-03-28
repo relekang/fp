@@ -5,6 +5,7 @@ import no.ntnu.fp.common.handlers.RoomHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 

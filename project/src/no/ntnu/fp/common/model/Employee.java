@@ -5,8 +5,6 @@ import no.ntnu.fp.common.handlers.EmployeeHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.sun.xml.internal.ws.message.EmptyMessageImpl;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
