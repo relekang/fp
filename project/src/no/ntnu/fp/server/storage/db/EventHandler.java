@@ -200,7 +200,7 @@ public class EventHandler extends DbHandler {
             if (participant == event.getAdmin()) admin = 1;
             else admin = 0;
             if (!participants.contains(participant)) {
-                query = "INSERT INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, %d);";
+                query = "INSERT IGNORE INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, %d);";
                 query = String.format(query, participant.getId(), event.getID(), admin);
                 Util.print(query);
 
