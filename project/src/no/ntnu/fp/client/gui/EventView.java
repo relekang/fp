@@ -33,26 +33,19 @@ public class EventView extends JFrame {
 	public static int STD_COLUMNS = 28;
 	public static Dimension STD_FIELD_DIM = new Dimension(310, 20);
 	
-	private JList participantList;//, participantPopList;
+	private JList participantList;
 	private JTextArea descriptionBox;
 	private JComboBox roomBox;
 	private JButton saveButton, cancelButton, deleteButton, acceptButton, declineButton, deletePersonButton;
-	private JTextField eventTitle, fromField, toField;//, participantsField;
-	private JPanel eventPanel;//, participantPopPanel;//listPanel, buttonPanel, eventViewPanel 
+	private JTextField eventTitle, fromField, toField;
+	private JPanel eventPanel;
 	private DateTimePicker calendarToPopPanel, calendarFromPopPanel;
 	private GridBagConstraints gbc;
-	private DefaultListModel listModel;//, popListModel;
-	private JPopupMenu fromPop, toPop;//, participantPop;
+	private DefaultListModel listModel;
+	private JPopupMenu fromPop, toPop;
 	private AutoCompleteSearchField<Employee> participantField;
-	
-	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-//		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		EventView view = new EventView();
-		view.setVisible(true);
-		view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		view.pack();
-	}
-	
+    private JLabel[] labels = {new JLabel("Title:"), new JLabel("From:"), new JLabel("To:"), new JLabel("Room:"), new JLabel("Participants:"), new JLabel("Description:")};
+
 	public EventView(){
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(10, 6, 10, 6);	
@@ -71,13 +64,21 @@ public class EventView extends JFrame {
 		addParticipantSearchField();
 		addDescriptionField();
 		addParticipantList();
-//		addAcceptButton();
-//		addDeclineButton();
 		addSaveButton();
 		addCancelButton();
 		addDeleteButton();
 	}
 
+    public void setParticipantFieldVisible(boolean b) {
+        if(b){
+            eventPanel.add(getParticipantField());
+            eventPanel.add(labels[4]);
+        } else {
+            eventPanel.remove(getParticipantField());
+            eventPanel.remove(labels[4]);
+        }
+    }
+    
 	private void initButtons() {
 		acceptButton = new JButton("Accept");
 		declineButton = new JButton("Decline");
@@ -95,7 +96,8 @@ public class EventView extends JFrame {
 	private void addParticipantList() {
 		listModel = new DefaultListModel();
 		participantList = new JList(listModel);
-//		participantList.setBackground(GuiConstants.SWING_FRAME_GRAY);
+
+		participantList.setBackground(GuiConstants.SWING_FRAME_GRAY);
 		participantList.setCellRenderer(new ParticipantRenderer());
 		participantList.setPreferredSize(new Dimension(250, 340));
 		participantList.setMinimumSize(new Dimension(250, 340));
@@ -115,10 +117,9 @@ public class EventView extends JFrame {
 		gbc.ipady = 7;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.gridx = 0;	
-		String[] labels = {"Title:", "From:", "To:", "Room:", "Participants:", "Description:"};
 		for(int i = 0; i < 6; i++) {
 			gbc.gridy = i;
-			eventPanel.add(new JLabel(labels[i]), gbc);
+			eventPanel.add(labels[i], gbc);
 		}
 	}
 	
@@ -167,15 +168,7 @@ public class EventView extends JFrame {
 		roomBox = new JComboBox(rooms);
 		roomBox.setPreferredSize(STD_FIELD_DIM);
 		roomBox.setMinimumSize(STD_FIELD_DIM);	
-//		TODO:fix rooms
-//		ArrayList<Employee> tempEmployeeArrayList = Employee.getAllEmployees();
-//		searchField = new AutoCompleteSearchField<Employee>(tempEmployeeArrayList, 8);
-//		searchField.setPreferredSize(participantsField.getPreferredSize());
-//		System.out.println(searchField);
-//		for(int i = 0; i < tempEmployeeArrayList.size(); i++){
-//			popListModel.addElement(tempEmployeeArrayList.get(i));
-//		}
-		gbc.gridx = 1;	
+		gbc.gridx = 1;
 		gbc.gridy = 3;
 		gbc.gridwidth = 3;
 		gbc.gridheight = 1;
@@ -183,24 +176,7 @@ public class EventView extends JFrame {
 	}
 
 	private void addParticipantSearchField() {
-//		popListModel = new DefaultListModel();
-//		participantPopList = new JList(popListModel);
-//		participantPopList.setPreferredSize(new Dimension(315, 100));
-//		participantPopPanel = new JPanel();
-//		participantPopPanel.add(participantPopList);
-//		participantPop = new JPopupMenu();
-//		participantPop.add(participantPopPanel);
-//		participantsField = new JTextField(STD_COLUMNS);
-		
-//		ArrayList<Employee> l = new ArrayList<Employee>();
-//		char[] chars = {'v', 'a', 'g', 'q', 'k', 'h', 'i', 'i','v', 'a', 'g', 'q', 'k', 'h', 'i', 'i',
-//				'v', 'a', 'g', 'q', 'k', 'h', 'i', 'i','v', 'a', 'g', 'q', 'k', 'h', 'i', 'i'};		
-//		for(int i = 0; i < chars.length; i++) {
-//			l.add(new Employee(""+chars[i]+""+chars[i%2]+""+chars[i%4]+""+chars[(chars.length-1-i)%5]+
-//					""+chars[i]+""+chars[chars.length-1-i]+""+chars[i]+""+chars[chars.length-1-i], 
-//					"g@mail.com", Calendar.getInstance().getTime(), Gender.MALE));
-//		}
-		participantField = new AutoCompleteSearchField<Employee>(STD_COLUMNS, 5);
+		participantField = new AutoCompleteSearchField<Employee>(Employee.getAllEmployees(), 5);
 		
 		participantField.setMinimumSize(STD_FIELD_DIM);
 		participantField.setPreferredSize(STD_FIELD_DIM);
@@ -295,7 +271,6 @@ public class EventView extends JFrame {
 	public JComboBox getRoomBox(){return roomBox;}
 	public void setRoomBox(Object room){roomBox.setSelectedItem(room);}	
 	public AutoCompleteSearchField<Employee> getParticipantField(){return participantField;}	
-//	public void setParticipantField(String participant){participantsField.setText(participant);}
 	public JTextArea getDescriptionArea(){return descriptionBox;}
 	public void setDescriptionArea(String description){descriptionBox.setText(description);}
 	public DateTimePicker getCalendarFromPopPanel(){return calendarFromPopPanel;}
@@ -303,12 +278,9 @@ public class EventView extends JFrame {
 	public JPopupMenu getFromPop(){return fromPop;}
 	public JPopupMenu getToPop(){return toPop;}
 	public DefaultListModel getListModel(){return listModel;}
-//	public JPopupMenu getParticipantPop(){return participantPop;}
-//	public DefaultListModel getPopListModel(){return popListModel;}
-//	public JList getParticipantPopList(){return participantPopList;}
 	public void removeParticipant(int i) {listModel.remove(i);}
 	public void addParticipant(Employee person) {listModel.addElement(person);}
     public void removeAllParticipants() {listModel.clear();}
-//    public JPanel getButtonPanel() {return buttonPanel;}
-//    public JPanel getListPanel(){return listPanel;}
+
+    
 }

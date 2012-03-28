@@ -16,6 +16,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import no.ntnu.fp.client.gui.EventView;
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Employee;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Room;
@@ -27,7 +28,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	private Employee currentUser;
 	private Calendar fromDate, toDate;
 	private Event event;
-//	private ArrayList<String> popList;//, popListFound;
+
 	
 	
 	public EventViewController(Employee currentUser, EventView view){
@@ -41,9 +42,6 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
         
         toDate.setTime(event.getDateTo());
         fromDate.setTime(event.getDateFrom());
-
-//		popList = new ArrayList<String>();
-//		popListFound = new ArrayList<String>();
 
 		eventView = new EventView();
 		eventView.setVisible(false);
@@ -118,12 +116,14 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	public void showEvent(Event event){
 		eventView.setLocationRelativeTo(ClientApplication.getMainViewController().getMainView());
 		boolean isAdmin = currentUser.equals(event.getAdmin());
+		Util.print("IS ADMIN: " + isAdmin);
 		eventView.getTitleField().setEditable(isAdmin);
 		eventView.getFromField().setEditable(isAdmin);
 		eventView.getToField().setEditable(isAdmin);
 		eventView.getRoomBox().setEnabled(isAdmin);
 		eventView.getDescriptionArea().setEditable(isAdmin);
 		eventView.getParticipantField().setVisible(isAdmin);
+        eventView.setParticipantFieldVisible(isAdmin);
 		if(!isAdmin) {
 			eventView.remove(eventView.getSaveButton());
 			eventView.remove(eventView.getCancelButton());
@@ -294,7 +294,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			}
 			event.setParticipants(participants);
 			event.setRoom((Room) eventView.getRoomBox().getSelectedItem());
-			System.out.println("Save called in eventViewController: " + event + " - " + event.getDateFrom()+  " : " + event.getDateTo());
+			System.out.println("Save called in eventViewController: " + event + " - " + event.getDateFrom() + " : " + event.getDateTo());
 	        event.save();
 		}
 		else if (e.getSource() == eventView.getCancelButton()) {
