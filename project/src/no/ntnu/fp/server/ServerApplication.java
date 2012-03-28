@@ -165,6 +165,13 @@ public class ServerApplication {
                 eventHandler.deleteParticipantFromEvent(p, event.getID());
             }
             conn.send(new JSONObject().put("key", "success").toString());
+        } else if(action.equals("reply")){
+            if(object.getString("value").equals("accept")){
+                eventHandler.acceptEventInvitation(object.getInt("employee_id"), object.getInt("event_id"));
+            } else {
+                eventHandler.declineEventInvitation(object.getInt("employee_id"), object.getInt("event_id"));
+            }
+            conn.send(new JSONObject().put("key", "success").toString());
         } else {
             conn.send(new JSONObject().put("key", "failure").toString());
         }
