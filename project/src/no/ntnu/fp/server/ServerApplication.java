@@ -197,6 +197,7 @@ public class ServerApplication {
             JSONObject message = new JSONObject();
             message.put("key", "success");
             message.put("room", room.toJson());
+            conn.send(message.toString());
 
         } else {
             conn.send(new JSONObject().put("key", "failure").toString());
