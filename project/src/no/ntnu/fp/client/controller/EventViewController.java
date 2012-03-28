@@ -102,7 +102,7 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 	public void showEvent(Event event){
 		eventView.setLocationRelativeTo(ClientApplication.getMainViewController().getMainView());
 		boolean isAdmin = currentUser.equals(event.getAdmin());
-		Util.print("IS ADMIN: " + isAdmin);
+		Util.print("IS ADMIN:(Admin " + event.getAdmin().getId() + ") " + isAdmin);
 		eventView.getTitleField().setEditable(isAdmin);
 		eventView.getFromField().setEditable(isAdmin);
 		eventView.getToField().setEditable(isAdmin);
@@ -236,7 +236,15 @@ public class EventViewController implements PropertyChangeListener, KeyListener,
 			this.setVisible(false);
             event.delete();
 		}
-		else if (e.getSource() == eventView.getDeletePersonButton()) {
+		else if (e.getSource() == eventView.getAcceptButton()) {
+			this.setVisible(false);
+            currentUser.acceptEvent(event);
+		}
+		else if (e.getSource() == eventView.getDeclineButton()) {
+			this.setVisible(false);
+            currentUser.declineEvent(event);
+		}
+        else if (e.getSource() == eventView.getDeletePersonButton()) {
 			int index = eventView.getParticipantList().getSelectedIndex();
 			Employee tempEmployee = (Employee) eventView.getParticipantList().getSelectedValue(); 
 			if(index > -1){

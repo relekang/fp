@@ -20,6 +20,8 @@ public class Employee extends EmployeeHandler implements Model, Comparable<Emplo
         return "";
     }
 
+
+
     public enum Gender{ FEMALE, MALE }
 
     private int ID;
@@ -203,6 +205,7 @@ public class Employee extends EmployeeHandler implements Model, Comparable<Emplo
     @Override
     public boolean equals(Object o){
         Employee e = (Employee)o;
+        Util.print(String.format("Employee.equals: this.id = %d, input.id = %d", this.getId(), e.getId()));
         return (this.getId() == e.getId() && this.getName().equals(e.getName()));
     }
 

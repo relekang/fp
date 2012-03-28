@@ -147,4 +147,25 @@ public class EmployeeHandler {
         return notifications;
     }
 
+    public void acceptEvent(Event event)  { acceptOrDeclineEventOnServer(event.getID(), "accept"); }
+    public void declineEvent(Event event) { acceptOrDeclineEventOnServer(event.getID(), "decline"); }
+
+    private void acceptOrDeclineEventOnServer(int eventId, String value){
+        try {
+            Connection conn = new Connection();
+            try {
+                conn.send(new JSONObject().put("key", "event").put("action", "reply").put("event_id", eventId).put("value", value));
+                String message = conn.receive();
+                conn.close();
+                JSONObject object = new JSONObject(message);
+
+            } catch (JSONException e) {
+                conn.close();
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

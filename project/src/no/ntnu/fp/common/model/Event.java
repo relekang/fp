@@ -95,10 +95,6 @@ public class Event extends EventHandler implements Model, Comparable<Event> {
         Util.print("Creating event from JSONObject: " + object);
         setDescription(object.getString("description"));
         setRoom(new Room(object.getJSONObject("room")));
-//        if(is_server)
-//            setRoom(RoomHandler.getRoom(object.getInt("room_id")));
-//        else
-//            setRoom(Room.getRoom(object.getInt("room_id")));
 
         JSONArray participantsArray = object.getJSONArray("participants");
         for(int i = 0; i<participantsArray.length(); i++){
