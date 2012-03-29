@@ -154,7 +154,7 @@ public class EmployeeHandler {
         try {
             Connection conn = new Connection();
             try {
-                conn.send(new JSONObject().put("key", "event").put("action", "reply").put("event_id", eventId).put("value", value));
+                conn.send(new JSONObject().put("key", "event").put("action", "reply").put("event_id", eventId).put("employee_id", this.id).put("value", value));
                 String message = conn.receive();
                 conn.close();
                 JSONObject object = new JSONObject(message);

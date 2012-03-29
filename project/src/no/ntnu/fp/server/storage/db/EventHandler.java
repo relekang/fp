@@ -137,7 +137,7 @@ public class EventHandler extends DbHandler {
 
 
         while (rs.next()) {
-            Event event = new Event(rs.getInt("id"), rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")), EmployeeHandler.getEmployee(rs.getInt("employee_id")));
+            Event event = new Event(rs.getInt("id"), rs.getString("title"), Util.dateTimeFromString(rs.getString("date_from")), Util.dateTimeFromString(rs.getString("date_to")), EventHandler.getAdminForId(rs.getInt("id")));
             event.setRoom(RoomHandler.getRoom(rs.getInt("room_id")));
             event.setDescription(rs.getString("description"));
             event.setParticipants(fetchParticipantsForEvent(event.getID()));
@@ -146,6 +146,10 @@ public class EventHandler extends DbHandler {
         rs.close();
         close();
         return events;
+    }
+
+    private static Employee getAdminForId(int id) throws SQLException {
+        return getEvent(id).getAdmin();
     }
 
     private ArrayList<Employee> fetchParticipantsForEvent(int eventId) throws SQLException {
@@ -177,7 +181,7 @@ public class EventHandler extends DbHandler {
         for(Employee participant:event.getParticipants()){
             if(participant == event.getAdmin()) admin = 1;
             else admin = 0;
-            query = "INSERT IGNORE INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, %d);";
+            query = "INSERT IGNORE INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, NULL, %d);";
             query = String.format(query, participant.getId(), id, admin);
             Util.print(query);
             stm = conn.createStatement();
@@ -200,7 +204,7 @@ public class EventHandler extends DbHandler {
             if (participant == event.getAdmin()) admin = 1;
             else admin = 0;
             if (!participants.contains(participant)) {
-                query = "INSERT IGNORE INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, 1, %d);";
+                query = "INSERT IGNORE INTO `EMPLOYEE_ATTEND_EVENT` (`employee_id`, `event_id`, `is_attending`, `is_admin`) VALUES (%d, %d, NULL, %d);";
                 query = String.format(query, participant.getId(), event.getID(), admin);
                 Util.print(query);
 
@@ -241,7 +245,7 @@ public class EventHandler extends DbHandler {
     public void acceptEventInvitation(int employee_id, int event_id) throws SQLException {
         if (!connect()) return;
         Statement stm = conn.createStatement();
-        String query = "UPDATE `EMPLOYEE_ATTEND_EVENT` SET `is_attending` = 1 WHERE  `id` =  %d LIMIT 1 ;";
+        String query = "UPDATE `EMPLOYEE_ATTEND_EVENT` SET `is_attending` = 1 WHERE  `employee_id` =  %d LIMIT 1 ;";
         query = String.format(query, employee_id, event_id);
         stm.execute(query);
         stm.close();
@@ -250,7 +254,7 @@ public class EventHandler extends DbHandler {
     public void declineEventInvitation(int employee_id, int event_id) throws SQLException {
         if (!connect()) return;
         Statement stm = conn.createStatement();
-        String query = "UPDATE `EMPLOYEE_ATTEND_EVENT` SET `is_attending` = 1 WHERE  `id` =  %d LIMIT 1 ;";
+        String query = "UPDATE `EMPLOYEE_ATTEND_EVENT` SET `is_attending` = 0 WHERE  `employee_id` =  %d LIMIT 1 ;";
         query = String.format(query, employee_id, event_id);
         stm.execute(query);
         stm.close();

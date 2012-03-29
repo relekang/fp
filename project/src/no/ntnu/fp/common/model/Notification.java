@@ -109,7 +109,7 @@ public class Notification implements Model{
         object.put("id", ID);
         object.put("event", event.toJson());
         object.put("type", type.toString());
-        object.put("timestamp", timestamp);
+        object.put("timestamp", Util.dateTimeToString(timestamp.getTime()));
         return object;
     }
 
