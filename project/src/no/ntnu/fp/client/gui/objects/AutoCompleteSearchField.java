@@ -78,11 +78,8 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 		model.clear();
 		while(it.hasNext()) {
 			E obj =  it.next();
-			if((obj.toString().toLowerCase()).contains(search.toLowerCase())) {
-				System.out.println(obj.toString() + " contains: " + search);
+			if((obj.toString().toLowerCase()).contains(search.toLowerCase())) 
 				model.addElement(obj);
-			} else
-				System.out.println(obj.toString() + " !contains: " + search);
 		}
 		System.out.println(search + ": " + model);
 		it = set.iterator();
