@@ -24,8 +24,6 @@ public class FindPersonViewController implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
-		
 	}
-
 
 }

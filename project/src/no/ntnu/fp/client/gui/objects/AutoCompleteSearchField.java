@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 
 import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.common.Util;
+import no.ntnu.fp.common.model.Employee;
 
 public class AutoCompleteSearchField<E> extends JTextField implements KeyListener {
 	
@@ -77,9 +78,13 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 		model.clear();
 		while(it.hasNext()) {
 			E obj =  it.next();
-			if((obj.toString()).contains(search))
+			if((obj.toString().toLowerCase()).contains(search.toLowerCase())) {
+				System.out.println(obj.toString() + " contains: " + search);
 				model.addElement(obj);
+			} else
+				System.out.println(obj.toString() + " !contains: " + search);
 		}
+		System.out.println(search + ": " + model);
 		it = set.iterator();
 		displayResults();
 		grabFocus();
@@ -92,11 +97,12 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 	@Override
 	public void keyTyped(KeyEvent e) {
 		char c = e.getKeyChar();
-		if(c >= 'A' && c <= 'z')
+		if(Character.isLetter(c))
 			srchStr += c;
 		if(c == KeyEvent.VK_BACK_SPACE)
 			srchStr = getText();
 		search(srchStr);
+//		search(getText());
 	}
 	
 	public void setPopupOffset(int x, int y) {

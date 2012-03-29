@@ -76,7 +76,7 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
             Calendar c = Util.getCalendar();
             c.set(Calendar.WEEK_OF_YEAR, currentWeek+1);//TODO: currentWeek+1 - seams to work, but not sure..
             c.set(currentYear, currentMonth, currentDay);
-            c.set(Calendar.DAY_OF_WEEK, 2+i);
+            c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY+i);
             days[i] = new CalendarDayBox(i, c);
             gbc.gridx = i;
             weekPanel.add(days[i]);
