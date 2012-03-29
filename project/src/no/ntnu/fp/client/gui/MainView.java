@@ -11,13 +11,13 @@ import java.awt.event.ActionListener;
 
 public class MainView extends JFrame {
 
-	private JPanel mainPanel;
-	private CalendarPanel calendarPanel;
-	private OverviewCalendarPanel overviewPanel;
-	private NotificationPanel notificationPanel;
-	private JButton createEventBtn, findPersonBtn, signOutBtn;
-	private GridBagConstraints gbc;
-	private JLabel userLabel;
+	protected JPanel mainPanel;
+	protected CalendarPanel calendarPanel;
+	protected OverviewCalendarPanel overviewPanel;
+	protected NotificationPanel notificationPanel;
+	protected JButton createEventBtn, findPersonBtn, signOutBtn;
+	protected GridBagConstraints gbc;
+	protected JLabel userLabel;
 
 	public MainView() {
 		gbc = new GridBagConstraints();

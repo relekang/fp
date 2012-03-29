@@ -2,10 +2,10 @@ package no.ntnu.fp.client.controller;
 
 import no.ntnu.fp.client.Connection;
 import no.ntnu.fp.client.gui.EventView;
+import no.ntnu.fp.client.gui.FindPersonView;
 import no.ntnu.fp.client.gui.GuiConstants;
 import no.ntnu.fp.client.gui.LoginView;
 import no.ntnu.fp.client.gui.MainView;
-import no.ntnu.fp.client.gui.FindPersonView;
 import no.ntnu.fp.common.model.Employee;
 
 import javax.swing.*;

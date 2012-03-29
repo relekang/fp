@@ -182,7 +182,7 @@ public class OverviewCalendarPanel extends JPanel implements MouseListener{
     	Calendar oldVal = this.selected;
     	selected = (Calendar)(label.getCalendar()).clone();
 //    	TODO: THIS IS A MASSIVE, FUCKINGS HACK TO GET THE SUITABLE WEEK_OF_YEAR! OMGOMGOMG! IT DOESN'T EVEN WORK!
-    	selected.set(Calendar.WEEK_OF_YEAR, selected.get(Calendar.WEEK_OF_YEAR)-1);
+    	selected.set(Calendar.WEEK_OF_YEAR, selected.get(Calendar.WEEK_OF_YEAR));
     	pcs.firePropertyChange(SELECTED_DAY_CHANGED, oldVal, selected);
     }
 

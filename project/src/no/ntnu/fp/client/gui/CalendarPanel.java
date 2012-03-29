@@ -32,7 +32,7 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
     	Calendar c = Util.getCalendar();
     	currentYear = c.get(Calendar.YEAR);
     	currentMonth = c.get(Calendar.MONTH);
-    	currentWeek = c.get(Calendar.WEEK_OF_YEAR)-1;//TODO: added -1 to get the correct initialization
+    	currentWeek = c.get(Calendar.WEEK_OF_YEAR);//TODO: added -1 to get the correct initialization
     	currentDay = c.get(Calendar.DAY_OF_MONTH);
         setLayout(new GridBagLayout());
         addCalendarHeaders();
@@ -74,7 +74,7 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
         gbc.gridy = 1;
         for (int i = 0; i < GuiConstants.DAYS.length; i++) {
             Calendar c = Util.getCalendar();
-            c.set(Calendar.WEEK_OF_YEAR, currentWeek+1);//TODO: currentWeek+1 - seams to work, but not sure..
+            c.set(Calendar.WEEK_OF_YEAR, currentWeek);//TODO: currentWeek+1 - seams to work, but not sure..
             c.set(currentYear, currentMonth, currentDay);
             c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY+i);
             days[i] = new CalendarDayBox(i, c);
@@ -124,7 +124,7 @@ public class CalendarPanel extends JPanel implements PropertyChangeListener {
         initHourLabels();
         for(int i = 0; i < 7; i++) {
 	        Calendar c = Util.getCalendar();
-	        c.set(Calendar.WEEK_OF_YEAR, currentWeek+1);//TODO:hack med currentWeek+1
+	        c.set(Calendar.WEEK_OF_YEAR, currentWeek);//TODO:hack med currentWeek+1
 	        c.set(currentYear, currentMonth, currentDay);
 	        c.set(Calendar.DAY_OF_WEEK, 2+i);
 	        days[i].removeAll();

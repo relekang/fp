@@ -59,8 +59,8 @@ public class MainViewController implements PropertyChangeListener {
 		this.currentUser = currentUser;
 		currentUser.addPropertyChangeListener(this);
 		mainView.getUserLabel()
-				.setText("Signed in as " + currentUser.getName()+"lol");
-		loadUserEvents(Util.getCalendar().get(Calendar.WEEK_OF_YEAR)-1);//TODO: works the first time when this is initialized 
+				.setText("Signed in as " + currentUser.getName());
+		loadUserEvents(Util.getCalendar().get(Calendar.WEEK_OF_YEAR));//TODO: works the first time when this is initialized 
 		loadUserNotifications();
 	}
 
@@ -73,7 +73,7 @@ public class MainViewController implements PropertyChangeListener {
 			DefaultListModel weekModel = new DefaultListModel();
 			for(int i = 0; i < 7; i++) {
 				Calendar c = Util.getCalendar();
-				c.set(Calendar.WEEK_OF_YEAR, week+1);
+				c.set(Calendar.WEEK_OF_YEAR, week);//TODO:+1
 				c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY+i);
 				weekModel.addElement(new Day(c.getTime()));
 				Util.print("Day created in MainViewController: " + c.getTime());
