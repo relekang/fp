@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Notification;
 import no.ntnu.fp.common.model.Notification.NotificationType;
 
@@ -26,8 +27,9 @@ public class NotificationRenderer extends DefaultListCellRenderer implements
 		label.setBackground(GuiConstants.SWING_FRAME_GRAY);
 		Notification selected = (Notification) selectedValue;
 
-		// TODO: Should get timestamp from database
-		Calendar cal = selected.getTimestamp();
+		Calendar cal = Util.getCalendar();
+        cal.clear();
+        cal.setTime(selected.getTimestamp());
 		String date = makeDoubleDigit(cal.get(Calendar.DAY_OF_MONTH)) + ".";
 		String month = makeDoubleDigit((cal.get(Calendar.MONTH) + 1)) + ", ";
 		String hour = makeDoubleDigit(cal.get(Calendar.HOUR_OF_DAY)) + ":";

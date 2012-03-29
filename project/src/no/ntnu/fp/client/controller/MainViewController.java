@@ -60,7 +60,7 @@ public class MainViewController implements PropertyChangeListener {
 		currentUser.addPropertyChangeListener(this);
 		mainView.getUserLabel()
 				.setText("Signed in as " + currentUser.getName());
-		loadUserEvents(Util.getCalendar().get(Calendar.WEEK_OF_YEAR));//TODO: works the first time when this is initialized 
+		loadUserEvents(Util.getCalendar().get(Calendar.WEEK_OF_YEAR));//TODO: works the first time when this is initialized
 		loadUserNotifications();
 	}
 

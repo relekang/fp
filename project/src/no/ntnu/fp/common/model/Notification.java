@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Notification implements Model{
     private int ID;
@@ -18,13 +19,13 @@ public class Notification implements Model{
     private Event event;
     private PropertyChangeSupport pcs;
     private NotificationType type;
-    private String timestamp;
+    private Calendar timestamp;
 
     public Notification(int id, Event event, String timestamp, NotificationType type){
         cal = Util.getCalendar();
     	this.ID = id;
         this.event = event;
-        this.timestamp = timestamp;
+        this.timestamp.setTime(Util.dateFromString(timestamp));
         this.type = type;
     }
 
@@ -77,11 +78,11 @@ public class Notification implements Model{
     }
 
     public String getTimestampString() {
-        return timestamp;
+        return Util.dateTimeToString(timestamp.getTime());
     }
     
-    public Calendar getTimestamp() {
-    	return Util.getCalendar();
+    public Date getTimestamp() {
+    	return timestamp.getTime();
     }
     
     public NotificationType getType() {

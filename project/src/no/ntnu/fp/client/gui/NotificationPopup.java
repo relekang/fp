@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import no.ntnu.fp.client.controller.ClientApplication;
+import no.ntnu.fp.common.Util;
 import no.ntnu.fp.common.model.Event;
 import no.ntnu.fp.common.model.Notification;
 import no.ntnu.fp.common.model.Notification.NotificationType;
@@ -41,8 +42,9 @@ public class NotificationPopup extends JPanel {
 		else if (type == NotificationType.CHANGE)
 			iconLabel.setIcon(GuiConstants.CHANGE_ICON_BIG);
 
-		// TODO: Should get timestamp from database
-		Calendar cal = notification.getTimestamp();
+        Calendar cal = Util.getCalendar();
+        cal.clear();
+        cal.setTime(notification.getTimestamp());
 		String date = makeDoubleDigit(cal.get(Calendar.DAY_OF_MONTH)) + ".";
 		String month = makeDoubleDigit((cal.get(Calendar.MONTH) + 1)) + ".";
 		String year = makeDoubleDigit((cal.get(Calendar.YEAR))) + " ";
