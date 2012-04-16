@@ -18,6 +18,14 @@ public class MainView extends JFrame {
 	protected JButton createEventBtn, findPersonBtn, signOutBtn;
 	protected GridBagConstraints gbc;
 	protected JLabel userLabel;
+	
+
+	public static void main(String args[]) {
+	MainView login  = new MainView(); 
+		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		login.setVisible(true);
+		login.pack();
+	}
 
 	public MainView() {
 		gbc = new GridBagConstraints();

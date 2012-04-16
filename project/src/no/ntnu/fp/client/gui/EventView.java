@@ -33,6 +33,14 @@ public class EventView extends JFrame {
 	private AutoCompleteSearchField<Employee> participantField;
     private JLabel[] labels = {new JLabel("Title:"), new JLabel("From:"), new JLabel("To:"), new JLabel("Room:"), new JLabel("Participants:"), new JLabel("Description:")};
 
+
+	public static void main(String args[]) {
+		EventView login = new EventView();
+		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		login.setVisible(true);
+		login.pack();
+	}
+    
 	public EventView(){
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(10, 6, 10, 6);	

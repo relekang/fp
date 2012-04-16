@@ -5,17 +5,24 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.beans.PropertyChangeSupport;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPopupMenu;
+import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionListener;
-
 import no.ntnu.fp.client.gui.GuiConstants;
-import no.ntnu.fp.common.Util;
-import no.ntnu.fp.common.model.Employee;
 
-public class AutoCompleteSearchField<E> extends JTextField implements KeyListener {
+public class AutoCompleteSearchField<E extends Comparable> extends JTextField implements KeyListener {
 	
 	public static final int STD_ROW_HEIGHT = 20;
 	
@@ -25,37 +32,33 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 	private Iterator<E> it;
 	private int numDisplayableResults;
 	private JPopupMenu resultPanel;
-	private PropertyChangeSupport pcs;
 	private String srchStr = "";
-	private int x = 4, y = STD_ROW_HEIGHT+5;
+	private int x = 0, y = STD_ROW_HEIGHT+5;
 	
-//	public static void main(String[] args) {
-//		ArrayList<Employee> l = new ArrayList<Employee>();
-//		char[] chars = {'v', 'a', 'g', 'q', 'k', 'h', 'i', 'i'};
-//		for(int i = 0; i < chars.length; i++) {
-//			l.add(new Employee(""+chars[i]+""+chars[chars.length-1-i]+"andra", "g@mail.com", Util.getCalendar().getTime(), Employee.Gender.MALE));
-//		}
-//		AutoCompleteSearchField<Employee> s = new AutoCompleteSearchField<Employee>(l, 3);
-//		JFrame f = new JFrame();
-//		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		f.setContentPane(s);
-//		f.setVisible(true);
-//		f.setSize(new Dimension(200, 50));
-//	}
+	static class LOL implements Comparable<LOL>{
+		public String toString() {
+			String a = "abcdefghijklmnopqrstuvwxyzæøå";
+			String s = "";
+			for(int i = 0; i < 40; i++) {
+				s += a.charAt((int)(Math.random()*a.length()));
+			}
+			return s;
+		}
+		public int compareTo(LOL o) {
+			return this.toString().compareTo(o.toString());
+		}
+	}
 	
-	public AutoCompleteSearchField(int columns, int numDisplayedResults) {
-		this(new ArrayList<E>(), numDisplayedResults);
+	public AutoCompleteSearchField(int columns, int visibleResults) {
+		this(new ArrayList<E>(), visibleResults);
 		setColumns(columns);
 	}
 	
-	public AutoCompleteSearchField(ArrayList<E> list, int numDisplayedResults) {
-		pcs = new PropertyChangeSupport(this);
+	public AutoCompleteSearchField(ArrayList<E> list, int visibleResults) {
 		set.addAll(list);
-		System.out.println(set);
 		it = set.iterator();
-		this.numDisplayableResults = numDisplayedResults;
+		this.numDisplayableResults = visibleResults;
 		results.setVisibleRowCount(this.numDisplayableResults);
-//		results.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 		results.setBackground(GuiConstants.SWING_FRAME_GRAY);
 		resultPanel = new JPopupMenu();
 		resultPanel.setPreferredSize(new Dimension(190, numDisplayableResults*STD_ROW_HEIGHT+4));
@@ -98,7 +101,6 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 		if(c == KeyEvent.VK_BACK_SPACE)
 			srchStr = getText();
 		search(srchStr);
-//		search(getText());
 	}
 	
 	public void setPopupOffset(int x, int y) {
@@ -157,19 +159,16 @@ public class AutoCompleteSearchField<E> extends JTextField implements KeyListene
 	}
 	
 	private class AutoCompleteCellRenderer extends DefaultListCellRenderer implements ListCellRenderer {
-
 		@Override
 		public Component getListCellRendererComponent(JList list, Object value,
 				int index, boolean isSelected, boolean cellHasFocus) {
 			JLabel lab = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
 			setSelectedTextColor(Color.BLUE);
 			setText(((E)value).toString());
 			lab.setBackground(GuiConstants.SWING_FRAME_GRAY);
 			lab.setSize(100, 30);
 			return this;
 		}
-		
 	}
 
 	public void keyPressed(KeyEvent e) {}
