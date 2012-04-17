@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-  <errors>false</errors>
+  <errors>true</errors>
   <loss>0.7</loss>
   <delay>0.7</delay>
   <ghost>0.8</ghost>

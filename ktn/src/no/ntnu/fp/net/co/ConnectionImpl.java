@@ -42,7 +42,6 @@ public class ConnectionImpl extends AbstractConnection {
 	public static final String DEBUG_RECEIVE = "DEBUG: ConnectionImpl->receive->";
 	public static final String DEBUG_CLOSE = "DEBUG: ConnectionImpl->close->";
 
-
 	/** Keeps track of the used ports for each server port. */
 	private static Map<Integer, Boolean> usedPorts = Collections
 			.synchronizedMap(new HashMap<Integer, Boolean>());
@@ -84,7 +83,6 @@ public class ConnectionImpl extends AbstractConnection {
 		this.remoteAddress = remoteAddress.getHostAddress();
 		this.remotePort = remotePort;
 		KtnDatagram syn = constructInternalPacket(Flag.SYN);
-		fixAddressAndPort(syn);
 		try {
 			simplySendPacket(syn);
 		} catch (ClException e) {
@@ -92,19 +90,12 @@ public class ConnectionImpl extends AbstractConnection {
 			e.printStackTrace();
 		}
 		state = State.SYN_SENT;
-		KtnDatagram ackPacket = receiveAck();
-		if(ackPacket != null && ackPacket.getFlag() != Flag.SYN_ACK)
-			lastValidPacketReceived = ackPacket;
-		
-		if (isValid(ackPacket) && ackPacket.getFlag() != Flag.SYN_ACK)
-			throw new ConnectException("Never received SYN_ACK");
-
-		KtnDatagram ack = new KtnDatagram();
-		fixAddressAndPort(ack);
-		sendAck(ack, false);
+		KtnDatagram synAckPacket = receiveAck();
+		lastValidPacketReceived = synAckPacket;
+		this.remotePort = synAckPacket.getSrc_port();
+		sendAck(synAckPacket, false);
 		state = State.ESTABLISHED;
-		System.out
-				.println(DEBUG_CONNECT + "connection established with server");
+		System.out.println(DEBUG_CONNECT + "connection established");
 	}
 
 	/**
@@ -116,29 +107,35 @@ public class ConnectionImpl extends AbstractConnection {
 	public Connection accept() throws IOException, SocketTimeoutException {
 		state = State.LISTEN;
 		KtnDatagram synPacket = null;
-		synPacket = receivePacket(true);
+		synPacket = null;
+		while (synPacket == null || synPacket.getFlag() != Flag.SYN) {
+			synPacket = receivePacket(true);
+		}
 		// while(synPacket == null) {
 		// System.out.println(DEBUG_ACCEPT+"server trying to receive SYN");
 		// synPacket = receivePacket(true);
 		// }
-		state = State.SYN_RCVD;
 		System.out.println(DEBUG_ACCEPT + "SYN received");
-		this.remoteAddress = synPacket.getSrc_addr();
-		this.remotePort = synPacket.getSrc_port();
-		if (synPacket.getFlag() == Flag.SYN) {
-			KtnDatagram packet = new KtnDatagram();
-			fixAddressAndPort(packet);
-			sendAck(packet, true);
-			System.out.println(DEBUG_ACCEPT + "trying to receive ACK");
-			KtnDatagram ackPacket = receiveAck();
-			if (ackPacket != null) {
-				state = State.ESTABLISHED;
-				System.out.println(DEBUG_ACCEPT
-						+ "connection established at server");
-				return this;
-			}
+		ConnectionImpl newConn = new ConnectionImpl(getPort());
+		newConn.lastValidPacketReceived = synPacket;
+		newConn.remoteAddress = synPacket.getSrc_addr();
+		newConn.remotePort = synPacket.getSrc_port();
+		newConn.state = State.SYN_RCVD;
+		newConn.sendAck(synPacket, true);
+		KtnDatagram ackPacket = null;
+		while (ackPacket == null || ackPacket.getFlag() != Flag.ACK)
+			ackPacket = newConn.receiveAck();
+		newConn.lastValidPacketReceived = ackPacket;
+		newConn.state = State.ESTABLISHED;
+		return newConn;
+	}
+
+	private int getPort() {
+		int i = 33333;
+		while (usedPorts.containsKey(i)) {
+			i++;
 		}
-		return null;
+		return i;
 	}
 
 	/**
@@ -155,11 +152,13 @@ public class ConnectionImpl extends AbstractConnection {
 	 */
 	public void send(String msg) throws ConnectException, IOException {
 		KtnDatagram packet = constructDataPacket(msg);
-		fixAddressAndPort(packet);
-		KtnDatagram ackPacket = sendDataPacketWithRetransmit(packet);
-		if (ackPacket == null || ackPacket.getFlag() != Flag.ACK)
-			throw new ConnectException(
-					"Never received ACK at client after sending a datapacket");
+		KtnDatagram ackPacket = null;
+		while (ackPacket == null || ackPacket.getFlag() != Flag.ACK) {
+			ackPacket = sendDataPacketWithRetransmit(packet);
+		}
+		lastValidPacketReceived = ackPacket;
+//		if (ackPacket == null || ackPacket.getFlag() != Flag.ACK)
+//			throw new ConnectException("Never received ACK at client after sending a datapacket");
 	}
 
 	/**
@@ -172,53 +171,19 @@ public class ConnectionImpl extends AbstractConnection {
 	 */
 	public String receive() throws ConnectException, IOException {
 		if (state != State.ESTABLISHED)
-			throw new ConnectException("Connection is not established");
-		KtnDatagram receivedPacket = receivePacket(false);
-		// KtnDatagram receivedPacket = receivePacket(false);
-		KtnDatagram ack = new KtnDatagram();
-		fixAddressAndPort(ack);
-		sendAck(ack, false);
+			throw new ConnectException("Connection not established");
+		// KtnDatagram receivedPacket = new ClSocket().receive(myPort);
+		KtnDatagram receivedPacket = null;
+		while (receivedPacket == null) {
+			receivedPacket = receivePacket(false);
+			if (!isValid(receivedPacket))
+				receivedPacket = null;
+		}
+		sendAck(receivedPacket, false);
 		System.out.println(DEBUG_RECEIVE + "packet received, flag: "
 				+ receivedPacket.getFlag());
 
-		if (isValid(receivedPacket) && receivedPacket.getFlag() == Flag.FIN) {
-			// close();
-
-			KtnDatagram fin = constructInternalPacket(Flag.FIN);
-			fixAddressAndPort(fin);
-			try {
-				simplySendPacket(fin);
-			} catch (ClException e1) {
-				System.out.println(DEBUG_RECEIVE + "sending of FIN failed");
-				e1.printStackTrace();
-			}
-			KtnDatagram ackPacket = receiveAck();
-			if (isValid(ackPacket) && ackPacket.getFlag() == Flag.ACK) {
-				throw new EOFException("Connection closed");
-			}
-			// KtnDatagram finPacket = constructInternalPacket(Flag.FIN);
-			// fixAddressAndPort(finPacket);
-			// try {
-			// simplySendPacket(finPacket);
-			// } catch (ClException e) {
-			// e.printStackTrace();
-			// }
-			// KtnDatagram ackPacket = receiveAck();
-			// if(isValid(ackPacket) && ackPacket.getFlag() == Flag.ACK) {
-			// System.out.println(DEBUG_RECEIVE+"FIN received, connection closed");
-			// state = State.CLOSED;
-			// } else {
-			// throw new
-			// ConnectException("Never receieved ACK after sending FIN");
-			// }
-		} else {
-			if (isValid(receivedPacket) && receivedPacket.getPayload() != null) {
-				return receivedPacket.getPayload().toString();
-			}
-			System.out.println(DEBUG_RECEIVE + "reached end of receive");
-			return null;
-		}
-		throw new EOFException();
+		return receivedPacket.getPayload().toString();
 	}
 
 	/**
@@ -227,27 +192,52 @@ public class ConnectionImpl extends AbstractConnection {
 	 * @see Connection#close()
 	 */
 	public void close() throws IOException {
+		if (state != State.ESTABLISHED)
+			throw new IOException("Can't close an un-established connection");
+
+		System.out.println(DEBUG_CLOSE + "disconnectrequest = "
+				+ disconnectRequest);
+
+		KtnDatagram ackPacket = null;
 		KtnDatagram fin = constructInternalPacket(Flag.FIN);
-		fixAddressAndPort(fin);
-		try {
-			simplySendPacket(fin);
-		} catch (ClException e1) {
-			System.out.println(DEBUG_CLOSE + "sending of FIN failed");
-			e1.printStackTrace();
-		}
-		KtnDatagram ackPacket = receiveAck();
-		if (isValid(ackPacket) && ackPacket.getFlag() == Flag.ACK) {
-			System.out.println(DEBUG_CLOSE + "received ack after sending FIN!");
-			KtnDatagram finPacket = receivePacket(true);
-			if (isValid(finPacket) && finPacket.getFlag() == Flag.FIN) {
-				KtnDatagram ackRespond = new KtnDatagram();
-				fixAddressAndPort(ackRespond);
-				sendAck(ackRespond, false);
-				System.out.println(DEBUG_CLOSE + "FIN received, ACK sent");
+		if (disconnectRequest == null) {
+			state = State.FIN_WAIT_1;
+			while (ackPacket == null || ackPacket.getFlag() != Flag.ACK) {
+				try {
+					simplySendPacket(fin);
+				} catch (ClException e1) {
+					System.out.println(DEBUG_CLOSE + "sending of FIN failed");
+					e1.printStackTrace();
+				}
+				ackPacket = receiveAck();
+			}
+//			while (ackPacket == null || ackPacket.getFlag() != Flag.ACK) {
+//				ackPacket = sendDataPacketWithRetransmit(fin);
+//			}
+			state = State.FIN_WAIT_2;
+			fin = null;
+			while(fin == null) {
+				fin = receivePacket(true);
+				if(fin != null && fin.getFlag() == Flag.FIN) {
+					sendAck(fin, false);
+				}
 			}
 		} else {
-			throw new ConnectException("never received ACK after sending FIN");
+			sendAck(disconnectRequest, false);
+			state = State.FIN_WAIT_2;
+			while(ackPacket == null || ackPacket.getFlag() != Flag.ACK/*ackPacket.getSeq_nr() != fin.getSeq_nr()*/) {
+				try {
+					simplySendPacket(fin);
+				} catch (ClException e) {
+					e.printStackTrace();
+				}
+				ackPacket = receiveAck();
+			}
+//			while (ackPacket == null || ackPacket.getFlag() != Flag.ACK) {
+//				ackPacket = sendDataPacketWithRetransmit(fin);
+//			}
 		}
+		state = State.CLOSED;
 	}
 
 	/**
@@ -259,49 +249,11 @@ public class ConnectionImpl extends AbstractConnection {
 	 * @return true if packet is free of errors, false otherwise.
 	 */
 	protected boolean isValid(KtnDatagram packet) {
-		boolean valid = true;
-		
-		if (packet == null)
-			valid = false;
-		else if (packet.getChecksum() != packet.calculateChecksum())
-			valid = false;
-		else if (packet.getSeq_nr() != lastValidPacketReceived.getSeq_nr() + 1)
-			valid = false;
-		else if (!packet.getSrc_addr().equals(remoteAddress))
-			valid = false;
-		else if (packet.getSrc_port() != remotePort)
-			valid = false;
-		else if (!(packet.getFlag() == Flag.ACK || packet.getFlag() == Flag.NONE))
-			valid = false;
-		
-		if(valid) 
-			lastValidPacketReceived = packet;
-		System.out.println("Packet isValid = " + valid);
-		return valid;
+		//return packet != null && packet.getSeq_nr() == lastValidPacketReceived.getSeq_nr() + 1;
+				/*&& packet.getChecksum() == packet.calculateChecksum()*/
+		if(packet == null)
+			return false;
+		return packet.getChecksum() == packet.calculateChecksum();
 	}
 
-	private KtnDatagram getEmptyPacketWidthAdressAndPort() {
-		KtnDatagram packet = new KtnDatagram();
-		fixAddressAndPort(packet);
-		return packet;
-	}
-
-	private void fixAddressAndPort(KtnDatagram packet) {
-		packet.setDest_addr(remoteAddress);
-		packet.setDest_port(remotePort);
-		packet.setSrc_addr(myAddress);
-		packet.setSrc_port(myPort);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder b = new StringBuilder();
-		b.append("ConnectionImpl, instance: " + getClass().getName() + "@"
-				+ Integer.toHexString(hashCode()));
-		b.append("\naddress: " + this.myAddress);
-		b.append(", port: " + this.myPort);
-		b.append("\nremoteAdress: " + this.remoteAddress);
-		b.append(", remotePort: " + this.remotePort);
-		return b.toString();
-	}
 }

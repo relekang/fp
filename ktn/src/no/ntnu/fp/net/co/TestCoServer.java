@@ -50,6 +50,7 @@ public class TestCoServer {
 			} catch (EOFException e) {
 				Log.writeToLog("Got close request (EOFException), closing.",
 						"TestServer");
+				System.out.println("SERVERSIDE: EOFException caught! Closing server");
 				conn.close();
 			}
 
