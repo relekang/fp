@@ -3,7 +3,7 @@
   <errors>true</errors>
   <loss>0.7</loss>
   <delay>0.7</delay>
-  <ghost>0.8</ghost>
+  <ghost>0.7</ghost>
   <payload>0.7</payload>
   <header>0.7</header>
   <onlydata>true</onlydata>
