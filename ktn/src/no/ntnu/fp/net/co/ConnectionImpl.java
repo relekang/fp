@@ -86,7 +86,6 @@ public class ConnectionImpl extends AbstractConnection {
 		try {
 			simplySendPacket(syn);
 		} catch (ClException e) {
-			System.out.println(DEBUG_CONNECT + "send SYN failed");
 			e.printStackTrace();
 		}
 		state = State.SYN_SENT;
@@ -95,7 +94,6 @@ public class ConnectionImpl extends AbstractConnection {
 		this.remotePort = synAckPacket.getSrc_port();
 		sendAck(synAckPacket, false);
 		state = State.ESTABLISHED;
-		System.out.println(DEBUG_CONNECT + "connection established");
 	}
 
 	/**
@@ -105,17 +103,14 @@ public class ConnectionImpl extends AbstractConnection {
 	 * @see Connection#accept()
 	 */
 	public Connection accept() throws IOException, SocketTimeoutException {
+//		Listen for anyone trying to connect to the server
 		state = State.LISTEN;
 		KtnDatagram synPacket = null;
 		synPacket = null;
 		while (synPacket == null || synPacket.getFlag() != Flag.SYN) {
 			synPacket = receivePacket(true);
 		}
-		// while(synPacket == null) {
-		// System.out.println(DEBUG_ACCEPT+"server trying to receive SYN");
-		// synPacket = receivePacket(true);
-		// }
-		System.out.println(DEBUG_ACCEPT + "SYN received");
+//		Establish a new connection with a new port number and return it to the client
 		ConnectionImpl newConn = new ConnectionImpl(getPort());
 		newConn.lastValidPacketReceived = synPacket;
 		newConn.remoteAddress = synPacket.getSrc_addr();
@@ -131,10 +126,10 @@ public class ConnectionImpl extends AbstractConnection {
 	}
 
 	private int getPort() {
+//		Returns a available port to the client
 		int i = 33333;
-		while (usedPorts.containsKey(i)) {
+		while (usedPorts.containsKey(i)) 
 			i++;
-		}
 		return i;
 	}
 
@@ -153,12 +148,10 @@ public class ConnectionImpl extends AbstractConnection {
 	public void send(String msg) throws ConnectException, IOException {
 		KtnDatagram packet = constructDataPacket(msg);
 		KtnDatagram ackPacket = null;
-		while (ackPacket == null || ackPacket.getFlag() != Flag.ACK) {
+		while (!isValid(ackPacket)/*ackPacket == null || ackPacket.getFlag() != Flag.ACK/**/) {
 			ackPacket = sendDataPacketWithRetransmit(packet);
 		}
 		lastValidPacketReceived = ackPacket;
-//		if (ackPacket == null || ackPacket.getFlag() != Flag.ACK)
-//			throw new ConnectException("Never received ACK at client after sending a datapacket");
 	}
 
 	/**
@@ -171,8 +164,8 @@ public class ConnectionImpl extends AbstractConnection {
 	 */
 	public String receive() throws ConnectException, IOException {
 		if (state != State.ESTABLISHED)
-			throw new ConnectException("Connection not established");
-		// KtnDatagram receivedPacket = new ClSocket().receive(myPort);
+			throw new ConnectException("Can't receive in an un-established connection");
+//		Recieve a packet until it's valid, then send an ACK and return the data to the serverapplication
 		KtnDatagram receivedPacket = null;
 		while (receivedPacket == null) {
 			receivedPacket = receivePacket(false);
@@ -180,9 +173,6 @@ public class ConnectionImpl extends AbstractConnection {
 				receivedPacket = null;
 		}
 		sendAck(receivedPacket, false);
-		System.out.println(DEBUG_RECEIVE + "packet received, flag: "
-				+ receivedPacket.getFlag());
-
 		return receivedPacket.getPayload().toString();
 	}
 
@@ -194,35 +184,31 @@ public class ConnectionImpl extends AbstractConnection {
 	public void close() throws IOException {
 		if (state != State.ESTABLISHED)
 			throw new IOException("Can't close an un-established connection");
-
-		System.out.println(DEBUG_CLOSE + "disconnectrequest = "
-				+ disconnectRequest);
-
 		KtnDatagram ackPacket = null;
 		KtnDatagram fin = constructInternalPacket(Flag.FIN);
 		if (disconnectRequest == null) {
+//			The host initiates the closing of the connection
 			state = State.FIN_WAIT_1;
 			while (ackPacket == null || ackPacket.getFlag() != Flag.ACK) {
 				try {
 					simplySendPacket(fin);
 				} catch (ClException e1) {
-					System.out.println(DEBUG_CLOSE + "sending of FIN failed");
 					e1.printStackTrace();
 				}
 				ackPacket = receiveAck();
 			}
-//			while (ackPacket == null || ackPacket.getFlag() != Flag.ACK) {
-//				ackPacket = sendDataPacketWithRetransmit(fin);
-//			}
 			state = State.FIN_WAIT_2;
+//			FIN sent, now waiting for a confirmation from the other host
 			fin = null;
 			while(fin == null) {
 				fin = receivePacket(true);
-				if(fin != null && fin.getFlag() == Flag.FIN) {
+				if(fin != null && fin.getFlag() == Flag.FIN) 
 					sendAck(fin, false);
-				}
+				else
+					fin = null;
 			}
 		} else {
+//			EOFException caught and host is now responding on the other host's close
 			sendAck(disconnectRequest, false);
 			state = State.FIN_WAIT_2;
 			while(ackPacket == null || ackPacket.getFlag() != Flag.ACK/*ackPacket.getSeq_nr() != fin.getSeq_nr()*/) {
@@ -233,9 +219,7 @@ public class ConnectionImpl extends AbstractConnection {
 				}
 				ackPacket = receiveAck();
 			}
-//			while (ackPacket == null || ackPacket.getFlag() != Flag.ACK) {
-//				ackPacket = sendDataPacketWithRetransmit(fin);
-//			}
+//			FIN sent and ACK received
 		}
 		state = State.CLOSED;
 	}
@@ -249,11 +233,7 @@ public class ConnectionImpl extends AbstractConnection {
 	 * @return true if packet is free of errors, false otherwise.
 	 */
 	protected boolean isValid(KtnDatagram packet) {
-		//return packet != null && packet.getSeq_nr() == lastValidPacketReceived.getSeq_nr() + 1;
-				/*&& packet.getChecksum() == packet.calculateChecksum()*/
-		if(packet == null)
-			return false;
-		return packet.getChecksum() == packet.calculateChecksum();
+		return packet != null && packet.getChecksum() == packet.calculateChecksum();
 	}
 
 }
